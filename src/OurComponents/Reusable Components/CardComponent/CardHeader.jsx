@@ -22,7 +22,7 @@ const CardHeader = ({
     <div
       className={` bg-gradient-to-b from-[#0e325a] from-10% to-[#141c3a] to-100% rounded-t-md border-[#1b3050] border-b-[1px] shadow-[2px_6px_20px_rgba(0,0,0,0.9)] py-2 px-8 flex justify-between h-full w-full ${className}`}
     >
-      <div className="flex items-center gap-1 my-2">
+      <div className="flex flex-row justify-center gap-1 my-2">
         {showLogo && (
           <img
             src={fundLogo}

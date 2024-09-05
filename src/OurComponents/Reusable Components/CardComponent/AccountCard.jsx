@@ -85,7 +85,7 @@ const AccountCard = () => {
       <div className="flex flex-col items-center gap-4">
         <CardHeader
           FundName="Demo Funds"
-          fundClassName="text-white"
+          fundClassName="text-white text-base"
           showButton={false}
           showLogo={true}
         />
