@@ -228,32 +228,32 @@
 //     },
 //   },
 
-//   safelist: [
-//     {
-//       pattern: /text-color-(theme1|theme2|theme3|theme4)/,
-//     },
-//     {
-//       pattern: /bg-color-(theme1|theme2|theme3|theme4)/,
-//     },
-//     {
-//       pattern: /bg-color-card-(theme1|theme2|theme3|theme4)/,
-//     },
-//     {
-//       pattern: /hover:bg-color-(theme1|theme2|theme3|theme4)/, // Hover background
-//     },
-//     {
-//       pattern: /hover:border-color-(theme1|theme2|theme3|theme4)/, // Hover border color
-//     },
-//     {
-//       pattern: /hover:text-color-(theme1|theme2|theme3|theme4)/, // Hover text color
-//     },
-//     {
-//       pattern: /font-(theme1|theme2|theme3|theme4)/, // Font family for each theme
-//     },
-//     {
-//       pattern: /text-size-(theme1|theme2|theme3|theme4)/, // Font size for each theme
-//     },
-//   ],
+// safelist: [
+//   {
+//     pattern: /text-color-(theme1|theme2|theme3|theme4)/,
+//   },
+//   {
+//     pattern: /bg-color-(theme1|theme2|theme3|theme4)/,
+//   },
+//   {
+//     pattern: /bg-color-card-(theme1|theme2|theme3|theme4)/,
+//   },
+//   {
+//     pattern: /hover:bg-color-(theme1|theme2|theme3|theme4)/, // Hover background
+//   },
+//   {
+//     pattern: /hover:border-color-(theme1|theme2|theme3|theme4)/, // Hover border color
+//   },
+//   {
+//     pattern: /hover:text-color-(theme1|theme2|theme3|theme4)/, // Hover text color
+//   },
+//   {
+//     pattern: /font-(theme1|theme2|theme3|theme4)/, // Font family for each theme
+//   },
+//   {
+//     pattern: /text-size-(theme1|theme2|theme3|theme4)/, // Font size for each theme
+//   },
+// ],
 //   plugins: [require("tailwindcss-animate")],
 // };
 
@@ -284,8 +284,81 @@ module.exports = {
       backgroundImage: {
         "custom-gradient":
           "linear-gradient(to bottom, #0d345d 0%, #151c39 100%)",
+        "gradient-card-theme1":
+          "linear-gradient(to bottom, #243279 0%, #0055BB 100%)",
+      },
+      backgroundColor: {
+        "color-theme1": "#edf2f4",
+        "color-theme2": "#e5e5e5",
+        "color-theme3": "#efefd0",
+        "color-theme4": "#004e89",
+        "color-card-theme1": "#8d99ae",
+        "color-card-theme2": "#ededed9",
+        "color-card-theme3": "#dde5b6",
+        "color-card-theme4": "#b5e2fa",
+        "color-theme1-hover": "#ef233c",
+        "color-theme2-hover": "#14213d",
+        "color-theme3-hover": "#004e89",
+        "color-theme4-hover": "#e27396",
+        "sidebar-color-theme1": "#FFFFFF",
+        "gradient-card-theme1":
+          "linear-gradient(to bottom, #243279 0%, #0055BB 100%)",
+        // "gradient-card-theme2": "linear-gradient(to bottom, #ededed, #14213d)",
+        // "gradient-card-theme3": "linear-gradient(to bottom, #dde5b6, #004e89)",
+        // "gradient-card-theme4": "linear-gradient(to bottom, #b5e2fa, #e27396)",
+      },
+
+      borderColor: {
+        "color-theme1": "#ef233c",
+        "color-theme2": "#14213d",
+        "color-theme3": "#004e89",
+        "color-theme4": "#e27396",
+      },
+      textColor: {
+        "color-theme1": "#ef233c",
+        "color-theme2": "#14213d",
+        "color-theme3": "#004e89",
+        "color-theme4": "#e27396",
+      },
+      fontFamily: {
+        theme1: ['"Roboto"', "sans-serif"], // Replace "Roboto" with the desired font
+        theme2: ['"Merriweather"', "serif"], // Replace "Merriweather" with the desired font
+        theme3: ['"Courier New"', "monospace"], // Replace "Courier New" with the desired font
+        theme4: ['"Arial"', "sans-serif"], // Replace "Arial" with the desired font
+      },
+      fontSize: {
+        theme1: "16px", // Font size for theme 1
+        theme2: "18px", // Font size for theme 2
+        theme3: "20px", // Font size for theme 3
+        theme4: "22px", // Font size for theme 4
       },
     },
+    safelist: [
+      {
+        pattern: /text-color-(theme1|theme2|theme3|theme4)/,
+      },
+      {
+        pattern: /bg-color-(theme1|theme2|theme3|theme4)/,
+      },
+      {
+        pattern: /bg-color-card-(theme1|theme2|theme3|theme4)/,
+      },
+      {
+        pattern: /hover:bg-color-(theme1|theme2|theme3|theme4)/, // Hover background
+      },
+      {
+        pattern: /hover:border-color-(theme1|theme2|theme3|theme4)/, // Hover border color
+      },
+      {
+        pattern: /hover:text-color-(theme1|theme2|theme3|theme4)/, // Hover text color
+      },
+      {
+        pattern: /font-(theme1|theme2|theme3|theme4)/, // Font family for each theme
+      },
+      {
+        pattern: /text-size-(theme1|theme2|theme3|theme4)/, // Font size for each theme
+      },
+    ],
     plugins: [],
   },
 };

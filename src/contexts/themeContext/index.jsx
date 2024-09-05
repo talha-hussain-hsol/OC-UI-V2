@@ -19,7 +19,7 @@ export const ThemeProvider = ({ children }) => {
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
-  )
+  );
 };
 
 export const useTheme = () => useContext(ThemeContext);

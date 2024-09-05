@@ -7,7 +7,7 @@ import { MdOutlineAccessTime } from "react-icons/md";
 const AccountCard = () => {
   const leftContentCard = (
     <div className="flex flex-col gap-1">
-      <h3 className="text-lg font-semibold text-white">Muhammad Imran AX</h3>
+    <h3 className={`text-lg font-semibold text-white`}>Muhammad Imran AX</h3>
       <p className="text-[#6881a3] flex items-center gap-2">
         Nationality: Aland Islands{" "}
         <span>
