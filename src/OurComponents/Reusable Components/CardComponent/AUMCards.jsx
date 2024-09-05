@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const AUMCard = ({ date, amount, icon, text }) => {
   return (
@@ -6,15 +6,13 @@ const AUMCard = ({ date, amount, icon, text }) => {
       <div className="flex-shrink-0 bg-green-500 w-12 h-12 rounded-full flex items-center justify-center">
         {icon}
       </div>
-      
+
       <div className="ml-6">
         <p className="text-white uppercase text-sm ">
           {text}
-           <span className="text-xs text-gray-300">{date}</span>
+          <span className="text-xs text-gray-300">{date}</span>
         </p>
-        <p className="text-white text-md  mt-1">
-          USD {amount}
-        </p>
+        <p className="text-white text-md  mt-1">USD {amount}</p>
       </div>
     </div>
   );

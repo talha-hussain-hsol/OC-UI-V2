@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import SideBar from "./SideBar";
-import Button from "./Button";
-import UserType from "./Screens/UserType";
-import UserForm from "./Screens/UserForm";
-import Documents from "./Screens/Documents";
-import FaceVerification from "./Screens/FaceVerification";
-import VCIP from "./Screens/VCIP";
-import Application from "./Screens/Application";
-import BankWallets from "./Screens/BankWallets";
-import Summary from "./Screens/Summary";
+import SideBar from "../Reusable Components/SideBar";
+import Button from "../Reusable Components/Button";
+import UserType from "./UserType";
+import UserForm from "./UserForm";
+import Documents from "./Documents";
+import FaceVerification from "./FaceVerification";
+import VCIP from "./VCIP";
+import Application from "./Application";
+import BankWallets from "./BankWallets";
+import Summary from "./Summary";
 
 const steps = [
   "Select Account",
@@ -21,7 +21,7 @@ const steps = [
   "Summary",
 ];
 
-function Steppers() {
+function Stepper() {
   const [currentStep, setCurrentStep] = useState(1);
   const [complete, setComplete] = useState(false);
 
@@ -66,7 +66,7 @@ function Steppers() {
     <>
       <SideBar portalType="Customer" />
       <div className="w-full px-4 py-4 sm:px-6 md:px-16 lg:px-24 md:py-5 lg:py-6 ">
-      <ul className="relative flex flex-row gap-x-0 ml-14 mt-7 ">
+        <ul className="relative flex flex-row gap-x-0 ml-14 mt-7 ">
           {steps.map((step, index) => (
             <li
               key={index}
@@ -111,8 +111,7 @@ function Steppers() {
               </div>
             </li>
           ))}
-        </ul> 
-
+        </ul>
 
         <div className="bg-custom-gradient w-full md:w-full shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] mx-auto p-10   md:ml-4 md:mt-12 rounded-lg  text-white  flex flex-col justify-center">
           {renderContent()}
@@ -138,5 +137,4 @@ function Steppers() {
   );
 }
 
-export default Steppers;
-
+export default Stepper;

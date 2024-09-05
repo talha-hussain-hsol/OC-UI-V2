@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 
-body {
+/* body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -178,4 +178,4 @@ th, td {
 
 .custom-dropdown-menu .lift-btn:hover {
   background: linear-gradient(to bottom, #758b8e, #0b3a723d) !important;
-}
+} */

@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import CardHeader from "./CardHeader";
 import Table from "../Tables/Table";
-import Button from "../Button";
-import AddBankForm from "../Forms/AddBankForm";
+import AddBankForm from "../../Forms/AddBankForm";
 
 const BankCard = () => {
   const [isAddBankModalOpen, setAddBankModalOpen] = useState(false);

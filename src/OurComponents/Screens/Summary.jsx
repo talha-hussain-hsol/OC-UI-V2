@@ -1,12 +1,12 @@
 import React from "react";
-import SideBar from "../SideBar";
-import SummaryCard from "../CardComponent/SummaryCard";
+import SideBar from "../Reusable Components/SideBar";
+import SummaryCard from "../Reusable Components/CardComponent/SummaryCard";
 
 const Summary = () => {
   return (
-      <div className=" flex flex-col justify-center items-center">
-        <SummaryCard />
-      </div>
+    <div className=" flex flex-col justify-center items-center">
+      <SummaryCard />
+    </div>
   );
 };
 

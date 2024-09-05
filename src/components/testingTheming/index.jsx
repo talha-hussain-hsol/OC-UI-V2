@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTheme } from '../../contexts/themeContext';
+import Dashboard from '../../OurComponents/Screens/Dashboard';
 
 const UserInfo = () => {
   const { theme } = useTheme();

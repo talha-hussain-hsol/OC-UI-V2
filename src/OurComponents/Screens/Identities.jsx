@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Table from "../Tables/Table";
-import Header from "../Header";
-import Button from "../Button";
-import SideBar from "../SideBar";
+import Table from "../Reusable Components/Tables/Table";
+import Header from "../Reusable Components/Header";
+import Button from "../Reusable Components/Button";
+import SideBar from "../Reusable Components/SideBar";
 import { AiFillEdit } from "react-icons/ai";
-import TabBar from "../TabBar";
+import TabBar from "../Reusable Components/TabBar";
 
 const Identities = () => {
   const Headers = ["Name", "Type", "Status", "Actions"];

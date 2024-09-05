@@ -1,10 +1,10 @@
 import React from "react";
-import SideBar from "./SideBar";
-import Header from "./Header";
-import AUMCard from "./CardComponent/AUMCards";
-import CardHeader from "./CardComponent/CardHeader";
-import FinancialChart from "./FinancialChart";
-import NotificationCard from "./NotificationCard";
+import SideBar from "../Reusable Components/SideBar";
+import Header from "../Reusable Components/Header";
+import AUMCard from "../Reusable Components/CardComponent/AUMCards";
+import CardHeader from "../Reusable Components/CardComponent/CardHeader";
+import FinancialChart from "../Reusable Components/FinancialChart";
+import NotificationCard from "../Reusable Components/NotificationCard";
 import { FaArrowRight, FaEye } from "react-icons/fa";
 
 function Dashboard() {

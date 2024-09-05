@@ -11,7 +11,7 @@
 //   const location = useLocation();
 //   const [formValues, setFormValues] = useState({});
 //   const [userType, setUserType] = useState(location.state?.userType || '');
-  
+
 //   const handleInputChange = (e) => {
 //     const { name, value } = e.target;
 //     setFormValues((prevValues) => ({
@@ -119,7 +119,7 @@
 //     <SideBar portalType="Customer" />
 //     {/* <div className="bg-gradient-to-r from-[#0d3b66] from-10% to-[#0b1e33] to-90% rounded-lg shadow-2xl w-[80%] flex flex-col items-center h-[700px]"> */}
 //       {/* <div className="my-8 bg-gradient-to-r from-[#0d3b66] from-10% to-[#0b1e33] to-90% rounded-lg shadow-2xl w-[80%] ml-[10%] flex flex-col items-center justify-center"> */}
-//         <div className="my-8 mt-[8%] bg-gradient-to-r from-[#0d3b66] from-10% to-[#0b1e33] to-90% rounded-lg shadow-[0px_6px_20px_5px_rgba(0,0,0,0.4)] w-[90%] ml-[7%] p-6 flex flex-col items-center justify-center"> 
+//         <div className="my-8 mt-[8%] bg-gradient-to-r from-[#0d3b66] from-10% to-[#0b1e33] to-90% rounded-lg shadow-[0px_6px_20px_5px_rgba(0,0,0,0.4)] w-[90%] ml-[7%] p-6 flex flex-col items-center justify-center">
 //         <div className="w-full flex flex-col justify-between h-full">
 //           <form onSubmit={(e) => e.preventDefault()} className="flex-grow flex flex-wrap gap-4">
 //             {filteredFields.map(([key, field]) => (
@@ -159,19 +159,17 @@
 
 // export default UserForm;
 
-
-import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import formData from '../Data/fieldsData.json';
-import DropdownField from '../DropdownField';
-import TextField from '../TextField';
-import SideBar from '../SideBar';
+import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import formData from "../Data/fieldsData.json";
+import DropdownField from "../Reusable Components/DropdownField";
+import TextField from "../Reusable Components/TextField";
 
 const UserForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [formValues, setFormValues] = useState({});
-  const userType = location.state?.userType || '';
+  const userType = location.state?.userType || "";
 
   // Function to handle changes in form inputs
   const handleInputChange = (e) => {
@@ -184,13 +182,13 @@ const UserForm = () => {
 
   // Render options for select fields
   const renderOptions = (field) => {
-    if (field.source?.type === 'table') {
+    if (field.source?.type === "table") {
       return field.source.data.map((option) => (
         <option key={option.id} value={option[field.source.returnKey]}>
           {option.name}
         </option>
       ));
-    } else if (field.source?.type === 'enum') {
+    } else if (field.source?.type === "enum") {
       return Object.entries(field.source.data).map(([key, option]) => (
         <option key={key} value={option.key}>
           {option.name}
@@ -202,28 +200,36 @@ const UserForm = () => {
 
   // Render different field types
   const renderField = (key, field) => {
-    const fieldId = key.split('.').join('_');
+    const fieldId = key.split(".").join("_");
     const commonProps = {
       id: fieldId,
       name: fieldId,
       required: field.required,
-      value: formValues[fieldId] || '',
+      value: formValues[fieldId] || "",
       onChange: handleInputChange,
       label: field.label,
     };
 
     switch (field.type) {
-      case 'select':
-      case 'dd':
-        return <DropdownField {...commonProps} options={renderOptions(field)} />;
+      case "select":
+      case "dd":
+        return (
+          <DropdownField {...commonProps} options={renderOptions(field)} />
+        );
 
-      case 'text':
-      case 'email':
-      case 'password':
-      case 'date':
-        return <TextField {...commonProps} type={field.type} placeholder={field.label} />;
+      case "text":
+      case "email":
+      case "password":
+      case "date":
+        return (
+          <TextField
+            {...commonProps}
+            type={field.type}
+            placeholder={field.label}
+          />
+        );
 
-      case 'radio':
+      case "radio":
         return (
           <div>
             {Object.entries(field.source.data).map(([key, option]) => (
@@ -246,22 +252,34 @@ const UserForm = () => {
         );
 
       default:
-        return <div className="text-red-500">Unsupported field type: {field.type}</div>;
+        return (
+          <div className="text-red-500">
+            Unsupported field type: {field.type}
+          </div>
+        );
     }
   };
 
   // Filter the fields to be displayed based on user type
-  const filteredFields = Object.entries(formData.fields).filter(([key, field]) => {
-    if (userType === 'individual') {
-      return key.startsWith('individual') && (field.for === 'all' || field.for === 'root');
-    } else if (userType === 'crp') {
-      return key.startsWith('corporate') && (field.for === 'all' || field.for === 'crp' || field.for === 'root');
+  const filteredFields = Object.entries(formData.fields).filter(
+    ([key, field]) => {
+      if (userType === "individual") {
+        return (
+          key.startsWith("individual") &&
+          (field.for === "all" || field.for === "root")
+        );
+      } else if (userType === "crp") {
+        return (
+          key.startsWith("corporate") &&
+          (field.for === "all" || field.for === "crp" || field.for === "root")
+        );
+      }
+      return false;
     }
-    return false;
-  });
+  );
 
   const handleNextClick = () => {
-    console.log('Form Values:', formValues);
+    console.log("Form Values:", formValues);
   };
 
   return (
@@ -269,12 +287,15 @@ const UserForm = () => {
       {/* <SideBar portalType="Customer" /> */}
       <div className="my-8 mt-[8%] bg-gradient-to-r from-[#0d3b66] from-10% to-[#0b1e33] to-90% rounded-lg shadow-[0px_6px_20px_5px_rgba(0,0,0,0.4)] w-[90%] ml-[7%] p-6 flex flex-col items-center justify-center">
         <div className="w-full flex flex-col justify-between h-full">
-          <form onSubmit={(e) => e.preventDefault()} className="flex-grow flex flex-wrap gap-4">
+          <form
+            onSubmit={(e) => e.preventDefault()}
+            className="flex-grow flex flex-wrap gap-4"
+          >
             {filteredFields.map(([key, field]) => (
               <div key={key} className="w-[48%] mb-4">
                 <label
                   className={`block text-sm mb-2 text-white`}
-                  htmlFor={key.split('.').join('_')}
+                  htmlFor={key.split(".").join("_")}
                 >
                   {field.label}
                   {field.required && <span className="text-red-500">*</span>}
@@ -287,7 +308,7 @@ const UserForm = () => {
           <div className="mt-auto flex justify-end w-full p-6">
             <button
               className="py-2 px-4 mb-3 border-[0.01px] text-white p-3 rounded-md hover:border-[#6e84a3] focus:outline-none"
-              onClick={() => navigate('/')}
+              onClick={() => navigate("/")}
             >
               Back
             </button>

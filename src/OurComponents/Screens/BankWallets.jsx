@@ -1,14 +1,11 @@
 import React from "react";
-import SideBar from "../SideBar";
-import Card from "../CardComponent/AccountCard";
-import BankCard from "../CardComponent/BankCard";
+import BankCard from "../Reusable Components/CardComponent/BankCard";
 
 const BankWallets = () => {
   return (
-  
-      <div className="flex flex-col justify-center items-center">
-        <BankCard />
-      </div>
+    <div className="flex flex-col justify-center items-center">
+      <BankCard />
+    </div>
   );
 };
 

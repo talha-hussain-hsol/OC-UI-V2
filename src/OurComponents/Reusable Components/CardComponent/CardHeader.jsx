@@ -1,5 +1,5 @@
 import React from "react";
-import fundLogo from "../../Assets/logo.investor.entity.png";
+import fundLogo from "../../../../public/Assets/logo.investor.entity.png";
 import Button from "../Button";
 
 const CardHeader = ({

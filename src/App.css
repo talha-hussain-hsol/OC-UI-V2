@@ -1,4 +1,4 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
 @tailwind utilities;
 .App {
@@ -40,4 +40,11 @@
   to {
     transform: rotate(360deg);
   }
+} */
+html {
+  background-color: #0c2138;
+}
+
+body {
+  background: linear-gradient(to right, #0c2138 0%, #113c4d 100%);
 }

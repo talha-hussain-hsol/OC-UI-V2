@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const Header = ({ subheading, heading, showButton, onButtonClick }) => {
   const navigate = useNavigate();
   function handleClick() {
-    navigate("/stepper")
+    navigate("/stepper");
   }
   return (
     <div className="ml-6 sm:mt-0 mt-10 ">
@@ -20,13 +20,13 @@ const Header = ({ subheading, heading, showButton, onButtonClick }) => {
           </h1>
         </div>
 
-      {showButton && (
-        // <button
-        //   className="bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600 my-[35px] w-[10%]"
-        //   onClick={onButtonClick}
-        // >
-        //   Create an Account
-        // </button>
+        {showButton && (
+          // <button
+          //   className="bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600 my-[35px] w-[10%]"
+          //   onClick={onButtonClick}
+          // >
+          //   Create an Account
+          // </button>
 
           <Button
             text="Create An Account"

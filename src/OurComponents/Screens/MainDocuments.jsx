@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Header from "../Header";
-import SideBar from "../SideBar";
-import CardHeader from "../CardComponent/CardHeader";
-import Button from "../Button";
-import Dropdown from "../Dropdown";
-import Table from "../Tables/Table";
+import Header from "../Reusable Components/Header";
+import SideBar from "../Reusable Components/SideBar";
+import Button from "../Reusable Components/Button";
+import Dropdown from "../Reusable Components/Dropdown";
+import Table from "../Reusable Components/Tables/Table";
+import CardHeader from "../Reusable Components/CardComponent/CardHeader";
 
 const MainDocuments = () => {
   const [documentCategory, setDocumentCategory] = useState("");

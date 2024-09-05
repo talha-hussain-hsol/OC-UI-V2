@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Logo from "../Assets/OneConstellation.png";
+import Logo from "../../../public/Assets/OneConstellation.png";
 import { RxDashboard } from "react-icons/rx";
 import { TbUsers, TbSwitch } from "react-icons/tb";
 import { CiSettings } from "react-icons/ci";

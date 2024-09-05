@@ -116,7 +116,7 @@
 // //     <div className="min-h-screen bg-gradient-to-r from-[#0c1f37] from-10% to-[#103649] to-90%">
 // //     <SideBar portalType="Customer" />
 // //     <div className=" bg-gradient-to-r from-[#0d3b66] from-10% to-[#0b1e33] to-90% rounded-lg shadow-2xl w-[80%] flex flex-col justify-center items-center"></div>
-// //     <div className=" p-6 bg-gradient-to-r from-[#0d3b66] from-10% to-[#0b1e33] to-90% rounded-lg shadow-2xl w-[80%] mx-[11%]"> 
+// //     <div className=" p-6 bg-gradient-to-r from-[#0d3b66] from-10% to-[#0b1e33] to-90% rounded-lg shadow-2xl w-[80%] mx-[11%]">
 // //       {!showForm ? (
 // //         <div className="mb-4 w-[80%] mx-[10%]">
 // //           <label className="block text-sm mb-2 text-white">Select User Type:</label>
@@ -221,12 +221,10 @@
 //       </div>
 //     </div>
 //   );
-  
+
 // };
 
 // export default UserType;
-
-
 
 // import React from 'react';
 // import { useNavigate } from 'react-router-dom';
@@ -248,7 +246,6 @@
 //     <div className="bg-gradient-to-r from-[#0d3b66] from-10% to-[#0b1e33] to-90% rounded-lg shadow-2xl w-[80%] flex flex-col items-center h-[600px]">
 //         <h3 className='text-white text-2xl font-light mt-6'>Let’s start with the basics.</h3>
 //         <p className='text-slate-500 text-xs font-light mt-2'>Please select if you are applying as an individual or corporate. You may an attach an existing identity or create a new one.</p>
-
 
 //       <div className='flex bg-gradient-to-r from-[#0f3057] from-10% to-[#13203f] to-90% rounded-lg shadow-[0px_6px_20px_5px_rgba(0,0,0,0.4)] h-[10%] w-[80%] mt-8 items-center'>
 //         <div className='flex items-center ml-2'>
@@ -282,7 +279,6 @@
 
 //     <hr className=" w-[80%] border-t-[1px] border-t-[#6e84a3] opacity-30 my-6 mx-8" />
 
-
 //       <div className="bg-gradient-to-r from-[#0d3b66] from-10% to-[#0b1e33] to-90% rounded-lg shadow-[0px_6px_20px_5px_rgba(0,0,0,0.5)] w-[80%] p-3 flex flex-col items-center mt-4">
 //         <div className="w-full">
 //           <label className="block text-sm mb-2 text-white">Select User Type:</label>
@@ -304,16 +300,16 @@
 
 // export default EntityTypeSelection;
 
-
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import SideBar from '../SideBar';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import SideBar from "../Reusable Components/SideBar";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 import { FaRegClock } from "react-icons/fa6";
 
-const EntityTypeSelection = () => {
+
+function UserType() {
   const navigate = useNavigate();
-  const [userType, setUserType] = useState('');
+  const [userType, setUserType] = useState("");
 
   const handleSelection = (type) => {
     setUserType(type);
@@ -321,9 +317,9 @@ const EntityTypeSelection = () => {
 
   const handleNextClick = () => {
     if (userType) {
-      navigate('/user-form', { state: { userType } });
+      navigate("/user-form", { state: { userType } });
     } else {
-      console.log('No user type selected');
+      console.log("No user type selected");
       // Optionally, display an error or prompt the user to select a type
     }
   };
@@ -331,82 +327,117 @@ const EntityTypeSelection = () => {
   return (
     <>
       {/* <SideBar portalType="Customer" /> */}
-        <div className=" w-full flex flex-col items-center h-[700px]">
-          <h3 className='text-white text-2xl font-light mt-6'>Let’s start with the basics.</h3>
-          <p className='text-slate-500 text-xs font-light mt-2'>Please select if you are applying as an individual or corporate. You may attach an existing identity or create a new one.</p>
+      <div className=" w-full flex flex-col items-center h-[700px]">
+        <h3 className="text-white text-2xl font-light mt-6">
+          Let’s start with the basics.
+        </h3>
+        <p className="text-slate-500 text-xs font-light mt-2">
+          Please select if you are applying as an individual or corporate. You
+          may attach an existing identity or create a new one.
+        </p>
 
-          {/* Additional Content */}
-          <div className='flex bg-gradient-to-r from-[#0f3057] from-10% to-[#13203f] to-90% rounded-lg shadow-[0px_6px_20px_5px_rgba(0,0,0,0.4)] h-[10%] w-[80%] mt-8 items-center'>
-            <div className='flex items-center ml-2'>
-              <img src="https://storage.googleapis.com/ascentfs-media-public/public-data/application/logo.investor.entity.png" alt="Image" className='w-15 h-12 mr-2 rounded-[3px]' />
-              <h2 className='text-white text-sm font-normal'>Demo Fund</h2>
-            </div>
-            <div className='text-white ml-[20%] text-xs font-light'>
-              <p className='flex items-center'><IoCheckmarkDoneCircleOutline color='green' /> Fund's KYC: Accepted</p>
-              <p className='text-slate-500 flex items-center'><IoCheckmarkDoneCircleOutline color='green' /> Fund Domicile: Singapore</p>
-            </div>
-            <div className='text-white ml-[20%] text-xs font-light'>
-              <p className='flex items-center'><FaRegClock color='green' /> Dealing Cycle: Interval</p>
-              <p className='text-slate-500 flex items-center'><IoCheckmarkDoneCircleOutline color='green' /> Digital Fund: Active</p>
-            </div>
+        {/* Additional Content */}
+        <div className="flex bg-gradient-to-r from-[#0f3057] from-10% to-[#13203f] to-90% rounded-lg shadow-[0px_6px_20px_5px_rgba(0,0,0,0.4)] h-[10%] w-[80%] mt-8 items-center">
+          <div className="flex items-center ml-2">
+            <img
+              src="https://storage.googleapis.com/ascentfs-media-public/public-data/application/logo.investor.entity.png"
+              alt="Image"
+              className="w-15 h-12 mr-2 rounded-[3px]"
+            />
+            <h2 className="text-white text-sm font-normal">Demo Fund</h2>
           </div>
-
-          <div className='bg-gradient-to-r from-[#0f3057] from-10% to-[#13203f] to-90% rounded-lg shadow-[0px_6px_20px_5px_rgba(0,0,0,0.4)] h-[20%] w-[80%] mt-8'>
-            <div className='flex bg-gradient-to-r from-[#0f3057] from-10% to-[#13203f] to-90% rounded-lg shadow-[0px_6px_20px_5px_rgba(0,0,0,0.5)] h-[50%] w-[100%]'>
-              <p className='text-white text-xs font-light m-3'>Account Description</p>
-            </div>
-            <p className='text-white text-xs font-light p-3'>Demo</p>
+          <div className="text-white ml-[20%] text-xs font-light">
+            <p className="flex items-center">
+              <IoCheckmarkDoneCircleOutline color="green" /> Fund's KYC:
+              Accepted
+            </p>
+            <p className="text-slate-500 flex items-center">
+              <IoCheckmarkDoneCircleOutline color="green" /> Fund Domicile:
+              Singapore
+            </p>
           </div>
-
-          <div className='flex bg-gradient-to-r from-[#0f3057] from-10% to-[#13203f] to-90% rounded-lg shadow-[0px_6px_20px_5px_rgba(0,0,0,0.5)] h-[10%] mt-4 w-[80%]'>
-            <p className='text-white text-xs font-light m-3'>Reference Documents</p>
+          <div className="text-white ml-[20%] text-xs font-light">
+            <p className="flex items-center">
+              <FaRegClock color="green" /> Dealing Cycle: Interval
+            </p>
+            <p className="text-slate-500 flex items-center">
+              <IoCheckmarkDoneCircleOutline color="green" /> Digital Fund:
+              Active
+            </p>
           </div>
-
-          <hr className="w-[80%] border-t-[1px] border-t-[#6e84a3] opacity-30 my-6 mx-8" />
-
-          {/* Toggle Buttons for User Type Selection */}
-          <div className='flex w-[80%]'>
-          <div className='w-[50] mr-[20%]'>
-            <p className='text-white text-sm'>Are you applying as an Individual or Corporate?</p>
-          <div className="flex mt-5">
-            <button
-              onClick={() => handleSelection('individual')}
-              className={`w-[100%] py-2 rounded-l-full text-white ${userType === 'individual' ? 'bg-[#3e9b3e]' : 'bg-[#1e3a5c]'} hover:bg-[#3e9b3e] focus:outline-none`}
-            >
-              Individual
-            </button>
-            <button
-              onClick={() => handleSelection('crp')}
-              className={`w-[100%] py-2 rounded-r-full text-white ${userType === 'crp' ? 'bg-[#3e9b3e]' : 'bg-[#1e3a5c]'} hover:bg-[#3e9b3e] focus:outline-none`}
-            >
-              Corporate
-            </button>
-            </div>
-          </div>
-          <div className='flex w-[50]'>
-            <p  className='text-white text-sm'>How would you like to create your identity?</p>
         </div>
-        </div>
-          <hr className="w-[100%] border-t-[1px] border-t-[#6e84a3] opacity-30 my-4 mx-8 mt-[10%]" />
-          {/* <div className='text-white space-x-[850px]'> */}
-          <div className="flex lg:space-x-[75%] md:justify-center sm:justify-center w-full p-4 xs:justify-center">
 
+        <div className="bg-gradient-to-r from-[#0f3057] from-10% to-[#13203f] to-90% rounded-lg shadow-[0px_6px_20px_5px_rgba(0,0,0,0.4)] h-[20%] w-[80%] mt-8">
+          <div className="flex bg-gradient-to-r from-[#0f3057] from-10% to-[#13203f] to-90% rounded-lg shadow-[0px_6px_20px_5px_rgba(0,0,0,0.5)] h-[50%] w-[100%]">
+            <p className="text-white text-xs font-light m-3">
+              Account Description
+            </p>
+          </div>
+          <p className="text-white text-xs font-light p-3">Demo</p>
+        </div>
+
+        <div className="flex bg-gradient-to-r from-[#0f3057] from-10% to-[#13203f] to-90% rounded-lg shadow-[0px_6px_20px_5px_rgba(0,0,0,0.5)] h-[10%] mt-4 w-[80%]">
+          <p className="text-white text-xs font-light m-3">
+            Reference Documents
+          </p>
+        </div>
+
+        <hr className="w-[80%] border-t-[1px] border-t-[#6e84a3] opacity-30 my-6 mx-8" />
+
+        {/* Toggle Buttons for User Type Selection */}
+        <div className="flex w-[80%]">
+          <div className="w-[50] mr-[20%]">
+            <p className="text-white text-sm">
+              Are you applying as an Individual or Corporate?
+            </p>
+            <div className="flex mt-5">
+              <button
+                onClick={() => handleSelection("individual")}
+                className={`w-[100%] py-2 rounded-l-full text-white ${
+                  userType === "individual" ? "bg-[#3e9b3e]" : "bg-[#1e3a5c]"
+                } hover:bg-[#3e9b3e] focus:outline-none`}
+              >
+                Individual
+              </button>
+              <button
+                onClick={() => handleSelection("crp")}
+                className={`w-[100%] py-2 rounded-r-full text-white ${
+                  userType === "crp" ? "bg-[#3e9b3e]" : "bg-[#1e3a5c]"
+                } hover:bg-[#3e9b3e] focus:outline-none`}
+              >
+                Corporate
+              </button>
+            </div>
+          </div>
+          <div className="flex w-[50]">
+            <p className="text-white text-sm">
+              How would you like to create your identity?
+            </p>
+          </div>
+        </div>
+        <hr className="w-[100%] border-t-[1px] border-t-[#6e84a3] opacity-30 my-4 mx-8 mt-[10%]" />
+        {/* <div className='text-white space-x-[850px]'> */}
+        <div className="flex lg:space-x-[75%] md:justify-center sm:justify-center w-full p-4 xs:justify-center">
           <button
-                onClick={handleNextClick}
-                className="py-2 px-4 mb-3 border-[0.01px] text-white p-3 rounded-md hover:border-[#6e84a3] focus:outline-none"
-            >
+            onClick={handleNextClick}
+            className="py-2 px-4 mb-3 border-[0.01px] text-white p-3 rounded-md hover:border-[#6e84a3] focus:outline-none"
+          >
             Back
           </button>
-            <button
-                onClick={handleNextClick}
-                className="py-2 px-4 mb-3 bg-green-500 text-white p-3 rounded-md hover:bg-green-600 focus:outline-none"
-            >
+          <button
+            onClick={handleNextClick}
+            className="py-2 px-4 mb-3 bg-green-500 text-white p-3 rounded-md hover:bg-green-600 focus:outline-none"
+          >
             Next
           </button>
-          </div>
+        </div>
       </div>
     </>
   );
 };
 
-export default EntityTypeSelection;
+
+
+export default UserType
+
+

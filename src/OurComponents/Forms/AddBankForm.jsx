@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Button from "../Button";
+import Button from "../Reusable Components/Button";
 
 const AddBankForm = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
@@ -49,13 +49,17 @@ const AddBankForm = ({ isOpen, onClose }) => {
                 onChange={handleChange}
                 placeholder="Currency"
                 className={`w-full p-2 bg-[#043f63] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md ${
-                  isFieldEmpty("currency") ? "border border-[#a9712c]" : "border border-[#1c3758]"
+                  isFieldEmpty("currency")
+                    ? "border border-[#a9712c]"
+                    : "border border-[#1c3758]"
                 }`}
               />
             </div>
             {/* Bank Name */}
             <div>
-              <label className="block mb-2 text-sm font-light">Bank Name*</label>
+              <label className="block mb-2 text-sm font-light">
+                Bank Name*
+              </label>
               <input
                 type="text"
                 name="bankName"
@@ -63,13 +67,17 @@ const AddBankForm = ({ isOpen, onClose }) => {
                 onChange={handleChange}
                 placeholder="Bank Name"
                 className={`w-full p-2 bg-[#043f63] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md ${
-                  isFieldEmpty("bankName") ? "border border-[#a9712c]" : "border border-[#1c3758]"
+                  isFieldEmpty("bankName")
+                    ? "border border-[#a9712c]"
+                    : "border border-[#1c3758]"
                 }`}
               />
             </div>
             {/* Account Number */}
             <div>
-              <label className="block mb-2 text-sm font-light">Account Number*</label>
+              <label className="block mb-2 text-sm font-light">
+                Account Number*
+              </label>
               <input
                 type="text"
                 name="accountNumber"
@@ -77,13 +85,17 @@ const AddBankForm = ({ isOpen, onClose }) => {
                 onChange={handleChange}
                 placeholder="Account Number"
                 className={`w-full p-2 bg-[#043f63] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md ${
-                  isFieldEmpty("accountNumber") ? "border border-[#a9712c]" : "border border-[#1c3758]"
+                  isFieldEmpty("accountNumber")
+                    ? "border border-[#a9712c]"
+                    : "border border-[#1c3758]"
                 }`}
               />
             </div>
             {/* Account Holder's Name */}
             <div>
-              <label className="block mb-2 text-sm font-light">Account Holder's Name*</label>
+              <label className="block mb-2 text-sm font-light">
+                Account Holder's Name*
+              </label>
               <input
                 type="text"
                 name="accountHolder"
@@ -91,13 +103,17 @@ const AddBankForm = ({ isOpen, onClose }) => {
                 onChange={handleChange}
                 placeholder="Account Holder's Name"
                 className={`w-full p-2 bg-[#043f63] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md ${
-                  isFieldEmpty("accountHolder") ? "border border-[#a9712c]" : "border border-[#1c3758]"
+                  isFieldEmpty("accountHolder")
+                    ? "border border-[#a9712c]"
+                    : "border border-[#1c3758]"
                 }`}
               />
             </div>
             {/* SWIFT/BIC/IFSC Code */}
             <div>
-              <label className="block mb-2 text-sm font-light">SWIFT/BIC/IFSC Code*</label>
+              <label className="block mb-2 text-sm font-light">
+                SWIFT/BIC/IFSC Code*
+              </label>
               <input
                 type="text"
                 name="swiftCode"
@@ -105,7 +121,9 @@ const AddBankForm = ({ isOpen, onClose }) => {
                 onChange={handleChange}
                 placeholder="SWIFT/BIC/IFSC Code"
                 className={`w-full p-2 bg-[#043f63] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md ${
-                  isFieldEmpty("swiftCode") ? "border border-[#a9712c]" : "border border-[#1c3758]"
+                  isFieldEmpty("swiftCode")
+                    ? "border border-[#a9712c]"
+                    : "border border-[#1c3758]"
                 }`}
               />
             </div>
@@ -120,7 +138,9 @@ const AddBankForm = ({ isOpen, onClose }) => {
             </div>
             {/* Sort Code */}
             <div>
-              <label className="block mb-2 text-sm font-light">Sort Code (for UK banks)</label>
+              <label className="block mb-2 text-sm font-light">
+                Sort Code (for UK banks)
+              </label>
               <input
                 type="text"
                 placeholder="Sort Code (for UK banks)"
@@ -129,7 +149,9 @@ const AddBankForm = ({ isOpen, onClose }) => {
             </div>
             {/* Routing Number */}
             <div>
-              <label className="block mb-2 text-sm font-light">Routing Number</label>
+              <label className="block mb-2 text-sm font-light">
+                Routing Number
+              </label>
               <input
                 type="text"
                 placeholder="Routing Number"
@@ -138,7 +160,9 @@ const AddBankForm = ({ isOpen, onClose }) => {
             </div>
             {/* Reference Description */}
             <div>
-              <label className="block mb-2 text-sm font-light">Reference Description</label>
+              <label className="block mb-2 text-sm font-light">
+                Reference Description
+              </label>
               <input
                 type="text"
                 placeholder="Reference description"
@@ -147,7 +171,9 @@ const AddBankForm = ({ isOpen, onClose }) => {
             </div>
             {/* Bank/Branch Address */}
             <div className="col-span-2">
-              <label className="block mb-2 text-sm font-light">Bank/Branch Address</label>
+              <label className="block mb-2 text-sm font-light">
+                Bank/Branch Address
+              </label>
               <textarea
                 placeholder="Bank/Branch Address"
                 className="w-full p-2 bg-[#043f63] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white border border-[#1c3758] rounded-md h-24"

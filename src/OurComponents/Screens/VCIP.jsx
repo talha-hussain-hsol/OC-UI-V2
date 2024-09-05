@@ -1,6 +1,6 @@
 import React from "react";
-import Button from "../Button";
-import SideBar from "../SideBar";
+import Button from "../Reusable Components/Button";
+import SideBar from "../Reusable Components/SideBar";
 
 function VCIP() {
   return (

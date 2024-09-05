@@ -1,24 +1,47 @@
-import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
+import PropTypes from "prop-types";
+import { useState } from "react";
+import {
+  BrowserRouter,
+  Navigate,
+  Outlet,
+  Route,
+  Routes,
+} from "react-router-dom";
+import Loader from "./components/ui/loader";
+import Callback from "./pages/callback";
 import useEntityStore from "./store/useEntityStore";
 import {} from "./utils/helperFunctions";
-import Callback from "./pages/callback";
-import { ToastContainer } from "react-toastify";
-import { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import axios from "axios";
-import Loader from "./components/ui/loader";
-import { getCookie } from "./utils/cookies";
 
 import "react-toastify/dist/ReactToastify.css";
 import SignIn from "./pages/sign-in";
 import SplashScreen from "./pages/splash";
-import UserInfo from "./components/testingTheming";
-import ThemeSwitcher from "./components/themeSwitcher";
-import { ThemeProvider } from "./contexts/themeContext";
-import Card from "./sample-theming/Card";
+
+import Accounts from "./OurComponents/Screens/Accounts";
+import Dashboard from "./OurComponents/Screens/Dashboard";
+import Identities from "./OurComponents/Screens/Identities";
+import MainDocuments from "./OurComponents/Screens/MainDocuments";
+import Stepper from "./OurComponents/Screens/Stepper";
+import UserForm from "./OurComponents/Screens/UserForm";
+import "./App.css"
 
 function App() {
   return (
+    <BrowserRouter>
+      <Routes>
+        {/* <Route path="/accounts" element={<AccountScreen />} /> */}
+        {/* <Route path="/" element={<DynamicForm />} /> */}
+        {/* <Route path="/" element={<UserType />} /> */}
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/user-form" element={<UserForm />} />
+        <Route path="/accounts" element={<Accounts />} />
+        <Route path="/identities" element={<Identities />} />
+        <Route path="/documents" element={<MainDocuments />} />
+        {/* <Route path="/faceverification" element={<FaceVerifacation />} />
+        <Route path="/vcip" element={<VCIP />} /> */}
+        <Route path="/stepper" element={<Stepper />} />
+        {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+      </Routes>
+    </BrowserRouter>
     // <div className="flex h-screen">
 
     //   <BrowserRouter>
@@ -28,16 +51,15 @@ function App() {
     //   <ToastContainer position="bottom-right" />
     // </div>
 
-    <ThemeProvider>
-      <div className="flex w-full h-screen place-items-center place-content-center">
-        <div className="flex  flex-col gap-4 max-w-lg">
-     
-          <ThemeSwitcher />
-          <UserInfo />
-          <Card />
-        </div>
-      </div>
-    </ThemeProvider>
+    // <ThemeProvider>
+    //   <div className="flex w-full h-screen place-items-center place-content-center">
+    //     <div className="flex  flex-col gap-4 max-w-lg">
+    //       <ThemeSwitcher />
+    //       <UserInfo />
+    //       <Card />
+    //     </div>
+    //   </div>
+    // </ThemeProvider>
   );
 }
 const AppWrapper = () => {
@@ -90,12 +112,18 @@ const AppWrapper = () => {
   }
 
   return (
-    <div className={`w-full overflow-hidden bg-custom-gradient text-white pt-[0.5%] pl-[7%] pr-[4%]`}>
+    <div
+      className={`w-full overflow-hidden bg-custom-gradient text-white pt-[0.5%] pl-[7%] pr-[4%]`}
+    >
       <Routes>
-        <Route path={"/"} element={<SignIn />} />
+        {/* <Route path={"/"} element={<SignIn />} /> */}
         <Route path={"/sign-in"} element={<SignIn />} />
         <Route path="/callback" element={<Callback />} />
         <Route path="/splash" element={<SplashScreen />} />
+        <Route path="/accounts" element={<Accounts />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/documents" element={<MainDocuments />} />
+        <Route path="/identities" element={<Identities />} />
       </Routes>
     </div>
   );

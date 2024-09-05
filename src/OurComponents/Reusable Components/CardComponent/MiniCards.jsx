@@ -1,5 +1,5 @@
 import React from "react";
-import UserIcon from "../../Assets/UserIcon.jpg";
+import UserIcon from "../../../../public/Assets/UserIcon.jpg";
 
 const MiniCards = ({
   leftContent,

@@ -1,13 +1,13 @@
 import React from "react";
-import SideBar from "../SideBar";
-import Header from "../Header";
-import Card from "../CardComponent/AccountCard";
+import SideBar from "../Reusable Components/SideBar";
+import Header from "../Reusable Components/Header";
+import AccountCard from "../Reusable Components/CardComponent/AccountCard";
 import { useNavigate } from "react-router-dom";
 
 const Accounts = () => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   function handleClick() {
-    navigate("/stepper")
+    navigate("/stepper");
   }
 
   return (
@@ -21,9 +21,9 @@ const Accounts = () => {
           onButtonClick={handleClick}
         />
 
-        <Card />
-        <Card />
-        <Card />
+        <AccountCard />
+        <AccountCard />
+        <AccountCard />
       </div>
     </div>
   );
