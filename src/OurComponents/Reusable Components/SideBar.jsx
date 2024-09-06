@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Logo from "../../../public/Assets/OneConstellation.png";
 import { RxDashboard } from "react-icons/rx";
 import { TbUsers, TbSwitch } from "react-icons/tb";
@@ -13,22 +13,62 @@ import { PiCompass } from "react-icons/pi";
 import Tooltip from "./Tooltip";
 import { AiOutlineMenu } from "react-icons/ai";
 import { MdInvertColors } from "react-icons/md";
-import { AiOutlineClose } from "react-icons/ai";
 
 const SideBar = ({ portalType }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isThemeSidebarOpen, setIsThemeSidebarOpen] = useState(false);
+  const [lightThemeEnabled, setLightThemeEnabled] = useState(false);
+  const [darkThemeEnabled, setDarkThemeEnabled] = useState(false);
+  const [standardCharteredEnabled, setStandardCharteredEnabled] =
+    useState(false);
 
-  const location = useLocation();
+  const sidebarRef = useRef(null);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+  const closeSidebar = () => {
+    setIsSidebarOpen(false);
+  };
+
   const toggleThemeSidebar = () => {
     setIsThemeSidebarOpen(!isThemeSidebarOpen);
   };
 
-  const isActive = (path) => location.pathname === path;
+  const handleThemeSwitch = (theme) => {
+    switch (theme) {
+      case "light":
+        setLightThemeEnabled(!lightThemeEnabled);
+        setDarkThemeEnabled(false);
+        setStandardCharteredEnabled(false);
+        break;
+      case "dark":
+        setDarkThemeEnabled(!darkThemeEnabled);
+        setLightThemeEnabled(false);
+        setStandardCharteredEnabled(false);
+        break;
+      case "standardChartered":
+        setStandardCharteredEnabled(!standardCharteredEnabled);
+        setLightThemeEnabled(false);
+        setDarkThemeEnabled(false);
+        break;
+      default:
+        break;
+    }
+  };
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        closeSidebar();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [sidebarRef]);
   return (
     <>
       {/* {/ Hamburger Menu Button /} */}
@@ -172,6 +212,48 @@ const SideBar = ({ portalType }) => {
             >
               <MdInvertColors size={18} />
             </button>
+            {isThemeSidebarOpen && (
+              <div className="absolute left-14 border-[#132141] border w-60 bottom-32 z-20 text-sm bg-[#152e4d] text-[#6e84a3] shadow-md p-2 rounded-md">
+                <ul>
+                  <li className="flex justify-between items-center cursor-pointer hover:text-white p-2">
+                    Light
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={lightThemeEnabled}
+                        onChange={() => handleThemeSwitch("light")}
+                        className="sr-only peer"
+                      />
+                      <div className="w-9 h-5 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2c7be5]"></div>
+                    </label>
+                  </li>
+                  <li className="flex justify-between items-center cursor-pointer hover:text-white p-2">
+                    Dark
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={darkThemeEnabled}
+                        onChange={() => handleThemeSwitch("dark")}
+                        className="sr-only peer"
+                      />
+                      <div className="w-9 h-5 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2c7be5]"></div>
+                    </label>
+                  </li>
+                  <li className="flex justify-between items-center cursor-pointer hover:text-white p-2">
+                    Standard Chartered
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={standardCharteredEnabled}
+                        onChange={() => handleThemeSwitch("standardChartered")}
+                        className="sr-only peer"
+                      />
+                      <div className="w-9 h-5 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2c7be5]"></div>
+                    </label>
+                  </li>
+                </ul>
+              </div>
+            )}
           </div>
 
           {portalType !== "Manager" && (

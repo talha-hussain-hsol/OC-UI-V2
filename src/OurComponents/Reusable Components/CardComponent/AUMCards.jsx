@@ -2,8 +2,8 @@ import React from "react";
 import { useTheme } from "../../../contexts/themeContext";
 
 const AUMCard = ({ date, amount, icon, text }) => {
-  const { theme } = useTheme();
-  console.log("theme", theme);
+  // const { theme } = useTheme();
+  // console.log("theme", theme);
 
   return (
     <div className="flex ml-6 items-center p-[28px] bg-custom-gradient rounded-lg w-full  shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)]">
