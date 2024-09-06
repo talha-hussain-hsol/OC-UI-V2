@@ -1,6 +1,7 @@
 import React from "react";
 import fundLogo from "../../../../public/Assets/logo.investor.entity.png";
 import Button from "../Button";
+import { useTheme } from "../../../contexts/themeContext";
 
 const CardHeader = ({
   FundName,
@@ -13,14 +14,26 @@ const CardHeader = ({
   middleContent = null,
   rightContent = null,
   BtnClassName,
-  onClick, // New onClick prop
+  onClick, 
   showField = false,
   fieldClassname = "",
   fieldPlaceholder = "",
 }) => {
+
+  const { theme } = useTheme();
+  console.log("theme", theme);
+
+  const backgroundClass = {
+    theme1: "bg-color-card-theme1",
+    theme2: "bg-color-theme2",
+    theme3: "bg-color-theme3",
+    theme4: "bg-color-theme4",
+  };
+  
+
   return (
     <div
-      className={` bg-gradient-to-b from-[#0e325a] from-10% to-[#141c3a] to-100% rounded-t-md border-[#1b3050] border-b-[1px] shadow-[2px_6px_20px_rgba(0,0,0,0.9)] py-2 px-8 flex justify-between h-full w-full ${className}`}
+      className={`${backgroundClass[theme]} rounded-t-md border-[#1b3050] border-b-[1px] shadow-[2px_6px_20px_rgba(0,0,0,0.9)] py-2 px-8 flex justify-between h-full w-full ${className}`}
     >
       <div className="flex flex-row justify-center gap-1 my-2">
         {showLogo && (

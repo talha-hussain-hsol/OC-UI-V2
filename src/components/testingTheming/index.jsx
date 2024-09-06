@@ -1,15 +1,17 @@
-import React from 'react';
-import { useTheme } from '../../contexts/themeContext';
-import Dashboard from '../../OurComponents/Screens/Dashboard';
+import React from "react";
+import { useTheme } from "../../contexts/themeContext";
+import Dashboard from "../../OurComponents/Screens/Dashboard";
 
 const UserInfo = () => {
   const { theme } = useTheme();
 
   // Common input classes
-  const inputClasses = 'p-2 border rounded-lg outline-none';
+  const inputClasses = "p-2 border rounded-lg outline-none";
 
   return (
-    <div className={`bg-color-card-${theme} flex flex-col gap-2 border rounded-lg p-4`}>
+    <div
+      className={`bg-color-card-${theme} flex flex-col gap-2 border rounded-lg p-4`}
+    >
       <input
         className={`${inputClasses} bg-${theme}-bg-secondary text-${theme}-text border-${theme}-border-color`}
         type="text"

@@ -22,8 +22,11 @@ import Identities from "./OurComponents/Screens/Identities";
 import MainDocuments from "./OurComponents/Screens/MainDocuments";
 import Stepper from "./OurComponents/Screens/Stepper";
 import UserForm from "./OurComponents/Screens/UserForm";
-import "./App.css"
+import "./App.css";
 import { ThemeProvider } from "./contexts/themeContext";
+import Card from "./sample-theming/Card";
+import ThemeSwitcher from "./components/themeSwitcher";
+import UserInfo from "./components/testingTheming";
 
 function App() {
   return (
@@ -32,9 +35,34 @@ function App() {
         {/* <Route path="/accounts" element={<AccountScreen />} /> */}
         {/* <Route path="/" element={<DynamicForm />} /> */}
         {/* <Route path="/" element={<UserType />} /> */}
-        <Route path="/" element={<ThemeProvider> <Dashboard /> </ThemeProvider> } />
+        <Route
+          path="/"
+          element={
+            <ThemeProvider>
+              <Dashboard />
+            </ThemeProvider>
+          }
+        />
+         {/* <Route
+          path="/Card"
+          element={
+            <ThemeProvider>
+              <ThemeSwitcher />
+              <UserInfo />
+              <Card />
+            </ThemeProvider>
+          }
+        /> */}
         <Route path="/user-form" element={<UserForm />} />
-        <Route path="/accounts" element={<Accounts />} />
+        <Route
+          path="/accounts"
+          element={
+            <ThemeProvider>
+              {" "}
+              <Accounts />{" "}
+            </ThemeProvider>
+          }
+        />
         <Route path="/identities" element={<Identities />} />
         <Route path="/documents" element={<MainDocuments />} />
         {/* <Route path="/faceverification" element={<FaceVerifacation />} />

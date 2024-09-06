@@ -4,7 +4,9 @@ import { MdOutlineAccessTime } from "react-icons/md";
 
 const MiniCards = ({ theme }) => {
   return (
-    <div className={`bg-color-card-${theme} border-color-${theme} p-4 rounded-lg shadow-md`}>
+    <div
+      className={`bg-color-card-${theme} border-color-${theme} p-4 rounded-lg shadow-md`}
+    >
       <div className="flex flex-col gap-4">
         <p className={`text-color-${theme} flex items-center gap-2`}>
           Nationality: Aland Islands <FiCheckCircle />

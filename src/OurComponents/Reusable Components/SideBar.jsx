@@ -23,9 +23,6 @@ const SideBar = ({ portalType }) => {
       toggleTheme(storedTheme);
     }
   }, []);
-  
- 
-
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isThemeSidebarOpen, setIsThemeSidebarOpen] = useState(false);
   const [lightThemeEnabled, setLightThemeEnabled] = useState(false);
@@ -34,6 +31,7 @@ const SideBar = ({ portalType }) => {
     useState(false);
 
   const sidebarRef = useRef(null);
+  const themeSidebarRef = useRef(null);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -51,19 +49,19 @@ const SideBar = ({ portalType }) => {
     toggleTheme(theme);
     switch (theme) {
       case "light":
-        toggleTheme('light')
+        toggleTheme("theme3");
         setLightThemeEnabled(!lightThemeEnabled);
         setDarkThemeEnabled(false);
         setStandardCharteredEnabled(false);
         break;
       case "dark":
-        toggleTheme('dark')
+        toggleTheme("theme2");
         setDarkThemeEnabled(!darkThemeEnabled);
         setLightThemeEnabled(false);
         setStandardCharteredEnabled(false);
         break;
       case "standardChartered":
-        toggleTheme('theme1')
+        toggleTheme("theme1");
         setStandardCharteredEnabled(!standardCharteredEnabled);
         setLightThemeEnabled(false);
         setDarkThemeEnabled(false);
@@ -77,6 +75,13 @@ const SideBar = ({ portalType }) => {
       if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
         closeSidebar();
       }
+      if (
+        isThemeSidebarOpen &&
+        themeSidebarRef.current &&
+        !themeSidebarRef.current.contains(event.target)
+      ) {
+        setIsThemeSidebarOpen(false);
+      }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
@@ -84,7 +89,8 @@ const SideBar = ({ portalType }) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [sidebarRef]);
+  }, [isThemeSidebarOpen]);
+
   return (
     <>
       {/* {/ Hamburger Menu Button /} */}
@@ -229,7 +235,10 @@ const SideBar = ({ portalType }) => {
               <MdInvertColors size={18} />
             </button>
             {isThemeSidebarOpen && (
-              <div className="absolute left-14 border-[#132141] border w-60 bottom-32 z-20 text-sm bg-[#152e4d] text-[#6e84a3] shadow-md p-2 rounded-md">
+              <div
+                ref={themeSidebarRef}
+                className="absolute left-14 border-[#132141] border w-60 bottom-32 z-20 text-sm bg-[#152e4d] text-[#6e84a3] shadow-md p-2 rounded-md"
+              >
                 <ul>
                   <li className="flex justify-between items-center cursor-pointer hover:text-white p-2">
                     Light

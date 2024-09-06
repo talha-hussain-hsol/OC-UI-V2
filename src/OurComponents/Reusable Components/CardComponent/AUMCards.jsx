@@ -39,7 +39,9 @@ const AUMCard = ({ date, amount, icon, text }) => {
   };
 
   return (
-    <div className={`flex ml-6 items-center p-[28px] ${backgroundClass[theme]} rounded-lg w-full shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)]`}>
+    <div
+      className={`flex ml-6 items-center p-[28px] ${backgroundClass[theme]} rounded-lg w-full shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)]`}
+    >
       <div className="flex-shrink-0 bg-green-500 w-12 h-12 rounded-full flex items-center justify-center">
         {icon}
       </div>
