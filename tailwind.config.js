@@ -257,10 +257,13 @@
 //   plugins: [require("tailwindcss-animate")],
 // };
 
-/** @type {import('tailwindcss').Config} */
+
+
+/**  @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
-  theme: {
+  // content: ["./src/**/*.{js,jsx,ts,tsx}", "./pages/**/*.{js,jsx}", "./components/**/*.{js,jsx}", "./app/**/*.{js,jsx}", "./src/**/*.{js,jsx}"],
+  content: ["./src/**/*.{js,jsx,ts,tsx}", "./pages/**/*.{js,jsx}", "./components/**/*.{js,jsx}", "./app/**/*.{js,jsx}", "./src/**/*.{js,jsx}"],
+theme: {
     screens: {
       xs: "350px",
       // => @media (min-width: 350px) { ... }
@@ -292,7 +295,7 @@ module.exports = {
         "color-theme2": "#e5e5e5",
         "color-theme3": "#efefd0",
         "color-theme4": "#004e89",
-        "color-card-theme1": "#8d99ae",
+        "color-card-theme1": "#FFFFFF",
         "color-card-theme2": "#ededed9",
         "color-card-theme3": "#dde5b6",
         "color-card-theme4": "#b5e2fa",
@@ -300,6 +303,21 @@ module.exports = {
         "color-theme2-hover": "#14213d",
         "color-theme3-hover": "#004e89",
         "color-theme4-hover": "#e27396",
+        "color-dropdown-theme1": "#77838F",
+        "color-button-theme1": "#2C75E6", // For All Buttons + Processing Case
+        "color-button1-theme1": "#8DC63F", //For Accepted Case
+        "color-button2-theme1": "#F74036", // For Rejected Case
+        "color-button3-theme1": "#F2A428", // For Pending Case
+        "color-button4-theme1": "#EE381F", // For On Hold Case
+        "color-stepper-theme1": "#8DC63F", // For Done State Stepper
+        "color-stepper1-theme1": "#2C75E6", // For Active State Stepper
+        "color-stepper2-theme1": "#A1AEBE", // For Inactive State Stepper
+        "color-barchart-theme1": "#0D7EF9",
+        "color-barchart1-theme1": "#68D930",
+        "color-cardheader-stepper-theme1": "linear-gradient(to bottom, #24357C 0%, #0B76A8 100%)", // Card header in stepper ex: Face Snap
+        "color-stepper-card-theme1": "linear-gradient(to right, #243279 0%, #0091BB 100%)", 
+        "color-stepper-proceedbutton-theme1": "#F0082E",
+        "color-stepstatus-theme1": "#24357C", // For Summary Page -> Status
         "sidebar-color-theme1": "#FFFFFF",
         "gradient-card-theme1":
           "linear-gradient(to bottom, #243279 0%, #0055BB 100%)",
@@ -315,10 +333,12 @@ module.exports = {
         "color-theme4": "#e27396",
       },
       textColor: {
-        "color-theme1": "#ef233c",
+        "color-theme1": "#000000",
         "color-theme2": "#14213d",
         "color-theme3": "#004e89",
         "color-theme4": "#e27396",
+        "color-h1-theme1": "#1A203D",
+        "color-h3-theme1": "#2C75E6"
       },
       fontFamily: {
         theme1: ['"Roboto"', "sans-serif"], // Replace "Roboto" with the desired font
@@ -335,30 +355,49 @@ module.exports = {
     },
     safelist: [
       {
-        pattern: /text-color-(theme1|theme2|theme3|theme4)/,
+        pattern: /text-color-(theme1|theme2|theme3|theme4)/, // Text color for each theme
       },
       {
-        pattern: /bg-color-(theme1|theme2|theme3|theme4)/,
+        pattern: /bg-color-(theme1|theme2|theme3|theme4)/, // Background color for each theme
       },
       {
-        pattern: /bg-color-card-(theme1|theme2|theme3|theme4)/,
+        pattern: /bg-color-card-(theme1|theme2|theme3|theme4)/, // Background color for card themes
       },
       {
-        pattern: /hover:bg-color-(theme1|theme2|theme3|theme4)/, // Hover background
+        pattern: /hover:bg-color-(theme1|theme2|theme3|theme4)/, // Hover background color for each theme
       },
       {
-        pattern: /hover:border-color-(theme1|theme2|theme3|theme4)/, // Hover border color
+        pattern: /hover:border-color-(theme1|theme2|theme3|theme4)/, // Hover border color for each theme
       },
       {
-        pattern: /hover:text-color-(theme1|theme2|theme3|theme4)/, // Hover text color
+        pattern: /hover:text-color-(theme1|theme2|theme3|theme4)/, // Hover text color for each theme
       },
       {
         pattern: /font-(theme1|theme2|theme3|theme4)/, // Font family for each theme
       },
       {
-        pattern: /text-size-(theme1|theme2|theme3|theme4)/, // Font size for each theme
+        pattern: /text-(theme1|theme2|theme3|theme4)/, // Font size for each theme
+      },
+      {
+        pattern: /bg-gradient-card-theme1/, // Background gradient for card theme1
+      },
+      {
+        pattern: /bg-gradient-card-theme2/, // Background gradient for card theme2 (commented out in config)
+      },
+      {
+        pattern: /bg-gradient-card-theme3/, // Background gradient for card theme3 (commented out in config)
+      },
+      {
+        pattern: /bg-gradient-card-theme4/, // Background gradient for card theme4 (commented out in config)
+      },
+      {
+        pattern: /bg-color-stepper-(theme1|theme2|theme3|theme4)/, // Background color for stepper theme states
+      },
+      {
+        pattern: /bg-color-button-(theme1|theme2|theme3|theme4)/, // Background color for buttons
       },
     ],
+    
     plugins: [],
   },
 };

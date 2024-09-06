@@ -13,8 +13,19 @@ import { PiCompass } from "react-icons/pi";
 import Tooltip from "./Tooltip";
 import { AiOutlineMenu } from "react-icons/ai";
 import { MdInvertColors } from "react-icons/md";
+import { useTheme } from "../../contexts/themeContext";
 
 const SideBar = ({ portalType }) => {
+  const { toggleTheme, theme } = useTheme();
+  useEffect(() => {
+    const storedTheme = localStorage.getItem("theme");
+    if (storedTheme) {
+      toggleTheme(storedTheme);
+    }
+  }, []);
+  
+ 
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isThemeSidebarOpen, setIsThemeSidebarOpen] = useState(false);
   const [lightThemeEnabled, setLightThemeEnabled] = useState(false);
@@ -36,18 +47,23 @@ const SideBar = ({ portalType }) => {
   };
 
   const handleThemeSwitch = (theme) => {
+    localStorage.setItem("theme", theme);
+    toggleTheme(theme);
     switch (theme) {
       case "light":
+        toggleTheme('light')
         setLightThemeEnabled(!lightThemeEnabled);
         setDarkThemeEnabled(false);
         setStandardCharteredEnabled(false);
         break;
       case "dark":
+        toggleTheme('dark')
         setDarkThemeEnabled(!darkThemeEnabled);
         setLightThemeEnabled(false);
         setStandardCharteredEnabled(false);
         break;
       case "standardChartered":
+        toggleTheme('theme1')
         setStandardCharteredEnabled(!standardCharteredEnabled);
         setLightThemeEnabled(false);
         setDarkThemeEnabled(false);

@@ -23,6 +23,7 @@ import MainDocuments from "./OurComponents/Screens/MainDocuments";
 import Stepper from "./OurComponents/Screens/Stepper";
 import UserForm from "./OurComponents/Screens/UserForm";
 import "./App.css"
+import { ThemeProvider } from "./contexts/themeContext";
 
 function App() {
   return (
@@ -31,7 +32,7 @@ function App() {
         {/* <Route path="/accounts" element={<AccountScreen />} /> */}
         {/* <Route path="/" element={<DynamicForm />} /> */}
         {/* <Route path="/" element={<UserType />} /> */}
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/" element={<ThemeProvider> <Dashboard /> </ThemeProvider> } />
         <Route path="/user-form" element={<UserForm />} />
         <Route path="/accounts" element={<Accounts />} />
         <Route path="/identities" element={<Identities />} />
