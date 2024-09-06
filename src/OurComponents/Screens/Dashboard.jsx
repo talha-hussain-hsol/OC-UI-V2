@@ -6,8 +6,14 @@ import CardHeader from "../Reusable Components/CardComponent/CardHeader";
 import FinancialChart from "../Reusable Components/FinancialChart";
 import NotificationCard from "../Reusable Components/NotificationCard";
 import { FaArrowRight, FaEye } from "react-icons/fa";
+import { useTheme } from "../../contexts/themeContext";
 
-function Dashboard() {
+function Dashboard() 
+{
+  const { theme } = useTheme();
+  console.log("theme", theme);
+
+
   const data = {
     labels: [
       "Jan",
@@ -41,6 +47,7 @@ function Dashboard() {
               date=" As at 03/09/2024"
               amount="38,000,000.00"
               text="Current Total AUM"
+              theme={theme}
             />
             <AUMCard amount="40,000,000.00" text="Total Subscription" />
             <AUMCard amount="1,000,000.00" text="Total Redemption" />

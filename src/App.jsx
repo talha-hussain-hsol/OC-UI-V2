@@ -23,23 +23,22 @@ import MainDocuments from "./OurComponents/Screens/MainDocuments";
 import Stepper from "./OurComponents/Screens/Stepper";
 import UserForm from "./OurComponents/Screens/UserForm";
 import "./App.css"
+import { ThemeProvider } from "./contexts/themeContext";
 
 function App() {
   return (
+    
     <BrowserRouter>
       <Routes>
         {/* <Route path="/accounts" element={<AccountScreen />} /> */}
         {/* <Route path="/" element={<DynamicForm />} /> */}
         {/* <Route path="/" element={<UserType />} /> */}
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/" element={<ThemeProvider> <Dashboard /> </ThemeProvider> } />
         <Route path="/user-form" element={<UserForm />} />
         <Route path="/accounts" element={<Accounts />} />
         <Route path="/identities" element={<Identities />} />
         <Route path="/documents" element={<MainDocuments />} />
-        {/* <Route path="/faceverification" element={<FaceVerifacation />} />
-        <Route path="/vcip" element={<VCIP />} /> */}
         <Route path="/stepper" element={<Stepper />} />
-        {/* <Route path="/dashboard" element={<Dashboard />} /> */}
       </Routes>
     </BrowserRouter>
     // <div className="flex h-screen">
@@ -120,10 +119,7 @@ const AppWrapper = () => {
         <Route path={"/sign-in"} element={<SignIn />} />
         <Route path="/callback" element={<Callback />} />
         <Route path="/splash" element={<SplashScreen />} />
-        <Route path="/accounts" element={<Accounts />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/documents" element={<MainDocuments />} />
-        <Route path="/identities" element={<Identities />} />
+        
       </Routes>
     </div>
   );

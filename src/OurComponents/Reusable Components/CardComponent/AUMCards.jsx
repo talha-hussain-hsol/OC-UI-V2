@@ -5,8 +5,11 @@ const AUMCard = ({ date, amount, icon, text }) => {
   const { theme } = useTheme();
   console.log("theme", theme);
 
+  const AUMStyle=`flex ml-6 items-center p-[28px] bg-color-card-${theme}  rounded-lg w-full  shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] `
+
   return (
-    <div className="flex ml-6 items-center p-[28px] bg-custom-gradient rounded-lg w-full  shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)]">
+    // <div className="flex ml-6 items-center p-[28px] bg-custom-gradient rounded-lg w-full  shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)]">
+     <div className={AUMStyle}> 
       <div className="flex-shrink-0 bg-green-500 w-12 h-12 rounded-full flex items-center justify-center">
         {icon}
       </div>
