@@ -30,8 +30,8 @@ function App() {
       <Routes>
         {/* <Route path="/accounts" element={<AccountScreen />} /> */}
         {/* <Route path="/" element={<DynamicForm />} /> */}
-        {/* <Route path="/" element={<UserType />} /> */}
         <Route path="/" element={<Dashboard />} />
+        <Route path="/user-type" element={<UserType />} />
         <Route path="/user-form" element={<UserForm />} />
         <Route path="/accounts" element={<Accounts />} />
         <Route path="/identities" element={<Identities />} />
