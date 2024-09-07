@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Button from "../Reusable Components/Button";
 import Modal from "../Reusable Components/Modal";
-import SideBar from "../Reusable Components/SideBar";
 
 function Documents() {
   const [selectedDocument, setSelectedDocument] = useState(null);

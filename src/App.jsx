@@ -43,7 +43,7 @@ function App() {
             </ThemeProvider>
           }
         />
-         {/* <Route
+        {/* <Route
           path="/Card"
           element={
             <ThemeProvider>
@@ -58,16 +58,31 @@ function App() {
           path="/accounts"
           element={
             <ThemeProvider>
-              {" "}
-              <Accounts />{" "}
+              <Accounts />
             </ThemeProvider>
           }
         />
-        <Route path="/identities" element={<Identities />} />
-        <Route path="/documents" element={<MainDocuments />} />
+        <Route
+          path="/identities"
+          element={
+            <ThemeProvider>
+              <Identities />
+            </ThemeProvider>
+          }
+        />
+        <Route
+          path="/documents"
+          element={
+            <ThemeProvider>
+              <MainDocuments />
+            </ThemeProvider>
+          }
+        />
         {/* <Route path="/faceverification" element={<FaceVerifacation />} />
         <Route path="/vcip" element={<VCIP />} /> */}
-        <Route path="/stepper" element={<Stepper />} />
+        <Route path="/stepper" element={ <ThemeProvider>
+              <Stepper />
+            </ThemeProvider>} />
         {/* <Route path="/dashboard" element={<Dashboard />} /> */}
       </Routes>
     </BrowserRouter>

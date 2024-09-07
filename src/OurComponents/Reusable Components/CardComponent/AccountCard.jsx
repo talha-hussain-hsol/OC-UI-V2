@@ -8,7 +8,7 @@ import { useTheme } from "../../../contexts/themeContext";
 const AccountCard = () => {
   const { theme } = useTheme();
   console.log("theme", theme);
-  
+
   const leftContentCard = (
     <div className="flex flex-col gap-1">
       <h3 className={`text-lg font-semibold text-color-${theme}`}>
@@ -32,8 +32,8 @@ const AccountCard = () => {
           <FiCheckCircle color="#01cc7a" size={16} />
         </span>
       </p>
-      <p className="text-white">Subscription Type: Standalone</p>
-      <p className="text-white">Status: Pending</p>
+      <p className={`text-color-${theme}`}>Subscription Type: Standalone</p>
+      <p className={`text-color-${theme}`}>Status: Pending</p>
     </div>
   );
   const leftContentCard2 = (
@@ -93,7 +93,7 @@ const AccountCard = () => {
       <div className="flex flex-col items-center gap-4">
         <CardHeader
           FundName="Demo Funds"
-          fundClassName={`text-color-${theme} text-base`}
+          fundClassName={`text-color-header-fund-${theme} text-base`}
           showButton={false}
           showLogo={true}
         />

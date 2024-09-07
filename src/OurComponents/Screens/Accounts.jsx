@@ -7,7 +7,7 @@ import { useTheme } from "../../contexts/themeContext";
 
 const Accounts = () => {
   const { theme } = useTheme();
-  
+
   const navigate = useNavigate();
   function handleClick() {
     navigate("/stepper");

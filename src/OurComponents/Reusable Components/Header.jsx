@@ -42,7 +42,7 @@ const Header = ({ subheading, heading, showButton, onButtonClick, theme }) => {
           <Button
             text="Create An Account"
             onClick={handleClick}
-            className="bg-[#2c7be5] text-white font-light mr-8 rounded-lg py-6 px-8 text-sm sm:text-md"
+            className={`bg-color-button-${theme} text-white font-light mr-8 rounded-lg py-6 px-8 text-sm sm:text-md`}
             // icon={<FaCreditCard />}
             iconPosition="left"
           />

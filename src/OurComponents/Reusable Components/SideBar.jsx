@@ -6,7 +6,7 @@ import { CiSettings } from "react-icons/ci";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { FiHome } from "react-icons/fi";
 import { FaRegBell } from "react-icons/fa";
-import { useLocation, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { IoDocumentsOutline } from "react-icons/io5";
 import { MdOutlineAccountTree } from "react-icons/md";
 import { PiCompass } from "react-icons/pi";
@@ -45,31 +45,72 @@ const SideBar = ({ portalType }) => {
   };
 
   const handleThemeSwitch = (theme) => {
-    localStorage.setItem("theme", theme);
-    toggleTheme(theme);
+    const defaultTheme = "theme4";
+    const themeStatus = {
+      light: lightThemeEnabled,
+      dark: darkThemeEnabled,
+      standardChartered: standardCharteredEnabled,
+    };
+    if (themeStatus[theme]) {
+      toggleTheme(defaultTheme);
+      setLightThemeEnabled(false);
+      setDarkThemeEnabled(false);
+      setStandardCharteredEnabled(false);
+      localStorage.setItem("theme", defaultTheme);
+      return;
+    }
     switch (theme) {
       case "light":
-        toggleTheme("theme3");
-        setLightThemeEnabled(!lightThemeEnabled);
+        setLightThemeEnabled(true);
         setDarkThemeEnabled(false);
         setStandardCharteredEnabled(false);
+        toggleTheme("theme3");
+        localStorage.setItem("theme", "theme3");
         break;
       case "dark":
-        toggleTheme("theme2");
-        setDarkThemeEnabled(!darkThemeEnabled);
         setLightThemeEnabled(false);
+        setDarkThemeEnabled(true);
         setStandardCharteredEnabled(false);
+        toggleTheme("theme2");
+        localStorage.setItem("theme", "theme2");
         break;
       case "standardChartered":
-        toggleTheme("theme1");
-        setStandardCharteredEnabled(!standardCharteredEnabled);
         setLightThemeEnabled(false);
         setDarkThemeEnabled(false);
+        setStandardCharteredEnabled(true);
+        toggleTheme("theme1");
+        localStorage.setItem("theme", "theme1");
         break;
       default:
         break;
     }
   };
+  useEffect(() => {
+    const storedTheme = localStorage.getItem("theme") || "theme1";
+    toggleTheme(storedTheme);
+    switch (storedTheme) {
+      case "theme3":
+        setLightThemeEnabled(true);
+        setDarkThemeEnabled(false);
+        setStandardCharteredEnabled(false);
+        break;
+      case "theme2":
+        setLightThemeEnabled(false);
+        setDarkThemeEnabled(true);
+        setStandardCharteredEnabled(false);
+        break;
+      case "theme1":
+        setLightThemeEnabled(false);
+        setDarkThemeEnabled(false);
+        setStandardCharteredEnabled(true);
+        break;
+      default:
+        setLightThemeEnabled(false);
+        setDarkThemeEnabled(false);
+        setStandardCharteredEnabled(false);
+    }
+  }, []);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
@@ -237,7 +278,7 @@ const SideBar = ({ portalType }) => {
             {isThemeSidebarOpen && (
               <div
                 ref={themeSidebarRef}
-                className="absolute left-14 border-[#132141] border w-60 bottom-32 z-20 text-sm bg-[#152e4d] text-[#6e84a3] shadow-md p-2 rounded-md"
+                className="absolute left-14 border-[#132141] border w-60 bottom-32 z-50 text-sm bg-[#152e4d] text-[#6e84a3] shadow-md p-2 rounded-md"
               >
                 <ul>
                   <li className="flex justify-between items-center cursor-pointer hover:text-white p-2">
