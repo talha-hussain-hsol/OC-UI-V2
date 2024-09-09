@@ -9,6 +9,7 @@ import VCIP from "./VCIP";
 import Application from "./Application";
 import BankWallets from "./BankWallets";
 import Summary from "./Summary";
+import { useTheme } from "../../contexts/themeContext";
 
 const steps = [
   "Select Account",
@@ -22,6 +23,10 @@ const steps = [
 ];
 
 function Stepper() {
+
+  const { theme } = useTheme();
+  console.log("theme", theme);
+
   const [currentStep, setCurrentStep] = useState(1);
   const [complete, setComplete] = useState(false);
 
@@ -65,7 +70,7 @@ function Stepper() {
   return (
     <>
       <SideBar portalType="Customer" />
-      <div className="w-full px-4 py-4 sm:px-6 md:px-16 lg:px-24 md:py-5 lg:py-6 ">
+      <div className={`bg-color-${theme} w-full px-4 py-4 sm:px-6 md:px-16 lg:px-24 md:py-5 lg:py-6 `}>
         <ul className="relative flex flex-row gap-x-0 ml-14 mt-7 ">
           {steps.map((step, index) => (
             <li
@@ -81,7 +86,7 @@ function Stepper() {
                       ? "bg-blue-500 text-white"
                       : index + 1 < currentStep || complete
                       ? "bg-[#008000] text-gray-200"
-                      : "bg-gray-100 text-gray-800"
+                      : "bg-gray-400 text-gray-800"
                   }`}
                 >
                   {index + 1}
@@ -91,7 +96,7 @@ function Stepper() {
                     className={`ms-1 w-full sm:w-[150%] md:w-[200%] h-px flex-grow group-last:hidden ${
                       index + 1 < currentStep || complete
                         ? "bg-[#008000]"
-                        : "bg-gray-200"
+                        : "bg-gray-400"
                     }`}
                   ></div>
                 )}
@@ -100,10 +105,10 @@ function Stepper() {
                 <span
                   className={`block text-sm md:text-base lg:text-sm  ${
                     index + 1 === currentStep
-                      ? "text-white  "
+                      ? " text-blue-500"
                       : index + 1 < currentStep || complete
-                      ? "text-gray-200"
-                      : "text-gray-400"
+                      ? " text-green-700"
+                      : " text-gray-500"
                   }`}
                 >
                   {step}
@@ -113,20 +118,20 @@ function Stepper() {
           ))}
         </ul>
 
-        <div className="bg-custom-gradient w-full md:w-full shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] mx-auto p-10   md:ml-4 md:mt-12 rounded-lg  text-white  flex flex-col justify-center">
+        <div className={`bg-gradient-stepper-card-${theme} w-full md:w-full shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] mx-auto p-10   md:ml-4 md:mt-12 rounded-lg  text-white  flex flex-col justify-center`}>
           {renderContent()}
 
           <hr className="w-[95%] border-t-[1px] border-t-[#6e84a3] opacity-30 my-6 mx-8 z-0" />
           <div className="flex lg:space-x-[75%] md:justify-center sm:justify-center w-full p-4 xs:justify-center z-10">
             <Button
               text="Back"
-              className="bg-[#062b4d] py-6 px-8 mr-[5%] border b-white hover:border-0 rounded-lg text-white focus:outline-none"
+              className={`bg-color-button-{theme} py-6 px-8 mr-[5%] border b-white hover:border-0 rounded-lg text-white focus:outline-none`}
               onClick={handlePrev}
               disabled={currentStep === 1}
             />
             <Button
               text="Next"
-              className="bg-green-600 py-6 px-8 rounded-lg text-white"
+              className={`bg-color-button-${theme} py-6 px-8 rounded-lg text-white`}
               onClick={handleNext}
               disabled={complete}
             />

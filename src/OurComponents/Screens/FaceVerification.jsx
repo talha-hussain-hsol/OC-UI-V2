@@ -1,19 +1,22 @@
 import React from "react";
 import Button from "../Reusable Components/Button";
+import { useTheme } from "../../contexts/themeContext";
 
 function FaceVerification() {
+  const { theme } = useTheme();
+  console.log("theme", theme);
   return (
     <>
-      <div className="mt-2 border-b-4 border-[#043f63] px-2 ">
+      <div className={`mt-2 border-b-4 border-color-${theme} px-2 `}>
         <h1 className="text-xl lg:text-2xl mb-2">Liveliness Test</h1>
-        <p className="text-sm lg:text-md mb-6 mt-4">
+        <p className="text-sm lg:text-md mb-6 mt-4 uppercase">
           To meet the regulatory KYC and AML/CFT requirements, this step helps
           us to ensure that you are who you say you are.
         </p>
       </div>
       <div className="flex flex-col lg:flex-row lg:space-x-8 mt-8 lg:mt-[74px] justify-center px-4">
-        <div className="bg-[#062b4d] p-6  rounded-lg w-full lg:w-[40%] shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] mb-8 lg:mb-0">
-          <h2 className="text-lg p-4 rounded-md mb-4 text-center shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)]">
+        <div className={`bg-color-stepper-card-${theme} p-6  rounded-lg w-full lg:w-[40%] shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] mb-8 lg:mb-0`}>
+          <h2 className={`bg-color-stepper-card-${theme} text-lg p-4 rounded-md mb-4 text-center shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] uppercase`}>
             Face Snap
           </h2>
           <div className="flex justify-center items-center mb-4 mt-10">
@@ -30,16 +33,16 @@ function FaceVerification() {
               />
             </svg>
           </div>
-          <p className="text-center text-sm lg:text-lg mt-10">
+          <p className="text-center text-sm lg:text-lg mt-10 uppercase">
             Position your face within the designated area.
           </p>
           <Button
             text="Proceed"
-            className="bg-red-500 hover:bg-red-600 text-white py-4 lg:py-[20px] px-4 rounded-lg mx-auto block mt-10"
+            className={`bg-color-stepper-proceedbutton-${theme} hover:bg-red-600 text-white py-4 lg:py-[20px] px-4 rounded-lg mx-auto block mt-10`}
           />
         </div>
-        <div className="bg-[#062b4d] p-6 rounded-lg w-full lg:w-[40%] shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)]">
-          <h2 className="text-lg p-4 rounded-md mb-4 text-center shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)]">
+        <div className={`bg-color-stepper-card-${theme}  p-6 rounded-lg w-full lg:w-[40%] shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)]`}>
+          <h2 className="text-lg p-4 rounded-md mb-4 text-center shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] uppercase">
             National ID / Passport with Photo
           </h2>
           <div className="flex justify-center items-center mb-4 mt-10">
@@ -56,12 +59,12 @@ function FaceVerification() {
               />
             </svg>
           </div>
-          <p className="text-center text-sm lg:text-lg mt-10">
+          <p className="text-center text-sm lg:text-lg mt-10 uppercase">
             Position the front of your National ID / Passport within the frame.
           </p>
           <Button
             text="Proceed"
-            className="bg-red-500 hover:bg-red-600 text-white py-4 lg:py-[20px] px-4 rounded-lg mx-auto block mt-10"
+            className={`bg-color-stepper-proceedbutton-${theme} hover:bg-red-600 text-white py-4 lg:py-[20px] px-4 rounded-lg mx-auto block mt-10`}
           />
         </div>
       </div>

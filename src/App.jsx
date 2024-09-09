@@ -26,6 +26,7 @@ import "./App.css"
 import { ThemeProvider } from "./contexts/themeContext";
 
 function App() {
+  
   return (
     <BrowserRouter>
       <Routes>
@@ -33,13 +34,13 @@ function App() {
         {/* <Route path="/" element={<DynamicForm />} /> */}
         {/* <Route path="/" element={<UserType />} /> */}
         <Route path="/" element={<ThemeProvider> <Dashboard /> </ThemeProvider> } />
-        <Route path="/user-form" element={<UserForm />} />
-        <Route path="/accounts" element={<Accounts />} />
-        <Route path="/identities" element={<Identities />} />
-        <Route path="/documents" element={<MainDocuments />} />
+        <Route path="/user-form" element={<ThemeProvider> <UserForm /> </ThemeProvider> } />
+        <Route path="/accounts" element={<ThemeProvider> <Accounts /> </ThemeProvider> } />
+        <Route path="/identities" element={<ThemeProvider> <Identities /> </ThemeProvider> } />
+        <Route path="/documents" element={<ThemeProvider> <MainDocuments /> </ThemeProvider> } />
         {/* <Route path="/faceverification" element={<FaceVerifacation />} />
         <Route path="/vcip" element={<VCIP />} /> */}
-        <Route path="/stepper" element={<Stepper />} />
+        <Route path="/stepper"  element={<ThemeProvider> <Stepper /> </ThemeProvider> } />
         {/* <Route path="/dashboard" element={<Dashboard />} /> */}
       </Routes>
     </BrowserRouter>

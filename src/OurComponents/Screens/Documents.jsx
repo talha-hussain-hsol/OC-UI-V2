@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import Button from "../Reusable Components/Button";
 import Modal from "../Reusable Components/Modal";
-import SideBar from "../Reusable Components/SideBar";
+import { useTheme } from "../../contexts/themeContext";
 
 function Documents() {
+  const { theme } = useTheme();
+  console.log("theme", theme);
+
   const [selectedDocument, setSelectedDocument] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -28,19 +31,18 @@ function Documents() {
 
   return (
     <>
-      <div className="flex flex-col  md:flex-row md:space-y-0 md:space-x-6">
-        <div className="bg-custom-gradient mx-auto md:ml-16 mt-6 rounded-lg shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] p-6 w-full max-w-md h-[390px] overflow-y-auto custom-scrollbar">
+      <div className="flex flex-col md:flex-row md:space-y-0 md:space-x-6">
+        <div className={`bg-gradient-stepper-card-${theme} mx-auto md:ml-16 mt-6 rounded-lg shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] p-6 w-full max-w-md h-[390px] overflow-y-auto custom-scrollbar`}>
           <div className="space-y-3">
             {documents.map((doc, index) => (
               <div
                 key={index}
                 className={`flex justify-between shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] items-center p-[22px] rounded-lg cursor-pointer
-                      ${
-                        selectedDocument === doc
-                          ? "border border-red-500"
-                          : "border border-transparent"
+                      ${selectedDocument === doc
+                        ? `border border-red-500`
+                        : "border border-transparent"
                       }
-                      hover:border-red-500 transition-colors`}
+                      hover:border-color-${theme} transition-colors`}
                 onClick={() => handleDocumentSelect(doc)}
               >
                 <span>{doc}</span>
@@ -52,7 +54,7 @@ function Documents() {
 
         <div className="flex flex-col items-center justify-center w-full h-64 md:mx-4 mt-10 text-white">
           <div className="flex flex-col items-center justify-center space-y-4">
-            <div className="flex flex-col items-center justify-center border-2 border-[#043f63] rounded-lg py-6 px-8  w-full">
+            <div className={`flex flex-col items-center justify-center border-2 border-color-${theme} rounded-lg py-6 px-8 w-full`}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-12 w-12 text-sky-500"
@@ -65,12 +67,11 @@ function Documents() {
                   clipRule="evenodd"
                 />
               </svg>
-              <p className="text-md ">
-                Max file size: <span className="">5MB</span>
+              <p className="text-md">
+                Max file size: <span>5MB</span>
               </p>
-              <p className="text-sm ">
-                Supported file types:{" "}
-                <span className="">PNG, JPG, PDF, DOCS</span>
+              <p className="text-sm">
+                Supported file types: <span>PNG, JPG, PDF, DOCS</span>
               </p>
             </div>
             <p className="text-center text-sm mt-4">
@@ -87,7 +88,7 @@ function Documents() {
           onClose={handleCloseModal}
           selectedType={selectedDocument}
         >
-          <div className="flex flex-col items-center justify-center w-full border-2 border-[#043f63] rounded-lg p-8 md:p-16">
+          <div className={` bg-transparent flex flex-col items-center justify-center w-full border-2 border-color-modal-${theme} rounded-lg p-8 md:p-16`}>
             <div className="flex flex-col items-center justify-center rounded-lg py-6 w-[80%]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -101,7 +102,7 @@ function Documents() {
                   clipRule="evenodd"
                 />
               </svg>
-              <p className="text-md text-nowrap ">
+              <p className="text-md text-nowrap">
                 Please click on 'Browse File' to upload.
               </p>
             </div>

@@ -1,6 +1,9 @@
 import React from "react";
+import { useTheme } from "../../contexts/themeContext";
 
 const Modal = ({ id, title, children, onClose, selectedType }) => {
+  const { theme } = useTheme();
+  console.log("theme", theme);
   return (
     <div
       id={id}
@@ -10,10 +13,10 @@ const Modal = ({ id, title, children, onClose, selectedType }) => {
       onClick={onClose}
     >
       <div
-        className="relative bg-[#152e4d] rounded-lg shadow-lg w-full max-w-4xl mx-4 md:mx-6 lg:mx-8"
+        className={`relative bg-gradient-stepper-card-${theme} rounded-lg shadow-lg w-full max-w-4xl mx-4 md:mx-6 lg:mx-8`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between p-4 border-[#151c39] rounded-t-lg">
+        <div className={`bg-gradient-stepper-card-${theme} flex items-center justify-between p-4 border-[#151c39] rounded-t-lg`}>
           <h3 className="text-lg font-semibold text-white">{title}</h3>
           <button
             type="button"
@@ -39,7 +42,7 @@ const Modal = ({ id, title, children, onClose, selectedType }) => {
           </button>
         </div>
         <div className="flex flex-col lg:flex-row">
-          <div className="flex flex-col items-center justify-center bg-[#152e4d] p-4 md:p-6 lg:p-8 rounded-l-lg lg:w-[50%] w-full">
+        <div className={`flex flex-col items-center justify-center bg-transparent p-4 md:p-6 lg:p-8 rounded-l-lg lg:w-[50%] w-full`}>
             {children}
           </div>
           <div className="flex flex-col justify-center p-4 md:p-6 lg:p-8 w-full lg:w-[50%]">
@@ -49,7 +52,7 @@ const Modal = ({ id, title, children, onClose, selectedType }) => {
                 <select
                   name=""
                   id=""
-                  className="w-full p-2 shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] rounded-lg bg-[#152e4d] text-white placeholder-gray-300"
+                  className={`w-full p-2 shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] border-[1px] border-color-${theme} rounded-lg bg-color-textfield-${theme} text-white placeholder-gray-300`}
                 >
                   <option value="">{selectedType}</option>
                 </select>
@@ -62,7 +65,7 @@ const Modal = ({ id, title, children, onClose, selectedType }) => {
                 <input
                   type="text"
                   placeholder="Document Number"
-                  className="w-full p-2 shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] rounded-lg bg-[#152e4d] text-white placeholder-gray-300"
+                  className={`w-full p-2 shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] border-[1px] border-color-${theme} rounded-lg bg-color-textfield-${theme} text-white placeholder-gray-300`}
                 />
               </div>
             </div>
@@ -73,7 +76,7 @@ const Modal = ({ id, title, children, onClose, selectedType }) => {
                 <input
                   type="text"
                   placeholder="Issue Date (DD/MM/YYYY)"
-                  className="w-full p-2 shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] rounded-lg bg-[#152e4d] text-white placeholder-gray-300"
+                  className={`w-full p-2 shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] border-[1px] border-color-${theme} rounded-lg bg-color-textfield-${theme} text-white placeholder-gray-300`}
                 />
               </div>
             </div>
@@ -84,12 +87,12 @@ const Modal = ({ id, title, children, onClose, selectedType }) => {
                 <input
                   type="text"
                   placeholder="Expiry Date"
-                  className="w-full p-2 shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] rounded-lg bg-[#152e4d] text-white placeholder-gray-300"
+                  className={`w-full p-2 shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] border-[1px] border-color-${theme} rounded-lg bg-color-textfield-${theme} text-white placeholder-gray-300`}
                 />
               </div>
             </div>
 
-            <button className="w-[180px] bg-blue-600 py-2 px-2 mt-6 rounded-2xl text-white">
+            <button className={`bg-color-button-${theme} w-[180px] bg-blue-600 py-2 px-2 mt-6 rounded-2xl text-white`}>
               Upload Document
             </button>
           </div>
