@@ -42,7 +42,7 @@ const MainDocuments = () => {
   ];
   const fundOptions = ["Standard Chartered Client's Fund"];
   return (
-    <div className={`bg-color-${theme} h-full`}>
+    <div className={`bg-color-${theme} h-screen`}>
       <SideBar portalType="Customer" />
       <div className="py-6 sm:ml-12 mx-4 sm:px-10 ">
         <div className="w-full">

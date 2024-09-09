@@ -27,7 +27,7 @@ module.exports = {
           "linear-gradient(to bottom, #0d345d 0%, #151c39 100%)",
       },
       backgroundColor: {
-        "color-theme1": "#edf2f4",
+        "color-theme1": "#F5F5F5",
         "color-theme2": "#e5e5e5",
         "color-theme3": "#efefd0",
         // "color-theme4": "linear-gradient(to bottom, #0d345d 0%, #151c39 100%)",

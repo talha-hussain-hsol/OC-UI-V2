@@ -4,8 +4,10 @@ import Button from "../Button";
 import { FiCheckCircle } from "react-icons/fi";
 import { MdOutlineAccessTime } from "react-icons/md";
 import StepsStatus from "./StepsStatus";
+import { useTheme } from "../../../contexts/themeContext";
 
 const SummaryCard = () => {
+  const { theme } = useTheme();
   const rightContent = (
     <div className="flex flex-col gap-1 py-2">
       <p className="text-white text-xs sm:text-sm flex items-center gap-1">
@@ -55,7 +57,9 @@ const SummaryCard = () => {
         className="mb-6"
       />
       <div className="sm:flex-row sm:gap-6 flex flex-col  w-full">
-        <div className="bg-gradient-to-b from-[#0e325a] from-10% to-[#141c3a] to-100% rounded-md border-[#1b3050] border-[1px] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] mb-8 flex flex-col  justify-center h-full w-full">
+        <div
+          className={`bg-color-${theme} rounded-md border-[#1b3050] border-[1px] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] mb-8 flex flex-col  justify-center h-full w-full`}
+        >
           <CardHeader
             FundName="Profile"
             showButton={false}
