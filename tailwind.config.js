@@ -675,6 +675,8 @@ module.exports = {
         "color-theme1": "#3DA500",
         "color-para-theme1": "#000000",
         "color-para-theme4": "#e79f31",
+        "color-text-theme1": "#000000",
+        "color-text-theme4": "#FFFFFF",
         "color-theme2": "#14213d",
         "color-theme3": "#004e89",
         // "color-theme4": "#e27396",
@@ -706,6 +708,12 @@ module.exports = {
         theme2: "18px", // Font size for theme 2
         theme3: "20px", // Font size for theme 3
         theme4: "22px", // Font size for theme 4
+      },
+      boxShadow: {
+        "shadow-theme1": "none", // No shadow for theme1
+        "shadow-theme2": "1px 10px 24px rgba(0, 0, 0, 0.9)", // Black shadow for theme2
+        "shadow-theme3": "1px 10px 24px rgba(0, 0, 0, 0.9)", // Black shadow for theme3
+        "shadow-theme4": "1px 10px 24px rgba(0, 0, 0, 0.9)",
       },
       screens: {
         xs: "350px",
@@ -740,6 +748,9 @@ module.exports = {
       pattern: /text-color-para-(theme1|theme2|theme3|theme4)/,
     },
     {
+      pattern: /text-color-text-(theme1|theme2|theme3|theme4)/,
+    },
+    {
       pattern: /bg-gradient-stepper-card-(theme1|theme2|theme3|theme4)/,
     },
     {
@@ -759,6 +770,9 @@ module.exports = {
     },
     {
       pattern: /bg-color-stepper-card-(theme1|theme2|theme3|theme4)/,
+    },
+    {
+      pattern: /shadow-(theme1|theme2|theme3|theme4)/,
     },
     {
       pattern: /text-color-header-fund-(theme1|theme2|theme3|theme4)/,

@@ -88,12 +88,12 @@ const AccountCard = () => {
   );
   return (
     <div
-      className={`bg-color-${theme} w-full rounded-lg border-[#1b3050] border-[1px] shadow-[1px_10px_24px_rgba(0,0,0,0.9)] mb-6 px-4`}
+      className={`bg-color-card-${theme} w-full rounded-lg border-[#1b3050] border-[1px] shadow-theme4 mb-6 px-4`}
     >
       <div className="flex flex-col items-center gap-4">
         <CardHeader
           FundName="Demo Funds"
-          fundClassName={`text-color-header-fund-${theme} text-base`}
+          fundClassName={`text-color-text-${theme} text-base`}
           showButton={false}
           showLogo={true}
         />

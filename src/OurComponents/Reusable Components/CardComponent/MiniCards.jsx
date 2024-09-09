@@ -17,7 +17,7 @@ const MiniCards = ({
   return (
     <div>
       <div
-        className={`bg-color-${theme} rounded-lg border-[#1b3050] border-[1px] shadow-[2px_4px_20px_rgba(0,0,0,0.9)] py-2 px-4 w-full`}
+        className={`bg-color-card-${theme} rounded-lg border-[#1b3050] border-[1px] shadow-${theme} py-2 px-4 w-full`}
       >
         <div className="flex flex-col md:flex-row justify-between gap-1 w-full">
           {showLeft && (
