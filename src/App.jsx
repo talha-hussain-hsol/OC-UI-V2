@@ -24,6 +24,7 @@ import Stepper from "./OurComponents/Screens/Stepper";
 import UserForm from "./OurComponents/Screens/UserForm";
 import "./App.css"
 import { ThemeProvider } from "./contexts/themeContext";
+import UserType from "./OurComponents/Screens/UserType";
 
 function App() {
   
