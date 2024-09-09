@@ -143,7 +143,7 @@ const SideBar = ({ portalType }) => {
       </button>
 
       <div
-        className={`bg-[#152e4d] h-screen w-16 fixed flex flex-col items-center md:hidden sm:hidden xs:hidden py-6 ${
+        className={`bg-color-card-${theme} h-screen w-16 fixed flex flex-col items-center md:hidden sm:hidden xs:hidden py-6 ${
           !isSidebarOpen ? "lg:flex" : "lg:hidden"
         }`}
       >

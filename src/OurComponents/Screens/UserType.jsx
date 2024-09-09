@@ -466,7 +466,7 @@ const UserType = () => {
   };
 
   return (
-    <div className={`w-full flex flex-col items-center h-[700px] bg-gradient-card-${theme} font-${theme} text-${theme}`}>
+    <div className={`w-full flex flex-col items-center h-[700px] bg-gradient-stepper-card-${theme} font-${theme} text-${theme}`}>
       <h3 className={`text-color-h3-${theme} text-2xl font-light mt-6`}>
         Let's start with the basics.
       </h3>

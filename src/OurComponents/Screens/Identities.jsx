@@ -52,7 +52,7 @@ const Identities = () => {
     );
   };
   return (
-    <div className={`bg-color-${theme} h-full`}>
+    <div className={`bg-color-${theme} h-screen`}>
       <SideBar portalType="Customer" />
       <div className="py-6 sm:ml-12 mx-4 sm:px-10 ">
         <div className=" w-full">
@@ -74,10 +74,10 @@ const Identities = () => {
         </div>
         <div className="flex flex-col w-full items-center justify-center sm:ml-6">
           <div
-            className={`bg-gradient-card-${theme} rounded-t-md border-[#1b3050] border-b-[1px] shadow-[0px_6px_20px_rgba(0,0,0,0.9)]  flex flex-col items-center justify-center h-full w-full`}
+            className={`bg-color-card-${theme} rounded-t-md border-[#1b3050] border-b-[1px] shadow-[0px_6px_20px_rgba(0,0,0,0.9)]  flex flex-col items-center justify-center h-full w-full`}
           >
             <p
-              className={`py-2 text-color-header-${theme} sm:text-xs text-[8px] w-full px-4`}
+              className={`py-2 text-color-para-${theme} sm:text-xs text-[8px] w-full px-4`}
             >
               Please note that you can set your identities to "Inactive" or
               "Active" by using the toggle button. Your submitted account
@@ -102,7 +102,9 @@ const Identities = () => {
                 <>
                   <td className="py-4 px-6 font-light">{row.name}</td>
                   <td className="py-4 px-6 font-light">{row.type}</td>
-                  <td className={`py-4 px-6 text-color-status-${theme} font-light`}>
+                  <td
+                    className={`py-4 px-6 text-color-status-${theme} font-light`}
+                  >
                     {status[index] ? "Active" : "Inactive"}
                   </td>
                   <td className="py-4 px-6">

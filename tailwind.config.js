@@ -444,8 +444,6 @@
 //   plugins: [require("tailwindcss-animate")],
 // };
 
-
-
 // /**  @type {import('tailwindcss').Config} */
 // module.exports = {
 //   // content: ["./src/**/*.{js,jsx,ts,tsx}", "./pages/**/*.{js,jsx}", "./components/**/*.{js,jsx}", "./app/**/*.{js,jsx}", "./src/**/*.{js,jsx}"],
@@ -505,7 +503,7 @@
 //         "color-barchart-theme1": "#0D7EF9",
 //         "color-barchart1-theme1": "#68D930",
 //         "color-cardheader-stepper-theme1": "linear-gradient(to bottom, #24357C 0%, #0B76A8 100%)", // Card header in stepper ex: Face Snap
-//         "color-stepper-card-theme1": "linear-gradient(to right, #243279 0%, #0091BB 100%)", 
+//         "color-stepper-card-theme1": "linear-gradient(to right, #243279 0%, #0091BB 100%)",
 //         "color-stepper-proceedbutton-theme1": "#F0082E",
 //         "color-stepstatus-theme1": "#24357C", // For Summary Page -> Status
 //         "sidebar-color-theme1": "#FFFFFF",
@@ -587,7 +585,7 @@
 //         pattern: /bg-color-button-(theme1|theme2|theme3|theme4)/, // Background color for buttons
 //       },
 //     ],
-    
+
 //     plugins: [],
 //   },
 // };
@@ -658,7 +656,7 @@ module.exports = {
         "color-stepper-proceedbutton-theme1": "#F0082E",
         "color-stepstatus-theme1": "#24357C", // For Summary Page -> Status
         "sidebar-color-theme1": "#FFFFFF",
-        "color-stepper-card-theme1": "#23367C"
+        "color-stepper-card-theme1": "#23367C",
       },
 
       borderColor: {
@@ -670,7 +668,8 @@ module.exports = {
       },
       textColor: {
         "color-theme1": "#3DA500",
-        "color-text-theme1": "#000000",
+        "color-para-theme1": "#000000",
+        "color-para-theme4": "#e79f31",
         "color-theme2": "#14213d",
         "color-theme3": "#004e89",
         // "color-theme4": "#e27396",
@@ -726,7 +725,9 @@ module.exports = {
     {
       pattern: /text-color-(theme1|theme2|theme3|theme4)/,
     },
-    
+    {
+      pattern: /text-color-para-(theme1|theme2|theme3|theme4)/,
+    },
     {
       pattern: /bg-gradient-stepper-card-(theme1|theme2|theme3|theme4)/,
     },
