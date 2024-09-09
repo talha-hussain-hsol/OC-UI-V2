@@ -1,8 +1,17 @@
 import React from "react";
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
+// import { useTheme } from "../../contexts/themeContext";
 
-const Header = ({ subheading, heading, showButton, onButtonClick }) => {
+const Header = ({ subheading, heading, showButton, onButtonClick, theme }) => {
+  // const { theme } = useTheme();
+  // console.log("theme", theme);
+  // const textColorClass = {
+  //   theme1: "txt-color-theme1",
+  //   theme2: "txt-color-theme2",
+  //   theme3: "txt-color-theme3",
+  //   theme4: "txt-color-theme4",
+  // };
   const navigate = useNavigate();
   function handleClick() {
     navigate("/stepper");
@@ -15,7 +24,9 @@ const Header = ({ subheading, heading, showButton, onButtonClick }) => {
           <h6 className="text-[10px] text-[#6e84a3] uppercase tracking-wider ">
             {subheading}
           </h6>
-          <h1 className="sm:text-2xl text-xs text-white sm:font-medium ">
+          <h1
+            className={`sm:text-2xl text-xs text-color-${theme} sm:font-medium`}
+          >
             {heading}
           </h1>
         </div>
@@ -31,7 +42,7 @@ const Header = ({ subheading, heading, showButton, onButtonClick }) => {
           <Button
             text="Create An Account"
             onClick={handleClick}
-            className="bg-[#2c7be5] text-white font-light mr-8 rounded-lg py-6 px-8 text-sm sm:text-md"
+            className={`bg-color-button-${theme} text-white font-light mr-8 rounded-lg py-6 px-8 text-sm sm:text-md`}
             // icon={<FaCreditCard />}
             iconPosition="left"
           />

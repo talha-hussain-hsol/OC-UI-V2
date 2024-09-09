@@ -1,5 +1,6 @@
 import React from "react";
 import UserIcon from "../../../../public/Assets/UserIcon.jpg";
+import { useTheme } from "../../../contexts/themeContext";
 
 const MiniCards = ({
   leftContent,
@@ -10,9 +11,14 @@ const MiniCards = ({
   leftClassName = "",
   rightClassName = "",
 }) => {
+  const { theme } = useTheme();
+  console.log("theme", theme);
+
   return (
     <div>
-      <div className="bg-gradient-to-b from-[#0e325a] from-10% to-[#141c3a] to-100% rounded-lg border-[#1b3050] border-[1px] shadow-[2px_4px_20px_rgba(0,0,0,0.9)] py-2 px-4 w-full">
+      <div
+        className={`bg-color-${theme} rounded-lg border-[#1b3050] border-[1px] shadow-[2px_4px_20px_rgba(0,0,0,0.9)] py-2 px-4 w-full`}
+      >
         <div className="flex flex-col md:flex-row justify-between gap-1 w-full">
           {showLeft && (
             <div className={`flex gap-4 w-full ${leftClassName}`}>

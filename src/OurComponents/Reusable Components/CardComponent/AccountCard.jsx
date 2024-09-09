@@ -3,12 +3,18 @@ import CardHeader from "./CardHeader";
 import MiniCards from "./MiniCards";
 import { FiCheckCircle } from "react-icons/fi";
 import { MdOutlineAccessTime } from "react-icons/md";
+import { useTheme } from "../../../contexts/themeContext";
 
 const AccountCard = () => {
+  const { theme } = useTheme();
+  console.log("theme", theme);
+
   const leftContentCard = (
     <div className="flex flex-col gap-1">
-    <h3 className={`text-lg font-semibold text-white`}>Muhammad Imran AX</h3>
-      <p className="text-[#6881a3] flex items-center gap-2">
+      <h3 className={`text-lg font-semibold text-color-${theme}`}>
+        Muhammad Imran AX
+      </h3>
+      <p className={`text-[#6881a3] flex items-center gap-2`}>
         Nationality: Aland Islands{" "}
         <span>
           <FiCheckCircle color="#01cc7a" size={16} />
@@ -26,8 +32,8 @@ const AccountCard = () => {
           <FiCheckCircle color="#01cc7a" size={16} />
         </span>
       </p>
-      <p className="text-white">Subscription Type: Standalone</p>
-      <p className="text-white">Status: Pending</p>
+      <p className={`text-color-${theme}`}>Subscription Type: Standalone</p>
+      <p className={`text-color-${theme}`}>Status: Pending</p>
     </div>
   );
   const leftContentCard2 = (
@@ -81,11 +87,13 @@ const AccountCard = () => {
     </div>
   );
   return (
-    <div className="bg-gradient-to-b from-[#0e325a] from-10% to-[#141c3a] to-100% w-full rounded-lg border-[#1b3050] border-[1px] shadow-[1px_10px_24px_rgba(0,0,0,0.9)] mb-6 px-4">
+    <div
+      className={`bg-color-${theme} w-full rounded-lg border-[#1b3050] border-[1px] shadow-[1px_10px_24px_rgba(0,0,0,0.9)] mb-6 px-4`}
+    >
       <div className="flex flex-col items-center gap-4">
         <CardHeader
           FundName="Demo Funds"
-          fundClassName="text-white text-base"
+          fundClassName={`text-color-header-fund-${theme} text-base`}
           showButton={false}
           showLogo={true}
         />

@@ -22,9 +22,12 @@ import Identities from "./OurComponents/Screens/Identities";
 import MainDocuments from "./OurComponents/Screens/MainDocuments";
 import Stepper from "./OurComponents/Screens/Stepper";
 import UserForm from "./OurComponents/Screens/UserForm";
-import "./App.css"
+import "./App.css";
 import { ThemeProvider } from "./contexts/themeContext";
 import UserType from "./OurComponents/Screens/UserType";
+import Card from "./sample-theming/Card";
+import ThemeSwitcher from "./components/themeSwitcher";
+import UserInfo from "./components/testingTheming";
 
 function App() {
   
