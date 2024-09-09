@@ -278,10 +278,10 @@ const SideBar = ({ portalType }) => {
             {isThemeSidebarOpen && (
               <div
                 ref={themeSidebarRef}
-                className="absolute left-14 border-[#132141] border w-60 bottom-32 z-50 text-sm bg-[#152e4d] text-[#6e84a3] shadow-md p-2 rounded-md"
+                className={`absolute left-14 border-color-${theme} border w-60 bottom-32 z-50 text-sm bg-color-sidebar-${theme} text-color-sidebar-icon-${theme} shadow-md p-2 rounded-md`}
               >
                 <ul>
-                  <li className="flex justify-between items-center cursor-pointer hover:text-white p-2">
+                  <li className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}>
                     Light
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input
@@ -293,7 +293,7 @@ const SideBar = ({ portalType }) => {
                       <div className="w-9 h-5 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2c7be5]"></div>
                     </label>
                   </li>
-                  <li className="flex justify-between items-center cursor-pointer hover:text-white p-2">
+                  <li className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}>
                     Dark
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input
@@ -305,7 +305,7 @@ const SideBar = ({ portalType }) => {
                       <div className="w-9 h-5 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2c7be5]"></div>
                     </label>
                   </li>
-                  <li className="flex justify-between items-center cursor-pointer hover:text-white p-2">
+                  <li className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}>
                     Standard Chartered
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input
