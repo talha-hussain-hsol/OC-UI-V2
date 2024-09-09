@@ -655,6 +655,10 @@ module.exports = {
         "color-stepstatus-theme1": "#24357C", // For Summary Page -> Status
         "sidebar-color-theme1": "#FFFFFF",
         "color-stepper-card-theme1": "#23367C",
+        "color-sidebar-theme1": "#FFFFFF",
+        "color-sidebar-theme4": "#152e4d",
+        "color-profile-icon-theme1": "#F6F6F6",
+        "color-profile-icon-theme4": "#244166",
       },
 
       borderColor: {
@@ -681,6 +685,12 @@ module.exports = {
         "color-header-fund-theme4": "#FFFFFF",
         "color-status-theme1": "#2e77e7",
         "color-status-theme4": "#05b56f",
+        "color-sidebar-icon-theme1": "#5C5E64",
+        "color-sidebar-icon-theme4": "#6e84a3",
+        "color-sidebar-icon-hover-theme1": "#000000",
+        "color-sidebar-icon-hover-theme4": "#FFFFFF",
+        "color-profile-icon-theme1": "#5C5E64",
+        "color-profile-icon-theme4": "#FFFFFF",
       },
       fontFamily: {
         theme1: ['"Roboto"', "sans-serif"], // Replace "Roboto" with the desired font
@@ -736,6 +746,12 @@ module.exports = {
       pattern: /bg-color-stepper-proceedbutton-(theme1|theme2|theme3|theme4)/,
     },
     {
+      pattern: /bg-color-sidebar-(theme1|theme2|theme3|theme4)/,
+    },
+    {
+      pattern: /bg-color-profile-icon-(theme1|theme2|theme3|theme4)/,
+    },
+    {
       pattern: /bg-color-stepper-card-(theme1|theme2|theme3|theme4)/,
     },
     {
@@ -746,6 +762,16 @@ module.exports = {
     },
     {
       pattern: /text-color-status-(theme1|theme2|theme3|theme4)/,
+    },
+    {
+      pattern: /text-color-sidebar-icon-(theme1|theme2|theme3|theme4)/,
+    },
+    {
+      pattern: /text-color-profile-icon-(theme1|theme2|theme3|theme4)/,
+    },
+    {
+      pattern:
+        /hover:text-color-sidebar-icon-hover-(theme1|theme2|theme3|theme4)/,
     },
     {
       pattern: /bg-color-(theme1|theme2|theme3|theme4)/,

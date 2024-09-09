@@ -143,7 +143,7 @@ const SideBar = ({ portalType }) => {
       </button>
 
       <div
-        className={`bg-color-card-${theme} h-screen w-16 fixed flex flex-col items-center md:hidden sm:hidden xs:hidden py-6 ${
+        className={`bg-color-sidebar-${theme} h-screen w-16 fixed flex flex-col items-center md:hidden sm:hidden xs:hidden py-6 ${
           !isSidebarOpen ? "lg:flex" : "lg:hidden"
         }`}
       >
@@ -155,7 +155,7 @@ const SideBar = ({ portalType }) => {
                 <Link to="">
                   <RxDashboard
                     size={18}
-                    className="text-[#6e84a3] hover:text-white transition-colors duration-200"
+                    className={`text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
                   />
                 </Link>
               </Tooltip>
@@ -163,7 +163,7 @@ const SideBar = ({ portalType }) => {
                 <Link to="">
                   <TbUsers
                     size={18}
-                    className="text-[#6e84a3] hover:text-white transition-colors duration-200"
+                    className={`text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
                   />
                 </Link>
               </Tooltip>
@@ -171,7 +171,7 @@ const SideBar = ({ portalType }) => {
                 <Link to="">
                   <TbSwitch
                     size={18}
-                    className="text-[#6e84a3] hover:text-white transition-colors duration-200"
+                    className={`text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
                   />
                 </Link>
               </Tooltip>
@@ -179,7 +179,7 @@ const SideBar = ({ portalType }) => {
                 <Link to="">
                   <CiSettings
                     size={18}
-                    className="text-[#6e84a3] hover:text-white transition-colors duration-200"
+                    className={`text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
                   />
                 </Link>
               </Tooltip>
@@ -187,7 +187,7 @@ const SideBar = ({ portalType }) => {
                 <Link to="">
                   <MdOutlineFileDownload
                     size={18}
-                    className="text-[#6e84a3] hover:text-white transition-colors duration-200"
+                    className={`text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
                   />
                 </Link>
               </Tooltip>
@@ -195,7 +195,7 @@ const SideBar = ({ portalType }) => {
                 <Link to="">
                   <MdOutlineFileDownload
                     size={18}
-                    className="text-[#6e84a3] hover:text-white transition-colors duration-200"
+                    className={`text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
                   />
                 </Link>
               </Tooltip>
@@ -207,7 +207,7 @@ const SideBar = ({ portalType }) => {
                 <Link to="/">
                   <FiHome
                     size={18}
-                    className="text-[#6e84a3] hover:text-white transition-colors duration-200"
+                    className={`text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
                   />
                 </Link>
               </Tooltip>
@@ -215,7 +215,7 @@ const SideBar = ({ portalType }) => {
                 <Link to="/documents">
                   <IoDocumentsOutline
                     size={18}
-                    className="text-[#6e84a3] hover:text-white transition-colors duration-200"
+                    className={`text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
                   />
                 </Link>
               </Tooltip>
@@ -223,7 +223,7 @@ const SideBar = ({ portalType }) => {
                 <Link to="/accounts">
                   <MdOutlineAccountTree
                     size={18}
-                    className="text-[#6e84a3] hover:text-white transition-colors duration-200"
+                    className={`text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
                   />
                 </Link>
               </Tooltip>
@@ -231,7 +231,7 @@ const SideBar = ({ portalType }) => {
                 <Link to="/identities">
                   <TbUsers
                     size={14}
-                    className="text-[#6e84a3] hover:text-white transition-colors duration-200"
+                    className={`text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
                   />
                 </Link>
               </Tooltip>
@@ -239,7 +239,7 @@ const SideBar = ({ portalType }) => {
                 <Link to="">
                   <PiCompass
                     size={18}
-                    className="text-[#6e84a3] hover:text-white transition-colors duration-200"
+                    className={`text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
                   />
                 </Link>
               </Tooltip>
@@ -251,7 +251,7 @@ const SideBar = ({ portalType }) => {
                 <Link to="">
                   <RxDashboard
                     size={18}
-                    className="text-[#6e84a3] hover:text-white transition-colors duration-200"
+                    className={`text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
                   />
                 </Link>
               </Tooltip>
@@ -259,7 +259,7 @@ const SideBar = ({ portalType }) => {
                 <Link to="">
                   <TbSwitch
                     size={18}
-                    className="text-[#6e84a3] hover:text-white transition-colors duration-200"
+                    className={`text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
                   />
                 </Link>
               </Tooltip>
@@ -271,7 +271,7 @@ const SideBar = ({ portalType }) => {
           <div className="flex flex-col items-center mt-auto">
             <button
               onClick={toggleThemeSidebar}
-              className="text-[#6e84a3] hover:text-white transition-colors duration-200"
+              className={`text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
             >
               <MdInvertColors size={18} />
             </button>
@@ -327,13 +327,15 @@ const SideBar = ({ portalType }) => {
               <Link to="">
                 <FaRegBell
                   size={18}
-                  className="text-[#6e84a3] hover:text-white transition-colors duration-200"
+                  className={`text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
                 />
               </Link>
             </Tooltip>
           )}
 
-          <div className="bg-[#244166] rounded-full text-sm text-white w-10 h-10 flex items-center justify-center">
+          <div
+            className={`bg-color-profile-icon-${theme} rounded-full text-sm text-color-profile-icon-${theme} w-10 h-10 flex items-center justify-center`}
+          >
             <p>U</p>
           </div>
         </div>
@@ -467,13 +469,15 @@ const SideBar = ({ portalType }) => {
           {portalType !== "Manager" && (
             <Link
               to=""
-              className="text-[#6e84a3] hover:text-white transition-colors duration-200"
+              className={`text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
             >
               <FaRegBell size={18} />
             </Link>
           )}
 
-          <div className="bg-[#244166] rounded-full text-sm text-white w-10 h-10 flex items-center justify-center">
+          <div
+            className={`bg-color-profile-icon-${theme} rounded-full text-sm text-white w-10 h-10 flex items-center justify-center`}
+          >
             <p>U</p>
           </div>
         </div>
