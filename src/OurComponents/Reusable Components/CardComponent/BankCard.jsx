@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import CardHeader from "./CardHeader";
 import Table from "../Tables/Table";
 import AddBankForm from "../../Forms/AddBankForm";
+import { useTheme } from "../../../contexts/themeContext";
 
 const BankCard = () => {
+  const { theme } = useTheme();
   const [isAddBankModalOpen, setAddBankModalOpen] = useState(false);
 
   const handleOpenModal = () => {
@@ -28,14 +30,14 @@ const BankCard = () => {
   const rows = [];
 
   return (
-    <div className="bg-gradient-to-b from-[#0e325a] from-10% to-[#141c3a] to-100% rounded-md border-[#1b3050] border-[1px] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] mb-16 px-2 sm:px-4 flex flex-col items-center justify-center h-full w-full">
+    <div className={`bg-color-card-${theme} rounded-md border-color-${theme} border-[1px] shadow-${theme} mb-16 px-2 sm:px-4 flex flex-col items-center justify-center h-full w-full`}>
       <CardHeader
         FundName="Bank List"
-        fundClassName="text-white"
+        fundClassName={`text-color-text-${theme}`}
         showButton={true}
         BtnText="Add New Bank"
         showLogo={false}
-        BtnClassName="bg-[#2c7be5] text-white font-medium border border-gray-700 rounded-lg py-6 px-7"
+        BtnClassName={`bg-color-button-${theme} text-white font-medium rounded-lg py-6 px-7`}
         onClick={handleOpenModal} // Open the modal here
         showField={false}
       />
