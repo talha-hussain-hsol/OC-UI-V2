@@ -49,6 +49,14 @@ module.exports = {
         "color-textfield-theme4": "#043f63",
         "color-dropdown-theme1": "#77838F",
         "color-button-theme1": "#3DA500", // For All Buttons + Processing Case
+        "color-textfield-theme1": "#FFFFFF",
+        "color-textfield-theme2": "#14213d",
+        "color-textfield-theme3": "#004e89",
+        "color-textfield-theme4": "#043f63",
+        "color-dropdown-theme1": "#FFFFFF",
+        "color-dropdown-theme2": "#1e3a5c",
+        // "color-dropdown-theme1": "#77838F",
+        "color-button-theme1": "#2C75E6", // For All Buttons + Processing Case
         "color-button-theme4": "#2C75E6", // For All Buttons + Processing Case
         "color-button1-theme1": "#8DC63F", //For Accepted Case
         "color-button2-theme1": "#F74036", // For Rejected Case
@@ -62,7 +70,14 @@ module.exports = {
         "color-stepper-proceedbutton-theme1": "#F0082E",
         "color-stepstatus-theme1": "#24357C", // For Summary Page -> Status
         "sidebar-color-theme1": "#FFFFFF",
-        "color-stepper-card-theme1": "#23367C"
+        "color-stepper-card-theme1": "#23367C",
+        "color-cardheader-stepper-theme1":
+          "linear-gradient(to bottom, #24357C 0%, #0B76A8 100%)", // Card header in stepper ex: Face Snap
+        "color-stepper-card-theme1":
+          "linear-gradient(to right, #243279 0%, #0091BB 100%)",
+        "color-stepper-proceedbutton-theme1": "#F0082E",
+        "color-stepstatus-theme1": "#24357C", // For Summary Page -> Status
+        "sidebar-color-theme1": "#FFFFFF",
       },
 
       borderColor: {
@@ -73,7 +88,8 @@ module.exports = {
         "color-theme4": "#e27396",
       },
       textColor: {
-        "color-theme1": "#000000",
+        "color-theme1": "#3DA500",
+        "color-text-theme1": "#000000",
         "color-theme2": "#14213d",
         "color-theme3": "#004e89",
         // "color-theme4": "#e27396",
@@ -160,6 +176,10 @@ module.exports = {
     {
       pattern: /bg-color-barchart1-(theme1|theme2|theme3|theme4)/,
     },
+    {
+      pattern: /bg-color-dropdown-(theme1|theme2|theme3|theme4)/, // Background color for dropdowns
+    },
+    
     {
       pattern: /bg-gradient-card-(theme1|theme2|theme3|theme4)/,
     },
