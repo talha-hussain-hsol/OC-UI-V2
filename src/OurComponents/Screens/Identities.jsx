@@ -74,7 +74,7 @@ const Identities = () => {
         </div>
         <div className="flex flex-col w-full items-center justify-center sm:ml-6">
           <div
-            className={`bg-color-card-${theme} rounded-t-md border-[#1b3050] border-b-[1px] shadow-[0px_6px_20px_rgba(0,0,0,0.9)]  flex flex-col items-center justify-center h-full w-full`}
+            className={`bg-color-card-${theme} rounded-t-md border-color-${theme} border-b-[1px] shadow-${theme} flex flex-col items-center justify-center h-full w-full`}
           >
             <p
               className={`py-2 text-color-para-${theme} sm:text-xs text-[8px] w-full px-4`}
@@ -93,7 +93,7 @@ const Identities = () => {
             </p>
           </div>
           <div
-            className={`bg-color-card-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] rounded-b-md border-[#1b3050] border-[1px] w-full`}
+            className={`bg-color-card-${theme} shadow-${theme} rounded-b-md border-color-${theme} border-[1px] w-full`}
           >
             <Table
               headers={Headers}

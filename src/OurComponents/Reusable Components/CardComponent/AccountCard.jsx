@@ -88,7 +88,7 @@ const AccountCard = () => {
   );
   return (
     <div
-      className={`bg-color-card-${theme} w-full rounded-lg border-[#1b3050] border-[1px] shadow-theme4 mb-6 px-4`}
+      className={`bg-color-card-${theme} w-full rounded-lg border-color-${theme} border-[1px] shadow-${theme} mb-6 px-4`}
     >
       <div className="flex flex-col items-center gap-4">
         <CardHeader

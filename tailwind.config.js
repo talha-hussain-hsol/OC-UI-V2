@@ -665,11 +665,11 @@ module.exports = {
       },
 
       borderColor: {
-        "color-theme1": "#FFFFFF",
+        "color-theme1": "#e0e0e0",
         "color-modal-theme1": "#8DC63F",
         "color-theme2": "#14213d",
         "color-theme3": "#004e89",
-        "color-theme4": "#e27396",
+        "color-theme4": "#1b3050",
       },
       textColor: {
         "color-theme1": "#3DA500",
@@ -710,10 +710,10 @@ module.exports = {
         theme4: "22px", // Font size for theme 4
       },
       boxShadow: {
-        "shadow-theme1": "none", // No shadow for theme1
-        "shadow-theme2": "1px 10px 24px rgba(0, 0, 0, 0.9)", // Black shadow for theme2
-        "shadow-theme3": "1px 10px 24px rgba(0, 0, 0, 0.9)", // Black shadow for theme3
-        "shadow-theme4": "1px 10px 24px rgba(0, 0, 0, 0.9)",
+        theme1: "none", // Theme 1: No shadow
+        theme2: "1px 10px 24px rgba(0, 0, 0, 0.9)", // Theme 2: Black shadow
+        theme3: "1px 10px 24px rgba(0, 0, 0, 0.9)", // Theme 3: Black shadow
+        theme4: "1px 10px 24px rgba(0, 0, 0, 0.9)", // Theme 4: Black shadow
       },
       screens: {
         xs: "350px",
