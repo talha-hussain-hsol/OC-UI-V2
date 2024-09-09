@@ -27,6 +27,20 @@ function Stepper() {
   const { theme } = useTheme();
   console.log("theme", theme);
 
+  const [userType, setUserType] = useState("");
+
+  const handleSelection = (type) => {
+    setUserType(type);
+  };
+
+  const handleNextClick = () => {
+    if (userType) {
+      navigate("/user-form", { state: { userType } });
+    } else {
+      console.log("No user type selected");
+    }
+  };
+
   const [currentStep, setCurrentStep] = useState(1);
   const [complete, setComplete] = useState(false);
 
@@ -143,3 +157,5 @@ function Stepper() {
 }
 
 export default Stepper;
+
+

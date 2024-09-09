@@ -1,8 +1,12 @@
 import React from "react";
 import CardHeader from "./CardHeader";
 import Table from "../Tables/Table";
+import { useTheme } from "../../../contexts/themeContext";
 
 const ApplicationCard = () => {
+  const { theme } = useTheme();
+  console.log("theme", theme);
+
   const DocHeaders = ["Type", "Date", "Status", "E Sign", "Action"];
   const THistoryHeaders = [
     "Subscription Type",
@@ -37,10 +41,10 @@ const ApplicationCard = () => {
 
   return (
     <>
-      <div className="bg-gradient-to-b from-[#0e325a] from-10% to-[#141c3a] to-100% rounded-md border-[#1b3050] border-[1px] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] mb-8 flex flex-col items-center justify-center h-full w-full">
+      <div className={`bg-color-card-${theme} rounded-md border-[#1b3050] border-[1px] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] mb-8 flex flex-col items-center justify-center h-full w-full`}>
         <CardHeader
           FundName="Review & Sign Documents"
-          fundClassName="text-white"
+          fundClassName={`text-color-h1-${theme} uppercase `}
           showButton={false}
           BtnText="Add New Bank"
           showLogo={false}
@@ -63,10 +67,10 @@ const ApplicationCard = () => {
           )}
         />
       </div>
-      <div className="bg-gradient-to-b from-[#0e325a] from-10% to-[#141c3a] to-100% rounded-md border-[#1b3050] border-[1px] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] mb-8 flex flex-col items-center justify-center h-full w-full">
+      <div className={`bg-color-card-${theme} rounded-md border-[#9aa0aa] border-[1px] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] mb-8 flex flex-col items-center justify-center h-full w-full`}>
         <CardHeader
-          FundName="Trasaction History"
-          fundClassName="text-white"
+          FundName="Transaction History"
+          fundClassName={`text-color-h1-${theme} uppercase `}
           showButton={false}
           BtnText="Add New Bank"
           showLogo={false}
