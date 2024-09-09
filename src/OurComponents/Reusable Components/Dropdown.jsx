@@ -9,7 +9,7 @@ const Dropdown = ({ label, options, onChange, value }) => {
     >
       <label className="mb-2">{label}</label>
       <select
-        className={`bg-color-textfield-${theme} text-color-h1-${theme} p-2 shadow-[0px_6px_20px_rgba(0,0,0,0.9)] rounded-md border border-[#1c3758] appearance-none sm:text-base text-xs`}
+        className={`bg-color-textfield-dropdown-${theme} text-color-h1-${theme} p-2  rounded-md  appearance-none sm:text-base text-xs`}
         value={value}
         onChange={onChange}
         style={{ maxWidth: "100%", width: "100%" }}

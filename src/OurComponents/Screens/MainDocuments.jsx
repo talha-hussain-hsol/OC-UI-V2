@@ -54,13 +54,13 @@ const MainDocuments = () => {
             //   onButtonClick={handleClick}
           />
           <div
-            className={`bg-color-${theme} rounded-md border-[#1b3050] border-[1px] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] mb-8 flex flex-col items-center justify-center h-full sm:ml-6`}
+            className={`bg-color-card-${theme} rounded-md  mb-8 flex flex-col items-center justify-center h-full sm:ml-6`}
           >
             <CardHeader
               showLogo={false}
               showButton={false}
               FundName="Documents"
-              fundClassName="text-white"
+              fundClassName={`text-color-text-${theme} `}
               className=""
               showField={false}
             />
@@ -88,7 +88,7 @@ const MainDocuments = () => {
                   onBlur={(e) => (e.target.type = asOfDate ? "text" : "text")}
                   placeholder="As Of Date"
                   onChange={(e) => setAsOfDate(e.target.value)}
-                  className={`bg-color-textfield-${theme} text-color-h1-${theme} p-2 shadow-[0px_6px_20px_rgba(0,0,0,0.9)] rounded-md border border-[#1c3758] placeholder-[#6e84a3] text-sm`}
+                  className={`bg-color-textfield-dropdown-${theme} text-color-h1-${theme} p-2  rounded-md  placeholder-[#323a46] text-sm`}
                 />
               </div>
               <div>
@@ -100,11 +100,11 @@ const MainDocuments = () => {
             </div>
           </div>
           <div
-            className={`bg-color-${theme} rounded-md border-[#1b3050] border-[1px] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] mb-8 flex flex-col items-center justify-center h-full sm:ml-6`}
+            className={`bg-color-card-${theme} rounded-md  mb-8 flex flex-col items-center justify-center h-full sm:ml-6`}
           >
             <CardHeader
               FundName="Search Result"
-              fundClassName="text-white"
+              fundClassName={`text-color-text-${theme} `}
               showButton={false}
               BtnText="Add New Bank"
               showLogo={false}

@@ -40,6 +40,7 @@ function Dashboard() {
             heading="Dashboard"
             subheading="INVESTOR PORTAL"
             showButton={false}
+            theme={theme}
           />
           <div className="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-10">
             <AUMCard
@@ -56,7 +57,7 @@ function Dashboard() {
               <div className="w-full">
                 <CardHeader
                   FundName="NAV HISTORY"
-                  fundClassName="text-white"
+                  fundClassName={`text-color-text-${theme}`}
                   showButton={false}
                   showLogo={false}
                   showField={false}
@@ -68,7 +69,7 @@ function Dashboard() {
               <div className="w-full">
                 <CardHeader
                   FundName="PRICE CHART"
-                  fundClassName="text-white"
+                  fundClassName={`text-color-text-${theme}`}
                   showButton={false}
                   showLogo={false}
                   showField={false}
@@ -82,7 +83,7 @@ function Dashboard() {
               <div className="w-full">
                 <CardHeader
                   FundName="PERFORMANCE HISTORY"
-                  fundClassName="text-white"
+                  fundClassName={`text-color-text-${theme}`}
                   showButton={false}
                   showLogo={false}
                   showField={false}
@@ -94,7 +95,7 @@ function Dashboard() {
               <div className="w-full">
                 <CardHeader
                   FundName="LATEST ACTIVITY"
-                  fundClassName="text-white"
+                  fundClassName={`text-color-text-${theme}`}
                   showButton={true}
                   showLogo={false}
                   BtnText="View All"
@@ -102,7 +103,7 @@ function Dashboard() {
                   showField={false}
                 />
               </div>
-              <div className={`bg-color-${theme}`}>
+              <div className={`bg-color-card-${theme}`}>
                 <NotificationCard
                   iconLeft={<FaArrowRight />}
                   message="New Performance Document Received"

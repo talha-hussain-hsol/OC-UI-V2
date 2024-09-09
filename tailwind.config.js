@@ -633,11 +633,13 @@ module.exports = {
         "color-card-theme2": "#ededed",
         "color-card-theme3": "#dde5b6",
         // "color-card-theme4": "#b5e2fa",
+        "color-card-header-theme1": "#edf2f4",
         "color-theme1-hover": "#ef233c",
         "color-theme2-hover": "#14213d",
         "color-theme3-hover": "#004e89",
         "color-theme4-hover": "#e27396",
         "color-textfield-theme1": "transparent",
+        "color-textfield-dropdown-theme1": "#F7F7F7",
         "color-textfield-theme2": "#14213d",
         "color-textfield-theme3": "#004e89",
         "color-textfield-theme4": "#043f63",
@@ -750,6 +752,9 @@ module.exports = {
       pattern: /bg-color-(theme1|theme2|theme3|theme4)/,
     },
     {
+      pattern: /bg-color-card-header-(theme1|theme2|theme3|theme4)/,
+    },
+    {
       pattern: /bg-color-barchart-(theme1|theme2|theme3|theme4)/, // Background color for bar chart theme 1
     },
     {
@@ -766,6 +771,9 @@ module.exports = {
     },
     {
       pattern: /bg-color-card-(theme1|theme2|theme3|theme4)/,
+    },
+    {
+      pattern: /bg-color-textfield-dropdown-(theme1|theme2|theme3|theme4)/,
     },
     {
       pattern: /bg-color-stepstatus-(theme1|theme2|theme3|theme4)/,

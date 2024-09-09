@@ -24,7 +24,7 @@ const CardHeader = ({
 
   return (
     <div
-      className={`bg-gradient-card-${theme} rounded-t-md border-[#1b3050] border-b-[1px] shadow-[2px_6px_20px_rgba(0,0,0,0.9)] py-2 px-8 flex justify-between h-full w-full ${className}`}
+      className={`bg-color-card-${theme} rounded-t-md border-[#cccdcf] border-b-[1px]  py-2 px-8 flex justify-between h-full w-full ${className}`}
     >
       <div className="flex flex-row justify-center gap-1 my-2">
         {showLogo && (
@@ -53,7 +53,7 @@ const CardHeader = ({
           <input
             type="text"
             placeholder={fieldPlaceholder}
-            className={`bg-color-textfield-${theme} text-white p-2 shadow-[0px_6px_20px_rgba(0,0,0,0.9)] rounded-md border border-[#1c3758] placeholder-[#6e84a3] text-sm ${fieldClassname}`}
+            className={`bg-color-textfield-${theme} text-white p-2  rounded-md border border-[#1c3758] placeholder-[#6e84a3] text-sm ${fieldClassname}`}
           />
         )}
       </div>
