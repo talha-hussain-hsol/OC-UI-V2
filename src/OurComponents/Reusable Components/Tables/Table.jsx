@@ -8,7 +8,7 @@ const Table = ({ headers, rows, renderRow, className }) => {
       <table className={`w-full ${className}`}>
         <thead>
           <tr
-            className={`bg-color-${theme} text-[#6e84a3] sm:text-[10px] text-[6px] text-left font-light uppercase border-[#1b3050] border-b-[1px]`}
+            className={`bg-color-table-color-${theme} text-[#6e84a3] sm:text-[10px] text-[6px] text-left font-light uppercase border-[#1b3050] border-b-[1px]`}
           >
             {headers.map((header, index) => (
               <th key={index} className="py-4 px-4 sm:px-6">

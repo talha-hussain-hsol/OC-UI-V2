@@ -657,6 +657,7 @@ module.exports = {
         "color-stepstatus-theme1": "#24357C", // For Summary Page -> Status
         "sidebar-color-theme1": "#FFFFFF",
         "color-stepper-card-theme1": "#23367C",
+        "color-table-color-theme1": "#FAFAFB",
       },
 
       borderColor: {
@@ -730,6 +731,9 @@ module.exports = {
     },
     {
       pattern: /bg-gradient-stepper-card-(theme1|theme2|theme3|theme4)/,
+    },
+    {
+      pattern: /bg-color-table-color-(theme1|theme2|theme3|theme4)/,
     },
     {
       pattern: /text-color-header-(theme1|theme2|theme3|theme4)/,
