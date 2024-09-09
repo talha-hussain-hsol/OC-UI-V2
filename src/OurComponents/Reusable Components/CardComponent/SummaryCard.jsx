@@ -10,7 +10,7 @@ const SummaryCard = () => {
   const { theme } = useTheme();
   const rightContent = (
     <div className="flex flex-col gap-1 py-2">
-      <p className="text-white text-xs sm:text-sm flex items-center gap-1">
+      <p className="text-[#6881a3] text-xs sm:text-sm flex items-center gap-1">
         <span>
           <FiCheckCircle color="#01cc7a" size={16} />
         </span>
@@ -20,7 +20,7 @@ const SummaryCard = () => {
   );
   const middleContent = (
     <div className="flex flex-col gap-1 py-2">
-      <p className="text-white text-xs sm:text-sm flex items-center gap-1">
+      <p className={`text-[#6881a3] text-xs sm:text-sm flex items-center gap-1`}>
         <span>
           <FiCheckCircle color="#01cc7a" size={16} />
         </span>
@@ -41,7 +41,7 @@ const SummaryCard = () => {
       </div> */}
       <CardHeader
         FundName="Demo Fund"
-        fundClassName="text-white text-sm sm:text-lg"
+        fundClassName={`text-color-text-${theme} text-sm sm:text-lg`}
         showButton={false}
         showLogo={true}
         logoClassname="rounded-none sm:w-20 w-12"
@@ -51,33 +51,33 @@ const SummaryCard = () => {
       />
       <CardHeader
         FundName="Reference Documents"
-        fundClassName="text-white text-xs sm:text-md"
+        fundClassName={`text-color-text-${theme} text-xs sm:text-md uppercase`}
         showButton={false}
         showLogo={false}
         className="mb-6"
       />
       <div className="sm:flex-row sm:gap-6 flex flex-col  w-full">
         <div
-          className={`bg-color-${theme} rounded-md border-[#1b3050] border-[1px] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] mb-8 flex flex-col  justify-center h-full w-full`}
+          className={`bg-color-stepstatus-${theme}  rounded-md border-[#1b3050] border-[1px] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] mb-8 flex flex-col  justify-center h-full w-full`}
         >
           <CardHeader
             FundName="Profile"
             showButton={false}
             showLogo={false}
-            fundClassName="text-[#6881a3]"
+            fundClassName={`text-[#6881a3] `}
             // className="w-full"
           />
-          <div className="flex flex-col ml-4 my-8 gap-3">
-            <p className="text-[#6881a3] text-sm">Name : testa daSA AX</p>
-            <p className="text-[#6881a3] text-sm">
+          <div className={`flex flex-col ml-4 my-8 gap-3`}>
+            <p className="text-white uppercase text-sm">Name : testa daSA AX</p>
+            <p className="text-white uppercase text-sm">
               Nationality : Aland Islands
             </p>
-            <p className="text-[#6881a3] text-sm">
+            <p className="text-white uppercase text-sm">
               Country of Residence: Afghanistan
             </p>
-            <p className="text-[#6881a3] text-sm">Customer Type : INDIVIDUAL</p>
-            <p className="text-[#6881a3] text-sm">Email : undefined</p>
-            <p className="text-[#6881a3] text-sm">Phone : 9386767676</p>
+            <p className="text-white uppercase text-sm">Customer Type : INDIVIDUAL</p>
+            <p className="text-white uppercase text-sm">Email : undefined</p>
+            <p className="text-white uppercase text-sm">Phone : 9386767676</p>
           </div>
         </div>
         <div className="flex flex-col gap-2 w-full">

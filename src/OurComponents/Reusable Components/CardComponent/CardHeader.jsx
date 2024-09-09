@@ -26,7 +26,7 @@ const CardHeader = ({
     <div
       className={`bg-color-card-${theme} rounded-t-md border-[#cccdcf] border-b-[1px]  py-2 px-8 flex justify-between h-full w-full ${className}`}
     >
-      <div className="flex flex-row justify-center gap-1 my-2">
+      <div className="flex flex-row justify-center gap-1 my-2 items-center">
         {showLogo && (
           <img
             src={fundLogo}
