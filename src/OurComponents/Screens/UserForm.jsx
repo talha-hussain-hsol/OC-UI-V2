@@ -335,7 +335,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import formData from '../Data/fieldsData.json';
 import DropdownField from "../Reusable Components/DropdownField";
 import TextField from "../Reusable Components/TextField";
-import SideBar from '../Reusable Components/SideBar';
+// import SideBar from '../Reusable Components/SideBar';
 import { useTheme } from "../../contexts/themeContext";
 
 const UserForm = () => {
@@ -435,7 +435,7 @@ const UserForm = () => {
   return (
     // <div className="min-h-screen flex bg-gradient-to-r from-[#0c1f37] from-10% to-[#103649] to-90%">
     <div className={`min-h-screen flex bg-color-card-${theme}`}>
-      <SideBar portalType="Customer" />
+      {/* <SideBar portalType="Customer" /> */}
       {/* <div className="my-8 mt-[8%] bg-gradient-to-r from-[#0d3b66] from-10% to-[#0b1e33] to-90% rounded-lg shadow-[0px_6px_20px_5px_rgba(0,0,0,0.4)] w-full md:w-[85%] lg:w-[80%] ml-[10%] p-6 flex flex-col items-center justify-center md:items-center md:mr-[10%] md:mt-[8%] sm:w-[80%] xs:w-[80%] xs:mt-[15%]"> */}
       <div className={`my-8 mt-[8%] bg-gradient-card-${theme} rounded-lg shadow-[0px_6px_20px_5px_rgba(0,0,0,0.4)] w-full md:w-[85%] lg:w-[80%] ml-[10%] p-6 flex flex-col items-center justify-center md:items-center md:mr-[10%] md:mt-[8%] sm:w-[80%] xs:w-[80%] xs:mt-[15%]`}>
         <div className="w-full flex flex-col justify-between h-full">
