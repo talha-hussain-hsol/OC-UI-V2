@@ -12,13 +12,7 @@ function Dashboard() {
   const { theme } = useTheme();
   console.log("theme", theme);
 
-  const backgroundClass = {
-    theme1: "bg-color-card-theme1",
-    theme2: "bg-color-theme2",
-    theme3: "bg-color-theme3",
-    theme4: "bg-color-theme4",
-  };
-
+ 
   const data = {
     labels: [
       "Jan",
@@ -108,7 +102,7 @@ function Dashboard() {
                   showField={false}
                 />
               </div>
-              <div className={`${backgroundClass[theme]}`}>
+              <div className={`bg-color-${theme}`}>
                 <NotificationCard
                   iconLeft={<FaArrowRight />}
                   message="New Performance Document Received"

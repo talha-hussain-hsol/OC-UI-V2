@@ -5,12 +5,6 @@ const AUMCard = ({ date, amount, icon, text }) => {
   const { theme } = useTheme();
   console.log("theme", theme);
 
-  // const backgroundClass = {
-  //   theme1: "bg-gradient-card-theme1",
-  //   theme2: "bg-color-theme2",
-  //   theme3: "bg-color-theme3",
-  //   theme4: "bg-color-theme4",
-  // };
 
   return (
     <div className={`flex ml-6 items-center p-[28px] bg-gradient-card-${theme} rounded-lg w-full shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)]`}>

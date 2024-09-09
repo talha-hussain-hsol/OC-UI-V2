@@ -768,6 +768,9 @@ module.exports = {
       pattern: /bg-color-card-(theme1|theme2|theme3|theme4)/,
     },
     {
+      pattern: /bg-color-stepstatus-(theme1|theme2|theme3|theme4)/,
+    },
+    {
       pattern: /bg-color-textfield-(theme1|theme2|theme3|theme4)/,
     },
     {

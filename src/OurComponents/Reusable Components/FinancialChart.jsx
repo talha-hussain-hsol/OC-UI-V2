@@ -28,12 +28,6 @@ const FinancialChart = ({ data, year, chartType = "bar" }) => {
   const { theme } = useTheme();
   console.log("theme", theme);
 
-  // const backgroundClass = {
-  //   theme1: "bg-color-card-theme1",
-  //   theme2: "bg-color-theme2",
-  //   theme3: "bg-color-theme3",
-  //   theme4: "bg-color-theme4",
-  // };
 
   const chartData = {
     labels: data.labels,
@@ -43,8 +37,8 @@ const FinancialChart = ({ data, year, chartType = "bar" }) => {
         data: data.values,
         backgroundColor:
           // chartType === "bar" ? "rgba(0, 255, 255, 0.2)" : "transparent",
-        chartType === "bar" ? `bg-color-barchart1-${theme}` : "transparent",
-        borderColor: "rgba(0, 255, 255, 1)",
+        chartType === "bar" ? `bg-color-barchart-${theme}` : "transparent",
+        borderColor: "#68D930",
         borderWidth: 2,
         borderRadius: chartType === "bar" ? 10 : 0,
         tension: chartType === "line" ? 0.4 : 0,
@@ -90,7 +84,7 @@ const FinancialChart = ({ data, year, chartType = "bar" }) => {
       ) : (
         <Line data={chartData} options={options} />
       )}
-      <div className={`text-center text-color-${theme} mt-4 text-lg`}>{year}</div>
+      <div className={`text-center text-color-text-${theme} mt-4 text-lg`}>{year}</div>
     </div>
   );
 };
