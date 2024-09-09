@@ -5,10 +5,6 @@ const NotificationCard = ({ iconLeft, message, dateTime, iconRight }) => {
   const { theme } = useTheme();
   console.log("theme", theme);
 
-  const textColor = {
-    theme1: "text-color-theme1",
-    
-  };
 
   return (
     <div className="flex items-center justify-between p-4">
@@ -17,7 +13,7 @@ const NotificationCard = ({ iconLeft, message, dateTime, iconRight }) => {
           {iconLeft}
         </div>
         <div>
-          <div className={`${textColor[theme]} font-medium`}>{message}</div>
+          <div className={`text-color-text-${theme} font-medium`}>{message}</div>
           <div className="text-gray-400 text-sm">{dateTime}</div>
         </div>
       </div>
