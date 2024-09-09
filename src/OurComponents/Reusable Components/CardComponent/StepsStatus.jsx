@@ -13,7 +13,7 @@ const StepsStatus = ({
   const { theme } = useTheme();
   return (
     <div
-      className={`bg-gradient-card-${theme} rounded-lg border-[#1b3050] border-[1px] shadow-[2px_6px_20px_rgba(0,0,0,0.9)] py-1 px-4 flex items-center justify-between  w-full ${className}`}
+      className={`bg-color-stepstatus-${theme} rounded-lg border-[#1b3050] border-[1px] shadow-[2px_6px_20px_rgba(0,0,0,0.9)] py-1 px-4 flex items-center justify-between  w-full ${className}`}
     >
       <div className="flex items-center gap-1 my-2">
         <h3 className="font-normal text-white">{FormName}</h3>
