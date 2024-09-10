@@ -8,7 +8,7 @@ const ThemeSwitcher = () => {
 
   return (
     <div className="flex flex-row gap-x-2">
-      <button className={buttonClasses} onClick={() => toggleTheme("theme1")}>
+      <button className={buttonClasses} onClick={() => toggleTheme("SC")}>
         Theme 1
       </button>
       <button className={buttonClasses} onClick={() => toggleTheme("theme2")}>
@@ -17,7 +17,7 @@ const ThemeSwitcher = () => {
       <button className={buttonClasses} onClick={() => toggleTheme("theme3")}>
         Theme 3
       </button>
-      <button className={buttonClasses} onClick={() => toggleTheme("theme4")}>
+      <button className={buttonClasses} onClick={() => toggleTheme("Ascent")}>
         Theme 4
       </button>
     </div>
