@@ -25,6 +25,8 @@ module.exports = {
           "linear-gradient(to bottom, #0d345d 0%, #151c39 100%)",
         "gradient-stepper-card-SC":
           "linear-gradient(to right, #243279 0%, #0091BB 100%)",
+        "gradient-stepper-card-Ascent":
+          "linear-gradient(to bottom, #0d345d 0%, #151c39 100%)",
         "color-cardheader-stepper-SC":
           "linear-gradient(to bottom, #24357C 0%, #0B76A8 100%)",
         "color-card-Ascent":
@@ -62,8 +64,6 @@ module.exports = {
         "color-barchart-SC": "#0D7EF9",
         "color-barchart1-SC": "#68D930",
         "color-stepper-proceedbutton-SC": "#F0082E",
-        "color-stepper-proceedbutton-Ascent": "rgb(230, 55, 87)",
-
         "color-stepstatus-SC": "#24357C", // For Summary Page -> Status
         "sidebar-color-SC": "#FFFFFF",
         "color-stepper-card-SC": "#23367C",

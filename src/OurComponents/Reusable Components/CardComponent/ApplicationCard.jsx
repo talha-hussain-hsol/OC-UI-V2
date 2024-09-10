@@ -41,7 +41,7 @@ const ApplicationCard = () => {
 
   return (
     <>
-      <div className={`bg-color-card-${theme} rounded-md border-[#1b3050] border-[1px] shadow-${theme} mb-8 flex flex-col items-center justify-center h-full w-full`}>
+      <div className={`bg-color-card-${theme} rounded-md  shadow-${theme} mb-8 flex flex-col items-center justify-center h-full w-full`}>
         <CardHeader
           FundName="Review & Sign Documents"
           fundClassName={`text-color-h1-${theme} uppercase `}
@@ -67,7 +67,7 @@ const ApplicationCard = () => {
           )}
         />
       </div>
-      <div className={`bg-color-card-${theme} rounded-md border-[#9aa0aa] border-[1px] shadow-${theme} mb-8 flex flex-col items-center justify-center h-full w-full`}>
+      <div className={`bg-color-card-${theme} rounded-md  shadow-${theme} mb-8 flex flex-col items-center justify-center h-full w-full`}>
         <CardHeader
           FundName="Transaction History"
           fundClassName={`text-color-h1-${theme} uppercase `}
