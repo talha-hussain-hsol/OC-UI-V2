@@ -30,18 +30,18 @@ module.exports = {
       },
       backgroundColor: {
         "color-SC": "#edf2f4",
-        "color-light": "#efefd0",
+        "color-lightTheme": "#efefd0",
         // "color-Ascent": "linear-gradient(to bottom, #0d345d 0%, #151c39 100%)",
         "color-card-SC": "#FFFFFF",
-        "color-card-light": "#dde5b6",
+        "color-card-lightTheme": "#dde5b6",
         // "color-card-Ascent": "#b5e2fa",
         "color-card-header-SC": "#edf2f4",
         "color-SC-hover": "#ef233c",
-        "color-light-hover": "#004e89",
+        "color-lightTheme-hover": "#004e89",
         "color-Ascent-hover": "#e27396",
         "color-textfield-SC": "transparent",
         "color-textfield-dropdown-SC": "#F7F7F7",
-        "color-textfield-light": "#004e89",
+        "color-textfield-lightTheme": "#004e89",
         "color-textfield-Ascent": "#043f63",
         "color-dropdown-SC": "#77838F",
         "color-button-SC": "#3DA500", // For All Buttons + Processing Case
@@ -69,7 +69,7 @@ module.exports = {
       borderColor: {
         "color-SC": "#e0e0e0",
         "color-modal-SC": "#8DC63F",
-        "color-light": "#004e89",
+        "color-lightTheme": "#004e89",
         "color-Ascent": "#1b3050",
       },
       textColor: {
@@ -78,7 +78,7 @@ module.exports = {
         "color-para-Ascent": "#e79f31",
         "color-text-SC": "#000000",
         "color-text-Ascent": "#FFFFFF",
-        "color-light": "#004e89",
+        "color-lightTheme": "#004e89",
         // "color-Ascent": "#e27396",
         "color-Ascent": "#FFFFFF",
         "color-h1-SC": "#1A203D",
@@ -98,18 +98,18 @@ module.exports = {
         "color-profile-icon-Ascent": "#FFFFFF",
       },
       fontFamily: {
-        SC: ['"Roboto"', "sans-serif"], // Replace "Roboto" with the desired font
-        light: ['"Courier New"', "monospace"], // Replace "Courier New" with the desired font
-        Ascent: ['"Arial"', "sans-serif"], // Replace "Arial" with the desired font
+        SC: ['"Roboto"', "sans-serif"], // Theme 1
+        lightTheme: ['"Courier New"', "monospace"], // Theme 3
+        Ascent: ['"Arial"', "sans-serif"], // Theme 4
       },
       fontSize: {
         SC: "16px", // Font size for theme 1
-        light: "20px", // Font size for theme 3
+        lightTheme: "20px", // Font size for theme 3
         Ascent: "22px", // Font size for theme 4
       },
       boxShadow: {
         SC: "none",
-        light: "1px 10px 24px rgba(0, 0, 0, 0.9)",
+        lightTheme: "1px 10px 24px rgba(0, 0, 0, 0.9)",
         Ascent: "1px 10px 24px rgba(0, 0, 0, 0.9)",
       },
       screens: {
@@ -139,112 +139,112 @@ module.exports = {
 
   safelist: [
     {
-      pattern: /text-color-(SC|light|Ascent)/,
+      pattern: /text-color-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /text-color-para-(SC|light|Ascent)/,
+      pattern: /text-color-para-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /text-color-text-(SC|light|Ascent)/,
+      pattern: /text-color-text-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /bg-gradient-stepper-card-(SC|light|Ascent)/,
+      pattern: /bg-gradient-stepper-card-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /bg-color-table-color-(SC|light|Ascent)/,
+      pattern: /bg-color-table-color-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /text-color-header-(SC|light|Ascent)/,
+      pattern: /text-color-header-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /bg-color-stepper-proceedbutton-(SC|light|Ascent)/,
+      pattern: /bg-color-stepper-proceedbutton-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /bg-color-sidebar-(SC|light|Ascent)/,
+      pattern: /bg-color-sidebar-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /bg-color-profile-icon-(SC|light|Ascent)/,
+      pattern: /bg-color-profile-icon-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /bg-color-stepper-card-(SC|light|Ascent)/,
+      pattern: /bg-color-stepper-card-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /shadow-(SC|light|Ascent)/,
+      pattern: /shadow-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /text-color-header-fund-(SC|light|Ascent)/,
+      pattern: /text-color-header-fund-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /text-color-h1-(SC|light|Ascent)/,
+      pattern: /text-color-h1-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /text-color-status-(SC|light|Ascent)/,
+      pattern: /text-color-status-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /text-color-sidebar-icon-(SC|light|Ascent)/,
+      pattern: /text-color-sidebar-icon-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /text-color-profile-icon-(SC|light|Ascent)/,
+      pattern: /text-color-profile-icon-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /hover:text-color-sidebar-icon-hover-(SC|light|Ascent)/,
+      pattern: /hover:text-color-sidebar-icon-hover-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /bg-color-(SC|light|Ascent)/,
+      pattern: /bg-color-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /bg-color-card-header-(SC|light|Ascent)/,
+      pattern: /bg-color-card-header-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /bg-color-barchart-(SC|light|Ascent)/, // Background color for bar chart theme 1
+      pattern: /bg-color-barchart-(SC|lightTheme|Ascent)/, // Background color for bar chart theme 1
     },
     {
-      pattern: /bg-color-barchart1-(SC|light|Ascent)/,
+      pattern: /bg-color-barchart1-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /bg-color-dropdown-(SC|light|Ascent)/, // Background color for dropdowns
+      pattern: /bg-color-dropdown-(SC|lightTheme|Ascent)/, // Background color for dropdowns
     },
     {
-      pattern: /bg-color-(SC|light|Ascent)/,
+      pattern: /bg-color-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /bg-gradient-card-(SC|light|Ascent)/,
+      pattern: /bg-gradient-card-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /bg-color-card-(SC|light|Ascent)/,
+      pattern: /bg-color-card-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /bg-color-textfield-dropdown-(SC|light|Ascent)/,
+      pattern: /bg-color-textfield-dropdown-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /bg-color-stepstatus-(SC|light|Ascent)/,
+      pattern: /bg-color-stepstatus-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /bg-color-textfield-(SC|light|Ascent)/,
+      pattern: /bg-color-textfield-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /hover:bg-color-(SC|light|Ascent)/, // Hover background
+      pattern: /hover:bg-color-(SC|lightTheme|Ascent)/, // Hover background
     },
     {
-      pattern: /bg-color-button-(SC|light|Ascent)/,
+      pattern: /bg-color-button-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /border-color-(SC|light|Ascent)/, // Hover border color
+      pattern: /border-color-(SC|lightTheme|Ascent)/, 
     },
     {
-      pattern: /border-color-modal-(SC|light|Ascent)/, // Hover border color
+      pattern: /border-color-modal-(SC|lightTheme|Ascent)/, // Hover border color
     },
     {
-      pattern: /hover:border-color-(SC|light|Ascent)/, // Hover border color
+      pattern: /hover:border-color-(SC|lightTheme|Ascent)/, // Hover border color
     },
     {
-      pattern: /hover:text-color-(SC|light|Ascent)/, // Hover text color
+      pattern: /hover:text-color-(SC|lightTheme|Ascent)/, // Hover text color
     },
     {
-      pattern: /font-(SC|light|Ascent)/, // Font family for each theme
+      pattern: /font-(SC|lightTheme|Ascent)/, // Font family for each theme
     },
     {
-      pattern: /text-size-(SC|light|Ascent)/, // Font size for each theme
+      pattern: /text-size-(SC|lightTheme|Ascent)/, // Font size for each theme
     },
   ],
   plugins: [require("tailwindcss-animate")],

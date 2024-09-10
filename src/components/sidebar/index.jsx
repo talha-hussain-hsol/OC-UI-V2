@@ -40,7 +40,7 @@ const SidenavFundConfiguration = ({
         ? "#2c7be5"
         : !activeItemId && item.id === "domainSetting"
         ? "#2c7be5"
-        : theme === "light"
+        : theme === "lightTheme"
         ? "black"
         : "white";
 

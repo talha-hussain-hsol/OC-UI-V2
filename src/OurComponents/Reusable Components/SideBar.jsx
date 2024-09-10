@@ -47,7 +47,7 @@ const SideBar = ({ portalType }) => {
   const handleThemeSwitch = (theme) => {
     const defaultTheme = "Ascent";
     const themeStatus = {
-      light: lightThemeEnabled,
+      lightTheme: lightThemeEnabled,
       dark: darkThemeEnabled,
       standardChartered: standardCharteredEnabled,
     };
@@ -60,12 +60,12 @@ const SideBar = ({ portalType }) => {
       return;
     }
     switch (theme) {
-      case "light":
+      case "lightTheme":
         setLightThemeEnabled(true);
         setDarkThemeEnabled(false);
         setStandardCharteredEnabled(false);
-        toggleTheme("light");
-        localStorage.setItem("theme", "light");
+        toggleTheme("lightTheme");
+        localStorage.setItem("theme", "lightTheme");
         break;
       case "dark":
         setLightThemeEnabled(false);
@@ -89,7 +89,7 @@ const SideBar = ({ portalType }) => {
     const storedTheme = localStorage.getItem("theme") || "SC";
     toggleTheme(storedTheme);
     switch (storedTheme) {
-      case "light":
+      case "lightTheme":
         setLightThemeEnabled(true);
         setDarkThemeEnabled(false);
         setStandardCharteredEnabled(false);
@@ -289,7 +289,7 @@ const SideBar = ({ portalType }) => {
                       <input
                         type="checkbox"
                         checked={lightThemeEnabled}
-                        onChange={() => handleThemeSwitch("light")}
+                        onChange={() => handleThemeSwitch("lightTheme")}
                         className="sr-only peer"
                       />
                       <div className="w-9 h-5 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2c7be5]"></div>

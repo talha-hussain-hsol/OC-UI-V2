@@ -9,7 +9,7 @@ function FaceVerification() {
     <>
       <div className={`mt-2 border-b-4 border-color-${theme} px-2 `}>
         <h1 className="text-xl lg:text-2xl mb-2">Liveliness Test</h1>
-        <p className="text-sm lg:text-md mb-6 mt-4 uppercase">
+        <p className={`text-sm lg:text-md mb-6 mt-4 uppercase`}>
           To meet the regulatory KYC and AML/CFT requirements, this step helps
           us to ensure that you are who you say you are.
         </p>
