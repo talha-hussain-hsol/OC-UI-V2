@@ -80,6 +80,7 @@ module.exports = {
         "color-modal-SC": "#8DC63F",
         "color-lightTheme": "#004e89",
         "color-Ascent": "#1b3050",
+        "color-dropdown-Ascent" : "#06d3de",
       },
       textColor: {
         "color-SC": "#3DA500",
@@ -239,6 +240,9 @@ module.exports = {
     },
     {
       pattern: /border-color-(SC|lightTheme|Ascent)/,
+    },
+    {
+      pattern: /border-color-dropdown-(SC|lightTheme|Ascent)/,
     },
     {
       pattern: /border-color-modal-(SC|lightTheme|Ascent)/, // Hover border color
