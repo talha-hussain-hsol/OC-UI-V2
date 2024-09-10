@@ -48,7 +48,7 @@ const SideBar = ({ portalType }) => {
     const defaultTheme = "Ascent";
     const themeStatus = {
       lightTheme: lightThemeEnabled,
-      dark: darkThemeEnabled,
+      Ascent: darkThemeEnabled,
       standardChartered: standardCharteredEnabled,
     };
     if (themeStatus[theme]) {
@@ -67,7 +67,7 @@ const SideBar = ({ portalType }) => {
         toggleTheme("lightTheme");
         localStorage.setItem("theme", "lightTheme");
         break;
-      case "dark":
+      case "Ascent":
         setLightThemeEnabled(false);
         setDarkThemeEnabled(true);
         setStandardCharteredEnabled(false);
@@ -199,6 +199,7 @@ const SideBar = ({ portalType }) => {
                   />
                 </Link>
               </Tooltip>
+              <div></div>
             </>
           )}
           {portalType === "Customer" && (
@@ -243,6 +244,7 @@ const SideBar = ({ portalType }) => {
                   />
                 </Link>
               </Tooltip>
+              <div></div>
             </>
           )}
           {portalType === "Manager" && (
@@ -263,6 +265,7 @@ const SideBar = ({ portalType }) => {
                   />
                 </Link>
               </Tooltip>
+              <div></div>
             </>
           )}
         </div>
@@ -303,7 +306,7 @@ const SideBar = ({ portalType }) => {
                       <input
                         type="checkbox"
                         checked={darkThemeEnabled}
-                        onChange={() => handleThemeSwitch("dark")}
+                        onChange={() => handleThemeSwitch("Ascent")}
                         className="sr-only peer"
                       />
                       <div className="w-9 h-5 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2c7be5]"></div>

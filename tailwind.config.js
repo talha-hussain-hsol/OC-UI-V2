@@ -36,6 +36,9 @@ module.exports = {
         "color-Ascent": "linear-gradient(to right, #0c2138 0%, #113c4d 100%)",
       },
       backgroundColor: {
+        "theme-SC": "#edf2f4", // Color for Theme 1 (SC)
+        "theme-lightTheme": "#efefd0", // Color for Theme 3 (lightTheme)
+        "theme-Ascent": "#0c2138",
         "color-SC": "#edf2f4",
         "color-lightTheme": "#efefd0",
 
@@ -80,7 +83,7 @@ module.exports = {
         "color-modal-SC": "#8DC63F",
         "color-lightTheme": "#004e89",
         "color-Ascent": "#1b3050",
-        "color-dropdown-Ascent" : "#06d3de",
+        "color-dropdown-Ascent": "#06d3de",
       },
       textColor: {
         "color-SC": "#3DA500",
