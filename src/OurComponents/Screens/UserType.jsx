@@ -9,7 +9,7 @@ const UserType = ({ onSelection }) => {  // Accept onSelection as a prop
 
   const handleSelection = (type) => {
     setUserType(type);
-    // onSelection(type); 
+    onSelection(type); 
   };
 
   return (
