@@ -135,11 +135,11 @@ function Stepper() {
         <div className={`bg-gradient-stepper-card-${theme} w-full md:w-full shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] mx-auto p-10   md:ml-4 md:mt-12 rounded-lg  text-white  flex flex-col justify-center`}>
           {renderContent()}
 
-          <hr className="w-[95%] border-t-[1px] border-t-[#6e84a3] opacity-30 my-6 mx-8 z-0" />
-          <div className="flex lg:space-x-[75%] md:justify-center sm:justify-center w-full p-4 xs:justify-center z-10">
+          <hr className="w-[95%] border-t-[1px] border-t-[#6e84a3] opacity-30 my-6 mx-8 " />
+          <div className="flex lg:space-x-[75%] md:justify-center sm:justify-center w-full p-4 xs:justify-center ">
             <Button
               text="Back"
-              className={`bg-color-button-{theme} py-6 px-8 mr-[5%] border b-white hover:border-0 rounded-lg text-white focus:outline-none`}
+              className={`bg-color-button-{theme} py-6 px-8 mr-[5%] border b-white hover:border-0 rounded-lg text-white focus:outline-none `}
               onClick={handlePrev}
               disabled={currentStep === 1}
             />
