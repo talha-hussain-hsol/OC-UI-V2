@@ -32,15 +32,18 @@ function Documents() {
   return (
     <>
       <div className="bg-transparent flex flex-col md:flex-row md:space-y-0 md:space-x-6">
-        <div className={`bg-transparent mx-auto md:ml-16 mt-6 rounded-lg  p-6 w-full max-w-md h-[390px] overflow-y-auto custom-scrollbar`}>
+        <div
+          className={`bg-transparent mx-auto md:ml-16 mt-6 rounded-lg  p-6 w-full max-w-md h-[390px] overflow-y-auto custom-scrollbar`}
+        >
           <div className="space-y-3">
             {documents.map((doc, index) => (
               <div
                 key={index}
                 className={`flex justify-between shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] items-center p-[22px] rounded-lg cursor-pointer
-                      ${selectedDocument === doc
-                        ? `border border-red-500`
-                        : "border border-white"
+                      ${
+                        selectedDocument === doc
+                          ? `border border-red-500`
+                          : "border border-white"
                       }
                       hover:border-color-${theme} transition-colors`}
                 onClick={() => handleDocumentSelect(doc)}
@@ -54,7 +57,9 @@ function Documents() {
 
         <div className="flex flex-col items-center justify-center w-full h-64 md:mx-4 mt-10 text-white">
           <div className="flex flex-col items-center justify-center space-y-4">
-            <div className={`flex flex-col items-center justify-center border-2 border-color-${theme} rounded-lg py-6 px-8 w-full`}>
+            <div
+              className={`flex flex-col items-center justify-center border-2 border-color-${theme} rounded-lg py-6 px-8 w-full`}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-12 w-12 text-sky-500"
@@ -88,7 +93,9 @@ function Documents() {
           onClose={handleCloseModal}
           selectedType={selectedDocument}
         >
-          <div className={` bg-transparent flex flex-col items-center justify-center w-full border-2 border-color-modal-${theme} rounded-lg p-8 md:p-16`}>
+          <div
+            className={` bg-transparent flex flex-col items-center justify-center w-full border-2 border-color-modal-${theme} rounded-lg p-8 md:p-16`}
+          >
             <div className="flex flex-col items-center justify-center rounded-lg py-6 w-[80%]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

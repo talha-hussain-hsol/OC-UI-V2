@@ -136,14 +136,14 @@ const SideBar = ({ portalType }) => {
     <>
       {/* {/ Hamburger Menu Button /} */}
       <button
-        className="fixed top-4 left-4 z-50 text-white p-2 focus:outline-none lg:hidden"
+        className="fixed top-4 left-4 text-white p-2 focus:outline-none lg:hidden"
         onClick={toggleSidebar}
       >
         <AiOutlineMenu size={24} />
       </button>
 
       <div
-        className={`bg-color-sidebar-${theme} h-screen w-16 fixed flex flex-col items-center md:hidden sm:hidden xs:hidden py-6 ${
+        className={`bg-color-sidebar-${theme} z-[1000] h-screen w-16 fixed flex flex-col items-center md:hidden sm:hidden xs:hidden py-6 ${
           !isSidebarOpen ? "lg:flex" : "lg:hidden"
         }`}
       >
@@ -271,14 +271,14 @@ const SideBar = ({ portalType }) => {
           <div className="flex flex-col items-center mt-auto">
             <button
               onClick={toggleThemeSidebar}
-              className={`text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
+              className={`text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200 z-20`}
             >
               <MdInvertColors size={18} />
             </button>
             {isThemeSidebarOpen && (
               <div
                 ref={themeSidebarRef}
-                className={`absolute left-14 border-color-${theme} border w-60 bottom-32 z-50 text-sm bg-color-sidebar-${theme} text-color-sidebar-icon-${theme} shadow-md p-2 rounded-md`}
+                className={`absolute left-14 border-color-${theme} border w-60 bottom-32 text-sm bg-color-sidebar-${theme} text-color-sidebar-icon-${theme} shadow-md p-2 rounded-md`}
               >
                 <ul>
                   <li
