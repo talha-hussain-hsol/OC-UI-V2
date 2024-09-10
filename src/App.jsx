@@ -22,6 +22,7 @@ import Identities from "./OurComponents/Screens/Identities";
 import MainDocuments from "./OurComponents/Screens/MainDocuments";
 import Stepper from "./OurComponents/Screens/Stepper";
 import UserForm from "./OurComponents/Screens/UserForm";
+import FundCode from "./OurComponents/Screens/FundCode"
 import "./App.css";
 import { ThemeProvider } from "./contexts/themeContext";
 import UserType from "./OurComponents/Screens/UserType";
@@ -44,6 +45,7 @@ function App() {
         <Route path="/documents" element={<ThemeProvider> <MainDocuments /> </ThemeProvider> } />
         {/* <Route path="/faceverification" element={<FaceVerifacation />} />
         <Route path="/vcip" element={<VCIP />} /> */}
+        <Route path="/fund-code"  element={<ThemeProvider> <FundCode /> </ThemeProvider> } />
         <Route path="/stepper"  element={<ThemeProvider> <Stepper /> </ThemeProvider> } />
         {/* <Route path="/dashboard" element={<Dashboard />} /> */}
       </Routes>

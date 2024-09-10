@@ -10,7 +10,7 @@ const Accounts = () => {
 
   const navigate = useNavigate();
   function handleClick() {
-    navigate("/stepper");
+    navigate("/fund-code");
   }
 
   return (
