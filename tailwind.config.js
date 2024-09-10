@@ -29,7 +29,7 @@ module.exports = {
           "linear-gradient(to bottom, #24357C 0%, #0B76A8 100%)",
         "color-card-Ascent":
           "linear-gradient(to bottom, #24357C 0%, #0B76A8 100%)", // Card header in stepper ex: Face Snap
-          "gradient-stepper-card-Ascent":
+        "gradient-stepper-card-Ascent":
           "linear-gradient(to bottom, #0d345d 0%, #151c39 100%)",
       },
       backgroundColor: {
