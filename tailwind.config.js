@@ -26,7 +26,9 @@ module.exports = {
         "gradient-stepper-card-SC":
           "linear-gradient(to right, #243279 0%, #0091BB 100%)",
         "color-cardheader-stepper-SC":
-          "linear-gradient(to bottom, #24357C 0%, #0B76A8 100%)", // Card header in stepper ex: Face Snap
+          "linear-gradient(to bottom, #24357C 0%, #0B76A8 100%)",
+        "color-card-Ascent":
+          "linear-gradient(to bottom, #0d345d 0%, #151c39 100%)",
       },
       backgroundColor: {
         "color-SC": "#edf2f4",
@@ -39,11 +41,12 @@ module.exports = {
         "color-SC-hover": "#ef233c",
         "color-lightTheme-hover": "#004e89",
         "color-Ascent-hover": "#e27396",
-        "color-textfield-SC": "transparent",
+
         "color-textfield-dropdown-SC": "#F7F7F7",
+        "color-textfield-dropdown-Ascent": "#043f63",
+        "color-textfield-SC": "transparent",
         "color-textfield-lightTheme": "#004e89",
         "color-textfield-Ascent": "#043f63",
-        "color-dropdown-SC": "#77838F",
         "color-button-SC": "#3DA500", // For All Buttons + Processing Case
         "color-button-Ascent": "#2C75E6", // For All Buttons + Processing Case
         "color-button1-SC": "#8DC63F", //For Accepted Case
@@ -60,6 +63,7 @@ module.exports = {
         "sidebar-color-SC": "#FFFFFF",
         "color-stepper-card-SC": "#23367C",
         "color-table-color-SC": "#FAFAFB",
+        "color-table-color-Ascent": "#12273f",
         "color-sidebar-SC": "#FFFFFF",
         "color-sidebar-Ascent": "#152e4d",
         "color-profile-icon-SC": "#F6F6F6",
@@ -229,7 +233,7 @@ module.exports = {
       pattern: /bg-color-button-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /border-color-(SC|lightTheme|Ascent)/, 
+      pattern: /border-color-(SC|lightTheme|Ascent)/,
     },
     {
       pattern: /border-color-modal-(SC|lightTheme|Ascent)/, // Hover border color

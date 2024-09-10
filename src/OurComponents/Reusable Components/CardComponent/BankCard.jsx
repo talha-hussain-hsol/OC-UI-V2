@@ -30,7 +30,9 @@ const BankCard = () => {
   const rows = [];
 
   return (
-    <div className={`bg-color-card-${theme} rounded-md border-color-${theme} border-[1px] shadow-${theme} mb-16 px-2 sm:px-4 flex flex-col items-center justify-center h-full w-full`}>
+    <div
+      className={`bg-color-card-${theme} rounded-md border-color-${theme} border-[1px] shadow-${theme} mb-16 px-2 sm:px-4 flex flex-col items-center justify-center h-full w-full`}
+    >
       <CardHeader
         FundName="Bank List"
         fundClassName={`text-color-text-${theme}`}
