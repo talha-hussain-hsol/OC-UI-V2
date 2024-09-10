@@ -78,7 +78,7 @@ const FinancialChart = ({ data, year, chartType = "bar" }) => {
   };
 
   return (
-    <div className={`p-6 bg-color-card-${theme} shadow-lg`}>
+    <div className={`p-6 bg-color-card-${theme} shadow-${theme}`}>
       {chartType === "bar" ? (
         <Bar data={chartData} options={options} />
       ) : (

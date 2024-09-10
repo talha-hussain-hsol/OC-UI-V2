@@ -103,7 +103,7 @@ function Dashboard() {
                   showField={false}
                 />
               </div>
-              <div className={`bg-color-card-${theme}`}>
+              <div className={`bg-color-card-${theme} shadow-${theme}`}>
                 <NotificationCard
                   iconLeft={<FaArrowRight />}
                   message="New Performance Document Received"
