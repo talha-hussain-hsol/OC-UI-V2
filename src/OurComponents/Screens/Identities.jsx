@@ -6,9 +6,14 @@ import SideBar from "../Reusable Components/SideBar";
 import { AiFillEdit } from "react-icons/ai";
 import TabBar from "../Reusable Components/TabBar";
 import { useTheme } from "../../contexts/themeContext";
+import { useNavigate } from "react-router-dom";
 
 const Identities = () => {
   const { theme } = useTheme();
+  const navigate = useNavigate();
+  function handleClick() {
+    navigate("/stepper");
+  }
 
   const Headers = ["Name", "Type", "Status", "Actions"];
   const Rows = [
@@ -68,6 +73,7 @@ const Identities = () => {
             <Button
               className={`bg-color-button-${theme} text-white font-light rounded-lg py-6 px-8 text-sm sm:text-md`}
               text="Create New Identity"
+              onClick={handleClick}
             />
           </div>
           <hr className="border-t-[1px] border-t-[#6e84a3] opacity-20 mb-6 ml-6" />
