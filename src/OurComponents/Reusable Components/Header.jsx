@@ -4,14 +4,6 @@ import { useNavigate } from "react-router-dom";
 // import { useTheme } from "../../contexts/themeContext";
 
 const Header = ({ subheading, heading, showButton, onButtonClick, theme }) => {
-  // const { theme } = useTheme();
-  // console.log("theme", theme);
-  // const textColorClass = {
-  //   theme1: "txt-color-theme1",
-  //   theme2: "txt-color-theme2",
-  //   theme3: "txt-color-theme3",
-  //   theme4: "txt-color-theme4",
-  // };
   const navigate = useNavigate();
   function handleClick() {
     navigate("/stepper");

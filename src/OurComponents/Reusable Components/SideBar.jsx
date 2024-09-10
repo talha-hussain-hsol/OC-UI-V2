@@ -45,7 +45,7 @@ const SideBar = ({ portalType }) => {
   };
 
   const handleThemeSwitch = (theme) => {
-    const defaultTheme = "theme4";
+    const defaultTheme = "Ascent";
     const themeStatus = {
       light: lightThemeEnabled,
       dark: darkThemeEnabled,
@@ -64,49 +64,49 @@ const SideBar = ({ portalType }) => {
         setLightThemeEnabled(true);
         setDarkThemeEnabled(false);
         setStandardCharteredEnabled(false);
-        toggleTheme("theme3");
-        localStorage.setItem("theme", "theme3");
+        toggleTheme("light");
+        localStorage.setItem("theme", "light");
         break;
       case "dark":
         setLightThemeEnabled(false);
         setDarkThemeEnabled(true);
         setStandardCharteredEnabled(false);
-        toggleTheme("theme2");
-        localStorage.setItem("theme", "theme2");
+        toggleTheme("Ascent");
+        localStorage.setItem("theme", "Ascent");
         break;
       case "standardChartered":
         setLightThemeEnabled(false);
         setDarkThemeEnabled(false);
         setStandardCharteredEnabled(true);
-        toggleTheme("theme1");
-        localStorage.setItem("theme", "theme1");
+        toggleTheme("SC");
+        localStorage.setItem("theme", "SC");
         break;
       default:
         break;
     }
   };
   useEffect(() => {
-    const storedTheme = localStorage.getItem("theme") || "theme1";
+    const storedTheme = localStorage.getItem("theme") || "SC";
     toggleTheme(storedTheme);
     switch (storedTheme) {
-      case "theme3":
+      case "light":
         setLightThemeEnabled(true);
         setDarkThemeEnabled(false);
         setStandardCharteredEnabled(false);
         break;
-      case "theme2":
+      case "Ascent":
         setLightThemeEnabled(false);
         setDarkThemeEnabled(true);
         setStandardCharteredEnabled(false);
         break;
-      case "theme1":
+      case "SC":
         setLightThemeEnabled(false);
         setDarkThemeEnabled(false);
         setStandardCharteredEnabled(true);
         break;
       default:
         setLightThemeEnabled(false);
-        setDarkThemeEnabled(false);
+        setDarkThemeEnabled(true);
         setStandardCharteredEnabled(false);
     }
   }, []);
@@ -281,7 +281,9 @@ const SideBar = ({ portalType }) => {
                 className={`absolute left-14 border-color-${theme} border w-60 bottom-32 z-50 text-sm bg-color-sidebar-${theme} text-color-sidebar-icon-${theme} shadow-md p-2 rounded-md`}
               >
                 <ul>
-                  <li className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}>
+                  <li
+                    className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}
+                  >
                     Light
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input
@@ -293,7 +295,9 @@ const SideBar = ({ portalType }) => {
                       <div className="w-9 h-5 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2c7be5]"></div>
                     </label>
                   </li>
-                  <li className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}>
+                  <li
+                    className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}
+                  >
                     Dark
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input
@@ -305,7 +309,9 @@ const SideBar = ({ portalType }) => {
                       <div className="w-9 h-5 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2c7be5]"></div>
                     </label>
                   </li>
-                  <li className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}>
+                  <li
+                    className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}
+                  >
                     Standard Chartered
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input

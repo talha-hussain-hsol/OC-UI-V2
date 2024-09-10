@@ -3,10 +3,10 @@ import { createContext, useContext, useEffect, useState } from "react";
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState("theme1");
+  const [theme, setTheme] = useState("SC");
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") || "theme1";
+    const savedTheme = localStorage.getItem("theme") || "SC";
     setTheme(savedTheme);
   }, []);
 
