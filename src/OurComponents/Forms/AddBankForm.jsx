@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Button from "../Reusable Components/Button";
+import { useTheme } from "../../contexts/themeContext";
 
 const AddBankForm = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
@@ -9,7 +10,7 @@ const AddBankForm = ({ isOpen, onClose }) => {
     accountHolder: "",
     swiftCode: "",
   });
-
+  const { theme } = useTheme(); 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -29,7 +30,7 @@ const AddBankForm = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center z-50 items-center overflow-y-auto">
-      <div className="bg-[#152e4d] rounded-md w-full sm:w-1/2 lg:w-1/3 mb-10 py-6 px-6 shadow-sm text-white">
+      <div className={`bg-gradient-stepper-card-${theme} rounded-md w-full sm:w-1/2 lg:w-8/12 mb-5 mt-40 py-6 px-6 shadow-sm text-white`}>
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-sm font-light">Add Bank</h2>
           <button onClick={onClose} className="text-[#6e84a3] text-sm">
@@ -48,7 +49,7 @@ const AddBankForm = ({ isOpen, onClose }) => {
                 value={formData.currency}
                 onChange={handleChange}
                 placeholder="Currency"
-                className={`w-full p-2 bg-[#043f63] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md ${
+                className={`w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md ${
                   isFieldEmpty("currency")
                     ? "border border-[#a9712c]"
                     : "border border-[#1c3758]"
@@ -66,7 +67,7 @@ const AddBankForm = ({ isOpen, onClose }) => {
                 value={formData.bankName}
                 onChange={handleChange}
                 placeholder="Bank Name"
-                className={`w-full p-2 bg-[#043f63] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md ${
+                className={`w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md ${
                   isFieldEmpty("bankName")
                     ? "border border-[#a9712c]"
                     : "border border-[#1c3758]"
@@ -84,7 +85,7 @@ const AddBankForm = ({ isOpen, onClose }) => {
                 value={formData.accountNumber}
                 onChange={handleChange}
                 placeholder="Account Number"
-                className={`w-full p-2 bg-[#043f63] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md ${
+                className={`w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md ${
                   isFieldEmpty("accountNumber")
                     ? "border border-[#a9712c]"
                     : "border border-[#1c3758]"
@@ -102,7 +103,7 @@ const AddBankForm = ({ isOpen, onClose }) => {
                 value={formData.accountHolder}
                 onChange={handleChange}
                 placeholder="Account Holder's Name"
-                className={`w-full p-2 bg-[#043f63] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md ${
+                className={`w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md ${
                   isFieldEmpty("accountHolder")
                     ? "border border-[#a9712c]"
                     : "border border-[#1c3758]"
@@ -120,7 +121,7 @@ const AddBankForm = ({ isOpen, onClose }) => {
                 value={formData.swiftCode}
                 onChange={handleChange}
                 placeholder="SWIFT/BIC/IFSC Code"
-                className={`w-full p-2 bg-[#043f63] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md ${
+                className={`w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md ${
                   isFieldEmpty("swiftCode")
                     ? "border border-[#a9712c]"
                     : "border border-[#1c3758]"
@@ -133,7 +134,7 @@ const AddBankForm = ({ isOpen, onClose }) => {
               <input
                 type="text"
                 placeholder="IBAN (International Bank Account Number)"
-                className="w-full p-2 bg-[#043f63] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white border border-[#1c3758] rounded-md"
+                className={`w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white border border-[#1c3758] rounded-md`}
               />
             </div>
             {/* Sort Code */}
@@ -144,7 +145,7 @@ const AddBankForm = ({ isOpen, onClose }) => {
               <input
                 type="text"
                 placeholder="Sort Code (for UK banks)"
-                className="w-full p-2 bg-[#043f63] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white border border-[#1c3758] rounded-md"
+                className={`w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white border border-[#1c3758] rounded-md`}
               />
             </div>
             {/* Routing Number */}
@@ -155,7 +156,7 @@ const AddBankForm = ({ isOpen, onClose }) => {
               <input
                 type="text"
                 placeholder="Routing Number"
-                className="w-full p-2 bg-[#043f63] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white border border-[#1c3758] rounded-md"
+                className={`w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white border border-[#1c3758] rounded-md`}
               />
             </div>
             {/* Reference Description */}
@@ -166,7 +167,7 @@ const AddBankForm = ({ isOpen, onClose }) => {
               <input
                 type="text"
                 placeholder="Reference description"
-                className="w-full p-2 bg-[#043f63] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white border border-[#1c3758] rounded-md"
+                className={`w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white border border-[#1c3758] rounded-md`}
               />
             </div>
             {/* Bank/Branch Address */}
@@ -176,7 +177,7 @@ const AddBankForm = ({ isOpen, onClose }) => {
               </label>
               <textarea
                 placeholder="Bank/Branch Address"
-                className="w-full p-2 bg-[#043f63] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white border border-[#1c3758] rounded-md h-24"
+                className={`w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white border border-[#1c3758] rounded-md h-24`}
               />
             </div>
           </div>
