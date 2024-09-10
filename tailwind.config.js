@@ -31,11 +31,12 @@ module.exports = {
           "linear-gradient(to bottom, #0d345d 0%, #151c39 100%)", // Card header in stepper ex: Face Snap
         "gradient-stepper-card-Ascent":
           "linear-gradient(to bottom, #0d345d 0%, #151c39 100%)",
+        "color-Ascent": "linear-gradient(to right, #0c2138 0%, #113c4d 100%)",
       },
       backgroundColor: {
         "color-SC": "#edf2f4",
         "color-lightTheme": "#efefd0",
-        // "color-Ascent": "linear-gradient(to bottom, #0d345d 0%, #151c39 100%)",
+
         "color-card-SC": "#FFFFFF",
         "color-card-lightTheme": "#dde5b6",
         // "color-card-Ascent": "#b5e2fa",

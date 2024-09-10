@@ -1,9 +1,11 @@
 import React from "react";
 import BankCard from "../Reusable Components/CardComponent/BankCard";
+import { useTheme } from "../../contexts/themeContext";
 
 const BankWallets = () => {
+  const { theme } = useTheme();
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className={`bg-color-${theme} flex flex-col justify-center items-center`}>
       <BankCard />
     </div>
   );

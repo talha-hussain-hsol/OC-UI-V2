@@ -10,7 +10,7 @@ const AddBankForm = ({ isOpen, onClose }) => {
     accountHolder: "",
     swiftCode: "",
   });
-  const { theme } = useTheme(); 
+  const { theme } = useTheme();
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -29,11 +29,16 @@ const AddBankForm = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center z-50 items-center overflow-y-auto">
-      <div className={`bg-gradient-stepper-card-${theme} rounded-md w-full sm:w-1/2 lg:w-8/12 mb-5 mt-40 py-6 px-6 shadow-sm text-white`}>
+    <div
+      className="fixed inset-0 bg-black bg-opacity-30 flex justify-center z-50 items-center overflow-y-auto"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <div
+        className={`bg-gradient-stepper-card-${theme} rounded-md w-full sm:w-1/2 lg:w-8/12 mb-5 mt-40 py-6 px-6 shadow-sm text-white`}
+      >
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-sm font-light">Add Bank</h2>
-          <button onClick={onClose} className="text-[#6e84a3] text-sm">
+          <button onClick={onClose} className="text-white text-sm">
             ✕
           </button>
         </div>
@@ -185,7 +190,9 @@ const AddBankForm = ({ isOpen, onClose }) => {
             <Button
               text="Submit"
               className={`py-6 px-8 rounded-lg ${
-                isFormValid() ? "bg-[#2c7be5]" : "bg-[#2c7be5] opacity-70"
+                isFormValid()
+                  ? `bg-color-button-${theme}`
+                  : `bg-color-button-${theme} opacity-70`
               }`}
               disabled={!isFormValid()}
             />
