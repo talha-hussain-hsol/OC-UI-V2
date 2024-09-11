@@ -45,7 +45,7 @@ const FundCode = () => {
     <>
       <SideBar portalType="Customer" />
       <div
-        className={`bg-color-card-${theme} h-screen border-color-${theme} border-[1px] shadow-${theme}  py-20 px-20 flex flex-col gap-4 items-center`}
+        className={`bg-color-${theme} h-screen border-color-${theme} border-[1px] shadow-${theme}  py-20 px-20 flex flex-col gap-4 items-center`}
       >
         <div
           className={`bg-gradient-stepper-card-${theme}  border-color-${theme} border-[1px] shadow-${theme} rounded-lg w-full ml-16 pt-20 pb-4 px-20 flex flex-col gap-4 items-center`}
