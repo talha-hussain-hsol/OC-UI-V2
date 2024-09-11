@@ -33,23 +33,21 @@ import UserInfo from "./components/testingTheming";
 function App() {
   
   return (
+
     <BrowserRouter>
-      <Routes>
-        {/* <Route path="/accounts" element={<AccountScreen />} /> */}
-        {/* <Route path="/" element={<DynamicForm />} /> */}
-        {/* <Route path="/" element={<UserType />} /> */}
-        <Route path="/" element={<ThemeProvider> <Dashboard /> </ThemeProvider> } />
-        <Route path="/user-form" element={<ThemeProvider> <UserForm /> </ThemeProvider> } />
-        <Route path="/accounts" element={<ThemeProvider> <Accounts /> </ThemeProvider> } />
-        <Route path="/identities" element={<ThemeProvider> <Identities /> </ThemeProvider> } />
-        <Route path="/documents" element={<ThemeProvider> <MainDocuments /> </ThemeProvider> } />
-        {/* <Route path="/faceverification" element={<FaceVerifacation />} />
-        <Route path="/vcip" element={<VCIP />} /> */}
-        <Route path="/fund-code"  element={<ThemeProvider> <FundCode /> </ThemeProvider> } />
-        <Route path="/stepper"  element={<ThemeProvider> <Stepper /> </ThemeProvider> } />
-        {/* <Route path="/dashboard" element={<Dashboard />} /> */}
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<ThemeProvider> <Dashboard /> </ThemeProvider> } />
+      <Route path="/user-form" element={<ThemeProvider> <UserForm /> </ThemeProvider> } />
+      <Route path="/accounts" element={<ThemeProvider> <Accounts /> </ThemeProvider> } />
+      <Route path="/identities" element={<ThemeProvider> <Identities /> </ThemeProvider> } />
+      <Route path="/documents" element={<ThemeProvider> <MainDocuments /> </ThemeProvider> } />
+      <Route path="/fund-code"  element={<ThemeProvider> <FundCode /> </ThemeProvider> } />
+      <Route path="/stepper"  element={<ThemeProvider> <Stepper /> </ThemeProvider> } />
+      
+    </Routes>
+  </BrowserRouter>
+       
+
     // <div className="flex h-screen">
 
     //   <BrowserRouter>
@@ -121,17 +119,14 @@ const AppWrapper = () => {
 
   return (
     <div
-      className={`w-full overflow-hidden bg-custom-gradient text-white pt-[0.5%] pl-[7%] pr-[4%]`}
+      className={`w-full overflow-hidden bg-custom-gradient text-white`}
     >
       <Routes>
         {/* <Route path={"/"} element={<SignIn />} /> */}
         <Route path={"/sign-in"} element={<SignIn />} />
         <Route path="/callback" element={<Callback />} />
         <Route path="/splash" element={<SplashScreen />} />
-        <Route path="/accounts" element={<Accounts />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/documents" element={<MainDocuments />} />
-        <Route path="/identities" element={<Identities />} />
+        
       </Routes>
     </div>
   );
