@@ -23,6 +23,10 @@ module.exports = {
           "linear-gradient(to bottom, #243279 0%, #0055BB 100%)",
         "gradient-card-Ascent":
           "linear-gradient(to bottom, #0d345d 0%, #151c39 100%)",
+        "gradient-profile-card-SC":
+          "linear-gradient(to bottom, #243279 0%, #0091BB 100%)",
+        "gradient-profile-card-Ascent":
+          "linear-gradient(to bottom, #0d345d 0%, #151c39 100%)",
         "gradient-stepper-card-SC":
           "linear-gradient(to right, #243279 0%, #0091BB 100%)",
         "gradient-stepper-card-Ascent":
@@ -177,6 +181,9 @@ module.exports = {
     },
     {
       pattern: /bg-color-profile-icon-(SC|lightTheme|Ascent)/,
+    },
+    {
+      pattern: /bg-gradient-profile-card-(SC|lightTheme|Ascent)/,
     },
     {
       pattern: /bg-color-stepper-card-(SC|lightTheme|Ascent)/,

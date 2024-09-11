@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "../Reusable Components/Tables/Table";
 import Header from "../Reusable Components/Header";
 import Button from "../Reusable Components/Button";
@@ -14,7 +14,22 @@ const Identities = () => {
   function handleClick() {
     navigate("/stepper");
   }
+  useEffect(() => {
+    console.log("Current theme:", theme);
 
+    document.body.style.backgroundColor =
+      theme === "SC"
+        ? "#ffffff"
+        : theme === "Ascent"
+        ? "rgba(18, 38, 63)"
+        : theme === "lightTheme"
+        ? "#000000"
+        : "";
+
+    return () => {
+      document.body.style.backgroundColor = "";
+    };
+  }, [theme]);
   const Headers = ["Name", "Type", "Status", "Actions"];
   const Rows = [
     {

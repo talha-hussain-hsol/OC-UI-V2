@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../Reusable Components/Header";
 import SideBar from "../Reusable Components/SideBar";
 import Button from "../Reusable Components/Button";
@@ -12,7 +12,22 @@ const MainDocuments = () => {
   const [documentCategory, setDocumentCategory] = useState("");
   const [fund, setFund] = useState("");
   const [asOfDate, setAsOfDate] = useState("");
+  useEffect(() => {
+    console.log("Current theme:", theme);
 
+    document.body.style.backgroundColor =
+      theme === "SC"
+        ? "#ffffff"
+        : theme === "Ascent"
+        ? "rgba(18, 38, 63)"
+        : theme === "lightTheme"
+        ? "#000000"
+        : "";
+
+    return () => {
+      document.body.style.backgroundColor = "";
+    };
+  }, [theme]);
   const Headers = [
     "Document Description",
     "Fund",

@@ -9,16 +9,16 @@ const Accounts = () => {
   const { theme } = useTheme();
 
   useEffect(() => {
-    console.log("Current theme:", theme); 
+    console.log("Current theme:", theme);
 
     document.body.style.backgroundColor =
       theme === "SC"
-        ? "#ffffff" 
+        ? "#ffffff"
         : theme === "Ascent"
-        ? "rgba(18, 38, 63)" 
+        ? "rgba(18, 38, 63)"
         : theme === "lightTheme"
-        ? "#000000" 
-        : ""; 
+        ? "#000000"
+        : "";
 
     return () => {
       document.body.style.backgroundColor = "";

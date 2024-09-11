@@ -20,7 +20,9 @@ const SummaryCard = () => {
   );
   const middleContent = (
     <div className="flex flex-col gap-1 py-2">
-      <p className={`text-[#6881a3] text-xs sm:text-sm flex items-center gap-1`}>
+      <p
+        className={`text-[#6881a3] text-xs sm:text-sm flex items-center gap-1`}
+      >
         <span>
           <FiCheckCircle color="#01cc7a" size={16} />
         </span>
@@ -60,13 +62,18 @@ const SummaryCard = () => {
         <div
           className={`bg-color-stepstatus-${theme}  rounded-md border-[#1b3050] border-[1px] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] mb-8 flex flex-col  justify-center h-full w-full`}
         >
-          <CardHeader
+          <div
+            className={`bg-gradient-profile-card-${theme} rounded-md border-color-${theme} border-b-[1px] shadow-${theme}  py-4 px-8 flex justify-between h-full w-full`}
+          >
+            <p>Profile</p>
+          </div>
+          {/* <CardHeader
             FundName="Profile"
             showButton={false}
             showLogo={false}
             fundClassName={`text-[#6881a3] `}
             // className="w-full"
-          />
+          /> */}
           <div className={`flex flex-col ml-4 my-8 gap-3`}>
             <p className="text-white uppercase text-sm">Name : testa daSA AX</p>
             <p className="text-white uppercase text-sm">
@@ -75,7 +82,9 @@ const SummaryCard = () => {
             <p className="text-white uppercase text-sm">
               Country of Residence: Afghanistan
             </p>
-            <p className="text-white uppercase text-sm">Customer Type : INDIVIDUAL</p>
+            <p className="text-white uppercase text-sm">
+              Customer Type : INDIVIDUAL
+            </p>
             <p className="text-white uppercase text-sm">Email : undefined</p>
             <p className="text-white uppercase text-sm">Phone : 9386767676</p>
           </div>

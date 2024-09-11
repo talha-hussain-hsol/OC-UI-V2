@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SideBar from "../Reusable Components/SideBar";
 import Button from "../Reusable Components/Button";
 import UserType from "./UserType";
@@ -27,7 +27,22 @@ function Stepper() {
   const [currentStep, setCurrentStep] = useState(1);
   const [userType, setUserType] = useState(""); // Store the selected userType
   const [formData, setFormData] = useState({}); // Store all form data
+  useEffect(() => {
+    console.log("Current theme:", theme);
 
+    document.body.style.backgroundColor =
+      theme === "SC"
+        ? "#ffffff"
+        : theme === "Ascent"
+        ? "rgba(18, 38, 63)"
+        : theme === "lightTheme"
+        ? "#000000"
+        : "";
+
+    return () => {
+      document.body.style.backgroundColor = "";
+    };
+  }, [theme]);
   const handleNext = (data) => {
     if (currentStep === steps.length) {
       setComplete(true);
