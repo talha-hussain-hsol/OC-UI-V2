@@ -71,6 +71,7 @@ module.exports = {
         "color-barchart-SC": "#0D7EF9",
         "color-barchart1-SC": "#68D930",
         "color-stepper-proceedbutton-SC": "#F0082E",
+        "color-stepper-proceedbutton-Ascent": "#F0082E",
         "color-stepstatus-SC": "#24357C", // For Summary Page -> Status
         "sidebar-color-SC": "#FFFFFF",
         "color-stepper-card-SC": "#23367C",
