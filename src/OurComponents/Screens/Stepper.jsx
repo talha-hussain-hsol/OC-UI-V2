@@ -81,8 +81,10 @@ function Stepper() {
   return (
     <>
       <SideBar portalType="Customer" />
-      <div className={`bg-color-${theme} w-full px-4 py-4 sm:px-6 md:px-16 lg:px-24 md:py-5 lg:py-6 `}>
-      <ul className="relative flex flex-row gap-x-0 ml-14 mt-7 ">
+      <div
+        className={`bg-color-${theme} w-full px-4 py-4 sm:px-6 md:px-16 lg:px-24 md:py-5 lg:py-6 `}
+      >
+        <ul className="relative flex flex-row gap-x-0 ml-14 mt-7 ">
           {steps.map((step, index) => (
             <li
               key={index}
@@ -90,10 +92,10 @@ function Stepper() {
                 index + 1 < currentStep ? "complete" : ""
               }`}
             >
-       <div className="min-w-10 min-h-10 w-full inline-flex items-center text-xs align-middle ">
+              <div className="min-w-10 min-h-10 w-full inline-flex items-center text-xs align-middle ">
                 <div
-               className={`w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex justify-center items-center shrink-0 rounded-full text-lg ml-2 sm:ml-4 md:ml-5 ${
-  index + 1 === currentStep
+                  className={`w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex justify-center items-center shrink-0 rounded-full text-lg ml-2 sm:ml-4 md:ml-5 ${
+                    index + 1 === currentStep
                       ? "bg-blue-500 text-white"
                       : index + 1 < currentStep
                       ? "bg-[#008000] text-gray-200"
@@ -105,14 +107,12 @@ function Stepper() {
                 {index < steps.length - 1 && (
                   <div
                     className={`ms-1 w-full sm:w-[150%] md:w-[200%] h-px flex-grow group-last:hidden ${
-                      index + 1 < currentStep
-                        ? "bg-[#008000]"
-                        : "bg-gray-400"
+                      index + 1 < currentStep ? "bg-[#008000]" : "bg-gray-400"
                     }`}
                   ></div>
                 )}
               </div>
-                 <div className="mt-2  xs:mt-3 xs:mr-[10px] sm:mt-3 sm:mr-[15px] md:mt-4 md:mr-[25px] lg:mt-3 mr-[78px] xl:mr-[62px]  2xl:mr-[120px] text-center">
+              <div className="mt-2  xs:mt-3 xs:mr-[10px] sm:mt-3 sm:mr-[15px] md:mt-4 md:mr-[25px] lg:mt-3 mr-[78px] xl:mr-[62px]  2xl:mr-[120px] text-center">
                 <span
                   className={`block text-sm md:text-base lg:text-sm  ${
                     index + 1 === currentStep
@@ -129,7 +129,9 @@ function Stepper() {
           ))}
         </ul>
 
-        <div className={`bg-gradient-stepper-card-${theme} w-full shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] mx-auto p-10 md:ml-4 md:mt-12 rounded-lg text-white flex flex-col justify-center`}>
+        <div
+          className={`bg-gradient-stepper-card-${theme} w-full shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] mx-auto p-10 md:ml-4 md:mt-12 rounded-lg text-white flex flex-col justify-center`}
+        >
           {renderContent()}
 
           <hr className="w-[95%] border-t-[1px] border-t-[#6e84a3] opacity-30 my-6 mx-8" />
@@ -154,6 +156,3 @@ function Stepper() {
 }
 
 export default Stepper;
-
-
-

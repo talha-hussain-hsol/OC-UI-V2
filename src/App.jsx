@@ -29,6 +29,8 @@ import UserType from "./OurComponents/Screens/UserType";
 import Card from "./sample-theming/Card";
 import ThemeSwitcher from "./components/themeSwitcher";
 import UserInfo from "./components/testingTheming";
+import ComplianceDashboard from "./OurComponents/ComplianceScreens/ComplianceDashboard";
+import KYW from "./OurComponents/ComplianceScreens/KYW";
 
 function App() {
   
@@ -43,7 +45,9 @@ function App() {
       <Route path="/documents" element={<ThemeProvider> <MainDocuments /> </ThemeProvider> } />
       <Route path="/fund-code"  element={<ThemeProvider> <FundCode /> </ThemeProvider> } />
       <Route path="/stepper"  element={<ThemeProvider> <Stepper /> </ThemeProvider> } />
-      
+      <Route path="/compliance-dashboard" element={<ThemeProvider> <ComplianceDashboard /> </ThemeProvider> } />
+      <Route path="/kyw" element={<ThemeProvider> <KYW /> </ThemeProvider> } />
+
     </Routes>
   </BrowserRouter>
        

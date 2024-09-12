@@ -106,6 +106,8 @@ module.exports = {
         "color-sidebar-icon-hover-Ascent": "#FFFFFF",
         "color-profile-icon-SC": "#5C5E64",
         "color-profile-icon-Ascent": "#FFFFFF",
+        "color-icon-SC":"#3DA500",
+        "color-icon-Ascent":"#3DA500",
       },
       fontFamily: {
         SC: ['"Roboto"', "sans-serif"], // Theme 1
@@ -165,6 +167,9 @@ module.exports = {
     },
     {
       pattern: /text-color-header-(SC|lightTheme|Ascent)/,
+    },
+    {
+      pattern: /text-color-icon-(SC|lightTheme|Ascent)/,
     },
     {
       pattern: /bg-color-stepper-proceedbutton-(SC|lightTheme|Ascent)/,
