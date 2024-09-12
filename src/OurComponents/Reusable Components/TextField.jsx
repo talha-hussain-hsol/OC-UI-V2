@@ -50,11 +50,7 @@ const TextField = ({
       value={value}
       placeholder={placeholder}
       onChange={onChange}
-      className={`p-3 rounded-md shadow-[0px_6px_20px_5px_rgba(0,0,0,0.5)] h-9 text-sm w-full focus:outline-none focus:ring-2 ${
-        theme === "SC"
-          ? `bg-white text-green-500 focus:ring-color-SC`
-          : `bg-[#1e3a5c] text-white focus:ring-color-theme2`
-      } ${
+      className={`p-3 rounded-md shadow-${theme} bg-color-textfield-dropdown-${theme} h-9 text-sm w-full focus:outline-none focus:ring-2  ${
         required ? `border border-yellow-500` : `border-0`
       }`}
     />

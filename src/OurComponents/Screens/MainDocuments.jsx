@@ -85,12 +85,14 @@ const MainDocuments = () => {
                 options={documentCategoryOptions}
                 value={documentCategory}
                 onChange={(e) => setDocumentCategory(e.target.value)}
+                className={`flex flex-col text-color-h1-${theme} sm:w-1/4 w-full z-0`}
               />
               <Dropdown
                 label="Fund"
                 options={fundOptions}
                 value={fund}
                 onChange={(e) => setFund(e.target.value)}
+                className={`flex flex-col text-color-h1-${theme} sm:w-1/4 w-full z-0`}
               />
               <div
                 className={`relative flex flex-col text-color-h1-${theme} sm:w-1/4 w-full`}

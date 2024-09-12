@@ -29,9 +29,14 @@ import UserType from "./OurComponents/Screens/UserType";
 import Card from "./sample-theming/Card";
 import ThemeSwitcher from "./components/themeSwitcher";
 import UserInfo from "./components/testingTheming";
+<<<<<<< HEAD
 import FundAccounts from "./OurComponents/ComplianceScreens/FundAccounts";
 import ComplianceDashboard from "./OurComponents/ComplianceScreens/ComplianceDashboard";
 import KYW from "./OurComponents/ComplianceScreens/KYW";
+=======
+import DomainAccounts from "./OurComponents/ComplianceScreens/DomainAccounts";
+
+>>>>>>> Compliance-Screens
 
 function App() {
   
@@ -48,8 +53,12 @@ function App() {
       <Route path="/stepper"  element={<ThemeProvider> <Stepper /> </ThemeProvider> } />
       <Route path="/fundsAccounts"  element={<ThemeProvider> <FundAccounts /> </ThemeProvider> } />
       <Route path="/splash" element={<SplashScreen />} />
+<<<<<<< HEAD
       <Route path="/compliance-dashboard" element={<ThemeProvider> <ComplianceDashboard /> </ThemeProvider> } />
       <Route path="/kyw" element={<ThemeProvider> <KYW /> </ThemeProvider> } />
+=======
+      <Route path="/domain-accounts" element={<ThemeProvider> <DomainAccounts /> </ThemeProvider>} />
+>>>>>>> Compliance-Screens
 
     </Routes>
   </BrowserRouter>
