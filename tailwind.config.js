@@ -181,6 +181,9 @@ module.exports = {
       pattern: /text-color-header-(SC|lightTheme|Ascent)/,
     },
     {
+      pattern: /text-color-icon-(SC|lightTheme|Ascent)/,
+    },
+    {
       pattern: /bg-color-stepper-proceedbutton-(SC|lightTheme|Ascent)/,
     },
     {

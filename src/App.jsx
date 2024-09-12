@@ -30,6 +30,8 @@ import Card from "./sample-theming/Card";
 import ThemeSwitcher from "./components/themeSwitcher";
 import UserInfo from "./components/testingTheming";
 import FundAccounts from "./OurComponents/ComplianceScreens/FundAccounts";
+import ComplianceDashboard from "./OurComponents/ComplianceScreens/ComplianceDashboard";
+import KYW from "./OurComponents/ComplianceScreens/KYW";
 
 function App() {
   
@@ -46,6 +48,8 @@ function App() {
       <Route path="/stepper"  element={<ThemeProvider> <Stepper /> </ThemeProvider> } />
       <Route path="/fundsAccounts"  element={<ThemeProvider> <FundAccounts /> </ThemeProvider> } />
       <Route path="/splash" element={<SplashScreen />} />
+      <Route path="/compliance-dashboard" element={<ThemeProvider> <ComplianceDashboard /> </ThemeProvider> } />
+      <Route path="/kyw" element={<ThemeProvider> <KYW /> </ThemeProvider> } />
 
     </Routes>
   </BrowserRouter>
