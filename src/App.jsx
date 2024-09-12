@@ -29,6 +29,8 @@ import UserType from "./OurComponents/Screens/UserType";
 import Card from "./sample-theming/Card";
 import ThemeSwitcher from "./components/themeSwitcher";
 import UserInfo from "./components/testingTheming";
+import DomainAccounts from "./OurComponents/ComplianceScreens/DomainAccounts";
+
 
 function App() {
   
@@ -44,6 +46,7 @@ function App() {
       <Route path="/fund-code"  element={<ThemeProvider> <FundCode /> </ThemeProvider> } />
       <Route path="/stepper"  element={<ThemeProvider> <Stepper /> </ThemeProvider> } />
       <Route path="/splash" element={<SplashScreen />} />
+      <Route path="/domain-accounts" element={<ThemeProvider> <DomainAccounts /> </ThemeProvider>} />
 
     </Routes>
   </BrowserRouter>
