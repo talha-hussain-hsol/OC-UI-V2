@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
-import { useTheme } from '../../../contexts/themeContext';
-import TabBar from '../TabBar';
-import Button from '../Button';
-import Table from '../Tables/Table';
-import { RiSearchLine } from 'react-icons/ri';
-import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
-import { MdDeleteOutline } from 'react-icons/md';
-import { HiDownload, HiOutlineDotsVertical } from 'react-icons/hi';
+import React, { useState } from "react";
+import { useTheme } from "../../../contexts/themeContext";
+import TabBar from "../TabBar";
+import Button from "../Button";
+import Table from "../Tables/Table";
+import { RiSearchLine } from "react-icons/ri";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+import { MdDeleteOutline } from "react-icons/md";
+import { HiDownload, HiOutlineDotsVertical } from "react-icons/hi";
 import { FaPlus } from "react-icons/fa6";
 
 const FundAccountCard = () => {
   const { theme } = useTheme();
-  const [activeTab, setActiveTab] = useState(0); 
+  const [activeTab, setActiveTab] = useState(0);
   const handleTabChange = (index) => {
     setActiveTab(index);
   };
   const Headers = [
     "Account",
     "Type",
-    "Customer Name", 
+    "Customer Name",
     "Created By",
     "Submitted At",
     "Reviewed By",
@@ -44,63 +44,77 @@ const FundAccountCard = () => {
       action: "",
     },
     {
-        account: "Standalone",
-        type: "Individual",
-        name: "Customer Name",
-        createdBy: "test-2024",
-        submittedAt: "",
-        reviewedBy: "",
-        computedRiskRating: "",
-        overrideRiskRating: "",
-        sStatus: "Pending",
-        status: "Pending",
-        action: "",
-      },
-      {
-        account: "Standalone",
-        type: "Individual",
-        name: "Customer Name",
-        createdBy: "test-2024",
-        submittedAt: "",
-        reviewedBy: "",
-        computedRiskRating: "",
-        overrideRiskRating: "",
-        sStatus: "Pending",
-        status: "Pending",
-        action: "",
-      },
-      {
-        account: "Standalone",
-        type: "Individual",
-        name: "Customer Name",
-        createdBy: "test-2024",
-        submittedAt: "",
-        reviewedBy: "",
-        computedRiskRating: "",
-        overrideRiskRating: "",
-        sStatus: "Pending",
-        status: "Pending",
-        action: "",
-      },
-      {
-        account: "Standalone",
-        type: "Individual",
-        name: "Customer Name",
-        createdBy: "test-2024",
-        submittedAt: "",
-        reviewedBy: "",
-        computedRiskRating: "",
-        overrideRiskRating: "",
-        sStatus: "Pending",
-        status: "Pending",
-        action: "",
-      },
+      account: "Standalone",
+      type: "Individual",
+      name: "Customer Name",
+      createdBy: "test-2024",
+      submittedAt: "",
+      reviewedBy: "",
+      computedRiskRating: "",
+      overrideRiskRating: "",
+      sStatus: "Pending",
+      status: "Pending",
+      action: "",
+    },
+    {
+      account: "Standalone",
+      type: "Individual",
+      name: "Customer Name",
+      createdBy: "test-2024",
+      submittedAt: "",
+      reviewedBy: "",
+      computedRiskRating: "",
+      overrideRiskRating: "",
+      sStatus: "Pending",
+      status: "Pending",
+      action: "",
+    },
+    {
+      account: "Standalone",
+      type: "Individual",
+      name: "Customer Name",
+      createdBy: "test-2024",
+      submittedAt: "",
+      reviewedBy: "",
+      computedRiskRating: "",
+      overrideRiskRating: "",
+      sStatus: "Pending",
+      status: "Pending",
+      action: "",
+    },
+    {
+      account: "Standalone",
+      type: "Individual",
+      name: "Customer Name",
+      createdBy: "test-2024",
+      submittedAt: "",
+      reviewedBy: "",
+      computedRiskRating: "",
+      overrideRiskRating: "",
+      sStatus: "Pending",
+      status: "Pending",
+      action: "",
+    },
   ];
 
   const renderContent = () => {
     switch (activeTab) {
       case 0:
         return (
+            <div>
+                 <div className={`rounded-b-xl w-full`}>
+        <div
+          className={`relative w-full py-2 px-4 bg-color-table-header-${theme}`}
+        >
+          <input
+            type="text"
+            placeholder="Search"
+            className="w-full py-2 px-4 pr-10 bg-[#1e3a5c] text-sm rounded-lg outline-none text-white transition-colors"
+          />
+          <RiSearchLine className="absolute text-[#748aa9] right-6 top-1/2 transform -translate-y-1/2 " />
+        </div>
+      </div>
+            
           <Table
             headers={Headers}
             rows={Rows}
@@ -148,8 +162,10 @@ const FundAccountCard = () => {
                   <HiOutlineDotsVertical size={18} color="#2c7be5" />
                 </td>
               </>
+
             )}
           />
+          </div>
         );
       case 1:
         return <div>Expiring Documents Content</div>;
@@ -202,18 +218,8 @@ const FundAccountCard = () => {
           ></Button>
         </div>
       </div>
-
-      <div className={`rounded-b-xl w-full`}>
-        <div className={`relative w-full py-2 px-4 bg-color-table-header-${theme}`}>
-          <input
-            type="text"
-            placeholder="Search"
-            className="w-full py-2 px-4 pr-10 bg-[#1e3a5c] text-sm rounded-lg outline-none text-white transition-colors"
-          />
-          <RiSearchLine className="absolute text-[#748aa9] right-6 top-1/2 transform -translate-y-1/2 " />
-        </div>
-        {renderContent()}
-      </div>
+      {renderContent()}
+     
     </div>
   );
 };
