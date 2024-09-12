@@ -130,6 +130,7 @@ const MainDocuments = () => {
               <Table
                 headers={Headers}
                 rows={Rows}
+                headerClassName={`bg-color-table-color-${theme}`}
                 renderRow={(row) => (
                   <>
                     <td className="py-4 px-6 text-[#2e77e7] text-xs">

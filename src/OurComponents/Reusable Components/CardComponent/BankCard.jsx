@@ -46,6 +46,7 @@ const BankCard = () => {
       <Table
         headers={headers}
         rows={rows}
+        headerClassName={`bg-color-table-color-${theme}`}
         renderRow={(row) => (
           <>
             <td className="py-4 px-2 sm:px-6">{row.label}</td>

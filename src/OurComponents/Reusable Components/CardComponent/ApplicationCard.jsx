@@ -41,7 +41,9 @@ const ApplicationCard = () => {
 
   return (
     <>
-      <div className={`bg-color-card-${theme} rounded-md  shadow-${theme} mb-8 flex flex-col items-center justify-center h-full w-full`}>
+      <div
+        className={`bg-color-card-${theme} rounded-md  shadow-${theme} mb-8 flex flex-col items-center justify-center h-full w-full`}
+      >
         <CardHeader
           FundName="Review & Sign Documents"
           fundClassName={`text-color-h1-${theme} uppercase `}
@@ -52,6 +54,7 @@ const ApplicationCard = () => {
         <Table
           headers={DocHeaders}
           rows={docRows}
+          headerClassName={`bg-color-table-color-${theme}`}
           renderRow={(row) => (
             <>
               <td className="py-4 px-4 uppercase">{row.type}</td>
@@ -67,7 +70,9 @@ const ApplicationCard = () => {
           )}
         />
       </div>
-      <div className={`bg-color-card-${theme} rounded-md  shadow-${theme} mb-8 flex flex-col items-center justify-center h-full w-full`}>
+      <div
+        className={`bg-color-card-${theme} rounded-md  shadow-${theme} mb-8 flex flex-col items-center justify-center h-full w-full`}
+      >
         <CardHeader
           FundName="Transaction History"
           fundClassName={`text-color-h1-${theme} uppercase `}

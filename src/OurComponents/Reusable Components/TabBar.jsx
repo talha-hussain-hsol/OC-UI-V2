@@ -1,18 +1,26 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import { useTheme } from "../../contexts/themeContext";
 
-const TabBar = ({ tabs }) => {
-  const [activeTab, setActiveTab] = useState(0);
+const TabBar = ({ tabs, className, onTabChange }) => {
   const { theme } = useTheme();
+  const [activeTab, setActiveTab] = useState(0);
+  const handleTabChange = (index) => {
+    setActiveTab(index);
+    if (onTabChange) {
+      onTabChange(index);
+    }
+  };
   return (
-    <div className="flex space-x-4">
+    <div className="flex space-x-6">
       {tabs.map((tab, index) => (
         <button
           key={index}
-          onClick={() => setActiveTab(index)}
-          className={`text-color-h1-${theme} font-medium pt-2 pb-8 ml-6 ${
-            activeTab === index ? "border-b-2 border-blue-500" : ""
-          }`}
+          onClick={() => handleTabChange(index)}
+          className={` ${
+            activeTab === index
+              ? `border-b-2 border-blue-500 text-color-${theme}`
+              : `text-[#748aa9] border-transparent hover:text-[#516989] transition-colors duration-200`
+          } ${className}`}
         >
           {tab}
         </button>
