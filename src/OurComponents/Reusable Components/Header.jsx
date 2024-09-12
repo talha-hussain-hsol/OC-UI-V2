@@ -1,14 +1,11 @@
 import React from "react";
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
-<<<<<<< HEAD
 import fundLogo from "../../../public/Assets/logo.investor.entity.png";
 import TabBar from "./TabBar";
 
 // import { useTheme } from "../../contexts/themeContext";
-=======
 import { useTheme } from "../../contexts/themeContext";
->>>>>>> Compliance-Screens
 
 const Header = ({
   subheading,

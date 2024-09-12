@@ -33,6 +33,7 @@ import FundAccounts from "./OurComponents/ComplianceScreens/FundAccounts";
 import ComplianceDashboard from "./OurComponents/ComplianceScreens/ComplianceDashboard";
 import KYW from "./OurComponents/ComplianceScreens/KYW";
 import DomainAccounts from "./OurComponents/ComplianceScreens/DomainAccounts";
+import TransactionMonitoring from "./OurComponents/ComplianceScreens/TransactionMonitoring";
 
 
 function App() {
@@ -53,7 +54,7 @@ function App() {
       <Route path="/compliance-dashboard" element={<ThemeProvider> <ComplianceDashboard /> </ThemeProvider> } />
       <Route path="/kyw" element={<ThemeProvider> <KYW /> </ThemeProvider> } />
       <Route path="/domain-accounts" element={<ThemeProvider> <DomainAccounts /> </ThemeProvider>} />
-
+      <Route path="/transaction-monitoring" element={<ThemeProvider> <TransactionMonitoring /> </ThemeProvider>} />
     </Routes>
   </BrowserRouter>
        
