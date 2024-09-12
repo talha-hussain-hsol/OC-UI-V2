@@ -8,6 +8,10 @@ import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { MdDeleteOutline } from "react-icons/md";
 import { HiDownload, HiOutlineDotsVertical } from "react-icons/hi";
 import { FaPlus } from "react-icons/fa6";
+import ExpiringDocuments from "./ExpiringDocuments";
+import PeriodicReview from "./PeriodicReviewFundAccount";
+import QuickScan from "./QuickScan";
+import DueDilligenceScreen from "./DueDilligenceScreen";
 
 const FundAccountCard = () => {
   const { theme } = useTheme();
@@ -101,80 +105,91 @@ const FundAccountCard = () => {
     switch (activeTab) {
       case 0:
         return (
-            <div>
-                 <div className={`rounded-b-xl w-full`}>
-        <div
-          className={`relative w-full py-2 px-4 bg-color-table-header-${theme}`}
-        >
-          <input
-            type="text"
-            placeholder="Search"
-            className="w-full py-2 px-4 pr-10 bg-[#1e3a5c] text-sm rounded-lg outline-none text-white transition-colors"
-          />
-          <RiSearchLine className="absolute text-[#748aa9] right-6 top-1/2 transform -translate-y-1/2 " />
-        </div>
-      </div>
-            
-          <Table
-            headers={Headers}
-            rows={Rows}
-            headerClassName={`bg-color-table-header-${theme}`}
-            showField={true}
-            className={`bg-color-header-${theme} rounded-b-lg `}
-            renderRow={(row, index) => (
-              <>
-                <td className="py-4 px-6 font-light text-xs flex items-center gap-1">
-                  <IoMdCheckmarkCircleOutline
-                    size={18}
-                    className={`text-color-icon-${theme}`}
-                  />
-                  {row.account}
-                </td>
-                <td className="py-4 px-6 font-light text-xs">{row.type}</td>
-                <td className="py-4 px-6 font-light text-xs">{row.name}</td>
-                <td className="py-4 px-6 font-light text-xs">
-                  {row.createdBy}
-                </td>
-                <td className="py-4 px-6 font-light text-xs">
-                  {row.submittedAt}
-                </td>
-                <td className="py-4 px-6 font-light text-xs">
-                  {row.reviewedBy}
-                </td>
-                <td className="py-4 px-6 font-light text-xs">
-                  {row.computedRiskRating}
-                </td>
-                <td className="py-4 px-6 font-light text-xs">
-                  {row.overrideRiskRating}
-                </td>
-                <td
-                  className={`py-4 px-6 font-light text-xs text-color-icon-${theme}`}
-                >
-                  {row.sStatus}
-                </td>
-                <td
-                  className={`py-4 px-6 font-light text-xs text-color-icon-${theme}`}
-                >
-                  {row.status}
-                </td>
-                <td className="py-4 px-6 font-light text-xs flex ">
-                  <MdDeleteOutline size={20} color="#d03354" />
-                  <HiOutlineDotsVertical size={18} color="#2c7be5" />
-                </td>
-              </>
+          <div>
+            <div className={`rounded-b-xl w-full`}>
+              <div
+                className={`relative w-full py-2 px-4 bg-color-table-header-${theme}`}
+              >
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className="w-full py-2 px-4 pr-10 bg-[#1e3a5c] text-sm rounded-lg outline-none text-white transition-colors"
+                />
+                <RiSearchLine className="absolute text-[#748aa9] right-6 top-1/2 transform -translate-y-1/2 " />
+              </div>
+            </div>
 
-            )}
-          />
+            <Table
+              headers={Headers}
+              rows={Rows}
+              headerClassName={`bg-color-table-header-${theme}`}
+              showField={true}
+              className={`bg-color-header-${theme} rounded-b-lg `}
+              renderRow={(row, index) => (
+                <>
+                  <td className="py-4 px-6 font-light text-xs flex items-center gap-1">
+                    <IoMdCheckmarkCircleOutline
+                      size={18}
+                      className={`text-color-icon-${theme}`}
+                    />
+                    {row.account}
+                  </td>
+                  <td className="py-4 px-6 font-light text-xs">{row.type}</td>
+                  <td className="py-4 px-6 font-light text-xs">{row.name}</td>
+                  <td className="py-4 px-6 font-light text-xs">
+                    {row.createdBy}
+                  </td>
+                  <td className="py-4 px-6 font-light text-xs">
+                    {row.submittedAt}
+                  </td>
+                  <td className="py-4 px-6 font-light text-xs">
+                    {row.reviewedBy}
+                  </td>
+                  <td className="py-4 px-6 font-light text-xs">
+                    {row.computedRiskRating}
+                  </td>
+                  <td className="py-4 px-6 font-light text-xs">
+                    {row.overrideRiskRating}
+                  </td>
+                  <td
+                    className={`py-4 px-6 font-light text-xs text-color-icon-${theme}`}
+                  >
+                    {row.sStatus}
+                  </td>
+                  <td
+                    className={`py-4 px-6 font-light text-xs text-color-icon-${theme}`}
+                  >
+                    {row.status}
+                  </td>
+                  <td className="py-4 px-6 font-light text-xs flex ">
+                    <MdDeleteOutline size={20} color="#d03354" />
+                    <HiOutlineDotsVertical size={18} color="#2c7be5" />
+                  </td>
+                </>
+              )}
+            />
           </div>
         );
       case 1:
-        return <div>Expiring Documents Content</div>;
+        return (
+          <div>
+            <ExpiringDocuments />
+          </div>
+        );
       case 2:
-        return <div>Periodic Review Content</div>;
+        return (
+          <div>
+            <PeriodicReview />
+          </div>
+        );
       case 3:
-        return <div>Due Diligence Content</div>;
+        return <div><DueDilligenceScreen/></div>;
       case 4:
-        return <div>Quick Scan Content</div>;
+        return (
+          <div>
+            <QuickScan />
+          </div>
+        );
       default:
         return null;
     }
@@ -219,7 +234,6 @@ const FundAccountCard = () => {
         </div>
       </div>
       {renderContent()}
-     
     </div>
   );
 };

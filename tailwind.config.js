@@ -59,7 +59,8 @@ module.exports = {
         "color-textfield-Ascent": "#043f63",
         "color-button-SC": "#3DA500", // For All Buttons + Processing Case
         "color-button-Ascent": "#2C75E6", // For All Buttons + Processing Case
-        "color-button1-SC": "#8DC63F", //For Accepted Case
+        "color-button1-SC": "#8DC63F",
+        "color-button1-Ascent": "#00da7e", 
         "color-button2-SC": "#F74036", // For Rejected Case
         "color-button3-SC": "#F2A428", // For Pending Case
         "color-button4-SC": "#EE381F", // For On Hold Case
@@ -266,6 +267,9 @@ module.exports = {
     },
     {
       pattern: /bg-color-button-(SC|lightTheme|Ascent)/,
+    },
+    {
+      pattern: /bg-color-button1-(SC|lightTheme|Ascent)/,
     },
     {
       pattern: /border-color-(SC|lightTheme|Ascent)/,

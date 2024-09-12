@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { useTheme } from "../../contexts/themeContext";
 
 const TabBar = ({ tabs, className, onTabChange }) => {
