@@ -16,7 +16,7 @@ function KYW() {
   const [selectedTab, setSelectedTab] = useState("Wallet");
 
   const handleTabChange = (tab) => {
-    setSelectedTab(tab); // Update the selected tab state
+    setSelectedTab(tab); 
   };
   
   const DocHeaders = ["Account", "Stage", "Type", "Chain", "Address","Identity","Status","Action"];
