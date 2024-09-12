@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { IoSettingsOutline } from "react-icons/io5";
-import { MdFileDownload } from "react-icons/md";
+import { MdFileDownload, MdFileDownloadDone } from "react-icons/md";
 import Header from '../Reusable Components/Header';
 import image from '../../Assets/react.svg'
 import SideBar from "../Reusable Components/SideBar";
@@ -129,106 +129,7 @@ const DomainAccounts = () => {
         console.log('Create Account button clicked');
       };
 
-//   return (
-//     <>
-//     <div className={`bg-color-${theme} flex flex-col `}>
 
-//     <SideBar portalType="Compliance" />
-//     <div className="flex-1 py-6 sm:ml-9 sm:px-10 px-4">
-//       <Header
-//         subheading="COMPLIANCE PORTAL"
-//         heading="Domain Accounts"
-//         showButton={false} 
-//         onButtonClick={handleCreateAccount}
-//         theme={theme}
-//       />
-//     </div>
-
-
-//     {/* outline outline-[#3a3a3a] outline-[0.5px] */}
-    
-    // <div className={`bg-color-card-${theme} p-6 rounded-lg shadow-${theme} border border-slate-700 mx-[120px]`}>
-    // <div className='flex'>
-    //   <p className={`text-color-text-${theme} mb-2 text-sm font-light w-[80%]`}>Search Domain Accounts</p>
-    //   <button className={`text-white bg-color-button-${theme} border border-slate-600 px-6 h-7 mb-4 text-sm rounded-md hover:bg-slate-600 w-[18%] ml-[4%]`}>
-    //     Sync Domain Account
-    //   </button>
-    //   </div>
-    //   <hr className=" w-[100%] border-t-[1px] border-t-[#6e84a3] opacity-20" />
-    //   <div className='flex my-4 space-x-10 items-center w-full'>
-    //     <TextField 
-    //     type="text"
-    //     placeholder="Select Domain"
-    //     />
-    //     <Dropdown
-    //     options={regions}
-    //     value={region}
-    //     onChange={(e) => setRegion(e.target.value)}
-    //     className={`text-color-h1-${theme} w-full`}
-        
-    //     />
-    //     <Button 
-    //     text="Search"
-    //     onClick={handleCreateAccount}
-    //     className={`bg-none border-slate-400 border text-[#6e84a3] font-light mr-8 rounded-lg py-4 px-24 text-sm sm:text-md`}
-    //     iconPosition="right"
-    //     />
-    //   </div>
-    //   </div>
-
-
-
-//     {/* Section 02: Domain Funds Section */}
-//     <div className={`bg-gradient-stepper-card-${theme} rounded-2xl shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] p-6 mt-10 mx-[120px]`}>
-//     <div className="flex justify-between items-center mb-4 ml-[78%] w-64">
-//             <button className={`flex bg-color-button-${theme} text-white px-5 h-9 rounded-md text-sm hover:bg-blue-600 w-50 items-center ml-[15%]`}>
-//               Download Entity Report <MdFileDownload />
-//             </button>
-//           </div>
-          
-          
-//         <div className={`bg-color-card-${theme}  shadow-${theme} mb-8 flex flex-col items-center justify-center h-full w-full`}>
-        
-//         <Table
-//           headers={dataHeader}
-//           rows={data}
-//           renderRow={(row) => (
-//             <>
-//               <td className="py-4 px-4 uppercase font-light text-sm">{row.fundName}</td>
-//               <td className="py-4 px-4 font-light text-sm">{row.region}</td>
-//               <td className="py-4 px-4 font-light text-sm">{row.manager}</td>
-//               <td className="py-4 px-4 font-light text-sm">{row.status}</td>
-//               <td className="py-4 px-4 font-light text-sm">{row.launchDate}</td>
-//               <td className="py-4 px-4">
-//                 <button className="p-2 text-[#609df1]">
-//                     <IoSettingsOutline />
-//                 </button>
-//               </td>
-//             </>
-//           )}
-//         />
-//       </div>
-//         </div>
-
-//             {/* Section 04: Pagination Section */}
-//             <div className='flex mt-5 justify-center'>
-//               <nav aria-label="Page navigation example">
-//               <ul className="inline-flex -space-x-px text-base h-10">
-//                 <li>
-//                   <a href="#" className="flex items-center justify-center rounded-sm px-4 h-10 ms-0 leading-tight bg-[#2d66b6] text-white">Prev</a>
-//                 </li>
-//                 <li>
-//                   <a href="#" className="flex items-center justify-center rounded-sm px-4 h-10 leading-tight bg-[#2d66b6] text-white mx-2">1</a>
-//                 </li>
-//                 <li>
-//                   <a href="#" className="flex items-center justify-center rounded-sm px-4 h-10 leading-tight bg-[#2d66b6] text-white">Next</a>
-//                 </li>
-//               </ul>
-//             </nav>
-//             </div>
-//         </div>
-//     </>
-//   );
 return (
     <>
       <div className={`bg-color-${theme} flex flex-col min-h-screen`}>
@@ -295,10 +196,10 @@ return (
                   <td className="py-2 sm:py-4 px-2 sm:px-4 uppercase font-light text-xs sm:text-sm">{row.fundName}</td>
                   <td className="py-2 sm:py-4 px-2 sm:px-4 font-light text-xs sm:text-sm">{row.region}</td>
                   <td className="py-2 sm:py-4 px-2 sm:px-4 font-light text-xs sm:text-sm">{row.manager}</td>
-                  <td className="py-2 sm:py-4 px-2 sm:px-4 font-light text-xs sm:text-sm">{row.status}</td>
+                  <td className="py-2 sm:py-4 px-2 sm:px-4 font-light text-xs sm:text-sm text-green-500 flex items-center"><MdFileDownloadDone />{row.status}</td>
                   <td className="py-2 sm:py-4 px-2 sm:px-4 font-light text-xs sm:text-sm">{row.launchDate}</td>
                   <td className="py-2 sm:py-4">
-                    <button className="p-2 text-[#609df1]">
+                    <button className="p-2 text-[#609df1] ml-4">
                       <IoSettingsOutline />
                     </button>
                   </td>
