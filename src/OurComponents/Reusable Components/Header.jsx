@@ -1,14 +1,11 @@
 import React from "react";
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
-<<<<<<< HEAD
 import fundLogo from "../../../public/Assets/logo.investor.entity.png";
 import TabBar from "./TabBar";
 
 // import { useTheme } from "../../contexts/themeContext";
-=======
 import { useTheme } from "../../contexts/themeContext";
->>>>>>> Compliance-Screens
 
 const Header = ({
   subheading,
@@ -19,6 +16,7 @@ const Header = ({
   showTabBar,
   theme,
   className,
+  onTabChange
 }) => {
   const navigate = useNavigate();
 
@@ -64,6 +62,8 @@ const Header = ({
               "Restricted Lists",
             ]}
             className="font-light py-8"
+            onTabChange={onTabChange} // Pass the tab change handler
+
           />
         )}
         {showLogo && (

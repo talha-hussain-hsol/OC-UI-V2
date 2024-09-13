@@ -36,8 +36,8 @@ const DonutChart = ({ labels, dataValues, colors }) => {
   };
 
   return (
-    <div className={`bg-color-card-${theme} w-full flex justify-center shadow-${theme}`}>
-  <div className="w-full sm:w-[90%] md:w-[70%] lg:w-[50%] max-w-md">
+    <div className={`bg-color-card-${theme} w-full flex justify-center `}>
+  <div className="w-full sm:w-[90%] md:w-[70%] lg:w-[50%] max-w-md rounded-lg ">
     <Doughnut data={data} options={options}  />
   </div>
 </div>
@@ -48,8 +48,3 @@ const DonutChart = ({ labels, dataValues, colors }) => {
 export default DonutChart;
 
 
-{/* <div className={` bg-color-card-${theme}  w-full flex justify-center shadow-${theme} `}>
-      <div className='max-w-md'>
-      <Doughnut data={data} options={options} width={400} height={400} />
-      </div>
-    </div> */}

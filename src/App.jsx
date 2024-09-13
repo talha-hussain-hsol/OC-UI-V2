@@ -34,6 +34,7 @@ import ComplianceDashboard from "./OurComponents/ComplianceScreens/ComplianceDas
 import KYW from "./OurComponents/ComplianceScreens/KYW";
 import DomainAccounts from "./OurComponents/ComplianceScreens/DomainAccounts";
 
+import MainScreenCompliance from "./OurComponents/ComplianceScreens/MainScreenCompliance";
 
 function App() {
   
@@ -53,6 +54,8 @@ function App() {
       <Route path="/compliance-dashboard" element={<ThemeProvider> <ComplianceDashboard /> </ThemeProvider> } />
       <Route path="/kyw" element={<ThemeProvider> <KYW /> </ThemeProvider> } />
       <Route path="/domain-accounts" element={<ThemeProvider> <DomainAccounts /> </ThemeProvider>} />
+      <Route path="/compliance" element={<ThemeProvider> <MainScreenCompliance /> </ThemeProvider> } />
+
 
     </Routes>
   </BrowserRouter>
