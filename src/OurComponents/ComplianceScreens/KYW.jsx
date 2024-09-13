@@ -36,7 +36,7 @@ function KYW() {
     <>
       
         <div
-          className={`bg-color-card-${theme} rounded-md shadow-${theme} ml-4 sm:ml-6 flex flex-col items-center justify-center h-full w-full`}
+          className={`bg-transparent rounded-md shadow-${theme} ml-4 sm:ml-6 flex flex-col items-center justify-center h-full w-full`}
         >
           <div
             className={`bg-color-header-${theme} border border-color-${theme} flex justify-between w-full p-3 rounded-lg`}  

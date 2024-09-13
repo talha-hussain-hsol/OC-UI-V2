@@ -63,10 +63,7 @@ function QuickScan() {
         />
       </div>
 
-      {/* <div className={`bg-color-card-${theme} rounded-lg shadow-${theme}`}>
-        <h2 className={`text-color-text-${theme} mt-2`}>Report List</h2>
-        <PeriodicReview />
-      </div> */}
+     
     </>
   );
 }
