@@ -10,6 +10,7 @@ import Dropdown from '../Reusable Components/Dropdown';
 import Button from '../Reusable Components/Button';
 import CardHeader from "../Reusable Components/CardComponent/CardHeader";
 import Table from "../Reusable Components/Tables/Table";
+import { Link } from "react-router-dom";
 
 
 const dataHeader = [
@@ -145,8 +146,7 @@ return (
           />
         </div>
   
-        {/* Responsive Search Card */}
-        <div className={`bg-color-card-${theme} p-6 rounded-lg shadow-${theme} border border-slate-700 mx-4 sm:mx-8 lg:mx-[120px]`}>
+        <div className={`bg-color-header-${theme} p-6 rounded-lg shadow-${theme} border border-slate-700 mx-4 sm:mx-8 lg:mx-[120px]`}>
           <div className='flex flex-wrap items-center justify-between'>
             <p className={`text-color-text-${theme} mb-2 text-sm font-light w-full sm:w-[70%]`}>Search Domain Accounts</p>
             <button className={`text-white bg-color-button-${theme} border border-slate-600 px-4 sm:px-6 h-7 mb-4 text-sm rounded-md hover:bg-slate-600 w-full sm:w-[30%] lg:w-[18%] ml-0 sm:ml-4`}>
@@ -156,7 +156,6 @@ return (
 
   <hr className="w-full border-t-[1px] border-t-[#6e84a3] opacity-20" />
 
-  {/* Adjust flex to ensure inline layout on large screens */}
   <div className='flex flex-wrap lg:flex-nowrap lg:space-x-5 my-4 items-center justify-between space-y-4 lg:space-y-0'>
     <TextField
       type="text"
@@ -180,20 +179,21 @@ return (
 
   
         {/* Responsive Domain Funds Section */}
-        <div className={`bg-gradient-stepper-card-${theme} rounded-2xl shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] p-6 mt-10 mx-4 sm:mx-8 lg:mx-[120px]`}>
+        <div className={`bg-color-header-${theme} rounded-2xl shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] p-6 mt-10 mx-4 sm:mx-8 lg:mx-[120px]`}>
           <div className="flex justify-end items-center mb-4">
             <button className={`flex bg-color-button-${theme} text-white items-center px-4 sm:px-5 h-9 rounded-md text-sm hover:bg-blue-600`}>
               Download Entity Report <MdFileDownload className="ml-2" />
             </button>
           </div>
           
-          <div className={`bg-color-card-${theme} shadow-${theme} mb-8 w-full`}>
+          <div className={`bg-color-header-${theme} shadow-${theme} mb-8 w-full`}>
             <Table
               headers={dataHeader}
               rows={data}
+              headerClassName={`bg-color-table-header-${theme}`}
               renderRow={(row) => (
                 <>
-                  <td className="py-2 sm:py-4 px-2 sm:px-4 uppercase font-light text-xs sm:text-sm">{row.fundName}</td>
+                  <td className="py-2 sm:py-4 px-2 sm:px-4 uppercase font-light text-xs sm:text-sm"><Link to="/compliance">{row.fundName}</Link></td>
                   <td className="py-2 sm:py-4 px-2 sm:px-4 font-light text-xs sm:text-sm">{row.region}</td>
                   <td className="py-2 sm:py-4 px-2 sm:px-4 font-light text-xs sm:text-sm">{row.manager}</td>
                   <td className="py-2 sm:py-4 px-2 sm:px-4 font-light text-xs sm:text-sm text-green-500 flex items-center"><MdFileDownloadDone />{row.status}</td>
