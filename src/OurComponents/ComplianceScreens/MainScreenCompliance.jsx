@@ -6,6 +6,7 @@ import KYW from './KYW';
 import ComplianceDashboard from './ComplianceDashboard';
 import FundAccounts from './FundAccounts';
 import TransactionMonitoring from './TransactionMonitoring';
+import RestrictedLists from './RestrictedLists';
 
 function MainScreenCompliance() {
     const { theme } = useTheme();
