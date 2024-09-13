@@ -165,7 +165,7 @@ const FundAccountCard = () => {
   };
 
   return (
-    <div className={`shadow-${theme} sm:ml-16 mr-10 rounded-lg`}>
+    <div className={`shadow-${theme} sm:ml-16  rounded-lg lg:ml-5`}>
       <div
         className={`flex w-full justify-between items-center bg-color-header-${theme} border border-color-${theme} rounded-t-xl px-6`}
       >

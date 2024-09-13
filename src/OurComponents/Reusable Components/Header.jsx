@@ -15,6 +15,7 @@ const Header = ({
   showTabBar,
   theme,
   className,
+  onTabChange
 }) => {
   const navigate = useNavigate();
 
@@ -60,6 +61,8 @@ const Header = ({
               "Restricted Lists",
             ]}
             className="font-light py-8"
+            onTabChange={onTabChange} // Pass the tab change handler
+
           />
         )}
         {showLogo && (

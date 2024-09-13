@@ -5,7 +5,7 @@ const Dropdown = ({ label, options, onChange, value }) => {
   const { theme } = useTheme();
   return (
     <div
-      className={`flex flex-col text-color-h1-${theme} sm:w-1/4 w-full z-0`}
+      className={`flex flex-col text-color-h1-${theme} w-full sm:w-1/4 lg:w-full z-0`}
     >
       <label className="mb-2">{label}</label>
       <select

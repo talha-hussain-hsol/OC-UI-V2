@@ -32,6 +32,7 @@ import UserInfo from "./components/testingTheming";
 import FundAccounts from "./OurComponents/ComplianceScreens/FundAccounts";
 import ComplianceDashboard from "./OurComponents/ComplianceScreens/ComplianceDashboard";
 import KYW from "./OurComponents/ComplianceScreens/KYW";
+import MainScreenCompliance from "./OurComponents/ComplianceScreens/MainScreenCompliance";
 
 function App() {
   
@@ -50,6 +51,8 @@ function App() {
       <Route path="/splash" element={<SplashScreen />} />
       <Route path="/compliance-dashboard" element={<ThemeProvider> <ComplianceDashboard /> </ThemeProvider> } />
       <Route path="/kyw" element={<ThemeProvider> <KYW /> </ThemeProvider> } />
+      <Route path="/compliance" element={<ThemeProvider> <MainScreenCompliance /> </ThemeProvider> } />
+
 
     </Routes>
   </BrowserRouter>
