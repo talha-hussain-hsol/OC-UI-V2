@@ -55,13 +55,8 @@ function App() {
       <Route path="/compliance-dashboard" element={<ThemeProvider> <ComplianceDashboard /> </ThemeProvider> } />
       <Route path="/kyw" element={<ThemeProvider> <KYW /> </ThemeProvider> } />
       <Route path="/domain-accounts" element={<ThemeProvider> <DomainAccounts /> </ThemeProvider>} />
-<<<<<<< HEAD
       <Route path="/compliance" element={<ThemeProvider> <MainScreenCompliance /> </ThemeProvider> } />
-
-
-=======
       <Route path="/transaction-monitoring" element={<ThemeProvider> <TransactionMonitoring /> </ThemeProvider>} />
->>>>>>> Fund-Config
     </Routes>
   </BrowserRouter>
        
