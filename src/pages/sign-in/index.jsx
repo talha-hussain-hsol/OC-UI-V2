@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from "react";
-import { getCookie } from "../../utils/cookies";
+import { getLocalStorage } from "../../utils/cookies";
 import {
   authUrl,
   investorClientId,
@@ -31,7 +31,7 @@ const SignIn = () => {
   }, []);
 
   useEffect(() => {
-    if (!getCookie("token")) {
+    if (!getLocalStorage("x-auth-token")) {
       handleSignIn();
     } else {
       navigate('/splash', {replace: true})

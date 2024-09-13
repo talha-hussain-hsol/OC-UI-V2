@@ -1,5 +1,3 @@
-import PropTypes from "prop-types";
-import { useState } from "react";
 import {
   BrowserRouter,
   Navigate,
@@ -7,75 +5,31 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import Loader from "./components/ui/loader";
-import Callback from "./pages/callback";
 import useEntityStore from "./store/useEntityStore";
-import {} from "./utils/helperFunctions";
+import {  } from "./utils/helperFunctions";
+import Callback from "./pages/callback";
+import { ToastContainer } from "react-toastify";
+import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import axios from "axios";
+import Loader from "./components/ui/loader";
+import { getLocalStorage } from "./utils/cookies";
 
-import "react-toastify/dist/ReactToastify.css";
+import 'react-toastify/dist/ReactToastify.css';
 import SignIn from "./pages/sign-in";
 import SplashScreen from "./pages/splash";
-
-import Accounts from "./OurComponents/Screens/Accounts";
-import Dashboard from "./OurComponents/Screens/Dashboard";
-import Identities from "./OurComponents/Screens/Identities";
-import MainDocuments from "./OurComponents/Screens/MainDocuments";
-import Stepper from "./OurComponents/Screens/Stepper";
-import UserForm from "./OurComponents/Screens/UserForm";
-import FundCode from "./OurComponents/Screens/FundCode"
-import "./App.css";
-import { ThemeProvider } from "./contexts/themeContext";
-import UserType from "./OurComponents/Screens/UserType";
-import Card from "./sample-theming/Card";
-import ThemeSwitcher from "./components/themeSwitcher";
-import UserInfo from "./components/testingTheming";
-import FundAccounts from "./OurComponents/ComplianceScreens/FundAccounts";
-import ComplianceDashboard from "./OurComponents/ComplianceScreens/ComplianceDashboard";
-import KYW from "./OurComponents/ComplianceScreens/KYW";
-import DomainAccounts from "./OurComponents/ComplianceScreens/DomainAccounts";
+import Compliance from "./pages/compliancePortal";
+import ComplianceDashboard from "./pages/compliancePortal/dashboard";
 
 
 function App() {
-  
   return (
-
-    <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<ThemeProvider> <Dashboard /> </ThemeProvider> } />
-      <Route path="/user-form" element={<ThemeProvider> <UserForm /> </ThemeProvider> } />
-      <Route path="/accounts" element={<ThemeProvider> <Accounts /> </ThemeProvider> } />
-      <Route path="/identities" element={<ThemeProvider> <Identities /> </ThemeProvider> } />
-      <Route path="/documents" element={<ThemeProvider> <MainDocuments /> </ThemeProvider> } />
-      <Route path="/fund-code"  element={<ThemeProvider> <FundCode /> </ThemeProvider> } />
-      <Route path="/stepper"  element={<ThemeProvider> <Stepper /> </ThemeProvider> } />
-      <Route path="/fundsAccounts"  element={<ThemeProvider> <FundAccounts /> </ThemeProvider> } />
-      <Route path="/splash" element={<SplashScreen />} />
-      <Route path="/compliance-dashboard" element={<ThemeProvider> <ComplianceDashboard /> </ThemeProvider> } />
-      <Route path="/kyw" element={<ThemeProvider> <KYW /> </ThemeProvider> } />
-      <Route path="/domain-accounts" element={<ThemeProvider> <DomainAccounts /> </ThemeProvider>} />
-
-    </Routes>
-  </BrowserRouter>
-       
-
-    // <div className="flex h-screen">
-
-    //   <BrowserRouter>
-    //     <AppWrapper isHome={false} />
-
-    //   </BrowserRouter>
-    //   <ToastContainer position="bottom-right" />
-    // </div>
-
-    // <ThemeProvider>
-    //   <div className="flex w-full h-screen place-items-center place-content-center">
-    //     <div className="flex  flex-col gap-4 max-w-lg">
-    //       <ThemeSwitcher />
-    //       <UserInfo />
-    //       <Card />
-    //     </div>
-    //   </div>
-    // </ThemeProvider>
+    <div className="flex h-screen">
+      <BrowserRouter>
+        {window.location.href.includes('compliance') ? <ComplianceRoutesWrapper /> :<AppWrapper isHome={false} />}
+      </BrowserRouter>
+      <ToastContainer position="bottom-right" />
+    </div>
   );
 }
 const AppWrapper = () => {
@@ -83,12 +37,12 @@ const AppWrapper = () => {
   const setEntityId = useEntityStore((state) => state.setEntityId);
 
   // useEffect(() => {
-  //   localStorage.setItem("entity_id", getCookie("entity_id"));
-  //   setEntityId(getCookie("entity_id"));
-  //   localStorage.setItem("entity_permissions", getCookie("entity_permissions"));
-  //   localStorage.setItem("x-auth-token", getCookie("token"));
-  //   localStorage.setItem("login_user_id", getCookie("login_user_id"));
-  //   axios.defaults.headers = { "x-auth-token": getCookie("token") };
+  //   localStorage.setItem("entity_id", getLocalStorage("entity_id"));
+  //   setEntityId(getLocalStorage("entity_id"));
+  //   localStorage.setItem("entity_permissions", getLocalStorage("entity_permissions"));
+  //   localStorage.setItem("x-auth-token", getLocalStorage("token"));
+  //   localStorage.setItem("login_user_id", getLocalStorage("login_user_id"));
+  //   axios.defaults.headers = { "x-auth-token": getLocalStorage("token") };
   //   setTimeout(() => {
   //     setLoading(false);
   //   }, 3000);
@@ -102,7 +56,7 @@ const AppWrapper = () => {
   // const renderNavigation = () => {
   //   if (authPages.includes(history.pathname) || !isSubDomain()) return null;
 
-  //   const entitiesCount = getCookie("entities_length");
+  //   const entitiesCount = getLocalStorage("entities_length");
 
   //   if (matchSubdomain("customer")) {
   //     return <CustomerNav entitiesCount={entitiesCount} />;
@@ -119,6 +73,8 @@ const AppWrapper = () => {
   //   return null;
   // };
 
+
+
   if (loading) {
     return (
       <div className="flex justify-center items-center w-full">
@@ -129,18 +85,31 @@ const AppWrapper = () => {
 
   return (
     <div
-      className={`w-full overflow-hidden bg-custom-gradient text-white`}
+      className={`w-full overflow-hidden bg-custom-gradient text-white pt-[0.5%] pl-[7%] pr-[4%]`}
     >
       <Routes>
-        {/* <Route path={"/"} element={<SignIn />} /> */}
+        <Route path={"/"} element={<SignIn />} />
         <Route path={"/sign-in"} element={<SignIn />} />
         <Route path="/callback" element={<Callback />} />
         <Route path="/splash" element={<SplashScreen />} />
-        
+        <Route path="/compliance" element={<Compliance />} />
       </Routes>
     </div>
   );
 };
+
+const ComplianceRoutesWrapper = () => {
+  return (
+    <div
+      className={`w-full overflow-hidden bg-custom-gradient text-white pt-[0.5%] pl-[7%] pr-[4%]`}
+    >
+      <Routes>
+        <Route path={"/"} element={<ComplianceDashboard />} />
+      </Routes>
+    </div>
+  );
+};
+
 
 AppWrapper.propTypes = {
   isHome: PropTypes.any,

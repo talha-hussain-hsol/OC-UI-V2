@@ -37,3 +37,37 @@ export const getEntities = async () => {
   }
   return customResponse;
 };
+
+export const getEntityPermission = async (entityId, cancelToken) => {
+  const customResponse = new ResponseModel();
+  const url = `/user/entity/${entityId}/permissions`;
+  const request = {
+    type: RequestType.GET,
+    urlString: url,
+  };
+  try {
+    // setAxiosHeader({});
+    const response = await processRequest(request, cancelToken);
+    customResponse.response = response.data;
+  } catch (error) {
+    customResponse.error = processError(error);
+  }
+  return customResponse;
+}
+
+export const getIdentityCount = async (entityId, baseURL="CAPI", cancelToken) => {
+  const customResponse = new ResponseModel();
+  const url = `/${entityId}/${baseURL}/identityCount`;
+  const request = {
+    type: RequestType.GET,
+    urlString: url,
+  };
+  try {
+    // setAxiosHeader({});
+    const response = await processRequest(request, cancelToken);
+    customResponse.response = response.data;
+  } catch (error) {
+    customResponse.error = processError(error);
+  }
+  return customResponse;
+}

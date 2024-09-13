@@ -26,3 +26,16 @@ export const clearAllCookies = () => {
 
   console.log("All cookies have been cleared.");
 };
+
+export const setLocalStorage = (key, value) => {
+  const valueCheck = typeof value === "string" ? value : JSON.stringify(value);
+  localStorage.setItem(key, valueCheck);
+};
+
+export const getLocalStorage = (key) => {
+  localStorage.getItem(key);
+};
+
+export const removeLocalStorage = () => {
+  localStorage.clear();
+};

@@ -11,7 +11,7 @@ import {
   scope,
 } from "../../api";
 import CryptoJS from "crypto-js";
-import { clearAllCookies, setCookie } from "../../utils/cookies";
+import { removeLocalStorage, setLocalStorage } from "../../utils/cookies";
 import useEntityStore from "../../store/useEntityStore";
 import Loader from "../../components/ui/loader";
 import axios from "axios";
@@ -30,7 +30,6 @@ const Callback = () => {
   }
 
   const handleAuthFlow = useCallback(async () => {
-    // debugger
     const cancelTokenSource = axios.CancelToken.source();
     
     const urlParams = new URLSearchParams(window.location.search);
@@ -69,7 +68,7 @@ const Callback = () => {
                 .replace(/=+$/, "");
               const url = `${authUrl}/oauth/authorize?client_id=${investorClientId}&redirect_uri=${investorRedirectUrl}&scope=${scope}&state=${newState}&code_challenge=${hash}&code_challenge_method=S256`;
 
-              clearAllCookies();
+              removeLocalStorage();
               window.location.href = url;
             } else {
               const responsedData = response?.response || {};
@@ -77,12 +76,11 @@ const Callback = () => {
               if (token) {
                 setAxiosHeader({ "x-auth-token": token });
                 const entityData = responsedData?.data?.data;
-                localStorage.setItem("x-auth-token", token);
-                setCookie("token", token);
-                setCookie("login_user_id", entityData?.id);
-                setCookie("user_email", entityData?.email);
-                setCookie("login_user_name", entityData?.name);
-                setCookie("profile_pic", entityData?.meta?.user_image);
+                setLocalStorage("x-auth-token", token);
+                setLocalStorage("login_user_id", entityData?.id);
+                setLocalStorage("user_email", entityData?.email);
+                setLocalStorage("login_user_name", entityData?.name);
+                setLocalStorage("profile_pic", entityData?.meta?.user_image);
                 setSingleAccount(responsedData?.data?.data);
                 removeParams();
                 navigate("/splash", { replace: true });
