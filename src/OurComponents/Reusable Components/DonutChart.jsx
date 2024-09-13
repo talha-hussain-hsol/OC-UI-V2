@@ -40,7 +40,7 @@ const DonutChart = ({ labels, dataValues, colors }) => {
   <div className="w-full sm:w-[90%] md:w-[70%] lg:w-[50%] max-w-md">
     <Doughnut data={data} options={options}  />
   </div>
-</div>
+ </div>
 
   );
 };

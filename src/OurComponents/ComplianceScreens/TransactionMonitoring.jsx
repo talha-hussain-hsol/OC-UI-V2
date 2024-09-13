@@ -26,7 +26,7 @@ const TransactionMonitoring = () => {
   };
   const renderSelectedTabContent = () => {
     if (selectedTab === "Transactions" || tabIndex === 0) {
-      return <UploadTransaction />;
+      return <TransactionSummary />;
     }
   };
 
@@ -59,7 +59,7 @@ const TransactionMonitoring = () => {
                   onTabChange={(tab, index) => handleTabChange(tab, index)}
                 />
               </div>
-              <div className="w-full p-4">
+              <div className="w-full p-8">
                 {renderSelectedTabContent()}
               </div>
               
