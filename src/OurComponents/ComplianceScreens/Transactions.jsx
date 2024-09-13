@@ -130,7 +130,7 @@ const Transactions = () => {
                   <td className="py-2 sm:py-4 px-2 sm:px-4 font-light text-xs sm:text-sm">{row.dealingDate}</td>
                   <td className="py-2 sm:py-4 px-2 sm:px-4 font-light text-xs sm:text-sm">{row.recievedDate}</td>
                   <td className="py-2 sm:py-4 px-2 sm:px-4 font-light text-xs sm:text-sm">{row.type}</td>
-                  <td className="py-2 sm:py-4 px-2 sm:px-4 font-light text-xs sm:text-sm text-green-500 flex items-center"><MdFileDownloadDone />{row.status}</td>
+                  <td className="py-2 sm:py-4 px-2 sm:px-4 font-light text-xs sm:text-sm text-green-500 flex items-center mt-3"><MdFileDownloadDone />{row.status}</td>
                   <td className="py-2 sm:py-4 px-2 sm:px-4 font-light text-xs sm:text-sm">{row.source}</td>
                   <td className="py-2 sm:py-4 px-2 sm:px-4 font-light text-xs sm:text-sm">{row.amount}</td>
                 </>
