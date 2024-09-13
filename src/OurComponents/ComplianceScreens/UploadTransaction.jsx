@@ -11,11 +11,11 @@ const UploadTransaction = () => {
 
   return (
     <>
-      <div className="flex flex-col lg:flex-row lg:space-x-8 mt-8 lg:mt-[74px] justify-center px-4">
+      <div className="flex flex-col lg:flex-row lg:space-x-8 mt-4 lg:mt-[50px] justify-center px-4">
       
       {/* Upload Section */}
-      <div className={`bg-color-stepper-card-${theme} p-6 rounded-lg w-full lg:w-[40%] shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] mb-8 lg:mb-0`}>
-        <p className={`text-color-${theme} text-base mb-4 font-light`}>Upload CSV</p>
+      <div className={`bg-gradient-stepper-card-${theme} p-6 rounded-lg w-full lg:w-[40%] shadow-${theme} mb-8`}>
+        <p className={`text-white text-base mb-4 font-light`}>Upload CSV</p>
         <hr className=" w-full border-t-[1px] border-t-[#6e84a3] opacity-25 mb-3 " />
         <div className="flex justify-center items-center mb-2 mt-10 h-44 border border-slate-800 hover:border-dashed hover:border-slate-500 rounded-lg bg-[#000040]">
         <p className="text-center lg:text-sm mt-10 mb-7 text-slate-500 text-xs">
@@ -25,8 +25,8 @@ const UploadTransaction = () => {
       </div>
 
       {/* Instructions Section */}
-      <div className={`bg-color-stepper-card-${theme} p-6 rounded-lg w-full lg:w-[40%] shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)]`}>
-        <p className={`text-color-${theme} text-base font-light mb-4`}>Instructions</p>
+      <div className={`bg-gradient-stepper-card-${theme} p-6 rounded-lg w-full lg:w-[40%] shadow-${theme}  mb-8`}>
+        <p className={`text-white text-base font-light mb-4`}>Instructions</p>
         <hr className=" w-full border-t-[1px] border-t-[#6e84a3] opacity-25 mb-3 " />
         <ul className="list-disc text-xs text-slate-400 space-y-2 mb-4 ml-2">
           <li>The file must be in CSV format.</li>
@@ -37,10 +37,10 @@ const UploadTransaction = () => {
           <li>Currency must be one of SGD, USD, or GBP.</li>
         </ul>
         <div className="flex">
-          <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg font-light">
+          <button className={`bg-color-button-${theme} text-white py-2 px-4 rounded-lg font-light`}>
             Download Sample File
           </button>
-          <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg ml-2 font-light">
+          <button className={`bg-color-button-${theme} text-white py-2 px-4 rounded-lg ml-2 font-light`}>
             Instructions
           </button>
         </div>

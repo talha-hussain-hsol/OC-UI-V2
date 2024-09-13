@@ -16,36 +16,35 @@ const TransactionMonitoring = () => {
 
     const { theme } = useTheme();
   console.log("theme", theme);
+
   const [selectedTab, setSelectedTab] = useState("Transaction Monitoring");
   const [tabIndex, setTabIndex] = useState(0); 
 
-
-  const handleTabChange = (tab) => {
-    setSelectedTab(tab); // Update the selected tab state
+  const handleTabChange = (tab, index) => {
+    console.log(tab)
+    setSelectedTab(tab); 
     setTabIndex(index);
   };
   const renderSelectedTabContent = () => {
-    if (selectedTab === "Transactions" || tabIndex === 0) {
+    if (selectedTab === "Summary" || tabIndex === 0) {
       return <TransactionSummary />;
+    }
+    else if (selectedTab === "Transactions" || tabIndex === 1) {
+      return <Transactions />;
+    }
+    else if (selectedTab === "Alerts" || tabIndex === 2) {
+      return <AlertsTransaction />;
+    }
+    else if (selectedTab === "Upload" || tabIndex === 3) {
+      return <UploadTransaction />;
     }
   };
 
     return (
         <>
-          <SideBar portalType="Compliance" />
-          <div
-            className={`bg-color-${theme} w-full px-4 py-4 sm:px-6 md:px-16 lg:px-24 md:py-5 lg:py-6 `}
-          >
-            <Header
-              heading="Demo Fund"
-              subheading="Compliance Portal"
-              showLogo={true}
-              className="items-center"
-              showTabBar={true}
-              theme={theme}
-            />
+          
             <div
-              className={`bg-color-card-${theme} rounded-md shadow-${theme} ml-4 sm:ml-6 flex flex-col items-center justify-center h-full w-full`}
+              className={`bg-color-header-${theme} rounded-md shadow-${theme} ml-4 sm:ml-6 flex flex-col items-center justify-center h-full w-full`}
             >
               <div
                 className={`bg-color-card-${theme} flex justify-between w-full p-3`}
@@ -59,12 +58,11 @@ const TransactionMonitoring = () => {
                   onTabChange={(tab, index) => handleTabChange(tab, index)}
                 />
               </div>
-              <div className="w-full p-8">
+              <div className={`w-full bg-color-header-${theme}`}>
                 {renderSelectedTabContent()}
               </div>
               
             </div>
-          </div>
         </>
       );
 }

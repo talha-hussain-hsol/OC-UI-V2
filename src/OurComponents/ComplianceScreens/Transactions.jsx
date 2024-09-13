@@ -118,8 +118,8 @@ const Transactions = () => {
     ];
 
   return (
-    <div className={`bg-color-card-${theme} shadow-${theme} mb-8 w-full`}>
-            <Table
+    // <div className={`bg-color-card-${theme} shadow-${theme} mb-8 w-full`}>
+    <>            <Table
               headers={dataHeader}
               headerClassName={`bg-color-table-header-${theme}`}
               rows={data}
@@ -136,7 +136,9 @@ const Transactions = () => {
                 </>
               )}
             />
-          </div>
+            </>
+
+          // {/* </div> */}
   )
 }
 

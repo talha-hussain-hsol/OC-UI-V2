@@ -196,7 +196,7 @@ const AlertsTransaction = () => {
     ];
 
   return (
-    <div className={`bg-color-card-${theme} shadow-${theme} mb-8 w-full`}>
+    <div className={`bg-color-header-${theme} shadow-${theme} mb-8 w-full`}>
             <Table
               headers={dataHeader}
               headerClassName={`bg-color-table-header-${theme}`}
