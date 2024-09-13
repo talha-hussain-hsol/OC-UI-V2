@@ -105,15 +105,15 @@ function Wallet() {
       rows={docRows}
       renderRow={(row) => (
         <>
-          <td className="py-2 px-2 sm:py-4 sm:px-4 uppercase">
+          <td className="py-4 px-6 font-light uppercase">
             {row.account}
           </td>
-          <td className="py-2 px-2 sm:py-4 sm:px-4">{row.stage}</td>
-          <td className="py-2 px-2 sm:py-4 sm:px-4">{row.type}</td>
-          <td className="py-2 px-2 sm:py-4 sm:px-4">{row.chain}</td>
-          <td className="py-2 px-2 sm:py-4 sm:px-4">{row.address}</td>
-          <td className="py-2 px-2 sm:py-4 sm:px-4">{row.identity}</td>
-          <td className="py-2 px-2 sm:py-4 sm:px-4">{row.status}</td>
+          <td className="py-4 px-6 font-light">{row.stage}</td>
+          <td className="py-4 px-6 font-light">{row.type}</td>
+          <td className="py-4 px-6 font-light">{row.chain}</td>
+          <td className="py-4 px-6 font-light">{row.address}</td>
+          <td className="py-4 px-6 font-light">{row.identity}</td>
+          <td className={`py-4 px-6 font-light text-color-icon-${theme}`}>{row.status}</td>
           <td className={`py-2 px-2 sm:py-4 sm:px-4 text-color-icon-${theme}`}>
             <div className="flex justify-start space-x-4 sm:space-x-6 text-base sm:text-lg">
               <MdDashboardCustomize />
