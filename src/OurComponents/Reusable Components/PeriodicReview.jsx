@@ -105,16 +105,16 @@ function PeriodicReview() {
       rows={docRows}
       renderRow={(row) => (
         <>
-          <td className="py-2 px-2 sm:py-4 sm:px-4 uppercase">
+          <td className="py-4 px-6 font-light  uppercase">
             {row.crpaddress}
           </td>
-          <td className="py-2 px-2 sm:py-4 sm:px-4">{row.type}</td>
-          <td className="py-2 px-2 sm:py-4 sm:px-4">{row.submission}</td>
-          <td className="py-2 px-2 sm:py-4 sm:px-4">{row.amt}</td>
-          <td className="py-2 px-2 sm:py-4 sm:px-4">{row.tx}</td>
-          <td className="py-2 px-2 sm:py-4 sm:px-4">{row.risk}</td>
-          <td className="py-2 px-2 sm:py-4 sm:px-4">{row.lastdate}</td>
-          <td className="py-2 px-2 sm:py-4 sm:px-4">{row.status}</td>
+          <td className="py-4 px-6 font-light ">{row.type}</td>
+          <td className="py-4 px-6 font-light ">{row.submission}</td>
+          <td className="py-4 px-6 font-light ">{row.amt}</td>
+          <td className="py-4 px-6 font-light ">{row.tx}</td>
+          <td className="py-4 px-6 font-light ">{row.risk}</td>
+          <td className="py-4 px-6 font-light ">{row.lastdate}</td>
+          <td className={`py-4 px-6 font-light text-color-icon-${theme}`}>{row.status}</td>
           <td className={`py-2 px-2 sm:py-4 sm:px-4 text-color-icon-${theme}`}>
             <div className="flex justify-start space-x-4 sm:space-x-6 text-base sm:text-lg">
               {/* <MdDashboardCustomize />
