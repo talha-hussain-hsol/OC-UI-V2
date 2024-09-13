@@ -48,7 +48,7 @@ const QuickScan = () => {
               />
               <label
                 htmlFor="sanctionLists"
-                className="ml-2 text-sm font-medium text-white"
+                className={`ml-2 text-sm font-medium text-color-text-${theme}`}
               >
                 Sanction List
               </label>
@@ -62,7 +62,7 @@ const QuickScan = () => {
               />
               <label
                 htmlFor="internalList"
-                className="ml-2 text-sm font-medium text-white"
+                className={`ml-2 text-sm font-medium text-color-text-${theme}`}
               >
                 Internal List
               </label>
@@ -77,7 +77,7 @@ const QuickScan = () => {
               />
               <label
                 htmlFor="adverseMedia"
-                className="ml-2 text-sm font-medium text-white"
+                className={`ml-2 text-sm font-medium text-color-text-${theme}`}
               >
                 Adverse Media News
               </label>

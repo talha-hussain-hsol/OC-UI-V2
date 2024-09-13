@@ -23,7 +23,7 @@ const DueDilligenceScreen = () => {
             placeholder="Select Start Date"
             className={`w-full bg-color-textfield-dropdown-${theme} py-2 px-4 rounded-md my-4`}
           />
-          <p className={`text-white`}>To</p>
+          <p className={`text-color-text-${theme}`}>To</p>
           <input
             type="text"
             id="search"
@@ -39,7 +39,7 @@ const DueDilligenceScreen = () => {
               placeholder="Search by name"
               className={`w-full bg-color-textfield-dropdown-${theme} py-2 px-4 rounded-md my-4`}
             />
-            <LuSearch color="white" size={20} />
+            <LuSearch color={`text-color-icon-${theme}`} size={20} />
           </div>
         </div>
       </div>
@@ -53,7 +53,7 @@ const DueDilligenceScreen = () => {
               value="All"
               className="form-radio rounded-full text-blue-500"
             />
-            <span className="ml-2 text-white">All</span>
+            <span className={`ml-2 text-color-text-${theme}`}>All</span>
           </label>
 
           <label className="flex items-center">
@@ -63,7 +63,7 @@ const DueDilligenceScreen = () => {
               value="Individual"
               className="form-radio rounded-full text-blue-500"
             />
-            <span className="ml-2 text-white">Individual</span>
+            <span className={`ml-2 text-color-text-${theme}`}>Individual</span>
           </label>
 
           <label className="flex items-center">
@@ -73,7 +73,7 @@ const DueDilligenceScreen = () => {
               value="Corporate"
               className="form-radio rounded-full text-blue-500"
             />
-            <span className="ml-2 text-white">Corporate</span>
+            <span className={`ml-2 text-color-text-${theme}`}>Corporate</span>
           </label>
         </div>
 
@@ -85,7 +85,7 @@ const DueDilligenceScreen = () => {
               value="both"
               className="form-radio rounded-full text-blue-500"
             />
-            <span className="ml-2 text-white">Both</span>
+            <span className={`ml-2 text-color-text-${theme}`}>Both</span>
           </label>
 
           <label className="flex items-center">
@@ -95,7 +95,7 @@ const DueDilligenceScreen = () => {
               value="action"
               className="form-radio rounded-full text-blue-500"
             />
-            <span className="ml-2 text-white">Action Required</span>
+            <span className={`ml-2 text-color-text-${theme}`}>Action Required</span>
           </label>
 
           <label className="flex items-center">
@@ -105,7 +105,7 @@ const DueDilligenceScreen = () => {
               value="hit"
               className="form-radio rounded-full text-blue-500"
             />
-            <span className="ml-2 text-white">No hit</span>
+            <span className={`ml-2 text-color-text-${theme}`}>No hit</span>
           </label>
         </div>
       </div>

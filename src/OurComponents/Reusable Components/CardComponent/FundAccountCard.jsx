@@ -15,10 +15,23 @@ import DueDilligenceScreen from "./DueDilligenceScreen";
 
 const FundAccountCard = () => {
   const { theme } = useTheme();
-  const [activeTab, setActiveTab] = useState(0);
-  const handleTabChange = (index) => {
-    setActiveTab(index);
+
+
+  // const [activeTab, setActiveTab] = useState(0);
+  // const handleTabChange = (index) => {
+  //   console.log("Index",index)
+  //   setActiveTab(index);
+  // };
+
+  const [selectedTab, setSelectedTab] = useState("Wallet");
+  const [tabIndex, setTabIndex] = useState(0); 
+  
+  const handleTabChange = (tab, index) => {
+    setSelectedTab(tab); 
+    setTabIndex(index);
   };
+
+  
   const Headers = [
     "Account",
     "Type",
@@ -102,9 +115,8 @@ const FundAccountCard = () => {
   ];
 
   const renderContent = () => {
-    switch (activeTab) {
-      case 0:
-        return (
+    if (selectedTab === "" || tabIndex === 0) {
+      return (
           <div>
             <div className={`rounded-b-xl w-full`}>
               <div
@@ -170,29 +182,32 @@ const FundAccountCard = () => {
             />
           </div>
         );
-      case 1:
+      }
+      else if (selectedTab === "Documents Expiry" || tabIndex === 1) {
         return (
           <div>
             <ExpiringDocuments />
           </div>
         );
-      case 2:
+      }
+      else if (selectedTab === "Periodic Review" || tabIndex === 2) {
         return (
           <div>
             <PeriodicReview />
           </div>
         );
-      case 3:
+      }
+      else if (selectedTab === "Due Deligence" || tabIndex === 3) {
         return <div><DueDilligenceScreen/></div>;
-      case 4:
+      }
+      else if (selectedTab === "Quick Scan" || tabIndex === 4) {
         return (
           <div>
             <QuickScan />
           </div>
         );
-      default:
-        return null;
-    }
+      }
+      
   };
 
   return (
@@ -209,7 +224,8 @@ const FundAccountCard = () => {
             "Quick Scan",
           ]}
           className="text-xs font-light ml-4 py-6"
-          onTabChange={handleTabChange}
+          // onTabChange={handleTabChange}
+          onTabChange={(tab,index) => handleTabChange(tab, index)}
         />
         <div className="flex gap-4">
           <Button
