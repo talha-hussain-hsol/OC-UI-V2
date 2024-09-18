@@ -12,7 +12,7 @@ const Table = ({
 }) => {
   const { theme } = useTheme();
   return (
-    <div className="w-full overflow-x-auto">
+    <div className="w-full overflow-x-auto rounded-lg">
       <table className={`w-full ${className}`}>
         <thead>
           <tr

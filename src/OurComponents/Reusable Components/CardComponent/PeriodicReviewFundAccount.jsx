@@ -21,7 +21,7 @@ const PeriodicReviewFundAccount = () => {
 
     return (
         <div className={`bg-color-header-${theme} py-4`}>
-            <p className={`text-xs leading-relaxed text-center text-[#6b82a1] py-6 mx-72`}>
+            <p className={`text-xs leading-relaxed text-center text-[#6b82a1] py-6 sm:mx-72`}>
                 Periodic review section indicates all cases which are due for periodic review cycle within the next 3 months.
                 The default periodic review cycle is set for High Risk (every 1 year), Medium Risk (Every 2 years) and Low Risk (Every 3 years).
             </p>
@@ -29,7 +29,7 @@ const PeriodicReviewFundAccount = () => {
                 <Table
                     headers={Headers}
                     rows={Rows}
-                    headerClassName={`bg-color-table-header-${theme}`}
+                    headerClassName={`bg-color-table-bg-${theme}`}
                     className={`bg-color-header-${theme} rounded-b-lg`}
                     renderRow={(row, index) => (
                         Rows.length > 0 ? (

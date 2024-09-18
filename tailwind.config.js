@@ -83,7 +83,13 @@ module.exports = {
         "color-header-SC": "#FFFFFF",
         "color-header-Ascent": "#01214a",
         "color-table-header-Ascent": "#030c32",
-        "color-table-header-SC": "#",
+        "color-table-header-SC": "#FFFFFF",
+        "color-table-bg-Ascent": "#030c32",
+        "color-table-bg-SC": "#FAFAFB",
+        "color-search-Ascent": "#1e3a5c",
+        "color-search-SC": "#FAFAFB",
+        "color-tab-buttons-inactive-SC" : "#F5F5F5",
+        "color-tab-buttons-inactive-Ascent" : "#0d3e80",
       },
 
       borderColor: {
@@ -94,12 +100,14 @@ module.exports = {
         "color-dropdown-Ascent": "#06d3de",
         "color-button-SC": "",
         "color-button-Ascent": "#FFFFFF",
+        "color-button-border-SC": "#3DA500",
+        "color-button-border-Ascent": "#2c7be5",
       },
       textColor: {
         "color-SC": "#3DA500",
         "color-para-SC": "#000000",
         "color-para-Ascent": "#e79f31",
-        "color-text-SC": "#000000",
+        "color-text-SC": "#6b82a1",
         "color-text-Ascent": "#FFFFFF",
         "color-lightTheme": "#004e89",
         // "color-Ascent": "#e27396",
@@ -119,8 +127,10 @@ module.exports = {
         "color-sidebar-icon-hover-Ascent": "#FFFFFF",
         "color-profile-icon-SC": "#5C5E64",
         "color-profile-icon-Ascent": "#FFFFFF",
+        "color-icon-text-SC": "#5C5E64",
+        "color-icon-text-Ascent": "#FFFFFF",
         "color-icon-SC": "#3DA500",
-        "color-icon-Ascent": "#ed9b0a",
+        "color-icon-Ascent": "#de9312",
       },
       fontFamily: {
         SC: ['"Roboto"', "sans-serif"], // Theme 1
@@ -194,6 +204,12 @@ module.exports = {
       pattern: /bg-color-header-(SC|lightTheme|Ascent)/,
     },
     {
+      pattern: /bg-color-search-(SC|lightTheme|Ascent)/,
+    },
+    {
+      pattern: /bg-color-tab-buttons-inactive-(SC|lightTheme|Ascent)/,
+    },
+    {
       pattern: /bg-color-profile-icon-(SC|lightTheme|Ascent)/,
     },
     {
@@ -215,6 +231,9 @@ module.exports = {
       pattern: /text-color-icon-(SC|lightTheme|Ascent)/,
     },
     {
+      pattern: /text-color-icon-text-(SC|lightTheme|Ascent)/,
+    },
+    {
       pattern: /text-color-status-(SC|lightTheme|Ascent)/,
     },
     {
@@ -234,6 +253,9 @@ module.exports = {
     },
     {
       pattern: /bg-color-table-header-(SC|lightTheme|Ascent)/,
+    },
+    {
+      pattern: /bg-color-table-bg-(SC|lightTheme|Ascent)/,
     },
     {
       pattern: /bg-color-barchart-(SC|lightTheme|Ascent)/, // Background color for bar chart theme 1
@@ -282,6 +304,9 @@ module.exports = {
     },
     {
       pattern: /border-color-modal-(SC|lightTheme|Ascent)/, // Hover border color
+    },
+    {
+      pattern: /border-color-button-border-(SC|lightTheme|Ascent)/, // Hover border color
     },
     {
       pattern: /hover:border-color-(SC|lightTheme|Ascent)/, // Hover border color

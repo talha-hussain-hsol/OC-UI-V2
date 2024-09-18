@@ -56,18 +56,18 @@ const ExpiringDocuments = () => {
           onClick={() => setActiveButton("expiring")}
           className={`${
             activeButton === "expiring"
-              ? "bg-[#2c7be5] text-white border-[#2c7be5]"
-              : "bg-[#0d3e80] text-white border-[#2c7be5]"
-          } py-5 px-4 rounded-l-full border border-blue-500`}
+              ? `bg-color-button-${theme} sm:text-md text-xs text-white border-color-button-border-${theme}`
+              : `bg-color-tab-buttons-inactive-${theme} sm:text-md text-xs text-color-profile-icon-${theme} border-color-button-border-${theme}`
+          } py-5 md:px-4 px-1 rounded-l-full border border-blue-500`}
         />
         <Button
           text="Expired Documents"
           onClick={() => setActiveButton("expired")}
           className={`${
             activeButton === "expired"
-              ? "bg-[#2c7be5] text-white border-[#2c7be5]"
-              : "bg-[#0d3e80] text-white border-[#2c7be5]"
-          } py-5 px-4 rounded-r-full border border-blue-500`}
+              ? `bg-color-button-${theme} sm:text-md text-xs text-white border-color-button-border-${theme}`
+              : `bg-color-tab-buttons-inactive-${theme} sm:text-md text-xs text-color-profile-icon-${theme} border-color-button-border-${theme}`
+          } py-5 md:px-4 px-1 rounded-r-full border border-blue-500`}
         />
       </div>
       {activeButton === "expired" && (
@@ -80,7 +80,7 @@ const ExpiringDocuments = () => {
           <Table
             headers={Headers}
             rows={Rows}
-            headerClassName={`bg-color-table-header-${theme} `}
+            headerClassName={`bg-color-table-bg-${theme} `}
             // showField={true}
             className={`bg-color-header-${theme} rounded-b-lg `}
             renderRow={(row, index) => (
@@ -113,7 +113,7 @@ const ExpiringDocuments = () => {
           <Table
             headers={Headers}
             rows={Rows}
-            headerClassName={`bg-color-table-header-${theme} `}
+            headerClassName={`bg-color-table-bg-${theme} `}
             // showField={true}
             className={`bg-color-header-${theme} rounded-b-lg `}
             renderRow={(row, index) => (
