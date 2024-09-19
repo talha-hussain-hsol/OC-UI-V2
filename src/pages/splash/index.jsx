@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import useSpashHook from "../../hooks/useSplashHook";
 import { TbLogout } from "react-icons/tb";
+import Button from '../../OurComponents/Reusable Components/Button';
 
 const portals = [
   { label: 'Customer Portal', type: 'customer' },
@@ -26,9 +27,15 @@ const SplashScreen = () => {
         <p className="text-sm font-light mb-6 text-slate-500">What do we want to do today?</p>
         
         <div className='flex justify-end'>
-          <button className="w-[20%] flex text-xs mb-3 px-3 mr-5 py-1 bg-[#2c7be5] hover:bg-[#4472c8] rounded text-white">
-          <TbLogout className='text-lg mr-1'/> LOGOUT
-          </button>
+          {/* <button className="w-[20%] flex text-xs mb-3 px-3 mr-2 py-1 bg-[#2c7be5] hover:bg-[#4472c8] rounded text-white">
+            <TbLogout className='text-lg'/> LOGOUT
+            </button> */}
+            <Button
+              text='LOGOUT'
+              className="flex text-xs mb-3 px-3 mr-2 py-1 bg-[#2c7be5] hover:bg-[#4472c8] rounded text-white"
+              icon={<TbLogout/>}
+              iconPosition='left'
+            />
         </div>
 
         {/* Display Fixed Tabs */}
