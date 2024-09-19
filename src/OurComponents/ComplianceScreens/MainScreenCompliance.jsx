@@ -19,6 +19,8 @@ function MainScreenCompliance() {
 
   const renderSelectedComponent = () => {
     switch (selectedTab) {
+      case "Domain":
+        return <DomainAccounts />;
       case "Dashboard":
         return <ComplianceDashboard />;
       case "KYC/KYB":

@@ -37,6 +37,7 @@ import TransactionMonitoring from "./OurComponents/ComplianceScreens/Transaction
 
 import MainScreenCompliance from "./OurComponents/ComplianceScreens/MainScreenCompliance";
 import CustomerList from "./OurComponents/ComplianceScreens/CustomerList";
+import SummaryDetails from "./OurComponents/ComplianceScreens/IdentityDetails/SummaryDetails";
 
 function App() {
   
@@ -59,6 +60,8 @@ function App() {
       <Route path="/compliance" element={<ThemeProvider> <MainScreenCompliance /> </ThemeProvider> } />
       <Route path="/transaction-monitoring" element={<ThemeProvider> <TransactionMonitoring /> </ThemeProvider>} />
       <Route path="/customers-list" element={<ThemeProvider> <CustomerList /> </ThemeProvider>} />
+      <Route path="/summary-details" element={<ThemeProvider> <SummaryDetails /> </ThemeProvider>} />
+
 
     </Routes>
   </BrowserRouter>

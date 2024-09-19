@@ -84,6 +84,7 @@ module.exports = {
         "color-header-Ascent": "#01214a",
         "color-table-header-Ascent": "#030c32",
         "color-table-header-SC": "#",
+        'custom-green': '#00d97e',
       },
 
       borderColor: {
