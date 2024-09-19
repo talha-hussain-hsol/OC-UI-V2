@@ -13,10 +13,22 @@ import PeriodicReview from "./PeriodicReviewFundAccount";
 import QuickScan from "./QuickScan";
 import DueDilligenceScreen from "./DueDilligenceScreen";
 import { TbListDetails } from "react-icons/tb";
+import Tooltip from "../Tooltip";
+import { ImDownload3 } from "react-icons/im";
 
 const FundAccountCard = () => {
   const { theme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [actionMenuOpen, setActionMenuOpen] = useState(false);
+  const [activeActionMenuIndex, setActiveActionMenuIndex] = useState(null);
+
+  const toggleActionMenu = (index) => {
+    if (activeActionMenuIndex === index) {
+      setActiveActionMenuIndex(null);
+    } else {
+      setActiveActionMenuIndex(index);
+    }
+  };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -176,10 +188,20 @@ const FundAccountCard = () => {
                 >
                   {row.status}
                 </td>
-                <td className="py-4 px-6 font-light text-xs flex items-center">
-                  <TbListDetails size={18} color="008000" />
-                  <MdDeleteOutline size={20} color="#d03354" />
-                  <HiOutlineDotsVertical size={18} color="#2c7be5" />
+                <td className="py-4 px-6 font-light text-xs flex items-center relative">
+                  <Tooltip content="Identity Details" position="top">
+                    <TbListDetails size={18} color="008000" />
+                  </Tooltip>
+                  <Tooltip content="Delete Account" position="top">
+                    <MdDeleteOutline size={20} color="#d03354" />
+                  </Tooltip>
+                  <Tooltip content="Actions" position="top">
+                    <HiOutlineDotsVertical
+                      size={18}
+                      color="#2c7be5"
+                      onClick={() => toggleActionMenu(index)}
+                    />
+                  </Tooltip>
                 </td>
               </>
             )}
@@ -228,7 +250,7 @@ const FundAccountCard = () => {
               "Due Diligence",
               "Quick Scan",
             ]}
-            className="text-xs font-light ml-4 py-6"
+            className="text-xs font-light ml-4 py-6 "
             onTabChange={(tab, index) => handleTabChange(tab, index)}
           />
         </div>
@@ -245,7 +267,9 @@ const FundAccountCard = () => {
 
         {/* Dropdown menu when hamburger is clicked */}
         {isMenuOpen && (
-          <div className={`lg:hidden absolute left-10 top-56 mt-2 shadow-lg rounded-md z-10 border border-color-${theme} bg-color-header-${theme} text-color-text-${theme} text-xs`}>
+          <div
+            className={`lg:hidden absolute left-10 top-56 mt-2 shadow-lg rounded-md z-10 border border-color-${theme} bg-color-header-${theme} text-color-text-${theme} text-xs`}
+          >
             <ul className="flex flex-col items-start">
               {[
                 "Accounts",
@@ -259,7 +283,7 @@ const FundAccountCard = () => {
                   className="px-4 py-2 w-full hover:bg-gray-100"
                   onClick={() => {
                     handleTabChange(tab, index);
-                    setIsMenuOpen(false); // Close the menu on tab selection
+                    setIsMenuOpen(false);
                   }}
                 >
                   {tab}
@@ -286,20 +310,20 @@ const FundAccountCard = () => {
             text="Create Account"
             icon={<FaPlus color="#008000" />}
             iconPosition="left"
-            className={`text-color-profile-icon-${theme} sm:text-sm text-[6px] font-light border-color-button-${theme} border rounded-md px-2 py-2`}
+            className={`text-color-profile-icon-${theme} sm:text-sm text-[6px] font-light border-color-button-${theme} border rounded-md px-2 py-2 hover:bg-color-tab-button1-hover-${theme} transition duration-300 ease-in-out hover:border-color-tab-button1-hover-${theme}`}
           ></Button>
           <Button
             text="Import Bulk Customer"
             icon={<FaPlus color="#008000" />}
             iconPosition="left"
-            className={`text-color-profile-icon-${theme} sm:text-sm text-[6px] font-light border-color-button-${theme} border rounded-md px-2 py-2`}
+            className={`text-color-profile-icon-${theme} sm:text-sm text-[6px] font-light border-color-button-${theme} border rounded-md px-2 py-2 hover:bg-color-tab-button1-hover-${theme} transition duration-300 ease-in-out hover:border-color-tab-button1-hover-${theme}`}
           ></Button>
           <Button
             text="Download Domain Report"
             icon={<HiDownload color="white" />}
             iconPosition="right"
             iconClassName="ml-1"
-            className={`text-white sm:text-sm text-[6px] font-light bg-color-button-${theme} px-1 py-2 rounded-md `}
+            className={`text-white sm:text-sm text-[6px] font-light bg-color-button-${theme} px-1 py-2 rounded-md hover:bg-color-tab-button2-hover-${theme} transition duration-300 ease-in-out`}
           ></Button>
         </div>
       </div>

@@ -151,7 +151,7 @@ const SideBar = ({ portalType }) => {
         <div className="flex flex-col gap-6 items-center mt-8">
           {portalType === "Compliance" && (
             <>
-              <Tooltip content="Domains">
+              <Tooltip content="Domains" position="right">
                 <Link to="/domain-accounts">
                   <RxDashboard
                     size={18}
@@ -159,7 +159,7 @@ const SideBar = ({ portalType }) => {
                   />
                 </Link>
               </Tooltip>
-              <Tooltip content="Customers">
+              <Tooltip content="Customers" position="right">
                 <Link to="/customers-list">
                   <TbUsers
                     size={18}
@@ -167,7 +167,7 @@ const SideBar = ({ portalType }) => {
                   />
                 </Link>
               </Tooltip>
-              <Tooltip content="Switch">
+              <Tooltip content="Switch" position="right">
                 <Link to="/splash">
                   <TbSwitch
                     size={18}
@@ -175,7 +175,7 @@ const SideBar = ({ portalType }) => {
                   />
                 </Link>
               </Tooltip>
-              <Tooltip content="Settings">
+              <Tooltip content="Settings" position="right">
                 <Link to="">
                   <CiSettings
                     size={18}
@@ -183,7 +183,7 @@ const SideBar = ({ portalType }) => {
                   />
                 </Link>
               </Tooltip>
-              <Tooltip content="Ageing Report">
+              <Tooltip content="Ageing Report" position="right">
                 <Link to="">
                   <MdOutlineFileDownload
                     size={18}
@@ -191,7 +191,7 @@ const SideBar = ({ portalType }) => {
                   />
                 </Link>
               </Tooltip>
-              <Tooltip content="Consumption Report">
+              <Tooltip content="Consumption Report" position="right">
                 <Link to="">
                   <MdOutlineFileDownload
                     size={18}
@@ -204,7 +204,7 @@ const SideBar = ({ portalType }) => {
           )}
           {portalType === "Customer" && (
             <>
-              <Tooltip content="Dashboard">
+              <Tooltip content="Dashboard" position="right">
                 <Link to="/">
                   <FiHome
                     size={18}
@@ -212,7 +212,7 @@ const SideBar = ({ portalType }) => {
                   />
                 </Link>
               </Tooltip>
-              <Tooltip content="Documents">
+              <Tooltip content="Documents" position="right">
                 <Link to="/documents">
                   <IoDocumentsOutline
                     size={18}
@@ -220,7 +220,7 @@ const SideBar = ({ portalType }) => {
                   />
                 </Link>
               </Tooltip>
-              <Tooltip content="Accounts">
+              <Tooltip content="Accounts" position="right">
                 <Link to="/accounts">
                   <MdOutlineAccountTree
                     size={18}
@@ -228,7 +228,7 @@ const SideBar = ({ portalType }) => {
                   />
                 </Link>
               </Tooltip>
-              <Tooltip content="Identities">
+              <Tooltip content="Identities" position="right">
                 <Link to="/identities">
                   <TbUsers
                     size={14}
@@ -236,7 +236,7 @@ const SideBar = ({ portalType }) => {
                   />
                 </Link>
               </Tooltip>
-              <Tooltip content="Walkthrough">
+              <Tooltip content="Walkthrough" position="right">
                 <Link to="">
                   <PiCompass
                     size={18}
@@ -249,7 +249,7 @@ const SideBar = ({ portalType }) => {
           )}
           {portalType === "Manager" && (
             <>
-              <Tooltip content="Domains">
+              <Tooltip content="Domains" position="right">
                 <Link to="">
                   <RxDashboard
                     size={18}
@@ -257,7 +257,7 @@ const SideBar = ({ portalType }) => {
                   />
                 </Link>
               </Tooltip>
-              <Tooltip content="Switch">
+              <Tooltip content="Switch" position="right">
                 <Link to="">
                   <TbSwitch
                     size={18}
@@ -332,7 +332,7 @@ const SideBar = ({ portalType }) => {
           </div>
 
           {portalType !== "Manager" && (
-            <Tooltip content="Notifications">
+            <Tooltip content="Notifications" position="right">
               <Link to="">
                 <FaRegBell
                   size={18}

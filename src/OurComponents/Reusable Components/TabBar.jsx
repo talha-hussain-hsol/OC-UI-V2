@@ -31,7 +31,6 @@
 
 // export default TabBar;
 
-
 // import React, { useState } from "react";
 // import { useTheme } from "../../contexts/themeContext";
 
@@ -67,20 +66,19 @@
 
 // export default TabBar;
 
-
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { useTheme } from "../../contexts/themeContext";
 
 const TabBar = ({ tabs, className, onTabChange }) => {
-    const { theme } = useTheme();
+  const { theme } = useTheme();
 
-    const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState(0);
 
   const handleTabClick = (tab, index) => {
-        setActiveTab(index);
+    setActiveTab(index);
 
     if (onTabChange) {
-      onTabChange(tab, index); 
+      onTabChange(tab, index);
     }
   };
 
@@ -91,10 +89,10 @@ const TabBar = ({ tabs, className, onTabChange }) => {
           key={index}
           onClick={() => handleTabClick(tab, index)}
           className={` ${
-                        activeTab === index
-                          ? `border-b-2 border-blue-500 text-color-${theme}`
-                          : `text-[#748aa9] border-transparent hover:text-[#516989] transition-colors duration-200`
-                      } ${className}`}
+            activeTab === index
+              ? `border-b-2 border-blue-500 text-color-${theme}`
+              : `text-[#748aa9] border-transparent hover:text-[#516989] transition-colors duration-200`
+          } ${className}`}
         >
           {tab}
         </button>
