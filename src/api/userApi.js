@@ -71,3 +71,4 @@ export const getIdentityCount = async (entityId, baseURL="CAPI", cancelToken) =>
   }
   return customResponse;
 }
+

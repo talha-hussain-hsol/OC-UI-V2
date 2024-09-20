@@ -29,18 +29,20 @@
 
 // export default customerRoutes
 
+
+
 import React from "react";
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
 import PropTypes from "prop-types";
 import { ThemeProvider } from "../contexts/themeContext";
+import Dashboard from "../pages/customerPortal/Screens/Dashboard"
+import UserForm from "../pages/customerPortal/Screens/UserForm"
+import Accounts from "../pages/customerPortal/Screens/Accounts"
+import Identities from "../pages/customerPortal/Screens/Identities"
+import MainDocuments from "../pages/customerPortal/Screens/MainDocuments"
+import FundCode from "../pages/customerPortal/Screens/FundCode"
+import Stepper from "../pages/customerPortal/Screens/Stepper"
 
-import Dashboard from "../OurComponents/Screens/Dashboard";
-import UserForm from "../OurComponents/Screens/UserForm";
-import Accounts from "../OurComponents/Screens/Accounts";
-import Identities from "../OurComponents/Screens/Identities";
-import MainDocuments from "../OurComponents/Screens/MainDocuments";
-import FundCode from "../OurComponents/Screens/FundCode";
-import Stepper from "../OurComponents/Screens/Stepper";
 
 const CustomerRoutesWrapper = () => {
   return (

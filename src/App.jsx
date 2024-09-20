@@ -19,17 +19,46 @@ import 'react-toastify/dist/ReactToastify.css';
 import SignIn from "./pages/sign-in";
 import SplashScreen from "./pages/splash";
 import Compliance from "./pages/compliancePortal";
+import Customer from "./pages/customerPortal";
 import ComplianceDashboard from "./pages/compliancePortal/dashboard";
+import { ThemeProvider } from "./contexts/themeContext";
+import Dashboard from "./pages/customerPortal/Screens/Dashboard"
+import UserForm from "./pages/customerPortal/Screens/UserForm"
+import Accounts from "./pages/customerPortal/Screens/Accounts"
+import Identities from "./pages/customerPortal/Screens/Identities"
+import MainDocuments from "./pages/customerPortal/Screens/MainDocuments"
+import FundCode from "./pages/customerPortal/Screens/FundCode"
+import Stepper from "./pages/customerPortal/Screens/Stepper"
 
 
 function App() {
   return (
-    <div className="flex h-screen">
-      <BrowserRouter>
-        {window.location.href.includes('compliance') ? <ComplianceRoutesWrapper /> :<AppWrapper isHome={false} />}
-      </BrowserRouter>
-      <ToastContainer position="bottom-right" />
-    </div>
+    // <div className="flex h-screen">
+    //   <BrowserRouter>
+    //     {window.location.href.includes('compliance') ? <ComplianceRoutesWrapper /> :<AppWrapper isHome={false} />}
+    //   </BrowserRouter>
+    //   <BrowserRouter>
+    //     {window.location.href.includes('customer') ? <CustomerRoutesWrapper /> :<AppWrapper isHome={false} />}
+    //   </BrowserRouter>
+    //   <ToastContainer position="bottom-right" />
+    // </div>
+    <div className="flex ">
+  <BrowserRouter>
+    {/* Conditionally render based on the URL */}
+    {window.location.href.includes('compliance') ? (
+      <ComplianceRoutesWrapper />
+    ) : window.location.href.includes('customer') ? (
+      <ThemeProvider>
+        <CustomerRoutesWrapper />
+        </ThemeProvider>
+    ) : (
+      <AppWrapper isHome={false} />
+    )}
+  </BrowserRouter>
+  
+  <ToastContainer position="bottom-right" />
+</div>
+
   );
 }
 const AppWrapper = () => {
@@ -85,7 +114,7 @@ const AppWrapper = () => {
 
   return (
     <div
-      className={`w-full overflow-hidden bg-custom-gradient text-white pt-[0.5%] pl-[7%] pr-[4%]`}
+      className={`w-full overflow-hidden bg-custom-gradient text-white `}
     >
       <Routes>
         <Route path={"/"} element={<SignIn />} />
@@ -93,6 +122,7 @@ const AppWrapper = () => {
         <Route path="/callback" element={<Callback />} />
         <Route path="/splash" element={<SplashScreen />} />
         <Route path="/compliance" element={<Compliance />} />
+        <Route path="/customer" element={<ThemeProvider><Customer /></ThemeProvider> } />
       </Routes>
     </div>
   );
@@ -101,11 +131,29 @@ const AppWrapper = () => {
 const ComplianceRoutesWrapper = () => {
   return (
     <div
-      className={`w-full overflow-hidden bg-custom-gradient text-white pt-[0.5%] pl-[7%] pr-[4%]`}
+      className={`w-full overflow-hidden bg-custom-gradient text-white `}
     >
       <Routes>
         <Route path={"/"} element={<ComplianceDashboard />} />
       </Routes>
+    </div>
+  );
+};
+
+
+const CustomerRoutesWrapper = () => {
+  return (
+    <div
+      className={`w-full overflow-hidden bg-custom-gradient text-white `}
+    ><Routes>
+    <Route path="/" element={<ThemeProvider><Dashboard /></ThemeProvider>} />
+    <Route path="/user-form" element={<ThemeProvider><UserForm /></ThemeProvider>} />
+    <Route path="/accounts" element={<ThemeProvider><Accounts /></ThemeProvider>} />
+    <Route path="/identities" element={<ThemeProvider><Identities /></ThemeProvider>} />
+    <Route path="/documents" element={<ThemeProvider><MainDocuments /></ThemeProvider>} />
+    <Route path="/fund-code" element={<ThemeProvider><FundCode /></ThemeProvider>} />
+    <Route path="/stepper" element={<ThemeProvider><Stepper /></ThemeProvider>} />
+  </Routes>
     </div>
   );
 };
