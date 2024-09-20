@@ -2,6 +2,7 @@ import React from "react";
 import useSpashHook from "../../hooks/useSplashHook";
 import { TbLogout } from "react-icons/tb";
 import Loader from "../../components/ui/loader";
+import Button from "../../OurComponents/Reusable Components/Button"
 
 const SplashScreen = () => {
   const {
@@ -13,7 +14,12 @@ const SplashScreen = () => {
     isLoader,
   } = useSpashHook();
 
+  console.log("Entitiess:", entites);
+  
+
   const filteredEntities = entites?.filter((row) => row?.type === activePortal);
+
+  console.log({activePortal, filteredEntities})
   const dummyImage =
     "https://storage.googleapis.com/ascentfs-media-public/public-data/application/logo.compliance.entity.png";
 
@@ -33,9 +39,15 @@ const SplashScreen = () => {
           </p>
 
           <div className="flex justify-end">
-            <button className="w-[20%] flex text-xs mb-3 px-3 mr-5 py-1 bg-[#2c7be5] hover:bg-[#4472c8] rounded text-white">
-              <TbLogout className="text-lg mr-1" /> LOGOUT
-            </button>
+            <Button 
+            text='LOGOUT'
+            icon={<TbLogout className="text-lg mr-1" />}
+            className="flex text-xs mb-3 px-3 mr-5 py-1 bg-[#2c7be5] hover:bg-[#4472c8] rounded text-white"
+
+            />
+            {/* <button className="w-[20%] flex text-xs mb-3 px-3 mr-5 py-1 bg-[#2c7be5] hover:bg-[#4472c8] rounded text-white">
+               LOGOUT
+            </button> */}
           </div>
 
           {/* Display Fixed Tabs */}
