@@ -153,8 +153,8 @@ export const getDocumentListAPI = async (cancelToken) => {
 export const getIdentityList = async (cancelToken, fundId) => {
   let url
   fundId
-    ? (url = `/${entityId}/${baseURL}/Identity/list?fundId=${fundId}`)
-    : (url = `/${entityId}/${baseURL}/Identity/list`)
+    ? (url = `/${entityId}/CAPI/Identity/list?fundId=${fundId}`)
+    : (url = `/${entityId}/CAPI/Identity/list`)
 
   const request = { type: "GET", urlString: url }
 
