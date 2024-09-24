@@ -9,6 +9,7 @@ const CardHeader = ({
   showButton = true,
   BtnText,
   showLogo = true,
+  logoUrl,
   logoClassname = "",
   className = "",
   middleContent = null,
@@ -20,20 +21,20 @@ const CardHeader = ({
   fieldPlaceholder = "",
 }) => {
   const { theme } = useTheme();
-  console.log("theme", theme);
 
   return (
     <div
       className={`bg-color-card-${theme} rounded-t-md border-color-${theme} border-b-[1px] shadow-${theme}  py-2 px-8 flex justify-between h-full w-full ${className}`}
     >
       <div className="flex flex-row justify-center gap-1 my-2 items-center">
-        {showLogo && (
-          <img
-            src={fundLogo}
-            alt="Fund Logo"
-            className={`w-10 h-auto rounded-md ${logoClassname}`}
-          />
-        )}
+        {showLogo &&
+          logoUrl && ( // Check if logoUrl exists before rendering the image
+            <img
+              src={logoUrl} // Use logoUrl from props
+              alt="Fund Logo"
+              className={`w-10 h-auto rounded-md ${logoClassname}`}
+            />
+          )}
         <h3 className={`font-medium ${fundClassName}`}>{FundName}</h3>
       </div>
 

@@ -1,16 +1,31 @@
-import React, { useEffect } from "react";
-import SideBar from "../../../OurComponents/Reusable Components/SideBar"
-import Header from "../../../OurComponents/Reusable Components/Header"
-import AccountCard from "../../../OurComponents/Reusable Components/CardComponent/AccountCard"
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import SideBar from "../../../OurComponents/Reusable Components/SideBar";
+import Header from "../../../OurComponents/Reusable Components/Header";
+import AccountCard from "../../../OurComponents/Reusable Components/CardComponent/AccountCard";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../../../contexts/themeContext";
+import { getLocalStorage } from "../../../utils/cookies";
+import { getCustomerAccounts } from "../../../api/userApi";
+import useEntityStore from "../../../store/useEntityStore";
+import { removeQueryParams } from "../../../utils/helperFunctions";
 
 const Accounts = () => {
+  const { entityId } = useEntityStore();
   const { theme } = useTheme();
 
-  useEffect(() => {
-    console.log("Current theme:", theme);
+  useLayoutEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const data = params.get("data");
+    if (data) {
+      const parsedData = JSON.parse(decodeURIComponent(data));
+      for (const key in parsedData) {
+        localStorage.setItem(key, parsedData[key]);
+      }
+    }
+    removeQueryParams();
+  }, []);
 
+  useEffect(() => {
     document.body.style.backgroundColor =
       theme === "SC"
         ? "#ffffff"
@@ -24,6 +39,24 @@ const Accounts = () => {
       document.body.style.backgroundColor = "";
     };
   }, [theme]);
+
+  const [accountData, setAccountData] = useState(null);
+
+  useEffect(() => {
+    debugger;
+    const fetchAccountData = async () => {
+      try {
+        const response = await getCustomerAccounts(entityId);
+        console.log("API Response:", response);
+        setAccountData(response?.data?.customer_accounts);
+      } catch (error) {
+        console.error("Failed to fetch customer accounts", error);
+      }
+    };
+
+    fetchAccountData();
+  }, [entityId]);
+
   const navigate = useNavigate();
   function handleClick() {
     navigate("/fund-code");
@@ -41,9 +74,13 @@ const Accounts = () => {
           theme={theme}
         />
 
-        <AccountCard />
-        <AccountCard />
-        <AccountCard />
+        {accountData !== null && (
+          <>
+            {accountData.map((account) => (
+              <AccountCard key={account.id} accountData={accountData} />
+            ))}
+          </>
+        )}
       </div>
     </div>
   );

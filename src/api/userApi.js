@@ -4,6 +4,8 @@ import ResponseModel, {
   processRequest,
   RequestType,
 } from "./config";
+import useEntityStore from "../store/useEntityStore";
+const { entityId } = useEntityStore.getState();
 
 export const getToken = async (code, code_verifier, cancelToken) => {
   const customResponse = new ResponseModel();
@@ -53,9 +55,13 @@ export const getEntityPermission = async (entityId, cancelToken) => {
     customResponse.error = processError(error);
   }
   return customResponse;
-}
+};
 
-export const getIdentityCount = async (entityId, baseURL="CAPI", cancelToken) => {
+export const getIdentityCount = async (
+  entityId,
+  baseURL = "CAPI",
+  cancelToken
+) => {
   const customResponse = new ResponseModel();
   const url = `/${entityId}/${baseURL}/identityCount`;
   const request = {
@@ -70,5 +76,19 @@ export const getIdentityCount = async (entityId, baseURL="CAPI", cancelToken) =>
     customResponse.error = processError(error);
   }
   return customResponse;
-}
+};
 
+export const getCustomerAccounts = async (entityId, cancelToken) => {
+  console.log("in get api");
+
+  const url = `/${entityId}/CAPI/Account/list?offset=0&limit=5`;
+  const request = { type: "GET", urlString: url };
+
+  try {
+    const response = await processRequest(request, cancelToken);
+    console.log("loginCustomer Response Headers", response);
+    return response.data;
+  } catch (error) {
+    // return getErrorResponse(error)
+  }
+};

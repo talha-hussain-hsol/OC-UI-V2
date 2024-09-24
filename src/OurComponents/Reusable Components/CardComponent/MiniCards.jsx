@@ -12,7 +12,6 @@ const MiniCards = ({
   rightClassName = "",
 }) => {
   const { theme } = useTheme();
-  console.log("theme", theme);
 
   return (
     <div>
