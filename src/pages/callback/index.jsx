@@ -23,6 +23,7 @@ const Callback = () => {
     setSingleAccount: state.setSingleAccount,
   }));
 
+
   function removeParams() {
     const url = window.location.href;
     const urlWithoutParams = url.split("?")[0];

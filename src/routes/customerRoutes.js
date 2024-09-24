@@ -47,7 +47,6 @@ import Stepper from "../pages/customerPortal/Screens/Stepper"
 const CustomerRoutesWrapper = () => {
   return (
     <div>
-      <BrowserRouter>
         <Routes>
           <Route path="/" element={<ThemeProvider><Dashboard /></ThemeProvider>} />
           <Route path="/user-form" element={<ThemeProvider><UserForm /></ThemeProvider>} />
@@ -57,7 +56,6 @@ const CustomerRoutesWrapper = () => {
           <Route path="/fund-code" element={<ThemeProvider><FundCode /></ThemeProvider>} />
           <Route path="/stepper" element={<ThemeProvider><Stepper /></ThemeProvider>} />
         </Routes>
-      </BrowserRouter>
     </div>
   );
 };

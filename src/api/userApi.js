@@ -4,6 +4,7 @@ import ResponseModel, {
   processRequest,
   RequestType,
 } from "./config";
+import useEntityStore from '../store/useEntityStore'; // Zustand store import
 
 export const getToken = async (code, code_verifier, cancelToken) => {
   const customResponse = new ResponseModel();
@@ -55,9 +56,9 @@ export const getEntityPermission = async (entityId, cancelToken) => {
   return customResponse;
 }
 
-export const getIdentityCount = async (entityId, baseURL="CAPI", cancelToken) => {
+export const getIdentityCount = async (entityId, cancelToken) => {
   const customResponse = new ResponseModel();
-  const url = `/${entityId}/${baseURL}/identityCount`;
+  const url = `/${entityId}/CAPI/identityCount`;
   const request = {
     type: RequestType.GET,
     urlString: url,
@@ -72,3 +73,23 @@ export const getIdentityCount = async (entityId, baseURL="CAPI", cancelToken) =>
   return customResponse;
 }
 
+
+export const getIdentityList = async (cancelToken, fundId) => {
+  const { entityId } = useEntityStore.getState();
+  console.log("Entity ID:", entityId);
+  
+  let url;
+  fundId
+    ? (url = `/${entityId}/CAPI/Identity/list?fundId=${fundId}`)
+    : (url = `/${entityId}/CAPI/Identity/list`);
+
+  const request = { type: "GET", urlString: url};
+
+  try {
+    const response = await processRequest(request, cancelToken);
+    return response.data;
+  } catch (error) {
+    // console.error("Error fetching identity list", error);
+    // Handle error as needed (e.g., return error response)
+  }
+};

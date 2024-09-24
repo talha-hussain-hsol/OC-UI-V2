@@ -65,44 +65,6 @@ const AppWrapper = () => {
   const [loading, setLoading] = useState(false);
   const setEntityId = useEntityStore((state) => state.setEntityId);
 
-  // useEffect(() => {
-  //   localStorage.setItem("entity_id", getLocalStorage("entity_id"));
-  //   setEntityId(getLocalStorage("entity_id"));
-  //   localStorage.setItem("entity_permissions", getLocalStorage("entity_permissions"));
-  //   localStorage.setItem("x-auth-token", getLocalStorage("token"));
-  //   localStorage.setItem("login_user_id", getLocalStorage("login_user_id"));
-  //   axios.defaults.headers = { "x-auth-token": getLocalStorage("token") };
-  //   setTimeout(() => {
-  //     setLoading(false);
-  //   }, 3000);
-  // }, [setEntityId]);
-
-  // const matchSubdomain = useCallback((type) => {
-  //   const subdomain = window.location.host.split(".")[0];
-  //   return subdomain === portalTypes?.[type] || subdomain.search(type) > -1;
-  // }, []);
-
-  // const renderNavigation = () => {
-  //   if (authPages.includes(history.pathname) || !isSubDomain()) return null;
-
-  //   const entitiesCount = getLocalStorage("entities_length");
-
-  //   if (matchSubdomain("customer")) {
-  //     return <CustomerNav entitiesCount={entitiesCount} />;
-  //   }
-
-  //   if (matchSubdomain("administration")) {
-  //     return <Sidenav entitiesCount={entitiesCount} portal="compliance" />;
-  //   }
-
-  //   if (matchSubdomain("management") || matchSubdomain("manager")) {
-  //     return <Sidenav entitiesCount={entitiesCount} portal="management" />;
-  //   }
-
-  //   return null;
-  // };
-
-
 
   if (loading) {
     return (

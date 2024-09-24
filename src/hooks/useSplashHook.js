@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { setLocalStorage } from "../utils/cookies";
 import { useNavigate } from "react-router-dom";
+import useEntityStore from "../../src/store/useEntityStore"; // Import Zustand store
 
 const portals = [
   { label: "Customer Portal", type: "customer" },
@@ -16,7 +17,14 @@ const useSpashHook = () => {
   const [entites, setEntites] = useState([]);
   const [activePortal, setActivePortal] = useState(portals[0].type);
   const [isLoader, setIsLoader] = useState(false);
+
+  const [selectedEntity, setSelectedEntity] = useState(null); // For tracking the selected entity
+
   const cancelTokenSource = axios.CancelToken.source();
+
+
+  // Get the Zustand store functions
+  const { setEntityId, setEntityList } = useEntityStore();
 
   const handleEntitiesAPI = useCallback(async () => {
     const listOfEntites = await getEntities();
@@ -29,8 +37,32 @@ const useSpashHook = () => {
     } else {
       const entityRows = listOfEntites?.response?.data?.rows || [];
       setEntites(entityRows);
+
+      // Update Zustand store with entity list
+      setEntityList(entityRows);
+
+      // If a user has previously selected an entity, set that entityId
+      const savedEntity = JSON.parse(localStorage.getItem("selected_entity"));
+      if (savedEntity) {
+        setSelectedEntity(savedEntity);
+        setEntityId(savedEntity.entityId); // Set the previously selected entityId in Zustand
+      } else if (entityRows.length > 0) {
+        // Default to the first entity if no previous selection is found
+        setSelectedEntity(entityRows[0]);
+        setEntityId(entityRows[0]?.entityId || "");
+      }
     }
-  }, []);
+  }, [setEntityId, setEntityList]);
+
+  //     if (entityRows.length > 0) {
+  //       setEntityId(entityRows[0]?.entityId || ""); // Set the first entityId in Zustand
+  //       setEntityList(entityRows); // Set the full entity list in Zustand
+  //       console.log("Entity ID mein yeh hai: ", entityRows[0].entityId);
+  //     }
+  //   }
+  // }, [setEntityId, setEntityList]);
+
+  
 
   useEffect(() => {
     handleEntitiesAPI();
@@ -59,11 +91,14 @@ const useSpashHook = () => {
       if (!(permissionList?.data || []).length) {
         toast.error("You do not have a permission");
       } else {
+        // debugger
         setLocalStorage("entity_permissions", permissionList?.data);
         setLocalStorage("selected_entity", data);
+        // setLocalStorage('entityid', data?.entityId)
         if (data?.type === "compliance") {
           navigate("/compliance", { replace: true });
         } else if (data?.type === "customer") {
+          // debugger
           navigate("/customer", { replace: true });
         } else {
           navigate("/managment", { replace: true });

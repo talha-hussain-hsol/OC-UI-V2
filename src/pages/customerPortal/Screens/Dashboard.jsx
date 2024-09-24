@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import SideBar from "../../../OurComponents/Reusable Components/SideBar";
 import Header from "../../../OurComponents/Reusable Components/Header";
 import AUMCard from "../../../OurComponents/Reusable Components/CardComponent/AUMCards";
@@ -7,10 +7,23 @@ import FinancialChart from "../../../OurComponents/Reusable Components/Financial
 import NotificationCard from "../../../OurComponents/Reusable Components/NotificationCard";
 import { FaArrowRight, FaEye } from "react-icons/fa";
 import { useTheme } from "../../../contexts/themeContext";
+import { removeQueryParams } from "../../../utils/helperFunctions";
 
 function Dashboard() {
   const { theme } = useTheme();
   console.log("theme", theme);
+
+  useLayoutEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const data = params.get('data');
+    if (data) {
+      const parsedData = JSON.parse(decodeURIComponent(data));
+      for (const key in parsedData) {
+        localStorage.setItem(key, parsedData[key]);
+      }
+    }
+    removeQueryParams()
+}, [])
 
   useEffect(() => {
     console.log("Current theme:", theme);

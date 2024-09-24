@@ -12,14 +12,10 @@ const SplashScreen = () => {
     handleActivePortal,
     handlePermission,
     isLoader,
-  } = useSpashHook();
-
-  console.log("Entitiess:", entites);
-  
+  } = useSpashHook();  
 
   const filteredEntities = entites?.filter((row) => row?.type === activePortal);
 
-  console.log({activePortal, filteredEntities})
   const dummyImage =
     "https://storage.googleapis.com/ascentfs-media-public/public-data/application/logo.compliance.entity.png";
 

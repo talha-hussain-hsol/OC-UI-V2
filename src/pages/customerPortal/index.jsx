@@ -3,8 +3,8 @@ import Loader from "../../components/ui/loader";
 import { replaceUrlPath } from "../../utils/helperFunctions";
 
 const Customer = () => {
-    debugger;
   useLayoutEffect(() => {
+    // debugger
     const finalUrl = replaceUrlPath(window.location.href);
     const localStorageData = JSON.stringify(localStorage);
     window.location.href = `${finalUrl}?data=${encodeURIComponent(
