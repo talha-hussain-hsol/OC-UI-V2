@@ -170,40 +170,72 @@ const Identities = () => {
           
           ) : (
             <Table
-              headers={Headers}
-              rows={profileListData}
-              headerClassName={`bg-color-table-color-${theme}`}
-              renderRow={(row, index) => (
-                <>
-                  <td className="py-4 px-6 font-light">{row.label}</td>
-                  <td className="py-4 px-6 font-light">{row.type}</td>
-                  <td
-                    className={`py-4 px-6 text-color-status-${theme} font-light`}
-                  >
-                    {status[index] ? "Active" : "Inactive"}
-                  </td>
-                  <td className="py-4 px-6">
-                    <div className="flex items-center space-x-4">
-                      <AiFillEdit
-                        className={`text-color-h1-${theme} cursor-pointer hover:text-[#ee9d0b] transition-colors duration-200`}
-                      />
-
-                      <label className="relative inline-flex items-center cursor-pointer">
-                        <input
-                          type="checkbox"
-                          checked={status[index]}
-                          onChange={() => handleToggle(index)}
-                          className="sr-only peer"
+                headers={Headers}
+                rows={profileListData}
+                headerClassName={`bg-color-table-color-${theme}`}
+                renderRow={(row, index) => (
+                  <>
+                    <td className="py-4 px-6 font-light">{row.label}</td>
+                    <td className="py-4 px-6 font-light">{row.type}</td>
+                    <td className={`py-4 px-6 text-color-status-${theme} font-light`}>
+                      {status[index] ? "Active" : "Inactive"}
+                    </td>
+                    <td className="py-4 px-6">
+                      <div className="flex items-center space-x-4">
+                        <AiFillEdit
+                          className={`text-color-h1-${theme} cursor-pointer hover:text-[#ee9d0b] transition-colors duration-200`}
                         />
-                        <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#2c7be5]"></div>
-                      </label>
-                      <p className="font-light">Active</p>
-                    </div>
-                  </td>
-                </>
-              )}
-            />
-          )}
+                        <label className="relative inline-flex items-center cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={status[index]}
+                            onChange={() => handleToggleStatus(index)}
+                            className="sr-only peer"
+                          />
+                          <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#2c7be5]"></div>
+                        </label>
+                        <p className="font-light">Active</p>
+                      </div>
+                    </td>
+                  </>
+                )}
+              />
+            )}
+          {/* //   <Table >
+          //     headers={Headers}
+          //     rows={profileListData}
+          //     headerClassName={`bg-color-table-color-${theme}`}
+          //     renderRow={(row, index) => (
+          //       <>
+          //         <td className="py-4 px-6 font-light">{row.label}</td>
+          //         <td className="py-4 px-6 font-light">{row.type}</td>
+          //         <td
+          //           className={`py-4 px-6 text-color-status-${theme} font-light`}
+          //         >
+          //           {status[index] ? "Active" : "Inactive"}
+          //         </td>
+          //         <td className="py-4 px-6">
+          //           <div className="flex items-center space-x-4">
+          //             <AiFillEdit
+          //               className={`text-color-h1-${theme} cursor-pointer hover:text-[#ee9d0b] transition-colors duration-200`}
+          //             />
+
+          //             <label className="relative inline-flex items-center cursor-pointer">
+          //               <input
+          //                 type="checkbox"
+          //                 checked={status[index]}
+          //                 onChange={() => handleToggle(index)}
+          //                 className="sr-only peer"
+          //               />
+          //               <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#2c7be5]"></div>
+          //             </label>
+          //             <p className="font-light">Active</p>
+          //           </div>
+          //         </td>
+          //       </>
+          //     )}
+          //   />
+          // )} */}
           </div>
         </div>
       </div>
