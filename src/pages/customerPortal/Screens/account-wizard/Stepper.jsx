@@ -11,6 +11,10 @@ import BankWallets from "./components/BankWallets";
 import Summary from "./components/Summary";
 import { useTheme } from "../../../../contexts/themeContext";
 import { getIdentityList } from "../../../../api/userApi";
+import { useLocation,useNavigate,useParams } from "react-router-dom";
+import axios from "axios";
+
+
 
 const steps = [
   "Select Account",
@@ -26,24 +30,44 @@ const steps = [
 function Stepper() {
   const { theme } = useTheme();
   const [currentStep, setCurrentStep] = useState(1);
-  const [userType, setUserType] = useState(""); // Store the selected userType
-  const [formData, setFormData] = useState({}); // Store all form data
-  useEffect(() => {
-    console.log("Current theme:", theme);
+  const [userType, setUserType] = useState(""); 
+  const [formData, setFormData] = useState({}); 
+  const location = useLocation();
+  const [fundData, setFundData] = useState(location.state?.fundData || null);
+  const [isLoader, setIsLoader] = useState(false);
+  const navigate = useNavigate();
+  const params = useParams();
+  const [activeStep, setActiveStep] = useState(1);
+  const [fundCode, setFundCode] = useState("");
+  const [selectedIdentity, setSelectedIdentity] = useState({ value: "" });
+  const [selectedIdentityData, setSelectedIdentityData] = useState();
+  const [identitiesData, setIdentitiesData] = useState([]);
 
-    document.body.style.backgroundColor =
-      theme === "SC"
-        ? "#ffffff"
-        : theme === "Ascent"
-        ? "rgba(18, 38, 63)"
-        : theme === "lightTheme"
-        ? "#000000"
-        : "";
 
-    return () => {
-      document.body.style.backgroundColor = "";
-    };
-  }, [theme]);
+
+
+
+  const cancelTokenSource = axios.CancelToken.source();
+
+
+
+
+  // useEffect(() => {
+  //   console.log("Current theme:", theme);
+
+  //   document.body.style.backgroundColor =
+  //     theme === "SC"
+  //       ? "#ffffff"
+  //       : theme === "Ascent"
+  //       ? "rgba(18, 38, 63)"
+  //       : theme === "lightTheme"
+  //       ? "#000000"
+  //       : "";
+
+  //   return () => {
+  //     document.body.style.backgroundColor = "";
+  //   };
+  // }, [theme]);
 
   useEffect(() => {
     if (fundData) {

@@ -95,7 +95,10 @@ const FundCode = () => {
       setIsLoader(false);
       setFundData(response?.data);
       console.log(response.data);
-      navigate("/stepper");
+      // navigate("/stepper");
+      navigate("/stepper", {
+        state: { fundData: response.data }, 
+      });
       localStorage.setItem("fundRegion", response?.data?.fund_setting?.region);
       if (!response?.data?.reference_document?.term_documents) {
         props.handleChangeTermsCondition();
