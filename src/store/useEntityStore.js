@@ -14,32 +14,6 @@
 // export default useEntityStore;
 
 
-// import { create } from "zustand";
-// import { persist } from "zustand/middleware";
-
-// const useEntityStore = create(
-//   persist(
-//     (set) => ({
-//       entityId: "",
-//       setEntityId: (id) => set(() => ({ entityId: id })),
-//       entityList: [],
-//       setEntityList: (data) => set(() => ({ entityList: data })),
-//       singleAccount: {},
-//       setSingleAccount: (data) => set(() => ({ singleAccount: data })),
-//       loading: false,
-//       error: null,
-//     }),
-//     {
-//       name: 'entity-store', 
-//       partialize: (state) => ({ entityId: state.entityId }) 
-//     }
-//   )
-// );
-
-// export default useEntityStore;
-
-
-
 import { create } from "zustand";
 
 const useEntityStore = create(

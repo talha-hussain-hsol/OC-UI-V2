@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import Logo from "../../Assets/OneConstellation.png";
 import { RxDashboard } from "react-icons/rx";
 import { TbUsers, TbSwitch } from "react-icons/tb";
@@ -17,6 +17,7 @@ import { useTheme } from "../../contexts/themeContext";
 
 const SideBar = ({ portalType }) => {
   const { toggleTheme, theme } = useTheme();
+  
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme");
     if (storedTheme) {

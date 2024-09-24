@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import SideBar from "../Reusable Components/SideBar";
 import Header from "../Reusable Components/Header";
 import AUMCard from "../Reusable Components/CardComponent/AUMCards";
@@ -10,11 +10,8 @@ import { useTheme } from "../../contexts/themeContext";
 
 function Dashboard() {
   const { theme } = useTheme();
-  console.log("theme", theme);
 
   useEffect(() => {
-    console.log("Current theme:", theme);
-
     document.body.style.backgroundColor =
       theme === "SC"
         ? "#ffffff"
@@ -28,6 +25,19 @@ function Dashboard() {
       document.body.style.backgroundColor = "";
     };
   }, [theme]);
+
+  useLayoutEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const data = params.get("data");
+    if (data) {
+      const parsedData = JSON.parse(decodeURIComponent(data));
+      for (const key in parsedData) {
+        localStorage.setItem(key, parsedData[key]);
+      }
+    }
+    removeQueryParams();
+  }, []);
+
   const data = {
     labels: [
       "Jan",
