@@ -7,10 +7,53 @@ import { AiFillEdit } from "react-icons/ai";
 import TabBar from "../../../OurComponents/Reusable Components/TabBar";
 import { useTheme } from "../../../contexts/themeContext";
 import { useNavigate } from "react-router-dom";
+import useIdentityHook from "../../../hooks/useIdentityHook";
+import axios from "axios";
+import { getIdentityList } from "../../../api/userApi";
 
 const Identities = () => {
+  // const { state } = useLocation();
+  const [profileListData, setProfileListData] = useState([]);
+  const cancelTokenSource = axios.CancelToken.source();
+  const [activeStep, setActiveStep] = useState(1);
+  const {
+    entites,
+    activePortal,
+    portals,
+    handleActivePortal,
+    isLoader
+  } = useIdentityHook();
+
+  useEffect(() => {
+    handleGetIdentityList();
+  }, []);
+  useEffect(() => {
+    console.log("profileListData", profileListData);
+  }, [profileListData]);
+
+  const handleGetIdentityList = async () => {
+    console.log(`checking`);
+    
+    try {
+        const response = await getIdentityList(cancelTokenSource.token);
+        console.log("Response", response);
+
+        if (response.success == true) {
+            // If success is true, set the profile data
+            setProfileListData(response?.data);
+        } else {
+            // Handle case where success is false
+            console.log("Profile list is empty or request failed.");
+        }
+    } catch (error) {
+        console.error("Error fetching identity list:", error);
+    }
+};
+
+
   const { theme } = useTheme();
   const navigate = useNavigate();
+
   function handleClick() {
     navigate("/stepper");
   }
@@ -31,40 +74,41 @@ const Identities = () => {
     };
   }, [theme]);
   const Headers = ["Name", "Type", "Status", "Actions"];
-  const Rows = [
-    {
-      name: "Hamilton sosa sn",
-      type: "Individual",
-      status: "Active",
-      //   actionText: "Sign & Submit",
-    },
-    {
-      name: "Testa dasa ax",
-      type: "Individual",
-      status: "Active",
-      //   actionText: "Sign & Submit",
-    },
-    {
-      name: "Dsdsad adsd af",
-      type: "Individual",
-      status: "Active",
-      //   actionText: "Sign & Submit",
-    },
-    {
-      name: "Wqwd aasd ax",
-      type: "Individual",
-      status: "Active",
-      //   actionText: "Sign & Submit",
-    },
-    {
-      name: "Egdfg ewer al",
-      type: "Individual",
-      status: "Active",
-      //   actionText: "Sign & Submit",
-    },
-  ];
+  // const Rows = [
+  //   {
+  //     name: "Hamilton sosa sn",
+  //     type: "Individual",
+  //     status: "Active",
+  //     //   actionText: "Sign & Submit",
+  //   },
+  //   {
+  //     name: "Testa dasa ax",
+  //     type: "Individual",
+  //     status: "Active",
+  //     //   actionText: "Sign & Submit",
+  //   },
+  //   {
+  //     name: "Dsdsad adsd af",
+  //     type: "Individual",
+  //     status: "Active",
+  //     //   actionText: "Sign & Submit",
+  //   },
+  //   {
+  //     name: "Wqwd aasd ax",
+  //     type: "Individual",
+  //     status: "Active",
+  //     //   actionText: "Sign & Submit",
+  //   },
+  //   {
+  //     name: "Egdfg ewer al",
+  //     type: "Individual",
+  //     status: "Active",
+  //     //   actionText: "Sign & Submit",
+  //   },
+  // ];
+
   const [status, setStatus] = useState(
-    Rows.map((row) => row.status === "Active")
+    profileListData.map((row) => row.status === "Active")
   );
   const handleToggle = (index) => {
     setStatus((prevStatus) =>
@@ -72,7 +116,7 @@ const Identities = () => {
     );
   };
   return (
-    <div className={`bg-color-${theme} h-screen`}>
+    <div className={`bg-color-${theme}`}>
       <SideBar portalType="Customer" />
       <div className="py-6 sm:ml-12 mx-4 sm:px-10 ">
         <div className=" w-full">
@@ -121,11 +165,11 @@ const Identities = () => {
           >
             <Table
               headers={Headers}
-              rows={Rows}
+              rows={profileListData}
               headerClassName={`bg-color-table-color-${theme}`}
               renderRow={(row, index) => (
                 <>
-                  <td className="py-4 px-6 font-light">{row.name}</td>
+                  <td className="py-4 px-6 font-light">{row.label}</td>
                   <td className="py-4 px-6 font-light">{row.type}</td>
                   <td
                     className={`py-4 px-6 text-color-status-${theme} font-light`}

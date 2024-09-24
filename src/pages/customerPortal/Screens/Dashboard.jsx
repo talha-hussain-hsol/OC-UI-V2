@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import SideBar from "../../../OurComponents/Reusable Components/SideBar";
 import Header from "../../../OurComponents/Reusable Components/Header";
 import AUMCard from "../../../OurComponents/Reusable Components/CardComponent/AUMCards";
@@ -7,6 +7,9 @@ import FinancialChart from "../../../OurComponents/Reusable Components/Financial
 import NotificationCard from "../../../OurComponents/Reusable Components/NotificationCard";
 import { FaArrowRight, FaEye } from "react-icons/fa";
 import { useTheme } from "../../../contexts/themeContext";
+import { removeQueryParams } from "../../../utils/helperFunctions";
+import { setAxiosHeader } from "../../../api/config";
+
 
 function Dashboard() {
   const { theme } = useTheme();
@@ -28,6 +31,22 @@ function Dashboard() {
       document.body.style.backgroundColor = "";
     };
   }, [theme]);
+
+  useLayoutEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const data = params.get('data');
+    if (data) {
+      const parsedData = JSON.parse(decodeURIComponent(data));
+      for (const key in parsedData) {
+        if (key === 'x-auth-token') {
+          setAxiosHeader({ "x-auth-token": parsedData[key] })
+        }
+        localStorage.setItem(key, parsedData[key]);
+      }
+    }
+    removeQueryParams()
+}, [])
+
   const data = {
     labels: [
       "Jan",

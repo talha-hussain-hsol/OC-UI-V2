@@ -2,7 +2,7 @@ import axios from "axios";
 import { authUrl, base_url, logoutRedirectUrl } from ".";
 import { clearAllCookies } from "../utils/cookies";
 
-const TIMEOUT = 15000;
+const TIMEOUT = 80000;
 
 const axiosAPI = axios.create({
   baseURL: base_url,
@@ -59,8 +59,20 @@ export async function setAxiosHeader(header) {
   };
 }
 export async function processRequest(request, token) {
+  const authToken = localStorage.getItem("x-auth-token")
+  if (authToken) {
+    setAxiosHeader({
+      "x-auth-token": authToken
+    })
+  }
   const headers = {
     ...axios.defaults.headers,
+    common: authToken ?  {
+      ...axios.defaults.headers.common,
+      "x-auth-token": authToken
+    } : {
+      ...axios.defaults.headers.common
+    },
     ...request.headers,
     // "User-Agent": utils.userAgent,
   };
