@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Button from "../../../OurComponents/Reusable Components//Button";
-import Modal from "../../../OurComponents/Reusable Components//Modal";
-import { useTheme } from "../../../contexts/themeContext";
-import { getIdentityDocument } from "../../../api/userApi";
+import Button from "../../../../../OurComponents/Reusable Components//Button";
+import Modal from "../../../../../OurComponents/Reusable Components//Modal";
+import { useTheme } from "../../../../../contexts/themeContext";
+import { getIdentityDocument } from "../../../../../api/userApi";
 
 function Documents() {
   const [documentUploadedSelected, setDocumentUploadedSelected] = useState([]);

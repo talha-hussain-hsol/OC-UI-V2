@@ -23,12 +23,12 @@ import Customer from "./pages/customerPortal";
 import ComplianceDashboard from "./pages/compliancePortal/dashboard";
 import { ThemeProvider } from "./contexts/themeContext";
 import Dashboard from "./pages/customerPortal/Screens/Dashboard"
-import UserForm from "./pages/customerPortal/Screens/UserForm"
+import UserForm from "./pages/customerPortal/Screens/account-wizard/components/UserForm"
 import Accounts from "./pages/customerPortal/Screens/Accounts"
 import Identities from "./pages/customerPortal/Screens/Identities"
 import MainDocuments from "./pages/customerPortal/Screens/MainDocuments"
-import FundCode from "./pages/customerPortal/Screens/FundCode"
-import Stepper from "./pages/customerPortal/Screens/Stepper"
+import Stepper from "./pages/customerPortal/Screens/account-wizard/Stepper"
+import FundCode from "./pages/customerPortal/Screens/account-wizard/components/FundCode";
 
 
 function App() {
@@ -151,7 +151,7 @@ const CustomerRoutesWrapper = () => {
     <Route path="/accounts" element={<ThemeProvider><Accounts /></ThemeProvider>} />
     <Route path="/identities" element={<ThemeProvider><Identities /></ThemeProvider>} />
     <Route path="/documents" element={<ThemeProvider><MainDocuments /></ThemeProvider>} />
-    <Route path="/fund-code" element={<ThemeProvider><FundCode /></ThemeProvider>} />
+    <Route path="/fund-code" element={<ThemeProvider><FundCode/></ThemeProvider>} />
     <Route path="/stepper" element={<ThemeProvider><Stepper /></ThemeProvider>} />
   </Routes>
     </div>

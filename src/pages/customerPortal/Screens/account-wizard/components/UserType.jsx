@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 import { FaRegClock } from "react-icons/fa6";
-import { useTheme } from "../../../contexts/themeContext";
+import { useTheme } from "../../../../../contexts/themeContext";
 
 const UserType = ({ onSelection }) => {  // Accept onSelection as a prop
   const { theme } = useTheme();

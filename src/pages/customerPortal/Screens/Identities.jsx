@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import useIdentityHook from "../../../hooks/useIdentityHook";
 import axios from "axios";
 import { getIdentityList } from "../../../api/userApi";
+import Loader from "../../../components/ui/loader";
 
 const Identities = () => {
   // const { state } = useLocation();
@@ -163,6 +164,11 @@ const Identities = () => {
           <div
             className={`bg-color-card-${theme} shadow-${theme} rounded-b-md border-color-${theme} border-[1px] w-full`}
           >
+            {isLoader ? (
+          
+          <Loader/>
+          
+          ) : (
             <Table
               headers={Headers}
               rows={profileListData}
@@ -197,6 +203,7 @@ const Identities = () => {
                 </>
               )}
             />
+          )}
           </div>
         </div>
       </div>

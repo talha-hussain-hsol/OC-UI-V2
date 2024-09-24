@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
-import SideBar from "../../../OurComponents/Reusable Components/SideBar";
-import Button from "../../../OurComponents/Reusable Components/Button";
-import UserType from "./UserType";
-import UserForm from "./UserForm";
-import Documents from "./Documents";
-import FaceVerification from "./FaceVerification";
-import VCIP from "./VCIP";
-import Application from "./Application";
-import BankWallets from "./BankWallets";
-import Summary from "./Summary";
-import { useTheme } from "../../../contexts/themeContext";
+import SideBar from "../../../../OurComponents/Reusable Components/SideBar";
+import Button from "../../../../OurComponents/Reusable Components/Button";
+import UserType from "./components/UserType";
+import UserForm from "./components/UserForm";
+import Documents from "./components/Documents";
+import FaceVerification from "./components/FaceVerification";
+import VCIP from "./components/VCIP";
+import Application from "./components/Application";
+import BankWallets from "./components/BankWallets";
+import Summary from "./components/Summary";
+import { useTheme } from "../../../../contexts/themeContext";
+import { getIdentityList } from "../../../../api/userApi";
 
 const steps = [
   "Select Account",
@@ -43,14 +44,22 @@ function Stepper() {
       document.body.style.backgroundColor = "";
     };
   }, [theme]);
+
+  useEffect(() => {
+    if (fundData) {
+      handleGetIdentityList();
+
+    }
+  }, [fundData]);
+
   const handleNext = (data) => {
     if (currentStep === steps.length) {
       setComplete(true);
     } else {
       if (data) {
-        setFormData((prevData) => ({ ...prevData, ...data })); // Save form data
+        setFormData((prevData) => ({ ...prevData, ...data })); 
       }
-      setCurrentStep((prev) => prev + 1); // Advance step
+      setCurrentStep((prev) => prev + 1); 
     }
   };
 
@@ -61,8 +70,8 @@ function Stepper() {
   };
 
   const handleUserTypeSelection = (type) => {
-    setUserType(type); // Store the selected user type in state
-    handleNext(); // Move to the next step
+    setUserType(type); 
+    handleNext(); 
   };
 
   const renderContent = () => {
@@ -90,6 +99,46 @@ function Stepper() {
         return <Summary />;
       default:
         return null;
+    }
+  };
+  const handleGetIdentityList = async () => {
+    setIsLoader(true);
+
+    const response = await getIdentityList(cancelTokenSource.token, fundData?.id);
+    if (fundData?.config?.reference?.customizeTC) {
+      handleClickCustomizeTC()
+    }
+    if (response.success == true) {
+      if(response?.data?.length >  0) {
+        setIsShowIdentityNewButton(false)
+      }else{
+        setIsShowIdentityNewButton(true)
+
+
+      }
+      setIsLoader(false);
+      const identities =
+        fundData?.fund_setting?.account?.applicant?.identity?.corporate?.enabled && fundData?.fund_setting?.account?.applicant?.identity?.indivisual?.enabled
+          ? response?.data
+          : fundData?.fund_setting?.account?.applicant?.identity?.indivisual?.enabled
+            ? response?.data?.filter((item) => item?.type == "INDIVIDUAL")
+            : response?.data?.filter((item) => item?.type == "CORPORATE");
+      setTimeout(function () {
+        if (params?.identity_id) {
+          selectedIdentity.value = params?.identity_id;
+          setSelectedIdentity(selectedIdentity);
+        }
+      }, 200);
+      const selectedIdentityData = response?.data.filter((item) => {
+        return item.id == params?.identity_id;
+      });
+      setSelectedIdentityData(...selectedIdentityData);
+
+      setIdentitiesData(identities);
+
+
+    } else {
+      setIsLoader(false);
     }
   };
 

@@ -1,13 +1,13 @@
 
 import React, { useState, useEffect } from "react";
-import { useTheme } from "../../../contexts/themeContext";
+import { useTheme } from "../../../../../contexts/themeContext";
 import { FiSearch } from "react-icons/fi";
-import SideBar from "../../../OurComponents/Reusable Components/SideBar";
+import SideBar from "../../../../../OurComponents/Reusable Components/SideBar";
 import { useNavigate } from "react-router-dom";
-import Button from "../../../OurComponents/Reusable Components/Button";
-import { getFundForJoin, verifyFundExist } from "../../../api/userApi"; // Ensure API function is correctly imported
+import Button from "../../../../../OurComponents/Reusable Components/Button";
+import { getFundForJoin, verifyFundExist } from "../../../../../api/userApi"; // Ensure API function is correctly imported
 import axios from "axios"; // If needed for CancelToken
-import Loader from "../../../components/ui/loader";
+import Loader from "../../../../../components/ui/loader";
 
 const FundCode = () => {
   const { theme } = useTheme();
