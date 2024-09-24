@@ -8,11 +8,8 @@ import NotificationCard from "../../../OurComponents/Reusable Components/Notific
 import { FaArrowRight, FaEye } from "react-icons/fa";
 import { useTheme } from "../../../contexts/themeContext";
 import { removeQueryParams } from "../../../utils/helperFunctions";
-<<<<<<< HEAD
 import { setAxiosHeader } from "../../../api/config";
 
-=======
->>>>>>> customer-routing/accounts
 
 function Dashboard() {
   const { theme } = useTheme();
@@ -41,12 +38,9 @@ function Dashboard() {
     if (data) {
       const parsedData = JSON.parse(decodeURIComponent(data));
       for (const key in parsedData) {
-<<<<<<< HEAD
         if (key === 'x-auth-token') {
           setAxiosHeader({ "x-auth-token": parsedData[key] })
         }
-=======
->>>>>>> customer-routing/accounts
         localStorage.setItem(key, parsedData[key]);
       }
     }

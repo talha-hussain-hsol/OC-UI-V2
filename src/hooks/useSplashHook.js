@@ -108,10 +108,7 @@ const useSpashHook = () => {
 
   const cancelTokenSource = axios.CancelToken.source();
 
-<<<<<<< HEAD
 
-=======
->>>>>>> customer-routing/accounts
   // Get the Zustand store functions
   const { setEntityId, setEntityList } = useEntityStore();
 
@@ -133,10 +130,7 @@ const useSpashHook = () => {
       // If a user has previously selected an entity, set that entityId
       const savedEntity = JSON.parse(localStorage.getItem("selected_entity"));
       if (savedEntity) {
-<<<<<<< HEAD
-=======
         console.log(savedEntity, "saved entity");
->>>>>>> customer-routing/accounts
         setSelectedEntity(savedEntity);
         setEntityId(savedEntity.entityId); // Set the previously selected entityId in Zustand
       } else if (entityRows.length > 0) {
@@ -154,11 +148,8 @@ const useSpashHook = () => {
   //     }
   //   }
   // }, [setEntityId, setEntityList]);
-<<<<<<< HEAD
 
   
-=======
->>>>>>> customer-routing/accounts
 
   useEffect(() => {
     handleEntitiesAPI();
@@ -187,7 +178,6 @@ const useSpashHook = () => {
       if (!(permissionList?.data || []).length) {
         toast.error("You do not have a permission");
       } else {
-<<<<<<< HEAD
         // debugger
         setLocalStorage("entity_permissions", permissionList?.data);
         setLocalStorage("selected_entity", data);
@@ -196,16 +186,6 @@ const useSpashHook = () => {
           navigate("/compliance", { replace: true });
         } else if (data?.type === "customer") {
           // debugger
-=======
-        debugger;
-        setLocalStorage("entity_permissions", permissionList?.data);
-        setLocalStorage("selected_entity", data);
-        setLocalStorage("entityid", data?.entityId);
-        if (data?.type === "compliance") {
-          navigate("/compliance", { replace: true });
-        } else if (data?.type === "customer") {
-          debugger;
->>>>>>> customer-routing/accounts
           navigate("/customer", { replace: true });
         } else {
           navigate("/managment", { replace: true });
