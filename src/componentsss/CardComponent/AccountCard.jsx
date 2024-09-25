@@ -1,6 +1,6 @@
 import React from "react";
 import CardHeader from "../header/CardHeader";
-import MiniCards from "./MiniCardssss";
+import MiniCards from "./MiniCardsss";
 import { FiCheckCircle } from "react-icons/fi";
 import { MdOutlineAccessTime } from "react-icons/md";
 import { useTheme } from "../../contexts/themeContext";
