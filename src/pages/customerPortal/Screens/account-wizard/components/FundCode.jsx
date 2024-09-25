@@ -93,6 +93,8 @@ const FundCode = () => {
     const response = await getFundForJoin(fundCode, cancelTokenSource.token);
     if (response.success == true) {
       setIsLoader(false);
+      const test = response?.data
+      const redDoc = test.reference_document
       setFundData(response?.data);
       console.log(response.data);
       // navigate("/stepper");

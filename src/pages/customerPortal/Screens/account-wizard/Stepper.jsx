@@ -13,6 +13,7 @@ import { useTheme } from "../../../../contexts/themeContext";
 import { getIdentityList } from "../../../../api/userApi";
 import { useLocation,useNavigate,useParams } from "react-router-dom";
 import axios from "axios";
+import Loader from "../../../../components/ui/loader";
 
 
 
@@ -129,17 +130,18 @@ function Stepper() {
     setIsLoader(true);
 
     const response = await getIdentityList(cancelTokenSource.token, fundData?.id);
-    if (fundData?.config?.reference?.customizeTC) {
-      handleClickCustomizeTC()
-    }
-    if (response.success == true) {
-      if(response?.data?.length >  0) {
-        setIsShowIdentityNewButton(false)
-      }else{
-        setIsShowIdentityNewButton(true)
+    // if (fundData?.config?.reference?.customizeTC) {
+    //   handleClickCustomizeTC()
+    // }
+    if (response) {
+      console.log(response)
+      // if(response?.data?.length >  0) {
+      //   setIsShowIdentityNewButton(false)
+      // }else{
+      //   setIsShowIdentityNewButton(true)
 
 
-      }
+      // }
       setIsLoader(false);
       const identities =
         fundData?.fund_setting?.account?.applicant?.identity?.corporate?.enabled && fundData?.fund_setting?.account?.applicant?.identity?.indivisual?.enabled
@@ -220,8 +222,13 @@ function Stepper() {
         <div
           className={`bg-gradient-stepper-card-${theme} w-full shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] mx-auto p-10 md:ml-4 md:mt-12 rounded-lg text-white flex flex-col justify-center`}
         >
-          {renderContent()}
-
+          {isLoader ? (
+          
+          <Loader/>
+          
+          ) : (
+          renderContent()
+          )}
           <hr className="w-[95%] border-t-[1px] border-t-[#6e84a3] opacity-30 my-6 mx-8" />
           <div className="flex lg:space-x-[75%] md:justify-center sm:justify-center w-full p-4">
             <Button

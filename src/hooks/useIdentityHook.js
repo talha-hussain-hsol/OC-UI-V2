@@ -19,10 +19,9 @@ const useIdentityHook = () => {
   const cancelTokenSource = axios.CancelToken.source();
 
   
+  
   const handleGetIdentityList = useCallback(async () => {
-    console.log(`checking`);
     setIsLoader(true);
-
     const response = await getIdentityList(cancelTokenSource.token);
     console.log("object 1", response);
     if (response == true) {
@@ -37,11 +36,10 @@ const useIdentityHook = () => {
     handleGetIdentityList();
   }, [handleGetIdentityList]);
 
+  
   const handleActivePortal = useCallback((portalType) => {
     setActivePortal(portalType);
   }, []);
-
-  
 
   return {
     entites,

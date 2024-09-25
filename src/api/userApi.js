@@ -162,7 +162,7 @@ export const getIdentityList = async (cancelToken, fundId) => {
     const response = await processRequest(request, cancelToken)
     return response.data
   } catch (error) {
-    return getErrorResponse(error)
+    // return getErrorResponse(error)
   }
 }
 
