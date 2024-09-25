@@ -11,7 +11,7 @@ import Loader from "../../../components/ui/loader";
 import useIdentityHook from "../../../hooks/useIdentityHook";
 import SideBar from "../../../components/sidebar/Sidebar";
 import Header from "../../../components/header/Header";
-import AccountCard from "../../../components/CardComponent/AccountCard";
+import AccountCard from "../../../components/cardComponent/AccountCard";
 
 const Accounts = () => {
   const cancelTokenSource = axios.CancelToken.source();

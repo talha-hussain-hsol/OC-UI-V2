@@ -1,5 +1,5 @@
 import React from "react";
-import SummaryCard from "../../../../../components/CardComponent/SummaryCard";
+import SummaryCard from "../../../../../components/cardComponent/SummaryCard";
 
 const Summary = () => {
   return (

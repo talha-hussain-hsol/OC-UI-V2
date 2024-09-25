@@ -1,5 +1,5 @@
 import React from "react";
-import CardHeader from "./CardHeader";
+import CardHeader from "../header/CardHeader";
 import MiniCards from "./MiniCards";
 import { FiCheckCircle } from "react-icons/fi";
 import { MdOutlineAccessTime } from "react-icons/md";

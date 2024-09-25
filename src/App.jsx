@@ -29,13 +29,13 @@ import { ThemeProvider } from "./contexts/themeContext";
 // import MainDocuments from "./pages/customerPortal/Screens/MainDocuments"
 // import FundCode from "./pages/customerPortal/Screens/account-wizard/FundCode"
 // import Stepper from "./pages/customerPortal/Screens/account-wizard/Stepper"
-import Dashboard from "./pages/customerPortal/screens/Dashboard"
-import UserForm from "./pages/customerPortal/screens/account-wizard/components/UserForm"
-import Accounts from "./pages/customerPortal/screens/Accounts"
-import Identities from "./pages/customerPortal/screens/Identities"
-import MainDocuments from "./pages/customerPortal/screens/MainDocuments"
-// import FundCode from "./pages/customerPortal/Screens/account-wizard/components/FundCode"
-import Stepper from "./pages/customerPortal/screens/account-wizard/Stepper"
+import Dashboard from "./pages/customerPortal/Screens/Dashboard"
+import UserForm from "./pages/customerPortal/Screens/account-wizard/components/UserForm"
+import Accounts from "./pages/customerPortal/Screens/Accounts"
+import Identities from "./pages/customerPortal/Screens/Identities"
+import MainDocuments from "./pages/customerPortal/Screens/MainDocuments"
+import FundCode from "./pages/customerPortal/Screens/account-wizard/components/FundCode"
+import Stepper from "./pages/customerPortal/Screens/account-wizard/Stepper"
 
 
 
