@@ -1,5 +1,5 @@
 import React from "react";
-import ApplicationCard from "../../../../../OurComponents/Reusable Components/CardComponent/ApplicationCard";
+import ApplicationCard from "../../../../../components/CardComponent/ApplicationCard";
 
 const Application = () => {
   return (

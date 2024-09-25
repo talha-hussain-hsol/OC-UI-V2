@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Table from "../../../OurComponents/Reusable Components/Tables/Table";
-import Header from "../../../OurComponents/Reusable Components/Header";
-import Button from "../../../OurComponents/Reusable Components/Button";
-import SideBar from "../../../OurComponents/Reusable Components/SideBar";
+import Table from "../../../components/Tables/Table";
+import Header from "../../../components/header/Header";
+import Button from "../../../components/ui/button/Button";
+import SideBar from "../../../components/sidebar/Sidebar";
 import { AiFillEdit } from "react-icons/ai";
-import TabBar from "../../../OurComponents/Reusable Components/TabBar";
+import TabBar from "../../../components/tabBar/TabBar";
 import { useTheme } from "../../../contexts/themeContext";
 import { useNavigate } from "react-router-dom";
 import useIdentityHook from "../../../hooks/useIdentityHook";
@@ -28,16 +28,11 @@ const Identities = () => {
   useEffect(() => {
     handleGetIdentityList();
   }, []);
-  useEffect(() => {
-    console.log("profileListData", profileListData);
-  }, [profileListData]);
 
   const handleGetIdentityList = async () => {
-    console.log(`checking`);
     
     try {
         const response = await getIdentityList(cancelTokenSource.token);
-        console.log("Response", response);
 
         if (response.success == true) {
             // If success is true, set the profile data
@@ -59,7 +54,7 @@ const Identities = () => {
     navigate("/stepper");
   }
   useEffect(() => {
-    console.log("Current theme:", theme);
+    
 
     document.body.style.backgroundColor =
       theme === "SC"
@@ -75,38 +70,6 @@ const Identities = () => {
     };
   }, [theme]);
   const Headers = ["Name", "Type", "Status", "Actions"];
-  // const Rows = [
-  //   {
-  //     name: "Hamilton sosa sn",
-  //     type: "Individual",
-  //     status: "Active",
-  //     //   actionText: "Sign & Submit",
-  //   },
-  //   {
-  //     name: "Testa dasa ax",
-  //     type: "Individual",
-  //     status: "Active",
-  //     //   actionText: "Sign & Submit",
-  //   },
-  //   {
-  //     name: "Dsdsad adsd af",
-  //     type: "Individual",
-  //     status: "Active",
-  //     //   actionText: "Sign & Submit",
-  //   },
-  //   {
-  //     name: "Wqwd aasd ax",
-  //     type: "Individual",
-  //     status: "Active",
-  //     //   actionText: "Sign & Submit",
-  //   },
-  //   {
-  //     name: "Egdfg ewer al",
-  //     type: "Individual",
-  //     status: "Active",
-  //     //   actionText: "Sign & Submit",
-  //   },
-  // ];
 
   const [status, setStatus] = useState(
     profileListData.map((row) => row.status === "Active")
@@ -126,7 +89,6 @@ const Identities = () => {
             subheading="Overview"
             showButton={false}
             theme={theme}
-            //   onButtonClick={handleClick}
           />
           <div className="flex items-center justify-between mb-">
             <TabBar

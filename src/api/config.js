@@ -33,7 +33,6 @@ const handleLogout = () => {
 };
 export function processError(error) {
   if (!error) return { code: -1 };
-  console.log("error", error, error?.response?.data?.message);
   if (error.toJSON().message === "Network Error") {
     return { code: -1 };
   } else if (error.data?.message === "timeout exceeded") {

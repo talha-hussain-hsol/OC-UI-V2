@@ -2,9 +2,9 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from "../../../../../contexts/themeContext";
 import { FiSearch } from "react-icons/fi";
-import SideBar from "../../../../../OurComponents/Reusable Components/SideBar";
+import SideBar from "../../../../../components/sidebar/Sidebar";
 import { useNavigate } from "react-router-dom";
-import Button from "../../../../../OurComponents/Reusable Components/Button";
+import Button from "../../../../../components/ui/button/Button";
 import { getFundForJoin, verifyFundExist } from "../../../../../api/userApi"; // Ensure API function is correctly imported
 import axios from "axios"; // If needed for CancelToken
 import Loader from "../../../../../components/ui/loader";
@@ -19,7 +19,7 @@ const FundCode = () => {
   const [fundData, setFundData] = useState(null);
 
   useEffect(() => {
-    console.log("Current theme:", theme);
+    
 
     document.body.style.backgroundColor =
       theme === "SC"
@@ -42,10 +42,7 @@ const FundCode = () => {
   const navigate = useNavigate();
 
   function handleClick() {
-    console.log("Button clicked");
-    // handleGetCustomersAccounts();
     getFundForJoinApi();
-    // navigate("/stepper");
   }
 
   function handleNext() {
@@ -56,9 +53,6 @@ const FundCode = () => {
     navigate("/accounts");
   }
 
-  // useEffect(() => {
-  //   handleGetCustomersAccounts();
-  // }, []);
 
   const handleGetCustomersAccounts = async () => {
     setIsLoader(true);
@@ -69,7 +63,6 @@ const FundCode = () => {
       );
 
       if (response.success == true) {
-        console.log("Response data:", response);
         setIsSCB(response?.data?.count);
         navigate("/stepper");
       } else {
@@ -96,8 +89,6 @@ const FundCode = () => {
       const test = response?.data
       const redDoc = test.reference_document
       setFundData(response?.data);
-      console.log(response.data);
-      // navigate("/stepper");
       navigate("/stepper", {
         state: { fundData: response.data }, 
       });

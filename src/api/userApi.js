@@ -8,8 +8,8 @@ import ResponseModel, {
 import useEntityStore from "../store/useEntityStore";
 
 
-const { entityId } = useEntityStore.getState(); // Zustand store se entityId le lo
-const { baseURL } = "CAPI" // Zustand store se entityId le lo
+const { entityId } = useEntityStore.getState();
+const { baseURL } = "CAPI" 
 
 
 export const getToken = async (code, code_verifier, cancelToken) => {
@@ -80,24 +80,22 @@ export const getIdentityCount = async (entityId, baseURL="CAPI", cancelToken) =>
 }
 
 
-export const getCustomerAccounts = async (offset ,limit,cancelToken) => {
-  if(!limit){
-    return
+export const getCustomerAccounts = async (offset, limit, cancelToken) => {
+  if (!limit) {
+    return;
   }
-
-  console.log("in get api")
-
-  const url = `/${entityId}/${baseURL}/Account/list?offset=${offset}&limit=${limit}`
-  const request = { type: "GET", urlString: url }
+  // console.log("in get api");
+  const url = `/${entityId}/CAPI/Account/list?offset=${offset}&limit=${limit}`;
+  const request = { type: "GET", urlString: url };
 
   try {
-    const response = await processRequest(request, cancelToken)
-    console.log("loginCustomer Response Headers", response)
-    return response.data
+    const response = await processRequest(request, cancelToken);
+    console.log("loginCustomer Response Headers", response);
+    return response.data;
   } catch (error) {
-    return getErrorResponse(error)
+    // return getErrorResponse(error);
   }
-}
+};
 
 export const getEntityTypeAPI = async (cancelToken) => {
   const url = `/${entityId}/${baseURL}/entity-types-list`
@@ -154,7 +152,7 @@ export const getIdentityList = async (cancelToken, fundId) => {
   let url
   fundId
     ? (url = `/${entityId}/CAPI/Identity/list?fundId=${fundId}`)
-    : (url = `/${entityId}/${baseURL}/Identity/list`)
+    : (url = `/${entityId}/CAPI/Identity/list`)
 
   const request = { type: "GET", urlString: url }
 
@@ -169,8 +167,6 @@ export const getIdentityList = async (cancelToken, fundId) => {
 
 export const verifyFundExist = async ( data, cancelToken) => {
   //post url:CAPI/Account/list/verify
-
-  //
   const url = `/${entityId}/CAPI/Account/list/verify`;
   const request = { type: "POST", urlString: url, params: data };
 

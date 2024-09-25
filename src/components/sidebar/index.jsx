@@ -72,7 +72,6 @@ const SidenavFundConfiguration = ({
                   </div>
                 </>
               ) : (
-                // <Link className="no-underline" to={item.url}>
                   <div
                     className="flex items-center gap-2.5 cursor-pointer"
                     style={{ color: itemColor }}
@@ -81,7 +80,6 @@ const SidenavFundConfiguration = ({
                     {item.icon && <FeatherIcon icon={item.icon} size="17" />}
                     {item.title}
                   </div>
-                // </Link>
               )}
             </>
           )}

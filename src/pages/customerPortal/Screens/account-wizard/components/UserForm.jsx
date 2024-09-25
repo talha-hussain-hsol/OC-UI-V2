@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import formData from '../../../../../OurComponents/Data/fieldsData.json';
-import DropdownField from "../../../../../OurComponents/Reusable Components/DropdownField";
-import TextField from "../../../../../OurComponents/Reusable Components/TextField";
+import formData from '../../../../../data/fieldsData.json';
+import DropdownField from "../../../../../components/ui/dropdown/DropdownField";
+import TextField from "../../../../../components/ui/input/TextField";
 import { useTheme } from "../../../../../contexts/themeContext";
 
-const UserForm = ({ userType, onNext }) => { // Pass `userType` and `onNext` callback as props
+const UserForm = ({ userType, onNext }) => { 
   const { theme } = useTheme();
   const [formValues, setFormValues] = useState({});
 
@@ -92,8 +92,7 @@ const UserForm = ({ userType, onNext }) => { // Pass `userType` and `onNext` cal
   });
 
   const handleNextClick = () => {
-    console.log('Form Values:', formValues);
-    onNext(formValues); // Call the `onNext` callback to move to the next step
+    onNext(formValues); 
   };
 
   return (

@@ -1,6 +1,6 @@
 import React from "react";
-import BankCard from "../../../../../OurComponents/Reusable Components/CardComponent/BankCard";
 import { useTheme } from "../../../../../contexts/themeContext";
+import BankCard from "../../../../../components/CardComponent/BankCard";
 
 const BankWallets = () => {
   const { theme } = useTheme();

@@ -1,10 +1,10 @@
 import React, { useEffect, useLayoutEffect } from "react";
-import SideBar from "../../../OurComponents/Reusable Components/SideBar";
-import Header from "../../../OurComponents/Reusable Components/Header";
-import AUMCard from "../../../OurComponents/Reusable Components/CardComponent/AUMCards";
-import CardHeader from "../../../OurComponents/Reusable Components/CardComponent/CardHeader";
-import FinancialChart from "../../../OurComponents/Reusable Components/FinancialChart";
-import NotificationCard from "../../../OurComponents/Reusable Components/NotificationCard";
+import SideBar from "../../../components/sidebar/Sidebar";
+import Header from "../../../components/header/Header";
+import AUMCard from "../../../components/cardComponent/AUMCards";
+import CardHeader from "../../../components/header/CardHeader";
+import FinancialChart from "../../../components/ui/charts/FinancialChart";
+import NotificationCard from "../../../components/cardComponent/NotificationCard";
 import { FaArrowRight, FaEye } from "react-icons/fa";
 import { useTheme } from "../../../contexts/themeContext";
 import { removeQueryParams } from "../../../utils/helperFunctions";
@@ -13,10 +13,9 @@ import { setAxiosHeader } from "../../../api/config";
 
 function Dashboard() {
   const { theme } = useTheme();
-  console.log("theme", theme);
 
   useEffect(() => {
-    console.log("Current theme:", theme);
+    
 
     document.body.style.backgroundColor =
       theme === "SC"

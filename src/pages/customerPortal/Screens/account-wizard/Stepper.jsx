@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import SideBar from "../../../../OurComponents/Reusable Components/SideBar";
-import Button from "../../../../OurComponents/Reusable Components/Button";
+import SideBar from "../../../../components/sidebar/Sidebar";
+import Button from "../../../../components/ui/button/Button";
 import UserType from "./components/UserType";
 import UserForm from "./components/UserForm";
 import Documents from "./components/Documents";
@@ -50,26 +50,6 @@ function Stepper() {
 
   const cancelTokenSource = axios.CancelToken.source();
 
-
-
-
-  // useEffect(() => {
-  //   console.log("Current theme:", theme);
-
-  //   document.body.style.backgroundColor =
-  //     theme === "SC"
-  //       ? "#ffffff"
-  //       : theme === "Ascent"
-  //       ? "rgba(18, 38, 63)"
-  //       : theme === "lightTheme"
-  //       ? "#000000"
-  //       : "";
-
-  //   return () => {
-  //     document.body.style.backgroundColor = "";
-  //   };
-  // }, [theme]);
-
   useEffect(() => {
     if (fundData) {
       handleGetIdentityList();
@@ -102,12 +82,12 @@ function Stepper() {
   const renderContent = () => {
     switch (currentStep) {
       case 1:
-        return <UserType onSelection={handleUserTypeSelection} />; // Pass the user type selection handler
+        return <UserType onSelection={handleUserTypeSelection} />;  
       case 2:
         return (
           <UserForm
-            userType={userType} // Pass the selected user type
-            onNext={(formValues) => handleNext(formValues)} // Handle form submission
+            userType={userType} 
+            onNext={(formValues) => handleNext(formValues)}
           />
         );
       case 3:
@@ -130,18 +110,9 @@ function Stepper() {
     setIsLoader(true);
 
     const response = await getIdentityList(cancelTokenSource.token, fundData?.id);
-    // if (fundData?.config?.reference?.customizeTC) {
-    //   handleClickCustomizeTC()
-    // }
+
     if (response) {
-      console.log(response)
-      // if(response?.data?.length >  0) {
-      //   setIsShowIdentityNewButton(false)
-      // }else{
-      //   setIsShowIdentityNewButton(true)
-
-
-      // }
+      
       setIsLoader(false);
       const identities =
         fundData?.fund_setting?.account?.applicant?.identity?.corporate?.enabled && fundData?.fund_setting?.account?.applicant?.identity?.indivisual?.enabled

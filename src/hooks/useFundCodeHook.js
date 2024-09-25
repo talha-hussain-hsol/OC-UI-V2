@@ -24,7 +24,6 @@ useEffect(() => {
       );
       
       if (response?.success) {
-        console.log("Response data:", response);
         setIsSCB(response?.data?.count);
       } else {
         console.error("API Error:", response?.message);

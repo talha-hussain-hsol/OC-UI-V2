@@ -26,7 +26,6 @@ function isSubDomain() {
 }
 
 export function getErrorResponse(error) {
-  console.log(error, "error error    error ")
   let customResponse = []
   try {
     if (error.data?.masssage == "timeout exceeded") {
@@ -46,7 +45,6 @@ export function getErrorResponse(error) {
       !!!error && console.log("FAILED API with undefined error")
     }
   } catch (e) {
-    console.log(e, "error catch")
     customResponse.success = false
     customResponse.status_code = { key: "failed", value: -1, name: "network" }
     customResponse.user_message = "Internet problem"
@@ -55,48 +53,16 @@ export function getErrorResponse(error) {
 }
 
 export const loginCustomer = async (email, password, cancelToken) => {
-  console.log("loginCustomer")
 
   const url = `customers/login`
   const data = { email: email, password: password }
-  // const result = await axios.get(`${process.env.AUTH_API_URL}/oauth/authorize?client_id=${process.env.INVESTOR_CLIENT_ID}&redirect_uri=${process.env.INVESTOR_REDIRECT_URL}&scope=*&state=${state}&response_type=${process.env.INVESTOR_RESPONSE_TYPE}`);
-  //   console.log('result',result);
-
-  // var config = {
-  //   method: 'get',
-  //   url: `${process.env.AUTH_API_URL}/oauth/authorize?client_id=6&redirect_uri=http://oms.demo/callback&scope=*&state=W8tLfKbR0wRcZeSbzL8tjJd1RVmRJ9uYDRVgE6vN&response_type=code`,
-  //   headers: {
-
-  //   }
-  // };
-
-  //  await axios(config)
-  // .then(function (response) {
-  //   console.log(JSON.stringify(response.data));
-  // })
-  // .catch(function (error) {
-  // });
-
-  // const request = { type: "POST", urlString: url, params: data };
-  // try {
-  //   const response = await processRequest(request, cancelToken);
-  //   console.log("loginCustomer Response Headers", response);
-  //   if (response.data.success == true && response.headers != null && response.headers["x-auth-token"] != null) {
-  //     axios.defaults.headers = { "x-auth-token": response.headers["x-auth-token"] };
-  //     localStorage.setItem("user-token", response.headers["x-auth-token"]);
-  //     localStorage.setItem("section", "particular");
-  //   }
-  //   return response.data;
-  // } catch (error) {
-  //   return getErrorResponse(error);
-  // }
+  
 }
 export const getCustomerAccounts = async (offset ,limit,cancelToken) => {
   if(!limit){
     return
   }
 
-  console.log("in get api")
 
   const url = `/${entityId}/${baseURL}/Account/list?offset=${offset}&limit=${limit}`
   const request = { type: "GET", urlString: url }

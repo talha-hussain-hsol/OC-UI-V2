@@ -95,7 +95,6 @@ const Callback = () => {
       }
     }
 
-    // Cleanup to cancel request if component unmounts
     return () => cancelTokenSource.cancel("Request canceled by the user.");
   }, [navigate, setSingleAccount]);
 

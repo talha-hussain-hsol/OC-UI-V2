@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Header from "../../../OurComponents/Reusable Components/Header";
-import SideBar from "../../../OurComponents/Reusable Components/SideBar";
-import Button from "../../../OurComponents/Reusable Components/Button";
-import Dropdown from "../../../OurComponents/Reusable Components/Dropdown";
-import Table from "../../../OurComponents/Reusable Components/Tables/Table";
-import CardHeader from "../../../OurComponents/Reusable Components/CardComponent/CardHeader";
+import Header from "../../../components/header/Header";
+import SideBar from "../../../components/sidebar/Sidebar";
+import Button from "../../../components/ui/button/Button";
+import Dropdown from "../../../components/ui/dropdown/Dropdown";
+import Table from "../../../components/tables/Table";
+import CardHeader from "../../../components/header/CardHeader";
 import { useTheme } from "../../../contexts/themeContext";
 
 const MainDocuments = () => {
@@ -13,7 +13,7 @@ const MainDocuments = () => {
   const [fund, setFund] = useState("");
   const [asOfDate, setAsOfDate] = useState("");
   useEffect(() => {
-    console.log("Current theme:", theme);
+    
 
     document.body.style.backgroundColor =
       theme === "SC"
@@ -66,7 +66,6 @@ const MainDocuments = () => {
             subheading="Investor Portal"
             showButton={false}
             theme={theme}
-            //   onButtonClick={handleClick}
           />
           <div
             className={`bg-color-card-${theme} rounded-md  mb-8 flex flex-col items-center justify-center h-full sm:ml-6 shadow-${theme}`}

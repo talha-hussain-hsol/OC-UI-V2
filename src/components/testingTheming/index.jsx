@@ -5,7 +5,6 @@ import Dashboard from "../../OurComponents/Screens/Dashboard";
 const UserInfo = () => {
   const { theme } = useTheme();
 
-  // Common input classes
   const inputClasses = "p-2 border rounded-lg outline-none";
 
   return (

@@ -43,7 +43,7 @@ const SplashScreen = () => {
             {portals.map((portal, index) => (
               <button
                 key={index}
-                onClick={() => handleActivePortal(portal.type)} // Set active portal by type
+                onClick={() => handleActivePortal(portal.type)} 
                 className={`px-2 py-2 rounded-full font-light text-xs ${
                   activePortal === portal.type ? "text-white" : "text-slate-500"
                 } hover:text-white`}
@@ -90,10 +90,8 @@ const SplashScreen = () => {
                       <p className="text-sm text-gray-400 font-light">
                         {entityType}
                       </p>
-                      {/* Display the entity type */}
                     </div>
                   </div>
-                  {/* Horizontal line underneath both image and text */}
                   <hr className="w-full border-t border-t-[#6e84a3] opacity-30 mt-2" />
                 </div>
               );
@@ -102,14 +100,12 @@ const SplashScreen = () => {
         </div>
       </div>
 
-      {/* Right side */}
       <div
         className="relative w-full lg:w-[65%] lg:bg-cover lg:bg-center bg-gradient-to-r from-[#0f3057] to-[#13203f]"
         style={{
           backgroundImage: `url('https://dev-portal.one-constellation.com/img/splash.jpg')`,
         }}
       >
-        {/* Last Synced Button */}
         <div className="absolute top-0 left-0 w-full lg:static flex justify-end lg:items-start p-4 lg:bg-transparent bg-[#13203f]">
           <button className="bg-blue-500 text-white font-light text-xs px-2 py-2 border border-black rounded-[15px]">
             Last Synced at: 3:58:43 PM <br />

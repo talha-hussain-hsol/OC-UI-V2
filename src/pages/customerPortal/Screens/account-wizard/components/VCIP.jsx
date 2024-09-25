@@ -1,11 +1,10 @@
 import React from "react";
-import Button from "../../../../../OurComponents/Reusable Components/Button";
-import SideBar from "../../../../../OurComponents/Reusable Components/SideBar";
+import Button from "../../../../../components/ui/button/Button";
+import SideBar from "../../../../../components/sidebar/Sidebar";
 import { useTheme } from "../../../../../contexts/themeContext";
 
 function VCIP() {
   const { theme } = useTheme();
-  console.log("theme", theme);
   return (
     <>
       <div className={`mt-2 border-b-4 border-color-${theme} px-4 `}>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Button from "../../../../../OurComponents/Reusable Components//Button";
-import Modal from "../../../../../OurComponents/Reusable Components//Modal";
+import Button from "../../../../../components/ui/button/Button";
+import Modal from "../../../../../components/modal/Modal";
 import { useTheme } from "../../../../../contexts/themeContext";
 import { getIdentityDocument } from "../../../../../api/userApi";
 
@@ -13,16 +13,12 @@ function Documents() {
 
 
   let { identity_id, account_id } = useParams();
-  console.log('awais checking location', location);
   useEffect(() => {
     handleGetIdentityDocumentApi();
-    // handleGetRequiredDocumentApi();
-    console.log('awais checking identity_id', account_id);
   }, [identity_id]);
 
 
   const { theme } = useTheme();
-  console.log("theme", theme);
 
   const [selectedDocument, setSelectedDocument] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,14 +43,12 @@ function Documents() {
   }
 
   const handleGetIdentityDocumentApi = async () => {
-    console.log(`checking`);
     setIsLoader(true);
 
     const response = await getIdentityDocument(
       identity_id,
       cancelTokenSource.token,
     );
-    console.log('object 1', response);
     if (response.success == true) {
       setIsLoader(false);
       setIdentityUploadDocList(response?.data?.IdentityDocuments);

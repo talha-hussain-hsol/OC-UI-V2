@@ -1,45 +1,14 @@
-// import React from 'react'
-// import { ThemeProvider } from '../contexts/themeContext'
-// import Dashboard from '../OurComponents/Screens/Dashboard'
-// import UserForm from '../OurComponents/Screens/UserForm'
-// import Accounts from '../OurComponents/Screens/Accounts'
-// import Identities from '../OurComponents/Screens/Identities'
-// import MainDocuments from '../OurComponents/Screens/MainDocuments'
-// import FundCode from '../OurComponents/Screens/FundCode'
-// import Stepper from '../OurComponents/Screens/Stepper'
-
-// const customerRoutes = () => {
-//   return (
-//     <div>
-//        <BrowserRouter>
-//       <Routes>
-//         <Route path="/" element={<ThemeProvider> <Dashboard /> </ThemeProvider> } />
-//         <Route path="/user-form" element={<ThemeProvider> <UserForm /> </ThemeProvider> } />
-//         <Route path="/accounts" element={<ThemeProvider> <Accounts /> </ThemeProvider> } />
-//         <Route path="/identities" element={<ThemeProvider> <Identities /> </ThemeProvider> } />
-//         <Route path="/documents" element={<ThemeProvider> <MainDocuments /> </ThemeProvider> } />
-//         <Route path="/fund-code"  element={<ThemeProvider> <FundCode /> </ThemeProvider> } />
-//         <Route path="/stepper"  element={<ThemeProvider> <Stepper /> </ThemeProvider> } />
-        
-//       </Routes>
-//     </BrowserRouter>
-//     </div>
-//   )
-// }
-
-// export default customerRoutes
-
 
 
 import React from "react";
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
 import PropTypes from "prop-types";
 import { ThemeProvider } from "../contexts/themeContext";
-import Dashboard from "../pages/customerPortal/Screens/Dashboard"
-import UserForm from "../pages/customerPortal/Screens/UserForm"
-import Accounts from "../pages/customerPortal/Screens/Accounts"
-import Identities from "../pages/customerPortal/Screens/Identities"
-import MainDocuments from "../pages/customerPortal/Screens/MainDocuments"
+import Dashboard from "../pages/customerPortal/screens/Dashboard"
+import UserForm from "../pages/customerPortal/screens/account-wizard/components/UserForm"
+import Accounts from "../pages/customerPortal/screens/Accounts"
+import Identities from "../pages/customerPortal/screens/Identities"
+import MainDocuments from "../pages/customerPortal/screens/MainDocuments"
 import FundCode from "../pages/customerPortal/Screens/FundCode"
 import Stepper from "../pages/customerPortal/Screens/Stepper"
 

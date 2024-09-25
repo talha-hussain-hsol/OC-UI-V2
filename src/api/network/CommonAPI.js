@@ -7,7 +7,6 @@ if (localStorage.getItem("x-auth-token")) axios.defaults.headers = { "x-auth-tok
 let baseURL = localStorage.getItem('base_url')
 let entityId = localStorage.getItem('entity_id')
 if (baseURL === null && isSubDomain() === true && window.location.host.split('.')[0] != 'portal') {
-  // location.reload()
 }
 
 function isSubDomain() {
@@ -20,7 +19,6 @@ function isSubDomain() {
 }
 
 export function getErrorResponse(error) {
-  console.log(error, "error error    error ");
   let customResponse = [];
   try {
     if (error.data?.masssage == "timeout exceeded") {
@@ -37,7 +35,6 @@ export function getErrorResponse(error) {
       !!!error && console.log("FAILED API with undefined error");
     }
   } catch (e) {
-    console.log(e, "error catch");
     customResponse.success = false;
     customResponse.status_code = { key: "failed", value: -1, name: "network" };
     customResponse.user_message = "Internet problem";
@@ -58,7 +55,6 @@ export const logoutAPI = async (cancelToken) => {
 };
 
 export const logoutCustomer = () => {
-  console.log("debug::1");
 
   axios.defaults.headers = null;
   localStorage.removeItem("user-token");

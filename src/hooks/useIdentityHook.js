@@ -23,7 +23,6 @@ const useIdentityHook = () => {
   const handleGetIdentityList = useCallback(async () => {
     setIsLoader(true);
     const response = await getIdentityList(cancelTokenSource.token);
-    console.log("object 1", response);
     if (response == true) {
       setIsLoader(false);
       setProfileListData(response?.data);
