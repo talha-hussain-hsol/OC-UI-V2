@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import CardHeader from "../../components/header/CardHeader";
-import Table from "../../components/tables/Table";
+import CardHeader from "../header/CardHeader";
+import Table from "../tables/Table";
 import AddBankForm from "../ui/forms/AddBankForm";
 import { useTheme } from "../../contexts/themeContext";
 

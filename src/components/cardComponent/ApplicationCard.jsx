@@ -1,6 +1,6 @@
 import React from "react";
-import CardHeader from "../../components/header/CardHeader";
-import Table from "../../components/tables/Table";
+import CardHeader from "../header/CardHeader";
+import Table from "../tables/Table";
 import { useTheme } from "../../contexts/themeContext";
 
 const ApplicationCard = () => {
