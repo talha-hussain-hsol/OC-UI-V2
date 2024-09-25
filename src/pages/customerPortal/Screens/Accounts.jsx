@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState, useRef } from "react";
 import SideBar from "../../../OurComponents/Reusable Components/SideBar";
 import Header from "../../../OurComponents/Reusable Components/Header";
 import AccountCard from "../../../OurComponents/Reusable Components/CardComponent/AccountCard";
@@ -19,7 +19,12 @@ const Accounts = () => {
   // const { entityId } = useEntityStore();
   const { entityId } = useEntityStore.getState();
   const { theme } = useTheme();
+  const [offset, setOffset] = useState(0);
+  const [limit] = useState(10);
   const [isLoading, setIsLoading] = useState(true);
+  const [isFetchingMore, setIsFetchingMore] = useState(false); 
+  const observerRef = useRef();
+  const [accountData, setAccountData] = useState([]);
 
   useLayoutEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -48,22 +53,27 @@ const Accounts = () => {
     };
   }, [theme]);
 
-  const [accountData, setAccountData] = useState(null);
-
   useEffect(() => {
     const fetchAccountData = async () => {
       try {
         setIsLoading(true);
-        const response = await getCustomerAccounts(cancelTokenSource.token);
-        console.log("entityID", entityId);
-        console.log("API Response:", response);
+        let currentOffset = offset;
+        const response = await getCustomerAccounts(
+          currentOffset,
+          limit,
+          cancelTokenSource.token
+        );
         if (response.success) {
-          setAccountData(response?.data?.customer_accounts);
+          setAccountData((prevData) => [
+            ...prevData,
+            ...response?.data?.customer_accounts,
+          ]);
+          setOffset((prevOffset) => prevOffset + limit);
         }
       } catch (error) {
         console.error("Failed to fetch customer accounts", error);
       } finally {
-        setIsLoading(false); 
+        setIsLoading(false);
       }
     };
     fetchAccountData();
@@ -73,6 +83,46 @@ const Accounts = () => {
   function handleClick() {
     navigate("/fund-code");
   }
+  const fetchMoreAccounts = async () => {
+    try {
+      setIsFetchingMore(true);
+      const response = await getCustomerAccounts(
+        offset,
+        limit,
+        cancelTokenSource.token
+      );
+      if (response.success) {
+        setAccountData((prevData) => [
+          ...prevData,
+          ...response?.data?.customer_accounts,
+        ]);
+        setOffset((prevOffset) => prevOffset + limit);
+      }
+    } catch (error) {
+      console.error("Failed to fetch more accounts", error);
+    } finally {
+      setIsFetchingMore(false);
+    }
+  };
+  
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !isFetchingMore && !isLoading) {
+          fetchMoreAccounts();
+        }
+      },
+      { threshold: 1 }
+    );
+    if (observerRef.current) {
+      observer.observe(observerRef.current);
+    }
+    return () => {
+      if (observerRef.current) {
+        observer.unobserve(observerRef.current);
+      }
+    };
+  }, [isFetchingMore, isLoading]);
 
   return (
     <div className={`bg-color-${theme} flex flex-col md:flex-row`}>
@@ -85,8 +135,8 @@ const Accounts = () => {
           onButtonClick={handleClick}
           theme={theme}
         />
-        {isLoading ? (
-          <Loader /> 
+        {/* {isLoading ? (
+          <Loader />
         ) : (
           <>
             {accountData !== null && (
@@ -97,8 +147,19 @@ const Accounts = () => {
               </>
             )}
           </>
+          
+        )} */}
+        {isLoading && <Loader />} 
+        {accountData.length > 0 && (
+          <>
+            {accountData.map((account) => (
+              <AccountCard key={account.id} accountData={account} />
+            ))}
+          </>
         )}
-        
+        <div ref={observerRef}>
+          {isFetchingMore && <Loader />} 
+        </div>
       </div>
     </div>
   );

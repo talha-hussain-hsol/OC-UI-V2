@@ -80,9 +80,12 @@ export const getIdentityCount = async (
   return customResponse;
 };
 
-export const getCustomerAccounts = async (cancelToken) => {
-  console.log("in get api");
-  const url = `/${entityId}/CAPI/Account/list?offset=10&limit=10`;
+export const getCustomerAccounts = async (offset, limit, cancelToken) => {
+  if (!limit) {
+    return;
+  }
+  // console.log("in get api");
+  const url = `/${entityId}/CAPI/Account/list?offset=${offset}&limit=${limit}`;
   const request = { type: "GET", urlString: url };
 
   try {
