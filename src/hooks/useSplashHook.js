@@ -42,6 +42,7 @@ const useSpashHook = () => {
 
       const savedEntity = JSON.parse(localStorage.getItem("selected_entity"));
       if (savedEntity) {
+        console.log(savedEntity, "saved entity");
         setSelectedEntity(savedEntity);
         setEntityId(savedEntity.entityId);
       } else if (entityRows.length > 0) {
@@ -97,7 +98,7 @@ const useSpashHook = () => {
     portals,
     handleActivePortal,
     handlePermission,
-    isLoader
+    isLoader,
   };
 };
 

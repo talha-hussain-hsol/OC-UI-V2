@@ -14,9 +14,58 @@ import Tooltip from "../tooltip/Tooltip";
 import { AiOutlineMenu } from "react-icons/ai";
 import { MdInvertColors } from "react-icons/md";
 import { useTheme } from "../../contexts/themeContext";
+import { logoutAPI } from "../../api/userApi";
+import axios from "axios";
 
 const SideBar = ({ portalType }) => {
   const { toggleTheme, theme } = useTheme();
+  const [isLoading, setIsLoading] = useState(true);
+  const cancelTokenSource = axios.CancelToken.source();
+
+  function handleLogout() {
+    logoutApiHandle();
+  }
+
+  function deleteAllCookies() {
+    const cookies = document.cookie.split(";");
+    const url = new URL(window.location.href);
+    const domain = url.hostname.split(".").slice(-2).join(".");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i];
+      const eqPos = cookie.indexOf("=");
+      const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+      document.cookie =
+        name +
+        `=;expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=.${domain};`;
+    }
+  }
+  const logoutApiHandle = async () => {
+    setIsLoading(true);
+    const response = await logoutAPI(cancelTokenSource.token);
+    // return;
+    if (response.success === true) {
+      deleteAllCookies();
+
+      let url = `${
+        process.env.VITE_AUTH_API_URL
+      }/logout?user_id=${localStorage.getItem("login_user_id")}&redirect_url=${
+        process.env.VITE_LOGOUT_REDIRECT_URL
+      }`;
+      localStorage.clear();
+      window.location.href = url;
+    } else {
+      deleteAllCookies();
+
+      let url = `${
+        process.env.AUTH_API_URL
+      }/logout?user_id=${localStorage.getItem("login_user_id")}&redirect_url=${
+        process.env.LOGOUT_REDIRECT_URL
+      }`;
+      localStorage.clear();
+      window.location.href = url;
+    }
+  };
+
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme");
     if (storedTheme) {
@@ -24,6 +73,7 @@ const SideBar = ({ portalType }) => {
     }
   }, []);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isProfileSidebarOpen, setIsProfileSidebarOpen] = useState(false);
   const [isThemeSidebarOpen, setIsThemeSidebarOpen] = useState(false);
   const [lightThemeEnabled, setLightThemeEnabled] = useState(false);
   const [darkThemeEnabled, setDarkThemeEnabled] = useState(false);
@@ -31,6 +81,7 @@ const SideBar = ({ portalType }) => {
     useState(false);
 
   const sidebarRef = useRef(null);
+  const profileSidebarRef = useRef(null);
   const themeSidebarRef = useRef(null);
 
   const toggleSidebar = () => {
@@ -42,6 +93,9 @@ const SideBar = ({ portalType }) => {
 
   const toggleThemeSidebar = () => {
     setIsThemeSidebarOpen(!isThemeSidebarOpen);
+  };
+  const toggleProfileSidebar = () => {
+    setIsProfileSidebarOpen(!isProfileSidebarOpen);
   };
 
   const handleThemeSwitch = (theme) => {
@@ -345,8 +399,24 @@ const SideBar = ({ portalType }) => {
           <div
             className={`bg-color-profile-icon-${theme} rounded-full text-sm text-color-profile-icon-${theme} w-10 h-10 flex items-center justify-center`}
           >
-            <p>U</p>
+            <button onClick={toggleProfileSidebar}>
+              <p>U</p>
+            </button>
           </div>
+          {isProfileSidebarOpen && (
+            <div
+              ref={profileSidebarRef}
+              className={`absolute left-14 border-color-${theme} border w-40 bottom-12 text-sm bg-color-sidebar-${theme} text-color-sidebar-icon-${theme} shadow-md p-2 rounded-md`}
+            >
+              <ul>
+                <li
+                  className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}
+                >
+                  <button onClick={handleLogout}>Log Out</button>
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
       </div>
 
