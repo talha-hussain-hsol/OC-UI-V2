@@ -4,7 +4,6 @@ import ResponseModel, {
   processRequest,
   RequestType,
 } from "./config";
-
 import useEntityStore from "../store/useEntityStore";
 
 
@@ -100,7 +99,7 @@ export const getCustomerAccounts = async (offset ,limit,cancelToken) => {
 }
 
 export const getEntityTypeAPI = async (cancelToken) => {
-  const url = `/${entityId}/${baseURL}/entity-types-list`
+  const url = `/${entityId}/CAPI/entity-types-list`
   const request = { type: "GET", urlString: url }
 
   try {
