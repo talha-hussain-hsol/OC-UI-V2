@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Table from "../../../components/tablessss/Table";
+import Table from "../../../components/table/Table";
 import Header from "../../../components/header/Header";
 import Button from "../../../components/ui/button/Button";
 import SideBar from "../../../components/sidebar/Sidebar";

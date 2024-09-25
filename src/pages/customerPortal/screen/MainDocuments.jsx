@@ -3,7 +3,7 @@ import Header from "../../../components/header/Header";
 import SideBar from "../../../components/sidebar/Sidebar";
 import Button from "../../../components/ui/button/Button";
 import Dropdown from "../../../components/ui/dropdown/Dropdown";
-import Table from "../../../components/tablessss/Table";
+import Table from "../../../components/table/Table";
 import CardHeader from "../../../components/header/CardHeader";
 import { useTheme } from "../../../contexts/themeContext";
 

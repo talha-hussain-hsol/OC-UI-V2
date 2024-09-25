@@ -23,13 +23,13 @@ import Customer from "./pages/customerPortal";
 import ComplianceDashboard from "./pages/compliancePortal/dashboard";
 import { ThemeProvider } from "./contexts/themeContext";
 
-import Dashboard from "./pages/customerPortal/screenssss/Dashboard"
-import UserForm from "./pages/customerPortal/screenssss/account-wizard/components/UserForm"
-import Accounts from "./pages/customerPortal/screenssss/Accounts"
-import Identities from "./pages/customerPortal/screenssss/Identities"
-import MainDocuments from "./pages/customerPortal/screenssss/MainDocuments"
-import Stepper from "./pages/customerPortal/screenssss/account-wizard/Stepper"
-import FundCode from "./pages/customerPortal/screenssss/account-wizard/components/FundCode";
+import Dashboard from "./pages/customerPortal/screen/Dashboard"
+import UserForm from "./pages/customerPortal/screen/account-wizard/components/UserForm"
+import Accounts from "./pages/customerPortal/screen/Accounts"
+import Identities from "./pages/customerPortal/screen/Identities"
+import MainDocuments from "./pages/customerPortal/screen/MainDocuments"
+import Stepper from "./pages/customerPortal/screen/account-wizard/Stepper"
+import FundCode from "./pages/customerPortal/screen/account-wizard/components/FundCode";
 
 
 

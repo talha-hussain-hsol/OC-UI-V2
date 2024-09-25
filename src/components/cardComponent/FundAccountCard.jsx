@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useTheme } from "../../../contexts/themeContext";
 import TabBar from "../TabBar";
 import Button from "../Button";
-import Table from "../tablessss/Table";
+import Table from "../table/Table";
 import { RiSearchLine } from "react-icons/ri";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { MdDeleteOutline } from "react-icons/md";
