@@ -4,12 +4,9 @@ import ResponseModel, {
   processRequest,
   RequestType,
 } from "./config";
-
 import useEntityStore from "../store/useEntityStore";
-
-
 const { entityId } = useEntityStore.getState();
-const { baseURL } = "CAPI" 
+const { baseURL } = "CAPI" // Zustand store se entityId le lo
 
 
 export const getToken = async (code, code_verifier, cancelToken) => {
@@ -60,9 +57,13 @@ export const getEntityPermission = async (entityId, cancelToken) => {
     customResponse.error = processError(error);
   }
   return customResponse;
-}
+};
 
-export const getIdentityCount = async (entityId, baseURL="CAPI", cancelToken) => {
+export const getIdentityCount = async (
+  entityId,
+  baseURL = "CAPI",
+  cancelToken
+) => {
   const customResponse = new ResponseModel();
   const url = `/${entityId}/${baseURL}/identityCount`;
   const request = {
@@ -77,8 +78,7 @@ export const getIdentityCount = async (entityId, baseURL="CAPI", cancelToken) =>
     customResponse.error = processError(error);
   }
   return customResponse;
-}
-
+};
 
 export const getCustomerAccounts = async (offset, limit, cancelToken) => {
   if (!limit) {
@@ -98,74 +98,71 @@ export const getCustomerAccounts = async (offset, limit, cancelToken) => {
 };
 
 export const getEntityTypeAPI = async (cancelToken) => {
-  const url = `/${entityId}/${baseURL}/entity-types-list`
-  const request = { type: "GET", urlString: url }
+  const url = `/${entityId}/${baseURL}/entity-types-list`;
+  const request = { type: "GET", urlString: url };
 
   try {
-    const response = await processRequest(request, cancelToken)
-    return response.data
+    const response = await processRequest(request, cancelToken);
+    return response.data;
   } catch (error) {
-    return getErrorResponse(error)
+    return getErrorResponse(error);
   }
-}
+};
 
 export const getFundForJoin = async (fundCode, cancelToken) => {
-  const url = `/fund/get/${fundCode}`
-  const request = { type: "GET", urlString: url }
+  const url = `/fund/get/${fundCode}`;
+  const request = { type: "GET", urlString: url };
 
   try {
-    const response = await processRequest(request, cancelToken)
-    return response.data
+    const response = await processRequest(request, cancelToken);
+    return response.data;
   } catch (error) {
-    return getErrorResponse(error)
+    return getErrorResponse(error);
   }
-}
-
+};
 
 export const getRequiredDocument = async (accountId, cancelToken) => {
-  const { entityId } = useEntityStore.getState(); 
-  const url = `/${entityId}/${baseURL}/Account/requiredDocuments/${accountId}`
-  const request = { type: "GET", urlString: url }
+  const { entityId } = useEntityStore.getState();
+  const url = `/${entityId}/${baseURL}/Account/requiredDocuments/${accountId}`;
+  const request = { type: "GET", urlString: url };
 
   try {
-    const response = await processRequest(request, cancelToken)
-    return response.data
+    const response = await processRequest(request, cancelToken);
+    return response.data;
   } catch (error) {
-    return getErrorResponse(error)
+    return getErrorResponse(error);
   }
-}
+};
 
 export const getDocumentListAPI = async (cancelToken) => {
-  const url = `organizations/ascent-fs/funds/demo/document-types`
-  const request = { type: "GET", urlString: url }
+  const url = `organizations/ascent-fs/funds/demo/document-types`;
+  const request = { type: "GET", urlString: url };
 
   try {
-    const response = await processRequest(request, cancelToken)
-    return response.data
+    const response = await processRequest(request, cancelToken);
+    return response.data;
+  } catch (error) {
+    return getErrorResponse(error);
+  }
+};
+
+export const getIdentityList = async (cancelToken, fundId) => {
+  let url;
+  fundId
+    ? (url = `/${entityId}/CAPI/Identity/list?fundId=${fundId}`)
+    : (url = `/${entityId}/${baseURL}/Identity/list`)
+
+  const request = { type: "GET", urlString: url };
+
+  try {
+    const response = await processRequest(request, cancelToken);
+    return response.data;
   } catch (error) {
     return getErrorResponse(error)
   }
-}
+};
 
-
-export const getIdentityList = async (cancelToken, fundId) => {
-  let url
-  fundId
-    ? (url = `/${entityId}/CAPI/Identity/list?fundId=${fundId}`)
-    : (url = `/${entityId}/CAPI/Identity/list`)
-
-  const request = { type: "GET", urlString: url }
-
-  try {
-    const response = await processRequest(request, cancelToken)
-    return response.data
-  } catch (error) {
-    // return getErrorResponse(error)
-  }
-}
-
-
-export const verifyFundExist = async ( data, cancelToken) => {
+export const verifyFundExist = async (data, cancelToken) => {
   //post url:CAPI/Account/list/verify
   const url = `/${entityId}/CAPI/Account/list/verify`;
   const request = { type: "POST", urlString: url, params: data };
@@ -178,14 +175,23 @@ export const verifyFundExist = async ( data, cancelToken) => {
   }
 };
 
-
 export const getIdentityDocument = async (identityId, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/Identity/${identityId}/documents`
-  const request = { type: "GET", urlString: url }
+  const url = `/${entityId}/${baseURL}/Identity/${identityId}/documents`;
+  const request = { type: "GET", urlString: url };
 
   try {
-    const response = await processRequest(request, cancelToken)
-    return response.data
+    const response = await processRequest(request, cancelToken);
+    return response.data;
+  } catch (error) {}
+};
+
+export const logoutAPI = async (cancelToken) => {
+  const url = `/auth/user/logout`;
+  const request = { type: "POST", urlString: url };
+  try {
+    const response = await processRequest(request, cancelToken);
+    return response.data;
   } catch (error) {
+    return getErrorResponse(error);
   }
-}
+};

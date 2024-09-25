@@ -1,5 +1,7 @@
 import React, { useEffect, useLayoutEffect, useState, useRef } from "react";
-
+// import SideBar from "../../../OurComponents/Reusable Components/SideBar";
+// import Header from "../../../OurComponents/Reusable Components/Header";
+// import AccountCard from "../../../OurComponents/Reusable Components/CardComponent/AccountCard";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../../../contexts/themeContext";
 import { getLocalStorage } from "../../../utils/cookies";
@@ -135,7 +137,6 @@ const Accounts = () => {
           onButtonClick={handleClick}
           theme={theme}
         />
-        
         {isLoading && <Loader />} 
         {accountData.length > 0 && (
           <>
