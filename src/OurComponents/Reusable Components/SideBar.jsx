@@ -17,7 +17,7 @@ import { useTheme } from "../../contexts/themeContext";
 
 const SideBar = ({ portalType }) => {
   const { toggleTheme, theme } = useTheme();
-  
+
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme");
     if (storedTheme) {
@@ -25,6 +25,7 @@ const SideBar = ({ portalType }) => {
     }
   }, []);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isProfileSidebarOpen, setIsProfileSidebarOpen] = useState(false);
   const [isThemeSidebarOpen, setIsThemeSidebarOpen] = useState(false);
   const [lightThemeEnabled, setLightThemeEnabled] = useState(false);
   const [darkThemeEnabled, setDarkThemeEnabled] = useState(false);
@@ -32,6 +33,7 @@ const SideBar = ({ portalType }) => {
     useState(false);
 
   const sidebarRef = useRef(null);
+  const profileSidebarRef = useRef(null);
   const themeSidebarRef = useRef(null);
 
   const toggleSidebar = () => {
@@ -43,6 +45,9 @@ const SideBar = ({ portalType }) => {
 
   const toggleThemeSidebar = () => {
     setIsThemeSidebarOpen(!isThemeSidebarOpen);
+  };
+  const toggleProfileSidebar = () => {
+    setIsProfileSidebarOpen(!isProfileSidebarOpen);
   };
 
   const handleThemeSwitch = (theme) => {
@@ -346,8 +351,24 @@ const SideBar = ({ portalType }) => {
           <div
             className={`bg-color-profile-icon-${theme} rounded-full text-sm text-color-profile-icon-${theme} w-10 h-10 flex items-center justify-center`}
           >
-            <p>U</p>
+            <button onClick={toggleProfileSidebar}>
+              <p>U</p>
+            </button>
           </div>
+          {isProfileSidebarOpen && (
+            <div
+              ref={profileSidebarRef}
+              className={`absolute left-14 border-color-${theme} border w-32 bottom-12 text-sm bg-color-sidebar-${theme} text-color-sidebar-icon-${theme} shadow-md p-2 rounded-md`}
+            >
+              <ul>
+                <li
+                  className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}
+                >
+                  Log Out
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
       </div>
 

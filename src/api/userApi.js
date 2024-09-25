@@ -20,7 +20,7 @@ export const getToken = async (code, code_verifier, cancelToken) => {
     // setAxiosHeader({});
     const response = await processRequest(request, cancelToken);
     customResponse.response = response;
-  } catch (error) {
+  } catch (error) { 
     customResponse.error = processError(error);
   }
   return customResponse;
