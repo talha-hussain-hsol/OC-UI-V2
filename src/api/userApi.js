@@ -7,8 +7,6 @@ import ResponseModel, {
 import useEntityStore from "../store/useEntityStore";
 const { entityId } = useEntityStore.getState();
 
-import useEntityStore from "../store/useEntityStore";
-
 const { baseURL } = "CAPI"; // Zustand store se entityId le lo
 
 export const getToken = async (code, code_verifier, cancelToken) => {
@@ -82,14 +80,9 @@ export const getIdentityCount = async (
   return customResponse;
 };
 
-export const getCustomerAccounts = async (offset, limit, cancelToken) => {
-  if (!limit) {
-    return;
-  }
-
+export const getCustomerAccounts = async (cancelToken) => {
   console.log("in get api");
-
-  const url = `/${entityId}/${baseURL}/Account/list?offset=${offset}&limit=${limit}`;
+  const url = `/${entityId}/CAPI/Account/list?offset=10&limit=10`;
   const request = { type: "GET", urlString: url };
 
   try {
@@ -97,7 +90,7 @@ export const getCustomerAccounts = async (offset, limit, cancelToken) => {
     console.log("loginCustomer Response Headers", response);
     return response.data;
   } catch (error) {
-    return getErrorResponse(error);
+    // return getErrorResponse(error);
   }
 };
 

@@ -108,7 +108,6 @@
 //   }
 // }
 
-
 import axios from "axios";
 import { authUrl, base_url, logoutRedirectUrl } from ".";
 import { clearAllCookies } from "../utils/cookies";
@@ -165,25 +164,28 @@ export function processError(error) {
 }
 
 export async function setAxiosHeader(header) {
-  axiosAPI.defaults.headers.common = await header || {
+  axiosAPI.defaults.headers.common = (await header) || {
     "x-auth-token": localStorage.getItem("x-auth-token"),
   };
 }
 export async function processRequest(request, token) {
-  const authToken = localStorage.getItem("x-auth-token")
+  
+  const authToken = localStorage.getItem("x-auth-token");
   if (authToken) {
     setAxiosHeader({
-      "x-auth-token": authToken
-    })
+      "x-auth-token": authToken,
+    });
   }
   const headers = {
     ...axios.defaults.headers,
-    common: authToken ?  {
-      ...axios.defaults.headers.common,
-      "x-auth-token": authToken
-    } : {
-      ...axios.defaults.headers.common
-    },
+    common: authToken
+      ? {
+          ...axios.defaults.headers.common,
+          "x-auth-token": authToken,
+        }
+      : {
+          ...axios.defaults.headers.common,
+        },
     ...request.headers,
     // "User-Agent": utils.userAgent,
   };

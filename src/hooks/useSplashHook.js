@@ -108,7 +108,6 @@ const useSpashHook = () => {
 
   const cancelTokenSource = axios.CancelToken.source();
 
-
   // Get the Zustand store functions
   const { setEntityId, setEntityList } = useEntityStore();
 
@@ -149,8 +148,6 @@ const useSpashHook = () => {
   //   }
   // }, [setEntityId, setEntityList]);
 
-  
-
   useEffect(() => {
     handleEntitiesAPI();
   }, [handleEntitiesAPI]);
@@ -178,14 +175,12 @@ const useSpashHook = () => {
       if (!(permissionList?.data || []).length) {
         toast.error("You do not have a permission");
       } else {
-        // debugger
         setLocalStorage("entity_permissions", permissionList?.data);
         setLocalStorage("selected_entity", data);
         // setLocalStorage('entityid', data?.entityId)
         if (data?.type === "compliance") {
           navigate("/compliance", { replace: true });
         } else if (data?.type === "customer") {
-          // debugger
           navigate("/customer", { replace: true });
         } else {
           navigate("/managment", { replace: true });

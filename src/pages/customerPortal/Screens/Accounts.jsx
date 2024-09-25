@@ -8,10 +8,18 @@ import { getLocalStorage } from "../../../utils/cookies";
 import { getCustomerAccounts } from "../../../api/userApi";
 import useEntityStore from "../../../store/useEntityStore";
 import { removeQueryParams } from "../../../utils/helperFunctions";
+import axios from "axios";
+import Loader from "../../../components/ui/loader";
+import useIdentityHook from "../../../hooks/useIdentityHook";
 
 const Accounts = () => {
-  const { entityId } = useEntityStore();
+  const cancelTokenSource = axios.CancelToken.source();
+  const { entites, activePortal, portals, handleActivePortal, isLoader } =
+    useIdentityHook();
+  // const { entityId } = useEntityStore();
+  const { entityId } = useEntityStore.getState();
   const { theme } = useTheme();
+  const [isLoading, setIsLoading] = useState(true);
 
   useLayoutEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -43,17 +51,21 @@ const Accounts = () => {
   const [accountData, setAccountData] = useState(null);
 
   useEffect(() => {
-    debugger;
     const fetchAccountData = async () => {
       try {
-        const response = await getCustomerAccounts(entityId);
+        setIsLoading(true);
+        const response = await getCustomerAccounts(cancelTokenSource.token);
+        console.log("entityID", entityId);
         console.log("API Response:", response);
-        setAccountData(response?.data?.customer_accounts);
+        if (response.success) {
+          setAccountData(response?.data?.customer_accounts);
+        }
       } catch (error) {
         console.error("Failed to fetch customer accounts", error);
+      } finally {
+        setIsLoading(false); 
       }
     };
-
     fetchAccountData();
   }, [entityId]);
 
@@ -73,14 +85,20 @@ const Accounts = () => {
           onButtonClick={handleClick}
           theme={theme}
         />
-
-        {accountData !== null && (
+        {isLoading ? (
+          <Loader /> 
+        ) : (
           <>
-            {accountData.map((account) => (
-              <AccountCard key={account.id} accountData={accountData} />
-            ))}
+            {accountData !== null && (
+              <>
+                {accountData.map((account) => (
+                  <AccountCard key={account.id} accountData={accountData} />
+                ))}
+              </>
+            )}
           </>
         )}
+        
       </div>
     </div>
   );
