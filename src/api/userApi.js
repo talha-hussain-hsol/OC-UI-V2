@@ -186,3 +186,14 @@ export const getIdentityDocument = async (identityId, cancelToken) => {
     return response.data;
   } catch (error) {}
 };
+
+export const logoutAPI = async (cancelToken) => {
+  const url = `/auth/user/logout`;
+  const request = { type: "POST", urlString: url };
+  try {
+    const response = await processRequest(request, cancelToken);
+    return response.data;
+  } catch (error) {
+    return getErrorResponse(error);
+  }
+};
