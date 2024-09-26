@@ -35,6 +35,8 @@ function Stepper() {
   const [formData, setFormData] = useState({}); 
   const location = useLocation();
   const [fundData, setFundData] = useState(location.state?.fundData || null);
+  const [referenceDocuments, setreferenceDocuments] = useState(location.state?.referenceDocuments || null);
+
   const [isLoader, setIsLoader] = useState(false);
   const navigate = useNavigate();
   const params = useParams();
@@ -44,12 +46,8 @@ function Stepper() {
   const [selectedIdentityData, setSelectedIdentityData] = useState();
   const [identitiesData, setIdentitiesData] = useState([]);
 
-
-
-
-
   const cancelTokenSource = axios.CancelToken.source();
-
+  console.log(referenceDocuments,"reefefefe")
   useEffect(() => {
     if (fundData) {
       handleGetIdentityList();
@@ -82,7 +80,7 @@ function Stepper() {
   const renderContent = () => {
     switch (currentStep) {
       case 1:
-        return <UserType onSelection={handleUserTypeSelection} />;  
+        return <UserType onSelection={handleUserTypeSelection} referenceDocuments={referenceDocuments} />;  
       case 2:
         return (
           <UserForm
@@ -222,3 +220,4 @@ function Stepper() {
 }
 
 export default Stepper;
+

@@ -85,12 +85,17 @@ const FundCode = () => {
     
     const response = await getFundForJoin(fundCode, cancelTokenSource.token);
     if (response.success == true) {
+      console.log(response)
       setIsLoader(false);
-      const test = response?.data
-      const redDoc = test.reference_document
+      const fundData = response?.data;
+      const referenceDocuments = fundData?.reference_document?.documents;
+      console.log("referenceDocuments",referenceDocuments)
       setFundData(response?.data);
       navigate("/stepper", {
-        state: { fundData: response.data }, 
+        state: { fundData,
+          referenceDocuments
+
+        }, 
       });
       localStorage.setItem("fundRegion", response?.data?.fund_setting?.region);
       if (!response?.data?.reference_document?.term_documents) {
