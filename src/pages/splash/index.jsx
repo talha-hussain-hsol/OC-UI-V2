@@ -18,7 +18,7 @@ const SplashScreen = () => {
     "https://storage.googleapis.com/ascentfs-media-public/public-data/application/logo.compliance.entity.png";
 
   if (isLoader) {
-    return <Loader />;
+    return <Loader theme={theme}/>;
   }
 
   return (

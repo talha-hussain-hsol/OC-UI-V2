@@ -1,10 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
-import { getIdentityList } from "../api/userApi";
+import { getCustomerAccounts } from "../api/userApi";
 import { toast } from "react-toastify";
-import axios from "axios";
-import { setLocalStorage } from "../utils/cookies";
 import { useNavigate } from "react-router-dom";
 import useEntityStore from "../store/useEntityStore";
+import axios from "axios";
 
 const portals = [
   { label: "Customer Portal", type: "customer" },
@@ -12,39 +11,39 @@ const portals = [
   { label: "Manager Portal", type: "management" },
 ];
 
-const useIdentityHook = () => {
-  const [entites, setEntites] = useState([]);
+const useAccountsHook = () => {
+  const navigate = useNavigate();
+  const [accounts, setAccounts] = useState([]);
   const [activePortal, setActivePortal] = useState(portals[0].type);
   const [isLoader, setIsLoader] = useState(false);
   const cancelTokenSource = axios.CancelToken.source();
+  const { setAccountId, setAccountList } = useEntityStore();
 
-  const handleGetIdentityList = useCallback(async () => {
+  // Memoize the API call using useCallback
+  const handleAccountsAPI = useCallback(async () => {
     setIsLoader(true);
-
-    const response = await getIdentityList(cancelTokenSource.token);
+    const response = await getCustomerAccounts(cancelTokenSource.token);
     if (response == true) {
       setIsLoader(false);
-      setProfileListData(response?.data);
+      setAccountList(response?.data);
     } else {
       setIsLoader(false);
     }
   }, []);
 
   useEffect(() => {
-    handleGetIdentityList();
-  }, [handleGetIdentityList]);
+    handleAccountsAPI();
+  }, [handleAccountsAPI]);
 
   const handleActivePortal = useCallback((portalType) => {
     setActivePortal(portalType);
   }, []);
 
   return {
-    entites,
-    activePortal,
-    portals,
-    handleActivePortal,
+    accounts,
     isLoader,
+    handleActivePortal,
   };
 };
 
-export default useIdentityHook;
+export default useAccountsHook;

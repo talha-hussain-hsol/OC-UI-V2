@@ -1,6 +1,6 @@
 import { useTheme } from "../../../contexts/themeContext";
-const Loader = () => {
-  const { theme } = useTheme();
+const Loader = ({theme}) => {
+  
   return (
     <div className={`flex items-center justify-center h-screen`}>
       <div

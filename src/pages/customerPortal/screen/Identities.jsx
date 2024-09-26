@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Table from "../../../components/table/Table";
 import Header from "../../../components/header/Header";
 import Button from "../../../components/ui/button/Button";
@@ -17,35 +17,41 @@ const Identities = () => {
   const [profileListData, setProfileListData] = useState([]);
   const cancelTokenSource = axios.CancelToken.source();
   const [activeStep, setActiveStep] = useState(1);
-  const {
-    entites,
-    activePortal,
-    portals,
-    handleActivePortal,
-    isLoader
-  } = useIdentityHook();
+  const [isLoading, setIsLoading] = useState(false);
+  const { entites, activePortal, portals, handleActivePortal, isLoader } =
+    useIdentityHook();
 
   useEffect(() => {
     handleGetIdentityList();
   }, []);
 
-  const handleGetIdentityList = async () => {
-    
-    try {
-        const response = await getIdentityList(cancelTokenSource.token);
+  //   const handleGetIdentityList = async () => {
 
-        if (response.success == true) {
-            // If success is true, set the profile data
-            setProfileListData(response?.data);
-        } else {
-            // Handle case where success is false
-            console.log("Profile list is empty or request failed.");
-        }
-    } catch (error) {
-        console.error("Error fetching identity list:", error);
+  //     try {
+  //         const response = await getIdentityList(cancelTokenSource.token);
+
+  //         if (response.success == true) {
+  //             // If success is true, set the profile data
+  //             setProfileListData(response?.data);
+  //         } else {
+  //             // Handle case where success is false
+  //             console.log("Profile list is empty or request failed.");
+  //         }
+  //     } catch (error) {
+  //         console.error("Error fetching identity list:", error);
+  //     }
+  // };
+  const handleGetIdentityList = useCallback(async () => {
+    setIsLoading(true);
+
+    const response = await getIdentityList(cancelTokenSource.token);
+    if (response.success == true) {
+      setIsLoading(false);
+      setProfileListData(response?.data);
+    } else {
+      setIsLoading(false);
     }
-};
-
+  }, []);
 
   const { theme } = useTheme();
   const navigate = useNavigate();
@@ -54,8 +60,6 @@ const Identities = () => {
     navigate("/stepper");
   }
   useEffect(() => {
-    
-
     document.body.style.backgroundColor =
       theme === "SC"
         ? "#ffffff"
@@ -127,11 +131,9 @@ const Identities = () => {
             className={`bg-color-card-${theme} shadow-${theme} rounded-b-md border-color-${theme} border-[1px] w-full`}
           >
             {isLoader ? (
-          
-          <Loader/>
-          
-          ) : (
-            <Table
+              <Loader theme={theme} />
+            ) : (
+              <Table
                 headers={Headers}
                 rows={profileListData}
                 headerClassName={`bg-color-table-color-${theme}`}
@@ -139,7 +141,9 @@ const Identities = () => {
                   <>
                     <td className="py-4 px-6 font-light">{row.label}</td>
                     <td className="py-4 px-6 font-light">{row.type}</td>
-                    <td className={`py-4 px-6 text-color-status-${theme} font-light`}>
+                    <td
+                      className={`py-4 px-6 text-color-status-${theme} font-light`}
+                    >
                       {status[index] ? "Active" : "Inactive"}
                     </td>
                     <td className="py-4 px-6">
@@ -163,7 +167,7 @@ const Identities = () => {
                 )}
               />
             )}
-          {/* //   <Table >
+            {/* //   <Table >
           //     headers={Headers}
           //     rows={profileListData}
           //     headerClassName={`bg-color-table-color-${theme}`}

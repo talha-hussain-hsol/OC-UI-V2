@@ -10,6 +10,6 @@ const Customer = () => {
       localStorageData
     )}`;
   }, []);
-  return <Loader />;
+  return <Loader theme={theme}/>;
 };
 export default Customer;
