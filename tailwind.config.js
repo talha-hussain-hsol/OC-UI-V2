@@ -93,6 +93,8 @@ module.exports = {
         "color-dropdown-Ascent": "#06d3de",
         "color-button-SC": "",
         "color-button-Ascent": "#FFFFFF",
+        "color-loader-SC": "#8DC63F",
+        "color-loader-Ascent": "#ffffff",
       },
       textColor: {
         "color-SC": "#3DA500",
@@ -272,6 +274,9 @@ module.exports = {
     },
     {
       pattern: /border-color-dropdown-(SC|lightTheme|Ascent)/,
+    },
+    {
+      pattern: /border-color-loader-(SC|lightTheme|Ascent)/,
     },
     {
       pattern: /border-color-button-(SC|lightTheme|Ascent)/,
