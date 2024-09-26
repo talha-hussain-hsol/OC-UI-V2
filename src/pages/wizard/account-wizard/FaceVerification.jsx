@@ -1,6 +1,6 @@
 import React from "react";
-import Button from "../../../../../components/ui/button/Button";
-import { useTheme } from "../../../../../contexts/themeContext";
+import Button from "../../../components/ui/button/Button";
+import { useTheme } from "../../../contexts/themeContext";
 
 function FaceVerification() {
   const { theme } = useTheme();

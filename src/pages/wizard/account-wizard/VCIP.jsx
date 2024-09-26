@@ -1,7 +1,6 @@
 import React from "react";
-import Button from "../../../../../components/ui/button/Button";
-import SideBar from "../../../../../components/sidebar/Sidebar";
-import { useTheme } from "../../../../../contexts/themeContext";
+import Button from "../../../components/ui/button/Button";
+import { useTheme } from "../../../contexts/themeContext";
 
 function VCIP() {
   const { theme } = useTheme();

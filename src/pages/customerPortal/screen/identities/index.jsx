@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
-import Table from "../../../components/table/Table";
-import Header from "../../../components/header/Header";
-import Button from "../../../components/ui/button/Button";
-import SideBar from "../../../components/sidebar/Sidebar";
+import Table from "../../../../components/table/Table";
+import Header from "../../../../components/header/Header";
+import Button from "../../../../components/ui/button/Button";
+import SideBar from "../../../../components/sidebar/Sidebar";
 import { AiFillEdit } from "react-icons/ai";
-import TabBar from "../../../components/tabBar/TabBar";
-import { useTheme } from "../../../contexts/themeContext";
+import TabBar from "../../../../components/tabBar/TabBar";
+import { useTheme } from "../../../../contexts/themeContext";
 import { useNavigate } from "react-router-dom";
-import useIdentityHook from "../../../hooks/useIdentityHook";
+import useIdentityHook from "../../../../hooks/useIdentityHook";
 import axios from "axios";
-import { getIdentityList } from "../../../api/userApi";
-import Loader from "../../../components/ui/loader";
+import { getIdentityList } from "../../../../api/userApi";
+import Loader from "../../../../components/ui/loader";
 
 const Identities = () => {
   // const { state } = useLocation();

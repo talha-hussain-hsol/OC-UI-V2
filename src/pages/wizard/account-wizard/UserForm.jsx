@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import formData from '../../../../../data/fieldsData.json';
-import DropdownField from "../../../../../components/ui/dropdown/DropdownField";
-import TextField from "../../../../../components/ui/input/TextField";
-import { useTheme } from "../../../../../contexts/themeContext";
+import formData from '../../../data/fieldsData.json';
+import DropdownField from "../../../components/ui/dropdown/DropdownField";
+import TextField from "../../../components/ui/input/TextField";
+import { useTheme } from "../../../contexts/themeContext";
 
 const UserForm = ({ userType, onNext }) => { 
   const { theme } = useTheme();

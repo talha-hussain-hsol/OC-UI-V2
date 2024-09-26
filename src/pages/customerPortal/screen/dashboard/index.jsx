@@ -1,14 +1,14 @@
 import React, { useEffect, useLayoutEffect } from "react";
-import SideBar from "../../../components/sidebar/Sidebar";
-import Header from "../../../components/header/Header";
-import AUMCard from "../../../components/cardComponent/AUMCards";
-import CardHeader from "../../../components/header/CardHeader";
-import FinancialChart from "../../../components/ui/charts/FinancialChart";
-import NotificationCard from "../../../components/cardComponent/NotificationCard";
+import SideBar from "../../../../components/sidebar/Sidebar";
+import Header from "../../../../components/header/Header";
+import AUMCard from "../../../../components/cardComponent/AUMCards";
+import CardHeader from "../../../../components/header/CardHeader";
+import FinancialChart from "../../../../components/ui/charts/FinancialChart";
+import NotificationCard from "../../../../components/cardComponent/NotificationCard";
 import { FaArrowRight, FaEye } from "react-icons/fa";
-import { useTheme } from "../../../contexts/themeContext";
-import { removeQueryParams } from "../../../utils/helperFunctions";
-import { setAxiosHeader } from "../../../api/config";
+import { useTheme } from "../../../../contexts/themeContext";
+import { removeQueryParams } from "../../../../utils/helperFunctions";
+import { setAxiosHeader } from "../../../../api/config";
 
 
 function Dashboard() {
