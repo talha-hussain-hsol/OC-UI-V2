@@ -193,7 +193,7 @@ function Stepper() {
         >
           {isLoader ? (
           
-          <Loader/>
+          <Loader theme={theme}/>
           
           ) : (
           renderContent()

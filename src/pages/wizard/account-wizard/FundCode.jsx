@@ -143,7 +143,7 @@ const FundCode = () => {
           </p>
           {isLoader ? (
           
-          <Loader/>
+          <Loader theme={theme}/>
           
           ) : (
             <>
