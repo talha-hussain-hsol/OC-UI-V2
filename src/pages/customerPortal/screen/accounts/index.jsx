@@ -1,17 +1,17 @@
 import React, { useEffect, useLayoutEffect, useState, useRef } from "react";
 
 import { useNavigate } from "react-router-dom";
-import { useTheme } from "../../../contexts/themeContext";
-import { getLocalStorage } from "../../../utils/cookies";
-import { getCustomerAccounts } from "../../../api/userApi";
-import useEntityStore from "../../../store/useEntityStore";
-import { removeQueryParams } from "../../../utils/helperFunctions";
+import { useTheme } from "../../../../contexts/themeContext";
+import { getLocalStorage } from "../../../../utils/cookies";
+import { getCustomerAccounts } from "../../../../api/userApi";
+import useEntityStore from "../../../../store/useEntityStore";
+import { removeQueryParams } from "../../../../utils/helperFunctions";
 import axios from "axios";
-import Loader from "../../../components/ui/loader";
-import useIdentityHook from "../../../hooks/useIdentityHook";
-import SideBar from "../../../components/sidebar/Sidebar";
-import Header from "../../../components/header/Header";
-import AccountCard from "../../../components/cardComponent/AccountCard";
+import Loader from "../../../../components/ui/loader";
+import useIdentityHook from "../../../../hooks/useIdentityHook";
+import SideBar from "../../../../components/sidebar/Sidebar";
+import Header from "../../../../components/header/Header";
+import AccountCard from "../../../../components/cardComponent/AccountCard";
 
 const Accounts = () => {
   const cancelTokenSource = axios.CancelToken.source();

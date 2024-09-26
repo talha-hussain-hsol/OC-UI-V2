@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
-import SideBar from "../../../../components/sidebar/Sidebar";
-import Button from "../../../../components/ui/button/Button";
-import UserType from "./components/UserType";
-import UserForm from "./components/UserForm";
-import Documents from "./components/Documents";
-import FaceVerification from "./components/FaceVerification";
-import VCIP from "./components/VCIP";
-import Application from "./components/Application";
-import BankWallets from "./components/BankWallets";
-import Summary from "./components/Summary";
-import { useTheme } from "../../../../contexts/themeContext";
-import { getIdentityList } from "../../../../api/userApi";
+import SideBar from "../../components/sidebar/Sidebar";
+import Button from "../../components/ui/button/Button";
+import UserType from "../wizard/account-wizard/UserType";
+import UserForm from "../wizard/account-wizard/UserForm";
+import Documents from "../wizard/account-wizard/Documents";
+import FaceVerification from "../wizard/account-wizard/FaceVerification";
+import VCIP from "../wizard/account-wizard/VCIP";
+import Application from "../wizard/account-wizard/Application";
+import BankWallets from "../wizard/account-wizard/BankWallets";
+import Summary from "../wizard/account-wizard/Summary";
+import { useTheme } from "../../contexts/themeContext";
+import { getIdentityList } from "../../api/userApi";
 import { useLocation,useNavigate,useParams } from "react-router-dom";
 import axios from "axios";
-import Loader from "../../../../components/ui/loader";
+import Loader from "../../components/ui/loader";
 
 
 
