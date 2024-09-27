@@ -35,8 +35,7 @@ module.exports = {
           "linear-gradient(to bottom, #24357C 0%, #0B76A8 100%)",
         "color-card-Ascent":
           "linear-gradient(to bottom, #0d345d 0%, #151c39 100%)", // Card header in stepper ex: Face Snap
-        "gradient-stepper-card-Ascent":
-          "linear-gradient(to bottom, #0d345d 0%, #151c39 100%)",
+       
         "color-Ascent": "linear-gradient(to right, #0c2138 0%, #113c4d 100%)",
       },
       backgroundColor: {
