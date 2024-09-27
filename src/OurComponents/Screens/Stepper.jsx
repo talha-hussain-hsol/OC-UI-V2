@@ -25,8 +25,8 @@ const steps = [
 function Stepper() {
   const { theme } = useTheme();
   const [currentStep, setCurrentStep] = useState(1);
-  const [userType, setUserType] = useState(""); // Store the selected userType
-  const [formData, setFormData] = useState({}); // Store all form data
+  const [userType, setUserType] = useState(""); 
+  const [formData, setFormData] = useState({}); 
   useEffect(() => {
     console.log("Current theme:", theme);
 
@@ -48,9 +48,9 @@ function Stepper() {
       setComplete(true);
     } else {
       if (data) {
-        setFormData((prevData) => ({ ...prevData, ...data })); // Save form data
+        setFormData((prevData) => ({ ...prevData, ...data })); 
       }
-      setCurrentStep((prev) => prev + 1); // Advance step
+      setCurrentStep((prev) => prev + 1); 
     }
   };
 
@@ -61,19 +61,19 @@ function Stepper() {
   };
 
   const handleUserTypeSelection = (type) => {
-    setUserType(type); // Store the selected user type in state
-    handleNext(); // Move to the next step
+    setUserType(type); 
+    handleNext();
   };
 
   const renderContent = () => {
     switch (currentStep) {
       case 1:
-        return <UserType onSelection={handleUserTypeSelection} />; // Pass the user type selection handler
+        return <UserType onSelection={handleUserTypeSelection} />; 
       case 2:
         return (
           <UserForm
-            userType={userType} // Pass the selected user type
-            onNext={(formValues) => handleNext(formValues)} // Handle form submission
+            userType={userType} 
+            onNext={(formValues) => handleNext(formValues)} 
           />
         );
       case 3:
@@ -99,17 +99,17 @@ function Stepper() {
       <div
         className={`bg-color-${theme} w-full px-4 py-4 sm:px-6 md:px-16 lg:px-24 md:py-5 lg:py-6 `}
       >
-        <ul className="relative flex flex-row gap-x-0 ml-14 mt-7 ">
+        <ul className="relative flex flex-row gap-x-0 lg:ml-14 mt-7  ">
           {steps.map((step, index) => (
             <li
               key={index}
-              className={`shrink basis-0 flex-1 group ${
+              className={` lg:flex-1 group ${
                 index + 1 < currentStep ? "complete" : ""
               }`}
             >
               <div className="min-w-10 min-h-10 w-full inline-flex items-center text-xs align-middle ">
                 <div
-                  className={`w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex justify-center items-center shrink-0 rounded-full text-lg ml-2 sm:ml-4 md:ml-5 ${
+                  className={`w-8 h-8 sm:w-6 sm:h-6 xs:w-5 xs:h-5  md:w-10 md:h-10 flex justify-center items-center shrink-0 rounded-full text-lg ml-2 sm:ml-4 md:ml-5 ${
                     index + 1 === currentStep
                       ? "bg-blue-500 text-white"
                       : index + 1 < currentStep
@@ -121,15 +121,15 @@ function Stepper() {
                 </div>
                 {index < steps.length - 1 && (
                   <div
-                    className={`ms-1 w-full sm:w-[150%] md:w-[200%] h-px flex-grow group-last:hidden ${
+                    className={`ms-1 lg:w-full  lg:h-[1px] lg:flex-grow  ${
                       index + 1 < currentStep ? "bg-[#008000]" : "bg-gray-400"
                     }`}
                   ></div>
                 )}
               </div>
-              <div className="mt-2  xs:mt-3 xs:mr-[10px] sm:mt-3 sm:mr-[15px] md:mt-4 md:mr-[25px] lg:mt-3 mr-[78px] xl:mr-[62px]  2xl:mr-[120px] text-center">
+              <div className="mt-2  xs:mt-3 xs:mr-[10px] sm:mt-3 sm:mr-[15px] md:mt-4 md:mr-[25px] lg:mt-3 mr-[78px] xl:mr-[62px]  2xl:mr-[120px] text-center ">
                 <span
-                  className={`block text-sm md:text-base lg:text-sm  ${
+                  className={`block text-sm md:text-sm lg:text-sm xs:text-xs xs:text-wrap ${
                     index + 1 === currentStep
                       ? " text-blue-500"
                       : index + 1 < currentStep

@@ -57,7 +57,7 @@ const MainDocuments = () => {
   ];
   const fundOptions = ["Standard Chartered Client's Fund"];
   return (
-    <div className={`bg-color-${theme} h-screen`}>
+    <div className={`bg-color-${theme} `}>
       <SideBar portalType="Customer" />
       <div className="py-6 sm:ml-12 mx-4 sm:px-10 ">
         <div className="w-full">
@@ -85,7 +85,7 @@ const MainDocuments = () => {
                 options={documentCategoryOptions}
                 value={documentCategory}
                 onChange={(e) => setDocumentCategory(e.target.value)}
-                className={`flex flex-col text-color-h1-${theme} sm:w-1/4 w-full z-0`}
+                className={`flex flex-col text-color-h1-${theme} sm:w-1/4 w-full z-0 `}
               />
               <Dropdown
                 label="Fund"
@@ -110,7 +110,7 @@ const MainDocuments = () => {
               </div>
               <div>
                 <Button
-                  className={`bg-color-button-${theme} text-white py-6 px-6 font-light rounded-md`}
+                  className={`bg-color-button-${theme} text-white py-6 px-6 font-light rounded-md text-nowrap mt-6`}
                   text="Clear Filter"
                 />
               </div>

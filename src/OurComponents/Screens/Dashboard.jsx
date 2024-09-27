@@ -52,14 +52,14 @@ function Dashboard() {
     >
       <SideBar portalType="Customer" />
       <div className="w-full flex flex-col">
-        <div className="flex-1 py-6 sm:ml-9 sm:px-10 px-4">
+        <div className=" py-6 sm:ml-9 sm:px-10 px-4">
           <Header
             heading="Dashboard"
             subheading="INVESTOR PORTAL"
             showButton={false}
             theme={theme}
           />
-          <div className="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-10">
+          <div className="flex flex-col space-y-4 md:flex-col md:space-y-2 md:space-x-10 md:ml-6 lg:flex-row">
             <AUMCard
               date=" As at 03/09/2024"
               amount="38,000,000.00"
@@ -110,7 +110,7 @@ function Dashboard() {
               </div>
               <FinancialChart data={data} year="2024" chartType="bar" />
             </div>
-            <div className="w-full md:w-[65%] lg:w-[65%] xl:w-[65%] rounded-lg shadow-lg">
+            <div className="w-full md:w-[62%] lg:w-[63%] xl:w-[65%] rounded-lg shadow-lg">
               <div className="w-full">
                 <CardHeader
                   FundName="LATEST ACTIVITY"
