@@ -2,9 +2,10 @@ import React, { useEffect, useLayoutEffect, useState, useRef } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../../../../contexts/themeContext";
+import useAccountsHook from "../../../../hooks/useAccountsHook";
 import { getCustomerAccounts } from "../../../../api/userApi";
 import useEntityStore from "../../../../store/useEntityStore";
-import { removeQueryParams } from "../../../../utils/helperFunctions";
+import {removeQueryParams} from "../../../../utils/helperFunctions"
 import axios from "axios";
 import Loader from "../../../../components/ui/loader";
 import useIdentityHook from "../../../../hooks/useIdentityHook";
@@ -14,13 +15,13 @@ import AccountCard from "../../../../components/cardComponent/AccountCard";
 
 const Accounts = () => {
   const cancelTokenSource = axios.CancelToken.source();
-  const { entites, activePortal, portals, handleActivePortal, isLoader } = useIdentityHook();
+  const { accounts, isLoader, handleAccountNavigation } = useAccountsHook();
   const { entityId } = useEntityStore.getState();
   const { theme } = useTheme();
   const [offset, setOffset] = useState(0);
   const [limit] = useState(10);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isFetchingMore, setIsFetchingMore] = useState(false); 
+  // const [ isLoading, setIsLoading] = useState(true);
+  const [isFetchingMore, setIsFetchingMore] = useState(false);
   const observerRef = useRef();
   const [accountData, setAccountData] = useState([]);
 
@@ -54,7 +55,7 @@ const Accounts = () => {
   useEffect(() => {
     const fetchAccountData = async () => {
       try {
-        setIsLoading(true);
+        // setIsLoading(true);
         let currentOffset = offset;
         const response = await getCustomerAccounts(
           currentOffset,
@@ -71,7 +72,7 @@ const Accounts = () => {
       } catch (error) {
         console.error("Failed to fetch customer accounts", error);
       } finally {
-        setIsLoading(false);
+        // setIsLoading(false);
       }
     };
     fetchAccountData();
@@ -102,11 +103,11 @@ const Accounts = () => {
       setIsFetchingMore(false);
     }
   };
-  
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && !isFetchingMore && !isLoading) {
+        if (entries[0].isIntersecting && !isFetchingMore && !isLoader) {
           fetchMoreAccounts();
         }
       },
@@ -120,7 +121,7 @@ const Accounts = () => {
         observer.unobserve(observerRef.current);
       }
     };
-  }, [isFetchingMore, isLoading]);
+  }, [isFetchingMore, isLoader]);
 
   return (
     <div className={`bg-color-${theme} flex flex-col md:flex-row`}>
@@ -133,8 +134,8 @@ const Accounts = () => {
           onButtonClick={handleClick}
           theme={theme}
         />
-        
-        {isLoading && <Loader />} 
+
+        {isLoader && <Loader theme={theme} />}
         {accountData.length > 0 && (
           <>
             {accountData.map((account) => (
@@ -143,7 +144,7 @@ const Accounts = () => {
           </>
         )}
         <div ref={observerRef}>
-          {isFetchingMore && <Loader />} 
+          {isFetchingMore && <Loader theme={theme} />}
         </div>
       </div>
     </div>

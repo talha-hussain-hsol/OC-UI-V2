@@ -61,8 +61,27 @@ const Identities = () => {
         <hr className="border-t-[1px] border-t-[#6e84a3] opacity-20 mb-6 ml-6" />
         <div className="flex flex-col w-full items-center justify-center sm:ml-6">
           <div className={`bg-color-card-${theme} shadow-${theme} rounded-md w-full`}>
+          <div
+            className={`bg-color-card-${theme} rounded-t-md border-color-${theme} border-b-[1px] shadow-${theme} flex flex-col items-center justify-center h-full w-full`}
+          >
+            <p
+              className={`py-2 text-color-para-${theme} sm:text-xs text-[8px] w-full px-4`}
+            >
+              Please note that you can set your identities to "Inactive" or
+              "Active" by using the toggle button. Your submitted account
+              applications will not be impacted if you set your identities as
+              "Inactive" <br />
+              To delete/withdraw an account application, please proceed to the
+              Account Details page to perform this action. <br />
+              Please note that you can only delete/withdraw an application which
+              are in "Draft" or "Pending" statuses. Applications that have
+              already been processed for KYC screening cannot be deleted or
+              withdrawn. <br />
+              You may contact your Account Manager to assist you in this case.
+            </p>
+          </div>
             {isLoader ? (
-              <Loader />
+              <Loader theme={theme} />
             ) : (
               <Table
                 headers={headers}
@@ -102,4 +121,3 @@ const Identities = () => {
 };
 
 export default Identities;
-

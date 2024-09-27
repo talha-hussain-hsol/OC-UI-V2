@@ -34,7 +34,9 @@ function Stepper() {
   const [userType, setUserType] = useState(""); 
   const [formData, setFormData] = useState({}); 
   const location = useLocation();
-  const [fundData, setFundData] = useState(location.state?.fundData || null); // State will be used in future 
+  const [fundData, setFundData] = useState(location.state?.fundData || null);
+  const [referenceDocuments, setreferenceDocuments] = useState(location.state?.referenceDocuments || null);
+
   const [isLoader, setIsLoader] = useState(false);
   const params = useParams();
   const [activeStep, setActiveStep] = useState(1);                            // State will be used in future 
@@ -48,7 +50,7 @@ function Stepper() {
 
 
   const cancelTokenSource = axios.CancelToken.source();
-
+  console.log(referenceDocuments,"reefefefe")
   useEffect(() => {
     if (fundData) {
       handleGetIdentityList();
@@ -81,7 +83,7 @@ function Stepper() {
   const renderContent = () => {
     switch (currentStep) {
       case 1:
-        return <UserType onSelection={handleUserTypeSelection} />;  
+        return <UserType onSelection={handleUserTypeSelection} referenceDocuments={referenceDocuments} />;  
       case 2:
         return (
           <UserForm
@@ -194,7 +196,7 @@ function Stepper() {
         >
           {isLoader ? (
           
-          <Loader/>
+          <Loader theme={theme}/>
           
           ) : (
           renderContent()
@@ -221,3 +223,4 @@ function Stepper() {
 }
 
 export default Stepper;
+

@@ -186,6 +186,27 @@ const SideBar = ({ portalType }) => {
     };
   }, [isThemeSidebarOpen]);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        closeSidebar();
+      }
+      if (
+        isProfileSidebarOpen &&
+        profileSidebarRef.current &&
+        !profileSidebarRef.current.contains(event.target)
+      ) {
+        setIsProfileSidebarOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isProfileSidebarOpen]);
+
   return (
     <>
       {/* {/ Hamburger Menu Button /} */}

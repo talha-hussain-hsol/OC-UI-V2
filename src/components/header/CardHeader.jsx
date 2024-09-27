@@ -43,11 +43,7 @@ const CardHeader = ({
         {rightContent && <div>{rightContent}</div>}
 
         {showButton && (
-          <Button
-            text={BtnText}
-            className={BtnClassName}
-            onClick={onClick} // Dynamic onClick passed from parent
-          />
+          <Button text={BtnText} className={BtnClassName} onClick={onClick} />
         )}
         {showField && (
           <input
