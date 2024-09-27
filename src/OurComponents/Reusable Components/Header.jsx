@@ -15,7 +15,7 @@ const Header = ({
   showTabBar,
   theme,
   className,
-  onTabChange
+  onTabChange,
 }) => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false); // Dropdown state for small screens
@@ -25,7 +25,7 @@ const Header = ({
   };
 
   return (
-    <div className="ml-6 sm:mt-0 mt-10">
+    <div className="sm:ml-6 lg:mr-0 mr-6 lg:mt-0 mt-10 ">
       <div className={`flex items-center justify-between`}>
         <div className="flex items-center gap-4">
           {showLogo && (
@@ -84,7 +84,9 @@ const Header = ({
 
             {/* Dropdown menu when hamburger is clicked */}
             {isMenuOpen && (
-              <div className={`lg:hidden absolute  top-24 right-10 mt-2 shadow-lg rounded-md z-10 border border-color-${theme} bg-color-header-${theme} text-color-text-${theme} text-xs`}>
+              <div
+                className={`lg:hidden absolute  top-24 right-10 mt-2 shadow-lg rounded-md z-10 border border-color-${theme} bg-color-header-${theme} text-color-text-${theme} text-xs`}
+              >
                 <ul className="flex flex-col items-start">
                   {[
                     "Dashboard",
