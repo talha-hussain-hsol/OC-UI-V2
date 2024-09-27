@@ -28,7 +28,7 @@ import UserForm from "./pages/wizard/account-wizard/UserForm"
 import Accounts from "./pages/customerPortal/screen/accounts/index"
 import Identities from "./pages/customerPortal/screen/identities/index"
 import MainDocuments from "./pages/customerPortal/screen/maindocuments/index"
-import Stepper from "./pages/wizard/Stepper"
+import Stepper from "./pages/wizard"
 import FundCode from "./pages/wizard/account-wizard/FundCode";
 
 

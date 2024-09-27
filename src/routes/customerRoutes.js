@@ -10,7 +10,7 @@ import Accounts from "../pages/customerPortal/screens/Accounts"
 import Identities from "../pages/customerPortal/screens/Identities"
 import MainDocuments from "../pages/customerPortal/screens/MainDocuments"
 import FundCode from "../pages/customerPortal/Screens/FundCode"
-import Stepper from "../pages/customerPortal/Screens/Stepper"
+import Stepper from "../pages/wizard/index"
 
 
 const CustomerRoutesWrapper = () => {

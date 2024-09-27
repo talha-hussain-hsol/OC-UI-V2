@@ -88,9 +88,16 @@ const FundCode = () => {
       setIsLoader(false);
       const test = response?.data
       const redDoc = test.reference_document
+      const fundField= response?.data?.fund_fields;
+      console.log("Fund Fields",fundField);
+      const fundSetting= response?.data?.fund_setting;
+      console.log("Fund setting",fundSetting);
       setFundData(response?.data);
       navigate("/stepper", {
-        state: { fundData: response.data }, 
+        state: { fundData: response.data,
+          fundField,
+          fundSetting
+         }, 
       });
       localStorage.setItem("fundRegion", response?.data?.fund_setting?.region);
       if (!response?.data?.reference_document?.term_documents) {
