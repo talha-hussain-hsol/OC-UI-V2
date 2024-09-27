@@ -20,7 +20,6 @@ function isSubDomain() {
 }
 
 export function getErrorResponse(error) {
-  console.log(error, "error error    error ");
   let customResponse = [];
   try {
     if (error.data?.masssage == "timeout exceeded") {

@@ -1,3 +1,6 @@
+// This is the sample project used to apply dynamic themeing in the portals
+
+
 import React from "react";
 import { FiCheckCircle } from "react-icons/fi";
 import { MdOutlineAccessTime } from "react-icons/md";

@@ -316,10 +316,9 @@ export const postgetToken = async (code, code_challenge, cancelToken) => {
   const request = { type: "POST", urlString: url }
   try {
     const response = await processRequest(request, cancelToken)
-    console.log("ccccccc", response)
     return response
   } catch (error) {
-    console.log("errrrrr", error)
+    console.log("error:", error)
     return getErrorResponse(error)
   }
 }

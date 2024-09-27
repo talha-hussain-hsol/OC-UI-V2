@@ -2,7 +2,6 @@ import React, { useEffect, useLayoutEffect, useState, useRef } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../../../../contexts/themeContext";
-import { getLocalStorage } from "../../../../utils/cookies";
 import { getCustomerAccounts } from "../../../../api/userApi";
 import useEntityStore from "../../../../store/useEntityStore";
 import { removeQueryParams } from "../../../../utils/helperFunctions";
@@ -15,8 +14,7 @@ import AccountCard from "../../../../components/cardComponent/AccountCard";
 
 const Accounts = () => {
   const cancelTokenSource = axios.CancelToken.source();
-  const { entites, activePortal, portals, handleActivePortal, isLoader } =
-    useIdentityHook();
+  const { entites, activePortal, portals, handleActivePortal, isLoader } = useIdentityHook();
   const { entityId } = useEntityStore.getState();
   const { theme } = useTheme();
   const [offset, setOffset] = useState(0);

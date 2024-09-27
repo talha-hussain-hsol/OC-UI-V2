@@ -2,6 +2,7 @@ import React from "react";
 import useSpashHook from "../../hooks/useSplashHook";
 import { TbLogout } from "react-icons/tb";
 import Loader from "../../components/ui/loader";
+import Button from "../../components/ui/button/Button";
 
 const SplashScreen = () => {
   const {
@@ -33,9 +34,11 @@ const SplashScreen = () => {
           </p>
 
           <div className="flex justify-end">
-            <button className="w-[20%] flex text-xs mb-3 px-3 mr-5 py-1 bg-[#2c7be5] hover:bg-[#4472c8] rounded text-white">
-              <TbLogout className="text-lg mr-1" /> LOGOUT
-            </button>
+            <Button 
+            className="flex text-xs mb-3 px-3 py-1 bg-[#2c7be5] hover:bg-[#4472c8] rounded text-white"
+            text="LOGOUT"
+            icon={<TbLogout className="text-lg mr-1" />}>
+            </Button>
           </div>
 
           {/* Display Fixed Tabs */}

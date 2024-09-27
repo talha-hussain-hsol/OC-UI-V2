@@ -84,7 +84,6 @@ export const getCustomerAccounts = async (offset, limit, cancelToken) => {
   if (!limit) {
     return;
   }
-  // console.log("in get api");
   const url = `/${entityId}/CAPI/Account/list?offset=${offset}&limit=${limit}`;
   const request = { type: "GET", urlString: url };
 

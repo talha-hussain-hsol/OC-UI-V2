@@ -11,7 +11,7 @@ import BankWallets from "../wizard/account-wizard/BankWallets";
 import Summary from "../wizard/account-wizard/Summary";
 import { useTheme } from "../../contexts/themeContext";
 import { getIdentityList } from "../../api/userApi";
-import { useLocation,useNavigate,useParams } from "react-router-dom";
+import { useLocation,useParams } from "react-router-dom";
 import axios from "axios";
 import Loader from "../../components/ui/loader";
 
@@ -34,15 +34,14 @@ function Stepper() {
   const [userType, setUserType] = useState(""); 
   const [formData, setFormData] = useState({}); 
   const location = useLocation();
-  const [fundData, setFundData] = useState(location.state?.fundData || null);
+  const [fundData, setFundData] = useState(location.state?.fundData || null); // State will be used in future 
   const [isLoader, setIsLoader] = useState(false);
-  const navigate = useNavigate();
   const params = useParams();
-  const [activeStep, setActiveStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(1);                            // State will be used in future 
   const [fundCode, setFundCode] = useState("");
   const [selectedIdentity, setSelectedIdentity] = useState({ value: "" });
-  const [selectedIdentityData, setSelectedIdentityData] = useState();
-  const [identitiesData, setIdentitiesData] = useState([]);
+  const [selectedIdentityData, setSelectedIdentityData] = useState();         // State will be used in future 
+  const [identitiesData, setIdentitiesData] = useState([]);                   // State will be used in future 
 
 
 

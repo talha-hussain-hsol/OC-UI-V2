@@ -1,10 +1,7 @@
 import React from "react";
 import Button from "../ui/button/Button";
-import { useNavigate } from "react-router-dom";
 import fundLogo from "../../assets/logo.investor.entity.png";
 import TabBar from "../tabBar/TabBar";
-
-import { useTheme } from "../../contexts/themeContext";
 
 const Header = ({
   subheading,
@@ -16,7 +13,6 @@ const Header = ({
   theme,
   className,
 }) => {
-  const navigate = useNavigate();
 
 
   return (
