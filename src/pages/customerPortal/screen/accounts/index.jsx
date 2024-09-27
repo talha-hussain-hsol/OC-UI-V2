@@ -1,11 +1,11 @@
 import React, { useEffect, useLayoutEffect, useState, useRef } from "react";
 
 import { useNavigate } from "react-router-dom";
-import { useTheme } from "../../../contexts/themeContext";
-import useAccountsHook from "../../../hooks/useAccountsHook";
-import { getCustomerAccounts } from "../../../api/userApi";
-import useEntityStore from "../../../store/useEntityStore";
-import { removeQueryParams } from "../../../utils/helperFunctions";
+import { useTheme } from "../../../../contexts/themeContext";
+import useAccountsHook from "../../../../hooks/useAccountsHook";
+import { getCustomerAccounts } from "../../../../api/userApi";
+import useEntityStore from "../../../../store/useEntityStore";
+import {removeQueryParams} from "../../../../utils/helperFunctions"
 import axios from "axios";
 import Loader from "../../../../components/ui/loader";
 import useIdentityHook from "../../../../hooks/useIdentityHook";
@@ -21,7 +21,7 @@ const Accounts = () => {
   const [offset, setOffset] = useState(0);
   const [limit] = useState(10);
   // const [ isLoading, setIsLoading] = useState(true);
-  const [isFetchingMore, setIsFetchingMore] = useState(false); 
+  const [isFetchingMore, setIsFetchingMore] = useState(false);
   const observerRef = useRef();
   const [accountData, setAccountData] = useState([]);
 
@@ -103,7 +103,7 @@ const Accounts = () => {
       setIsFetchingMore(false);
     }
   };
-  
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -134,8 +134,8 @@ const Accounts = () => {
           onButtonClick={handleClick}
           theme={theme}
         />
-        
-        {isLoader && <Loader theme={theme}/>} 
+
+        {isLoader && <Loader theme={theme} />}
         {accountData.length > 0 && (
           <>
             {accountData.map((account) => (
@@ -144,7 +144,7 @@ const Accounts = () => {
           </>
         )}
         <div ref={observerRef}>
-          {isFetchingMore && <Loader theme={theme}/>} 
+          {isFetchingMore && <Loader theme={theme} />}
         </div>
       </div>
     </div>

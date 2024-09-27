@@ -102,7 +102,7 @@ const Callback = () => {
     handleAuthFlow();
   }, [handleAuthFlow]);
 
-  return <Loader theme={theme} />;
+  return <Loader />;
 };
 
 export default Callback;

@@ -37,7 +37,7 @@ const SignIn = () => {
       navigate('/splash', {replace: true})
     }
   }, [handleSignIn, navigate]);
-  return <Loader theme={theme}/>;
+  return <Loader />;
 };
 
 export default SignIn;

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
-import Table from "../../../components/table/Table";
-import Header from "../../../components/header/Header";
-import Button from "../../../components/ui/button/Button";
-import SideBar from "../../../components/sidebar/Sidebar";
+import Table from "../../../../components/table/Table";
+import Header from "../../../../components/header/Header";
+import Button from "../../../../components/ui/button/Button";
+import SideBar from "../../../../components/sidebar/Sidebar";
 import { AiFillEdit } from "react-icons/ai";
 import TabBar from "../../../../components/tabBar/TabBar";
 import { useTheme } from "../../../../contexts/themeContext";
