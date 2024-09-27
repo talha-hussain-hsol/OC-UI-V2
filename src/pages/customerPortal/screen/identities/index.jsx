@@ -13,45 +13,34 @@ import { getIdentityList } from "../../../../api/userApi";
 import Loader from "../../../../components/ui/loader";
 
 const Identities = () => {
-  // const { state } = useLocation();
   const [profileListData, setProfileListData] = useState([]);
+  const [isDataLoaded, setIsDataLoaded] = useState(false); // New state to track if data is loaded
   const cancelTokenSource = axios.CancelToken.source();
   const [activeStep, setActiveStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const { entites, activePortal, portals, handleActivePortal, isLoader } =
     useIdentityHook();
 
-  useEffect(() => {
-    handleGetIdentityList();
-  }, []);
-
-  //   const handleGetIdentityList = async () => {
-
-  //     try {
-  //         const response = await getIdentityList(cancelTokenSource.token);
-
-  //         if (response.success == true) {
-  //             // If success is true, set the profile data
-  //             setProfileListData(response?.data);
-  //         } else {
-  //             // Handle case where success is false
-  //             console.log("Profile list is empty or request failed.");
-  //         }
-  //     } catch (error) {
-  //         console.error("Error fetching identity list:", error);
-  //     }
-  // };
   const handleGetIdentityList = useCallback(async () => {
-    setIsLoading(true);
-
-    const response = await getIdentityList(cancelTokenSource.token);
-    if (response.success == true) {
-      setIsLoading(false);
-      setProfileListData(response?.data);
-    } else {
-      setIsLoading(false);
+    if (!isDataLoaded) { // Only fetch data if not already loaded
+      setIsLoading(true);
+      try {
+        const response = await getIdentityList(cancelTokenSource.token);
+        if (response.success) {
+          setProfileListData(response.data);
+          setIsDataLoaded(true); // Mark data as loaded after successful fetch
+        }
+      } catch (error) {
+        console.error("Error fetching identity list:", error);
+      } finally {
+        setIsLoading(false);
+      }
     }
-  }, []);
+  }, [isDataLoaded]); // Depend on isDataLoaded to prevent refetching
+
+  useEffect(() => {
+    handleGetIdentityList(); // Trigger the API call
+  }, [handleGetIdentityList]);
 
   const { theme } = useTheme();
   const navigate = useNavigate();
@@ -59,6 +48,7 @@ const Identities = () => {
   function handleClick() {
     navigate("/stepper");
   }
+
   useEffect(() => {
     document.body.style.backgroundColor =
       theme === "SC"
@@ -73,8 +63,8 @@ const Identities = () => {
       document.body.style.backgroundColor = "";
     };
   }, [theme]);
-  const Headers = ["Name", "Type", "Status", "Actions"];
 
+  const Headers = ["Name", "Type", "Status", "Actions"];
   const [status, setStatus] = useState(
     profileListData.map((row) => row.status === "Active")
   );
@@ -83,11 +73,12 @@ const Identities = () => {
       prevStatus.map((stat, i) => (i === index ? !stat : stat))
     );
   };
+
   return (
     <div className={`bg-color-${theme}`}>
       <SideBar portalType="Customer" />
       <div className="py-6 sm:ml-12 mx-4 sm:px-10 ">
-        <div className=" w-full">
+        <div className="w-full">
           <Header
             heading="My Identities"
             subheading="Overview"
@@ -121,9 +112,9 @@ const Identities = () => {
               To delete/withdraw an account application, please proceed to the
               Account Details page to perform this action. <br />
               Please note that you can only delete/withdraw an application which
-              are in "Draft" or "Pending" statues. Applications that has been
-              already processed for KYC screening cannot be deleted/withdrawn.
-              <br />
+              are in "Draft" or "Pending" statuses. Applications that have
+              already been processed for KYC screening cannot be deleted or
+              withdrawn. <br />
               You may contact your Account Manager to assist you in this case.
             </p>
           </div>
@@ -155,7 +146,7 @@ const Identities = () => {
                           <input
                             type="checkbox"
                             checked={status[index]}
-                            onChange={() => handleToggleStatus(index)}
+                            onChange={() => handleToggle(index)}
                             className="sr-only peer"
                           />
                           <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#2c7be5]"></div>
@@ -167,41 +158,6 @@ const Identities = () => {
                 )}
               />
             )}
-            {/* //   <Table >
-          //     headers={Headers}
-          //     rows={profileListData}
-          //     headerClassName={`bg-color-table-color-${theme}`}
-          //     renderRow={(row, index) => (
-          //       <>
-          //         <td className="py-4 px-6 font-light">{row.label}</td>
-          //         <td className="py-4 px-6 font-light">{row.type}</td>
-          //         <td
-          //           className={`py-4 px-6 text-color-status-${theme} font-light`}
-          //         >
-          //           {status[index] ? "Active" : "Inactive"}
-          //         </td>
-          //         <td className="py-4 px-6">
-          //           <div className="flex items-center space-x-4">
-          //             <AiFillEdit
-          //               className={`text-color-h1-${theme} cursor-pointer hover:text-[#ee9d0b] transition-colors duration-200`}
-          //             />
-
-          //             <label className="relative inline-flex items-center cursor-pointer">
-          //               <input
-          //                 type="checkbox"
-          //                 checked={status[index]}
-          //                 onChange={() => handleToggle(index)}
-          //                 className="sr-only peer"
-          //               />
-          //               <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#2c7be5]"></div>
-          //             </label>
-          //             <p className="font-light">Active</p>
-          //           </div>
-          //         </td>
-          //       </>
-          //     )}
-          //   />
-          // )} */}
           </div>
         </div>
       </div>

@@ -12,13 +12,13 @@ const SplashScreen = () => {
     handlePermission,
     isLoader,
   } = useSpashHook();
-
+  
   const filteredEntities = entites?.filter((row) => row?.type === activePortal);
   const dummyImage =
     "https://storage.googleapis.com/ascentfs-media-public/public-data/application/logo.compliance.entity.png";
 
   if (isLoader) {
-    return <Loader/>;
+    return <Loader />;
   }
 
   return (
@@ -43,7 +43,7 @@ const SplashScreen = () => {
             {portals.map((portal, index) => (
               <button
                 key={index}
-                onClick={() => handleActivePortal(portal.type)} 
+                onClick={() => handleActivePortal(portal.type)}
                 className={`px-2 py-2 rounded-full font-light text-xs ${
                   activePortal === portal.type ? "text-white" : "text-slate-500"
                 } hover:text-white`}

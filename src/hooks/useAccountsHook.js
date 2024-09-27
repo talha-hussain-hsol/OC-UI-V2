@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 import { getCustomerAccounts } from "../api/userApi";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import useEntityStore from "../store/useEntityStore";
 import axios from "axios";
