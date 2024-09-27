@@ -18,7 +18,6 @@ const Header = ({
 }) => {
   const navigate = useNavigate();
 
-
   return (
     <div className="ml-6 sm:mt-0 mt-10 ">
       <div className={`flex items-center justify-between`}>

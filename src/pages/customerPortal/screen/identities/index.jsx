@@ -22,7 +22,8 @@ const Identities = () => {
     useIdentityHook();
 
   const handleGetIdentityList = useCallback(async () => {
-    if (!isDataLoaded) { // Only fetch data if not already loaded
+    if (!isDataLoaded) {
+      // Only fetch data if not already loaded
       setIsLoading(true);
       try {
         const response = await getIdentityList(cancelTokenSource.token);
