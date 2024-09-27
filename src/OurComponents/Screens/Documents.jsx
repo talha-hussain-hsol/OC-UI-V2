@@ -33,13 +33,13 @@ function Documents() {
     <>
       <div className="bg-transparent flex flex-col md:flex-row md:space-y-0 md:space-x-6">
         <div
-          className={`bg-transparent mx-auto md:ml-16 mt-6 rounded-lg  p-6 w-full max-w-md h-[390px] overflow-y-auto custom-scrollbar`}
+          className={`bg-transparent mx-auto md:ml-16 mt-6 rounded-lg  p-4 w-full max-w-md h-[390px] overflow-y-auto custom-scrollbar`}
         >
           <div className="space-y-3">
             {documents.map((doc, index) => (
               <div
                 key={index}
-                className={`flex justify-between shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] items-center p-[22px] rounded-lg cursor-pointer
+                className={`flex justify-between shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] items-center p-[19px] rounded-lg cursor-pointer
                       ${
                         selectedDocument === doc
                           ? `border border-red-500`
