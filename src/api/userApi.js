@@ -7,7 +7,38 @@ import ResponseModel, {
 import useEntityStore from "../store/useEntityStore";
 const { entityId } = useEntityStore.getState();
 
-const { baseURL } = "CAPI"; // Zustand store se entityId le lo
+const { baseURL } = "CAPI"; 
+
+
+export function getErrorResponse(error) {
+  console.log(error, "error error    error ")
+  let customResponse = []
+  try {
+    if (error.data?.masssage == "timeout exceeded") {
+      customResponse.success = false
+      customResponse.status_code = { key: "failed", value: -1, name: "timeout" }
+      customResponse.user_message = "Timeout Exceeded"
+    } else if (error && error?.toJSON().message === "Network Error") {
+      customResponse.success = false
+      customResponse.status_code = { key: "failed", value: -1, name: "network" }
+      customResponse.user_message = "Internet problem"
+    } else {
+      customResponse = error?.response.data
+      !!error &&
+        console.error(
+          `FAILED API = ${error.response.config.url} | Error Code = ${customResponse.status_code?.value} | System Message = ${customResponse.system_message}`
+        )
+      !!!error && console.log("FAILED API with undefined error")
+    }
+  } catch (e) {
+    console.log(e, "error catch")
+    customResponse.success = false
+    customResponse.status_code = { key: "failed", value: -1, name: "network" }
+    customResponse.user_message = "Internet problem"
+  }
+  return customResponse
+}
+
 
 export const getToken = async (code, code_verifier, cancelToken) => {
   const customResponse = new ResponseModel();
@@ -175,15 +206,6 @@ export const verifyFundExist = async (data, cancelToken) => {
   }
 };
 
-export const getIdentityDocument = async (identityId, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/Identity/${identityId}/documents`;
-  const request = { type: "GET", urlString: url };
-
-  try {
-    const response = await processRequest(request, cancelToken);
-    return response.data;
-  } catch (error) {}
-};
 
 export const logoutAPI = async (cancelToken) => {
   const url = `/auth/user/logout`;
@@ -195,3 +217,45 @@ export const logoutAPI = async (cancelToken) => {
     return getErrorResponse(error);
   }
 };
+
+
+//documents api
+export const postIdentityAttatchWithFund = async (
+  identityId,
+  data,
+  cancelToken
+) => {
+  const url = `/${entityId}/${baseURL}/Identity/${identityId}/attach`
+  const request = { type: "POST", urlString: url, params: data }
+
+  try {
+    const response = await processRequest(request, cancelToken)
+    return response.data
+  } catch (error) {
+    return getErrorResponse(error)
+  }
+}
+
+
+
+export const getIdentityDocument = async (identityId, cancelToken) => {
+  const url = `/${entityId}/${baseURL}/Identity/${identityId}/documents`;
+  const request = { type: "GET", urlString: url };
+
+  try {
+    const response = await processRequest(request, cancelToken);
+    return response.data;
+  } catch (error) {}
+};
+
+
+export const getCRPsByIdentityIdAPI = async (identityId, cancelToken) => {
+  const url = `/${entityId}/${baseURL}/Identity/${identityId}/Crp/list`
+  const request = { type: "GET", urlString: url }
+  try {
+    const response = await processRequest(request, cancelToken)
+    return response.data
+  } catch (error) {
+    return getErrorResponse(error)
+  }
+}
