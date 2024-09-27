@@ -77,12 +77,16 @@ module.exports = {
         "color-table-color-Ascent": "#12273f",
         "color-sidebar-SC": "#FFFFFF",
         "color-sidebar-Ascent": "#152e4d",
+        "color-sidebar-small-SC": "#FFFFFF",
+        "color-sidebar-small-Ascent": "#152e4d",
         "color-profile-icon-SC": "#F6F6F6",
         "color-profile-icon-Ascent": "#244166",
         "color-header-SC": "#FFFFFF",
         "color-header-Ascent": "#01214a",
         "color-table-header-Ascent": "#030c32",
         "color-table-header-SC": "#",
+        "color-profile-bg-SC": "#3DA500",
+        "color-profile-bg-Ascent": "#244166",
       },
 
       borderColor: {
@@ -198,6 +202,9 @@ module.exports = {
       pattern: /bg-color-profile-icon-(SC|lightTheme|Ascent)/,
     },
     {
+      pattern: /bg-color-profile-bg-(SC|lightTheme|Ascent)/,
+    },
+    {
       pattern: /bg-gradient-profile-card-(SC|lightTheme|Ascent)/,
     },
     {
@@ -220,6 +227,9 @@ module.exports = {
     },
     {
       pattern: /text-color-sidebar-icon-(SC|lightTheme|Ascent)/,
+    },
+    {
+      pattern: /bg-color-sidebar-small-(SC|lightTheme|Ascent)/,
     },
     {
       pattern: /text-color-profile-icon-(SC|lightTheme|Ascent)/,

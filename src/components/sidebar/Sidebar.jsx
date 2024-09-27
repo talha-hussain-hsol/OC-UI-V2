@@ -15,10 +15,12 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { MdInvertColors } from "react-icons/md";
 import { useTheme } from "../../contexts/themeContext";
 import { logoutAPI } from "../../api/userApi";
+import { RiLogoutCircleLine } from "react-icons/ri";
 import axios from "axios";
 
 const SideBar = ({ portalType }) => {
   const { toggleTheme, theme } = useTheme();
+  console.log("theme", theme);
   const [isLoading, setIsLoading] = useState(true);
   const cancelTokenSource = axios.CancelToken.source();
 
@@ -108,7 +110,7 @@ const SideBar = ({ portalType }) => {
     if (themeStatus[theme]) {
       toggleTheme(defaultTheme);
       setLightThemeEnabled(false);
-      setDarkThemeEnabled(false);
+      setDarkThemeEnabled(true);
       setStandardCharteredEnabled(false);
       localStorage.setItem("theme", defaultTheme);
       return;
@@ -211,7 +213,7 @@ const SideBar = ({ portalType }) => {
     <>
       {/* {/ Hamburger Menu Button /} */}
       <button
-        className="fixed top-4 left-4 text-white p-2 focus:outline-none lg:hidden"
+        className={`fixed top-4 left-4 text-color-${theme} p-2 focus:outline-none lg:hidden`}
         onClick={toggleSidebar}
       >
         <AiOutlineMenu size={24} />
@@ -443,14 +445,14 @@ const SideBar = ({ portalType }) => {
 
       {/* {/ Sidebar for smaller screens (hamburger menu) /} */}
       <div
-        className={`fixed top-0 left-0 w-full bg-[#152e4d] transition-transform transform ${
+        className={`fixed top-0 left-0 w-full bg-color-sidebar-small-${theme} z-20 transition-transform transform ${
           isSidebarOpen ? "translate-y-0" : "-translate-y-full"
         } lg:hidden flex flex-col items-center p-4`}
       >
         <div className="flex items-center justify-between w-full mb-6">
           <img src={Logo} alt="One Constellation Logo" className="w-10" />
           <button
-            className="text-white p-2 focus:outline-none"
+            className={`text-color-${theme} p-2 focus:outline-none`}
             onClick={toggleSidebar}
           >
             ✕
@@ -508,54 +510,119 @@ const SideBar = ({ portalType }) => {
           {portalType === "Customer" && (
             <>
               <Link
-                to=""
-                className="flex items-center gap-2 text-[#6e84a3] hover:text-white transition-colors duration-200"
+                to="/"
+                className={`flex items-center gap-2 text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
               >
                 <FiHome size={18} />
                 <span>Dashboard</span>
               </Link>
               <Link
-                to=""
-                className="flex items-center gap-2 text-[#6e84a3] hover:text-white transition-colors duration-200"
+                to="/documents"
+                className={`flex items-center gap-2 text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
               >
                 <IoDocumentsOutline size={18} />
                 <span>Documents</span>
               </Link>
               <Link
-                to=""
-                className="flex items-center gap-2 text-[#6e84a3] hover:text-white transition-colors duration-200"
+                to="/accounts"
+                className={`flex items-center gap-2 text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
               >
                 <MdOutlineAccountTree size={18} />
                 <span>Accounts</span>
               </Link>
               <Link
-                to=""
-                className="flex items-center gap-2 text-[#6e84a3] hover:text-white transition-colors duration-200"
+                to="/identities"
+                className={`flex items-center gap-2 text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
               >
                 <TbUsers size={14} />
                 <span>Identities</span>
               </Link>
               <Link
                 to=""
-                className="flex items-center gap-2 text-[#6e84a3] hover:text-white transition-colors duration-200"
+                className={`flex items-center gap-2 text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
               >
                 <PiCompass size={18} />
                 <span>Walkthrough</span>
               </Link>
+              <button
+                onClick={toggleThemeSidebar}
+                className={`flex gap-2 items-center text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200 z-20`}
+              >
+                <MdInvertColors size={18} />
+                <span>Theme</span>
+              </button>
+              {/* <Link
+                to=""
+                className={`flex items-center gap-2 text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
+              >
+                <MdInvertColors size={18} />
+                <span>Theme</span>
+              </Link> */}
             </>
+          )}
+          {isThemeSidebarOpen && (
+            <div
+              ref={themeSidebarRef}
+              className={`absolute  border-color-${theme} border w-60 top-80 text-sm bg-color-sidebar-${theme} text-color-sidebar-icon-${theme} shadow-md p-2 rounded-md`}
+            >
+              <ul>
+                <li
+                  className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}
+                >
+                  Light
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={lightThemeEnabled}
+                      onChange={() => handleThemeSwitch("lightTheme")}
+                      className="sr-only peer"
+                    />
+                    <div className="w-9 h-5 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2c7be5]"></div>
+                  </label>
+                </li>
+                <li
+                  className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}
+                >
+                  Dark
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={darkThemeEnabled}
+                      onChange={() => handleThemeSwitch("Ascent")}
+                      className="sr-only peer"
+                    />
+                    <div className="w-9 h-5 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2c7be5]"></div>
+                  </label>
+                </li>
+                <li
+                  className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}
+                >
+                  Standard Chartered
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={standardCharteredEnabled}
+                      onChange={() => handleThemeSwitch("standardChartered")}
+                      className="sr-only peer"
+                    />
+                    <div className="w-9 h-5 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2c7be5]"></div>
+                  </label>
+                </li>
+              </ul>
+            </div>
           )}
           {portalType === "Manager" && (
             <>
               <Link
                 to=""
-                className="flex items-center gap-2 text-[#6e84a3] hover:text-white transition-colors duration-200"
+                className="flex items-center gap-2 text-[#6e84a3] hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200"
               >
                 <RxDashboard size={18} />
                 <span>Domains</span>
               </Link>
               <Link
                 to=""
-                className="flex items-center gap-2 text-[#6e84a3] hover:text-white transition-colors duration-200"
+                className={`flex items-center gap-2 text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
               >
                 <TbSwitch size={18} />
                 <span>Switch</span>
@@ -569,17 +636,20 @@ const SideBar = ({ portalType }) => {
           {portalType !== "Manager" && (
             <Link
               to=""
-              className={`text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
+              className={`flex items-center gap-2 text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
             >
               <FaRegBell size={18} />
+              <p>Notifications</p>
             </Link>
           )}
-
-          <div
-            className={`bg-color-profile-icon-${theme} rounded-full text-sm text-white w-10 h-10 flex items-center justify-center`}
-          >
-            <p>U</p>
-          </div>
+          <button onClick={handleLogout}>
+            <div
+              className={`text-sm text-color-sidebar-icon-${theme} gap-2 flex items-center flex`}
+            >
+              <RiLogoutCircleLine size={18} />
+              <p>Log Out</p>
+            </div>
+          </button>
         </div>
       </div>
     </>

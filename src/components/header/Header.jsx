@@ -19,7 +19,7 @@ const Header = ({
   const navigate = useNavigate();
 
   return (
-    <div className="ml-6 sm:mt-0 mt-10 ">
+    <div className="ml-6 lg:mt-0 mt-10 ">
       <div className={`flex items-center justify-between`}>
         <div className="flex items-center gap-4">
           {showLogo && (

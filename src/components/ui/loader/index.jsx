@@ -1,4 +1,3 @@
-import { useTheme } from "../../../contexts/themeContext";
 const Loader = ({theme}) => {
   
   return (

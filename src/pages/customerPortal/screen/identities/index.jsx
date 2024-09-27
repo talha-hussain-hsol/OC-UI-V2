@@ -78,7 +78,7 @@ const Identities = () => {
   return (
     <div className={`bg-color-${theme}`}>
       <SideBar portalType="Customer" />
-      <div className="py-6 sm:ml-12 mx-4 sm:px-10 ">
+      <div className="py-6 lg:ml-12 mx-4 lg:px-10 ">
         <div className="w-full">
           <Header
             heading="My Identities"
