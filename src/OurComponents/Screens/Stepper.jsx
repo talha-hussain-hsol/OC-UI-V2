@@ -25,8 +25,8 @@ const steps = [
 function Stepper() {
   const { theme } = useTheme();
   const [currentStep, setCurrentStep] = useState(1);
-  const [userType, setUserType] = useState(""); 
-  const [formData, setFormData] = useState({}); 
+  const [userType, setUserType] = useState("");
+  const [formData, setFormData] = useState({});
   useEffect(() => {
     console.log("Current theme:", theme);
 
@@ -48,9 +48,9 @@ function Stepper() {
       setComplete(true);
     } else {
       if (data) {
-        setFormData((prevData) => ({ ...prevData, ...data })); 
+        setFormData((prevData) => ({ ...prevData, ...data }));
       }
-      setCurrentStep((prev) => prev + 1); 
+      setCurrentStep((prev) => prev + 1);
     }
   };
 
@@ -61,19 +61,19 @@ function Stepper() {
   };
 
   const handleUserTypeSelection = (type) => {
-    setUserType(type); 
+    setUserType(type);
     handleNext();
   };
 
   const renderContent = () => {
     switch (currentStep) {
       case 1:
-        return <UserType onSelection={handleUserTypeSelection} />; 
+        return <UserType onSelection={handleUserTypeSelection} />;
       case 2:
         return (
           <UserForm
-            userType={userType} 
-            onNext={(formValues) => handleNext(formValues)} 
+            userType={userType}
+            onNext={(formValues) => handleNext(formValues)}
           />
         );
       case 3:
@@ -127,15 +127,15 @@ function Stepper() {
                   ></div>
                 )}
               </div>
-              <div className="mt-2  xs:mt-3 xs:mr-[10px] sm:mt-3 sm:mr-[15px] md:mt-4 md:mr-[25px] lg:mt-3 mr-[78px] xl:mr-[62px]  2xl:mr-[120px] text-center ">
+              <div className="mt-2  xs:mt-3 xs:mr-[10px] sm:mt-3 sm:mr-[15px] md:mt-4 md:mr-[25px] lg:mt-3 mr-[78px] xl:mr-[62px]  2xl:mr-[120px] text-center">
                 <span
-                  className={`block text-sm md:text-sm lg:text-sm xs:text-xs xs:text-wrap ${
+                  className={`block text-sm md:text-xs lg:text-sm xs:text-xs xs:text-wrap ${
                     index + 1 === currentStep
                       ? " text-blue-500"
                       : index + 1 < currentStep
                       ? " text-green-700"
                       : " text-gray-500"
-                  }`}
+                  } sm:block hidden ml-3`}
                 >
                   {step}
                 </span>
