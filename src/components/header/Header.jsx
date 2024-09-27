@@ -19,7 +19,7 @@ const Header = ({
   const navigate = useNavigate();
 
   return (
-    <div className="ml-6 lg:mt-0 mt-10 ">
+    <div className="sm:ml-6 lg:mr-0 mr-6 lg:mt-0 mt-10 ">
       <div className={`flex items-center justify-between`}>
         <div className="flex items-center gap-4">
           {showLogo && (
@@ -31,7 +31,7 @@ const Header = ({
               {subheading}
             </h6>
             <h1
-              className={`sm:text-2xl text-xs text-color-${theme} sm:font-medium`}
+              className={`text-2xl text-color-${theme} sm:font-medium`}
             >
               {heading}
             </h1>
