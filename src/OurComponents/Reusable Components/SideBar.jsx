@@ -14,6 +14,7 @@ import Tooltip from "./Tooltip";
 import { AiOutlineMenu } from "react-icons/ai";
 import { MdInvertColors } from "react-icons/md";
 import { useTheme } from "../../contexts/themeContext";
+import LogoGif from "../../../public/Assets/form-logo.gif";
 
 const SideBar = ({ portalType }) => {
   const { toggleTheme, theme } = useTheme();
@@ -25,13 +26,17 @@ const SideBar = ({ portalType }) => {
   }, []);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isThemeSidebarOpen, setIsThemeSidebarOpen] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [lightThemeEnabled, setLightThemeEnabled] = useState(false);
   const [darkThemeEnabled, setDarkThemeEnabled] = useState(false);
+  const [isProfileSidebarOpen, setIsProfileSidebarOpen] = useState(false);
   const [standardCharteredEnabled, setStandardCharteredEnabled] =
     useState(false);
 
   const sidebarRef = useRef(null);
   const themeSidebarRef = useRef(null);
+  const profileMenuRef = useRef(null);
+  const profileSidebarRef = useRef(null);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -42,6 +47,12 @@ const SideBar = ({ portalType }) => {
 
   const toggleThemeSidebar = () => {
     setIsThemeSidebarOpen(!isThemeSidebarOpen);
+  };
+  const toggleProfileMenu = () => {
+    setIsProfileMenuOpen(!isProfileMenuOpen);
+  };
+  const toggleProfileSidebar = () => {
+    setIsProfileSidebarOpen(!isProfileSidebarOpen);
   };
 
   const handleThemeSwitch = (theme) => {
@@ -54,7 +65,7 @@ const SideBar = ({ portalType }) => {
     if (themeStatus[theme]) {
       toggleTheme(defaultTheme);
       setLightThemeEnabled(false);
-      setDarkThemeEnabled(false);
+      setDarkThemeEnabled(true);
       setStandardCharteredEnabled(false);
       localStorage.setItem("theme", defaultTheme);
       return;
@@ -132,15 +143,95 @@ const SideBar = ({ portalType }) => {
     };
   }, [isThemeSidebarOpen]);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        closeSidebar();
+      }
+      if (
+        isProfileMenuOpen &&
+        profileMenuRef.current &&
+        !profileMenuRef.current.contains(event.target)
+      ) {
+        setIsProfileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isProfileMenuOpen]);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        closeSidebar();
+      }
+      if (
+        isProfileSidebarOpen &&
+        profileSidebarRef.current &&
+        !profileSidebarRef.current.contains(event.target)
+      ) {
+        setIsProfileSidebarOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isProfileSidebarOpen]);
+
   return (
     <>
       {/* {/ Hamburger Menu Button /} */}
-      <button
-        className="fixed top-4 left-4 text-white p-2 focus:outline-none lg:hidden"
-        onClick={toggleSidebar}
+      <div
+        className={`fixed flex justify-between items-center bg-color-sidebar-nav-${theme} py-2 px-8 w-full focus:outline-none lg:hidden`}
       >
-        <AiOutlineMenu size={24} />
-      </button>
+        <div>
+          <button
+            className={` text-white focus:outline-none lg:hidden `}
+            onClick={toggleSidebar}
+          >
+            <AiOutlineMenu size={24} />
+          </button>
+        </div>
+
+        <div>
+          <img src={LogoGif} alt="" className={`w-20`} />
+        </div>
+        <div>
+          <button onClick={toggleProfileMenu}>
+            <div
+              className={`bg-color-profile-icon-${theme} rounded-full text-sm text-color-profile-icon-${theme} w-10 h-10 flex items-center justify-center`}
+            >
+              <p>U</p>
+            </div>
+          </button>
+
+          {isProfileMenuOpen && (
+            <div
+              ref={profileMenuRef}
+              className={`absolute  border-color-${theme} border w-40 right-10 text-sm bg-color-sidebar-${theme} text-color-sidebar-icon-${theme} shadow-md p-2 rounded-md`}
+            >
+              <ul>
+                <li
+                  className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}
+                >
+                  Notifications
+                </li>
+                <li
+                  className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}
+                >
+                  Log Out
+                </li>
+              </ul>
+            </div>
+          )}
+        </div>
+      </div>
 
       <div
         className={`bg-color-sidebar-${theme} z-[1000] h-screen w-16 fixed flex flex-col items-center md:hidden sm:hidden xs:hidden py-6 ${
@@ -341,23 +432,42 @@ const SideBar = ({ portalType }) => {
               </Link>
             </Tooltip>
           )}
-
-          <div
-            className={`bg-color-profile-icon-${theme} rounded-full text-sm text-color-profile-icon-${theme} w-10 h-10 flex items-center justify-center`}
-          >
-            <p>U</p>
-          </div>
+          <button onClick={toggleProfileSidebar}>
+            <div
+              className={`bg-color-profile-icon-${theme} rounded-full text-sm text-color-profile-icon-${theme} w-10 h-10 flex items-center justify-center`}
+            >
+              <p>U</p>
+            </div>
+          </button>
+          {isProfileSidebarOpen && (
+            <div
+              ref={profileSidebarRef}
+              className={`absolute left-14 border-color-${theme} border w-40 bottom-12 text-sm bg-color-sidebar-${theme} text-color-sidebar-icon-${theme} shadow-md p-2 rounded-md`}
+            >
+              <ul>
+                <li
+                  className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}
+                >
+                  <button>Log Out</button>
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
       </div>
 
       {/* {/ Sidebar for smaller screens (hamburger menu) /} */}
       <div
-        className={`fixed top-0 left-0 w-full bg-[#152e4d] transition-transform transform ${
+        className={`fixed pb-8 top-0 left-0 w-full bg-color-sidebar-nav-${theme} z-20 transition-transform linear duration-300 transform ${
           isSidebarOpen ? "translate-y-0" : "-translate-y-full"
         } lg:hidden flex flex-col items-center p-4`}
       >
         <div className="flex items-center justify-between w-full mb-6">
-          <img src={Logo} alt="One Constellation Logo" className="w-10" />
+          <img
+            src={LogoGif}
+            alt="One Constellation Logo"
+            className="w-16 m-auto"
+          />
           <button
             className="text-white p-2 focus:outline-none"
             onClick={toggleSidebar}
@@ -417,28 +527,28 @@ const SideBar = ({ portalType }) => {
           {portalType === "Customer" && (
             <>
               <Link
-                to=""
+                to="/"
                 className="flex items-center gap-2 text-[#6e84a3] hover:text-white transition-colors duration-200"
               >
                 <FiHome size={18} />
                 <span>Dashboard</span>
               </Link>
               <Link
-                to=""
+                to="/documents"
                 className="flex items-center gap-2 text-[#6e84a3] hover:text-white transition-colors duration-200"
               >
                 <IoDocumentsOutline size={18} />
                 <span>Documents</span>
               </Link>
               <Link
-                to=""
+                to="/accounts"
                 className="flex items-center gap-2 text-[#6e84a3] hover:text-white transition-colors duration-200"
               >
                 <MdOutlineAccountTree size={18} />
                 <span>Accounts</span>
               </Link>
               <Link
-                to=""
+                to="/identities"
                 className="flex items-center gap-2 text-[#6e84a3] hover:text-white transition-colors duration-200"
               >
                 <TbUsers size={14} />
@@ -474,22 +584,24 @@ const SideBar = ({ portalType }) => {
         </div>
 
         {/* {/ Bottom Section for smaller screens /} */}
-        <div className="flex flex-col items-center gap-6 mt-4 w-full">
+        {/* <div className="flex flex-col items-center gap-6 mt-4 w-full">
           {portalType !== "Manager" && (
             <Link
               to=""
-              className={`text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
+              className={`flex gap-2 items-center text-[#6e84a3] hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
             >
               <FaRegBell size={18} />
+              <span>Notifications</span>
             </Link>
           )}
-
-          <div
-            className={`bg-color-profile-icon-${theme} rounded-full text-sm text-white w-10 h-10 flex items-center justify-center`}
-          >
-            <p>U</p>
-          </div>
-        </div>
+          <button>
+            <div
+              className={`text-sm text-[#6e84a3] flex items-center justify-center`}
+            >
+              <p>Log Out</p>
+            </div>
+          </button>
+        </div>   */}
       </div>
     </>
   );

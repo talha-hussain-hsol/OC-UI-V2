@@ -25,7 +25,7 @@ const Header = ({
   };
 
   return (
-    <div className="sm:ml-6 lg:mr-0 mr-6 lg:mt-0 mt-10 ">
+    <div className="ml-6 lg:mr-0 mr-6 lg:mt-0 mt-16 ">
       <div className={`flex items-center justify-between`}>
         <div className="flex items-center gap-4">
           {showLogo && (
@@ -37,27 +37,24 @@ const Header = ({
               {subheading}
             </h6>
             <h1
-              className={`sm:text-2xl text-xs text-color-${theme} sm:font-medium`}
+              className={`text-2xl text-color-${theme} sm:font-medium`}
             >
               {heading}
             </h1>
           </div>
         </div>
 
-        {/* Show the Button */}
         {showButton && (
           <Button
             text="Create An Account"
             onClick={onButtonClick}
-            className={`bg-color-button-${theme} text-white font-light mr-8 rounded-lg py-6 px-8 text-sm sm:text-md`}
+            className={`bg-color-button-${theme} text-white font-light mr-8 rounded-lg py-6 sm:px-8 px-2 text-xs sm:text-md`}
             iconPosition="left"
           />
         )}
 
-        {/* TabBar - Responsive Hamburger Menu */}
         {showTabBar && (
           <>
-            {/* For large screens, show the TabBar */}
             <div className="hidden lg:flex">
               <TabBar
                 tabs={[
@@ -72,7 +69,6 @@ const Header = ({
               />
             </div>
 
-            {/* For small screens, show the hamburger icon */}
             <div className="lg:hidden">
               <button
                 onClick={toggleMenu}
@@ -82,7 +78,6 @@ const Header = ({
               </button>
             </div>
 
-            {/* Dropdown menu when hamburger is clicked */}
             {isMenuOpen && (
               <div
                 className={`lg:hidden absolute  top-24 right-10 mt-2 shadow-lg rounded-md z-10 border border-color-${theme} bg-color-header-${theme} text-color-text-${theme} text-xs`}
@@ -120,7 +115,7 @@ const Header = ({
           />
         )}
       </div>
-      <hr className="w-full border-t-[1px] border-t-[#6e84a3] opacity-20 mb-6" />
+      {/* <hr className="w-full border-t-[1px] border-t-[#6e84a3] opacity-20 mb-6" /> */}
     </div>
   );
 };

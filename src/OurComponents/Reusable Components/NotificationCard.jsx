@@ -13,8 +13,8 @@ const NotificationCard = ({ iconLeft, message, dateTime, iconRight }) => {
           {iconLeft}
         </div>
         <div>
-          <div className={`text-color-text-${theme} font-medium`}>{message}</div>
-          <div className="text-gray-400 text-sm">{dateTime}</div>
+          <div className={`text-color-text-${theme} font-medium text-lg md:text-xs xl:text-lg`}>{message}</div>
+          <div className="text-gray-400 md:text-xs xl:text-lg text-lg">{dateTime}</div>
         </div>
       </div>
 

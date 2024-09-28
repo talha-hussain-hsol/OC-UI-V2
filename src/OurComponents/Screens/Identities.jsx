@@ -73,29 +73,30 @@ const Identities = () => {
   };
   return (
     <div className={`bg-color-${theme}`}>
-    <SideBar portalType="Customer" />
-    <div className="py-6 lg:ml-12 ml-4 lg:px-10 ">
-      <div className="w-full">
-        <Header
-          heading="My Identities"
-          subheading="Overview"
-          showButton={false}
-          theme={theme}
-        />
-        <div className="flex items-center justify-between lg:mr-0 mr-6">
-          <TabBar
-            tabs={["My Identities"]}
-            className={`text-color-h1-${theme} font-medium sm:ml-6 pt-8 pb-8`}
+      <SideBar portalType="Customer" />
+      <div className="py-6 lg:ml-12 ml-4 lg:px-10 ">
+        <div className="w-full">
+          <Header
+            heading="My Identities"
+            subheading="Overview"
+            showButton={false}
+            theme={theme}
           />
-          <Button
-            className={`bg-color-button-${theme} text-white font-light rounded-lg py-6 px-8 text-sm sm:text-md`}
-            text="Create New Identity"
-            onClick={handleClick}
-          />
+          <hr className=" border-t-[1px] border-t-[#6e84a3] opacity-20 mb-6 mt-4 sm:ml-6 sm:mr-6 lg:mr-0 ml-6 mr-6" /> 
+          <div className="flex items-center justify-between ml-6 sm:ml-0 lg:mr-0 mr-6 ">
+            <TabBar
+              tabs={["My Identities"]}
+              className={`text-color-h1-${theme} font-medium sm:ml-6 pt-8 pb-8`}
+            />
+            <Button
+              className={`bg-color-button-${theme} text-white font-light rounded-lg py-6 px-8 text-sm sm:text-md`}
+              text="Create New Identity"
+              onClick={handleClick}
+            />
+          </div>
+          <hr className="border-t-[1px] border-t-[#6e84a3] opacity-20 mb-6 ml-6 lg:mr-0 mr-6" />
         </div>
-        <hr className="border-t-[1px] border-t-[#6e84a3] opacity-20 mb-6 ml-6 lg:mr-0 mr-6" />
-      </div>
-      <div className="flex flex-col  items-center justify-center sm:ml-6 lg:mr-0 mr-6">
+        <div className="flex flex-col  items-center justify-center ml-6 lg:mr-0 mr-6">
           <div
             className={`bg-color-card-${theme} rounded-t-md border-color-${theme} border-b-[1px] shadow-${theme} flex flex-col items-center justify-center h-full w-full`}
           >

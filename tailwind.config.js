@@ -89,6 +89,9 @@ module.exports = {
         "color-search-SC": "#FAFAFB",
         "color-tab-buttons-inactive-SC" : "#F5F5F5",
         "color-tab-buttons-inactive-Ascent" : "#0d3e80",
+        "color-sidebar-nav-SC": '#243279',
+        "color-sidebar-nav-Ascent": '#152e4d',
+        "color-sidebar-nav-lightTheme": '',
       },
 
       borderColor: {
@@ -204,6 +207,9 @@ module.exports = {
     },
     {
       pattern: /bg-color-search-(SC|lightTheme|Ascent)/,
+    },
+    {
+      pattern: /bg-color-sidebar-nav-(SC|lightTheme|Ascent)/,
     },
     {
       pattern: /bg-color-tab-buttons-inactive-(SC|lightTheme|Ascent)/,

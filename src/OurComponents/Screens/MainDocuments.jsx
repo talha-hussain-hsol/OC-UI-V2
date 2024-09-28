@@ -59,8 +59,8 @@ const MainDocuments = () => {
   return (
     <div className={`bg-color-${theme} `}>
       <SideBar portalType="Customer" />
-      <div className="py-6 sm:ml-12 mx-4 sm:px-10 ">
-        <div className="w-full">
+      <div className="py-6 lg:ml-9 lg:px-10 px-2 mr-6 lg:mr-0">
+        <div className="">
           <Header
             heading="Documents"
             subheading="Investor Portal"
@@ -68,8 +68,9 @@ const MainDocuments = () => {
             theme={theme}
             //   onButtonClick={handleClick}
           />
+          <hr className=" border-t-[1px] border-t-[#6e84a3] opacity-20 mb-6 mt-4 sm:ml-6 ml-6 mr-0" /> 
           <div
-            className={`bg-color-card-${theme} rounded-md  mb-8 flex flex-col items-center justify-center h-full sm:ml-6 shadow-${theme}`}
+            className={`bg-color-card-${theme} rounded-md  mb-8 flex flex-col items-center justify-center h-full  ml-6 shadow-${theme}`}
           >
             <CardHeader
               showLogo={false}
@@ -97,7 +98,7 @@ const MainDocuments = () => {
               <div
                 className={`relative flex flex-col text-color-h1-${theme} sm:w-1/4 w-full`}
               >
-                <label className="mb-2">As of Date</label>
+                <label className="mb-2 text-md sm:text-xs lg:text-md">As of Date</label>
                 <input
                   type="text"
                   value={asOfDate}
@@ -117,7 +118,7 @@ const MainDocuments = () => {
             </div>
           </div>
           <div
-            className={`bg-color-card-${theme} rounded-md  mb-8 flex flex-col items-center justify-center h-full sm:ml-6 shadow-${theme}`}
+            className={`bg-color-card-${theme} rounded-md  mb-8 flex flex-col items-center justify-center h-full ml-6 shadow-${theme}`}
           >
             <CardHeader
               FundName="Search Result"
