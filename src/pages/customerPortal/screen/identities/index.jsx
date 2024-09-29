@@ -37,6 +37,11 @@ const Identities = () => {
     navigate("/stepper");
   };
 
+  const handleToggle = () => {
+    console.log("Toggle Button Clicked!");
+    
+  }
+
   const headers = ["Name", "Type", "Status", "Actions"];
   
   // Manage toggle status for rows
