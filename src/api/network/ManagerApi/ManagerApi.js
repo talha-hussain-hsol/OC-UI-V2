@@ -747,7 +747,7 @@ export const getDownloadCustomerProfilePullAPI = async (
   cancelToken
 ) => {
   const url = `/${entityId}/${baseURL}/${fund_id}/getIdentityPdfReportPolling?id=${identity_id}&dateTime=${dateTime}`
-  console.log(url, "urlurlurlurl")
+  
   const request = { type: "GET", urlString: url }
 
   try {

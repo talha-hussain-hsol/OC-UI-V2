@@ -1,47 +1,49 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { getCustomerAccounts } from "../api/userApi";
-import { useNavigate } from "react-router-dom";
 import useEntityStore from "../store/useEntityStore";
 import axios from "axios";
 
-const portals = [
-  { label: "Customer Portal", type: "customer" },
-  { label: "Compliance Portal", type: "compliance" },
-  { label: "Manager Portal", type: "management" },
-];
-
 const useAccountsHook = () => {
-  const navigate = useNavigate();
   const [accounts, setAccounts] = useState([]);
-  const [activePortal, setActivePortal] = useState(portals[0].type);
+  const [offset, setOffset] = useState(0);
   const [isLoader, setIsLoader] = useState(false);
   const cancelTokenSource = axios.CancelToken.source();
-  const { setAccountId, setAccountList } = useEntityStore();
+  const { setAccountList } = useEntityStore();
+  const limit = 10;
 
-  // Memoize the API call using useCallback
-  const handleAccountsAPI = useCallback(async () => {
-    setIsLoader(true);
-    const response = await getCustomerAccounts(cancelTokenSource.token);
-    if (response == true) {
-      setIsLoader(false);
-      setAccountList(response?.data);
-    } else {
+  // Memoize the API call to prevent recreating the function on every render
+  const fetchAccountsAPI = useCallback(async (currentOffset = 0) => {
+    try {
+      setIsLoader(true);
+      const response = await getCustomerAccounts(
+        currentOffset,
+        limit,
+        cancelTokenSource.token
+      );
+      if (response.success) {
+        return response?.data?.customer_accounts || [];
+      }
+    } catch (error) {
+      console.error("Failed to fetch customer accounts", error);
+    } finally {
       setIsLoader(false);
     }
-  }, []);
+    return [];
+  }, [limit]);
 
-  useEffect(() => {
-    handleAccountsAPI();
-  }, [handleAccountsAPI]);
-
-  const handleActivePortal = useCallback((portalType) => {
-    setActivePortal(portalType);
-  }, []);
+  // Memoize the function to fetch more accounts
+  const fetchMoreAccounts = useCallback(async () => {
+    const newAccounts = await fetchAccountsAPI(offset);
+    if (newAccounts.length > 0) {
+      setAccounts((prevAccounts) => [...prevAccounts, ...newAccounts]);
+      setOffset((prevOffset) => prevOffset + limit);
+    }
+  }, [offset, fetchAccountsAPI, limit]);
 
   return {
     accounts,
     isLoader,
-    handleActivePortal,
+    fetchMoreAccounts,
   };
 };
 

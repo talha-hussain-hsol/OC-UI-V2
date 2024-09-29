@@ -85,11 +85,9 @@ const FundCode = () => {
     
     const response = await getFundForJoin(fundCode, cancelTokenSource.token);
     if (response.success == true) {
-      console.log(response)
       setIsLoader(false);
       const fundData = response?.data;
       const referenceDocuments = fundData?.reference_document?.documents;
-      console.log("referenceDocuments",referenceDocuments)
       setFundData(response?.data);
       navigate("/stepper", {
         state: { fundData,
@@ -113,12 +111,7 @@ const FundCode = () => {
       ) {
         props.handleChangeTermsCondition();
       }
-      console.log(
-        response?.data?.reference_document?.term_documents?.[
-          response?.data?.reference_document?.term_documents?.length - 1
-        ]?.is_required,
-        "response?.data?.reference_document?.term_documents?.[response?.data?.reference_document?.term_documents?.length-1]?.is_required"
-      );
+      
     } else {
       setIsLoader(false);
       setAlertJoinFund(true);

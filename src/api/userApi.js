@@ -89,7 +89,6 @@ export const getCustomerAccounts = async (offset, limit, cancelToken) => {
 
   try {
     const response = await processRequest(request, cancelToken);
-    console.log("loginCustomer Response Headers", response);
     return response.data;
   } catch (error) {
     // return getErrorResponse(error);

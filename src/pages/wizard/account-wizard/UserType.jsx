@@ -5,7 +5,7 @@ import { FaEye } from "react-icons/fa";
 import { useTheme } from "../../../contexts/themeContext";
 
 const UserType = ({ onSelection, referenceDocuments }) => {
-  console.log(referenceDocuments,"referencessss")
+  console.log(referenceDocuments,"These are the Ref. Documents")
   const { theme } = useTheme();
   const [userType, setUserType] = useState("");
   const [isCollapsed, setIsCollapsed] = useState(true);
@@ -113,7 +113,6 @@ const UserType = ({ onSelection, referenceDocuments }) => {
                     <p className={`mb-0 text-xs text-gray-500`}>{item?.description}</p>
                   </div>
                   <button
-                    // onClick={() => handleClickReferenceDocument(item?.url)}
                     className={`p-2 rounded-full bg-gradient-card-${theme} flex items-center justify-center`}
                     style={{
                       height: '30px',

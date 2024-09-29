@@ -50,7 +50,6 @@ function Stepper() {
 
 
   const cancelTokenSource = axios.CancelToken.source();
-  console.log(referenceDocuments,"reefefefe")
   useEffect(() => {
     if (fundData) {
       handleGetIdentityList();

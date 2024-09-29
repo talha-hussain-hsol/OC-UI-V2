@@ -42,7 +42,7 @@ const SideBar = ({ portalType }) => {
   const logoutApiHandle = async () => {
     setIsLoading(true);
     const response = await logoutAPI(cancelTokenSource.token);
-    // return;
+
     if (response.success === true) {
       deleteAllCookies();
 
