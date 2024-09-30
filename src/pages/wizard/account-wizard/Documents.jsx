@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Button from "../../../components/ui/button/Button";
 import Modal from "../../../components/modal/Modal";
 import { useTheme } from "../../../contexts/themeContext";
-import { getIdentityDocument } from "../../../api/userApi";
+import { getIdentityDocument,getRequiredDocumentCRP } from "../../../api/userApi";
+import {useParams} from "react-router-dom"
+import axios from "axios";
+
 
 function Documents() {
   const [documentUploadedSelected, setDocumentUploadedSelected] = useState([]);
   const [identityUploadDocList, setIdentityUploadDocList] = useState([]);
   const [isLoader, setIsLoader] = useState(false);
+  const cancelTokenSource = axios.CancelToken.source();
 
 
 
@@ -15,6 +19,7 @@ function Documents() {
   let { identity_id, account_id } = useParams();
   useEffect(() => {
     handleGetIdentityDocumentApi();
+    handleGetRequiredDocumentApi();
   }, [identity_id]);
 
 
@@ -54,6 +59,27 @@ function Documents() {
       setIdentityUploadDocList(response?.data?.IdentityDocuments);
     } else {
       setIsLoader(false);
+    }
+  };
+  const handleGetRequiredDocumentApi = async () => {
+    setIsLoader(true);
+    if (account_id) {
+      const response = await getRequiredDocumentCRP(
+        account_id,
+        identity_id,
+        cancelTokenSource.token,
+      );
+      if (response.success == true) {
+        setIsLoader(false);
+        setRequiredDocList(response?.data?.required_documents_types);
+
+      } else {
+        setIsLoader(false);
+      }
+    } else {
+      setIsLoader(false);
+      setRequiredDocList([]);
+      setIsRequiredDocListExist(false);
     }
   };
 

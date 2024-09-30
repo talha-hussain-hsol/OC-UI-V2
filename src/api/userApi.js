@@ -249,9 +249,14 @@ export const getIdentityDocument = async (identityId, cancelToken) => {
 };
 
 
-export const getCRPsByIdentityIdAPI = async (identityId, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/Identity/${identityId}/Crp/list`
+export const getRequiredDocumentCRP = async (
+  accountId,
+  identityId,
+  cancelToken
+) => {
+  const url = `/${entityId}/${baseURL}/Account/requiredDocuments/${accountId}?identityId=${identityId}`
   const request = { type: "GET", urlString: url }
+
   try {
     const response = await processRequest(request, cancelToken)
     return response.data
