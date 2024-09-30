@@ -150,7 +150,7 @@ function Stepper() {
           {renderContent()}
 
           <hr className="w-[95%] border-t-[1px] border-t-[#6e84a3] opacity-30 my-6 mx-8" />
-          <div className="flex lg:space-x-[75%] md:justify-center sm:justify-center w-full p-4">
+          <div className="flex justify-center lg:space-x-[75%]  sm:justify-between w-full p-4">
             <Button
               text="Back"
               className={`bg-color-button-{theme} py-6 px-8 mr-[5%] border b-white hover:border-0 rounded-lg text-white focus:outline-none`}
