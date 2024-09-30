@@ -99,7 +99,7 @@ function Stepper() {
       <div
         className={`bg-color-${theme} w-full px-4 py-4 sm:px-6 md:px-16 lg:px-24 md:py-5 lg:py-6 `}
       >
-        <ul className="relative flex flex-row gap-x-0 lg:ml-14 mt-7  ">
+        <ul className="relative flex flex-row  lg:ml-14 lg:mt-7 md:mt-16 md:ml-0 md:mr-2 sm:mt-16 sm:ml-0 xs:mt-16 xs:ml-4">
           {steps.map((step, index) => (
             <li
               key={index}
