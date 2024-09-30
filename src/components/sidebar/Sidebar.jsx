@@ -16,6 +16,7 @@ import { MdInvertColors } from "react-icons/md";
 import { useTheme } from "../../contexts/themeContext";
 import { logoutAPI } from "../../api/userApi";
 import axios from "axios";
+import LogoGif from '../../assets/form-logo.gif'
 
 const SideBar = ({ portalType }) => {
   const { toggleTheme, theme } = useTheme();
@@ -75,6 +76,8 @@ const SideBar = ({ portalType }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isProfileSidebarOpen, setIsProfileSidebarOpen] = useState(false);
   const [isThemeSidebarOpen, setIsThemeSidebarOpen] = useState(false);
+  const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [lightThemeEnabled, setLightThemeEnabled] = useState(false);
   const [darkThemeEnabled, setDarkThemeEnabled] = useState(false);
   const [standardCharteredEnabled, setStandardCharteredEnabled] =
@@ -83,6 +86,8 @@ const SideBar = ({ portalType }) => {
   const sidebarRef = useRef(null);
   const profileSidebarRef = useRef(null);
   const themeSidebarRef = useRef(null);
+  const themeMenuRef = useRef(null);
+  const profileMenuRef = useRef(null);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -97,6 +102,12 @@ const SideBar = ({ portalType }) => {
   const toggleProfileSidebar = () => {
     setIsProfileSidebarOpen(!isProfileSidebarOpen);
   };
+  const toggleThemeMenu = () => {
+    setIsThemeMenuOpen(!isThemeMenuOpen);
+  };
+  const toggleProfileMenu = () => {
+    setIsProfileMenuOpen(!isProfileMenuOpen);
+  };
 
   const handleThemeSwitch = (theme) => {
     const defaultTheme = "Ascent";
@@ -108,7 +119,7 @@ const SideBar = ({ portalType }) => {
     if (themeStatus[theme]) {
       toggleTheme(defaultTheme);
       setLightThemeEnabled(false);
-      setDarkThemeEnabled(false);
+      setDarkThemeEnabled(true);
       setStandardCharteredEnabled(false);
       localStorage.setItem("theme", defaultTheme);
       return;
@@ -170,27 +181,15 @@ const SideBar = ({ portalType }) => {
       if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
         closeSidebar();
       }
+
       if (
-        isThemeSidebarOpen &&
-        themeSidebarRef.current &&
-        !themeSidebarRef.current.contains(event.target)
+        isProfileMenuOpen &&
+        profileMenuRef.current &&
+        !profileMenuRef.current.contains(event.target)
       ) {
-        setIsThemeSidebarOpen(false);
+        setIsProfileMenuOpen(false);
       }
-    };
 
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isThemeSidebarOpen]);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-        closeSidebar();
-      }
       if (
         isProfileSidebarOpen &&
         profileSidebarRef.current &&
@@ -198,6 +197,22 @@ const SideBar = ({ portalType }) => {
       ) {
         setIsProfileSidebarOpen(false);
       }
+
+      if (
+        isThemeSidebarOpen &&
+        themeSidebarRef.current &&
+        !themeSidebarRef.current.contains(event.target)
+      ) {
+        setIsThemeSidebarOpen(false);
+      }
+
+      if (
+        isThemeMenuOpen &&
+        themeMenuRef.current &&
+        !themeMenuRef.current.contains(event.target)
+      ) {
+        setIsThemeMenuOpen(false);
+      }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
@@ -205,20 +220,124 @@ const SideBar = ({ portalType }) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isProfileSidebarOpen]);
+  }, [
+    isProfileMenuOpen,
+    isProfileSidebarOpen,
+    isThemeSidebarOpen,
+    isThemeMenuOpen,
+  ]);
 
   return (
     <>
       {/* {/ Hamburger Menu Button /} */}
-      <button
-        className="fixed top-4 left-4 text-white p-2 focus:outline-none lg:hidden"
-        onClick={toggleSidebar}
+      <div
+        className={`fixed z-20 flex justify-between items-center bg-color-sidebar-nav-${theme} py-2 px-8 w-full focus:outline-none lg:hidden`}
       >
-        <AiOutlineMenu size={24} />
-      </button>
+        <div>
+          <button
+            className={` text-white focus:outline-none lg:hidden `}
+            onClick={toggleSidebar}
+          >
+            <AiOutlineMenu size={24} />
+          </button>
+        </div>
+
+        <div>
+          <img src={LogoGif} alt="" className={`w-20`} />
+        </div>
+        <div className="flex gap-4">
+          <button
+            onClick={toggleThemeMenu}
+            className={`text-white hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
+          >
+            <MdInvertColors size={28} />
+          </button>
+          {isThemeMenuOpen && (
+            <div
+              ref={themeMenuRef}
+              className={`absolute  border-color-${theme} border w-60 right-20 top-12 text-sm bg-color-sidebar-${theme} text-color-sidebar-icon-${theme} shadow-md p-2 rounded-md`}
+            >
+              <ul>
+                <li
+                  className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}
+                >
+                  Light
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={lightThemeEnabled}
+                      onChange={() => handleThemeSwitch("lightTheme")}
+                      className="sr-only peer"
+                    />
+                    <div className="w-9 h-5 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2c7be5]"></div>
+                  </label>
+                </li>
+                <li
+                  className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}
+                >
+                  Dark
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={darkThemeEnabled}
+                      onChange={() => handleThemeSwitch("Ascent")}
+                      className="sr-only peer"
+                    />
+                    <div className="w-9 h-5 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2c7be5]"></div>
+                  </label>
+                </li>
+                <li
+                  className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}
+                >
+                  Standard Chartered
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={standardCharteredEnabled}
+                      onChange={() => handleThemeSwitch("standardChartered")}
+                      className="sr-only peer"
+                    />
+                    <div className="w-9 h-5 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2c7be5]"></div>
+                  </label>
+                </li>
+              </ul>
+            </div>
+          )}
+
+          <div>
+            <button onClick={toggleProfileMenu}>
+              <div
+                className={`bg-color-profile-icon-${theme} rounded-full text-sm text-color-profile-icon-${theme} w-10 h-10 flex items-center justify-center`}
+              >
+                <p>U</p>
+              </div>
+            </button>
+
+            {isProfileMenuOpen && (
+              <div
+                ref={profileMenuRef}
+                className={`absolute  border-color-${theme} border w-40 right-10 text-sm bg-color-sidebar-${theme} text-color-sidebar-icon-${theme} shadow-md p-2 rounded-md`}
+              >
+                <ul>
+                  <li
+                    className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}
+                  >
+                    Notifications
+                  </li>
+                  <li
+                    className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}
+                  >
+                    <button onClick={handleLogout}>Log Out</button>
+                  </li>
+                </ul>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
 
       <div
-        className={`bg-color-sidebar-${theme} z-[1000] h-screen w-16 fixed flex flex-col items-center md:hidden sm:hidden xs:hidden py-6 ${
+        className={`bg-color-sidebar-${theme} z-[1000] h-screen w-16 fixed flex flex-col items-center md:hidden sm:hidden xs:hidden 2xs:hidden py-6 ${
           !isSidebarOpen ? "lg:flex" : "lg:hidden"
         }`}
       >
@@ -443,12 +562,16 @@ const SideBar = ({ portalType }) => {
 
       {/* {/ Sidebar for smaller screens (hamburger menu) /} */}
       <div
-        className={`fixed top-0 left-0 w-full bg-[#152e4d] transition-transform transform ${
+        className={`fixed pb-8 top-0 left-0 w-full bg-color-sidebar-nav-${theme} z-20 transition-transform linear duration-300 transform ${
           isSidebarOpen ? "translate-y-0" : "-translate-y-full"
         } lg:hidden flex flex-col items-center p-4`}
       >
         <div className="flex items-center justify-between w-full mb-6">
-          <img src={Logo} alt="One Constellation Logo" className="w-10" />
+          <img
+            src={LogoGif}
+            alt="One Constellation Logo"
+            className="w-16 m-auto"
+          />
           <button
             className="text-white p-2 focus:outline-none"
             onClick={toggleSidebar}
@@ -508,28 +631,28 @@ const SideBar = ({ portalType }) => {
           {portalType === "Customer" && (
             <>
               <Link
-                to=""
+                to="/"
                 className="flex items-center gap-2 text-[#6e84a3] hover:text-white transition-colors duration-200"
               >
                 <FiHome size={18} />
                 <span>Dashboard</span>
               </Link>
               <Link
-                to=""
+                to="/documents"
                 className="flex items-center gap-2 text-[#6e84a3] hover:text-white transition-colors duration-200"
               >
                 <IoDocumentsOutline size={18} />
                 <span>Documents</span>
               </Link>
               <Link
-                to=""
+                to="/accounts"
                 className="flex items-center gap-2 text-[#6e84a3] hover:text-white transition-colors duration-200"
               >
                 <MdOutlineAccountTree size={18} />
                 <span>Accounts</span>
               </Link>
               <Link
-                to=""
+                to="/identities"
                 className="flex items-center gap-2 text-[#6e84a3] hover:text-white transition-colors duration-200"
               >
                 <TbUsers size={14} />
@@ -565,7 +688,7 @@ const SideBar = ({ portalType }) => {
         </div>
 
         {/* {/ Bottom Section for smaller screens /} */}
-        <div className="flex flex-col items-center gap-6 mt-4 w-full">
+        {/* <div className="flex flex-col items-center gap-6 mt-4 w-full">
           {portalType !== "Manager" && (
             <Link
               to=""
@@ -580,7 +703,7 @@ const SideBar = ({ portalType }) => {
           >
             <p>U</p>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

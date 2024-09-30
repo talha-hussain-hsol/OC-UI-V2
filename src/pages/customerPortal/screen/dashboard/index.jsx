@@ -10,13 +10,10 @@ import { useTheme } from "../../../../contexts/themeContext";
 import { removeQueryParams } from "../../../../utils/helperFunctions";
 import { setAxiosHeader } from "../../../../api/config";
 
-
 function Dashboard() {
   const { theme } = useTheme();
 
   useEffect(() => {
-    
-
     document.body.style.backgroundColor =
       theme === "SC"
         ? "#ffffff"
@@ -33,18 +30,18 @@ function Dashboard() {
 
   useLayoutEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const data = params.get('data');
+    const data = params.get("data");
     if (data) {
       const parsedData = JSON.parse(decodeURIComponent(data));
       for (const key in parsedData) {
-        if (key === 'x-auth-token') {
-          setAxiosHeader({ "x-auth-token": parsedData[key] })
+        if (key === "x-auth-token") {
+          setAxiosHeader({ "x-auth-token": parsedData[key] });
         }
         localStorage.setItem(key, parsedData[key]);
       }
     }
-    removeQueryParams()
-}, [])
+    removeQueryParams();
+  }, []);
 
   const data = {
     labels: [
@@ -70,14 +67,15 @@ function Dashboard() {
     >
       <SideBar portalType="Customer" />
       <div className="w-full flex flex-col">
-        <div className="flex-1 py-6 sm:ml-9 sm:px-10 px-4">
+        <div className="flex-1 py-6 lg:ml-9 lg:px-10 px-2">
           <Header
             heading="Dashboard"
             subheading="INVESTOR PORTAL"
             showButton={false}
             theme={theme}
           />
-          <div className="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-10">
+          <hr className=" border-t-[1px] border-t-[#6e84a3] opacity-20 mb-6 mt-4 sm:ml-6 sm:mr-6 lg:mr-0 ml-6 mr-6" />
+          <div className="lg:flex lg:flex-row space-y-4 lg:space-y-0 lg:space-x-10 sm:ml-6 ml-6 mr-6 md:mr-0 flex flex-col">
             <AUMCard
               date=" As at 03/09/2024"
               amount="38,000,000.00"
@@ -87,10 +85,8 @@ function Dashboard() {
             <AUMCard amount="1,000,000.00" text="Total Redemption" />
           </div>
 
-          <div className="flex flex-wrap justify-between mt-7 ml-6 space-y-6 md:space-y-0 md:space-x-6">
-            <div
-              className={`w-full md:w-[48%] lg:w-[48%] xl:w-[48%] rounded-lg shadow-lg`}
-            >
+          <div className="flex flex-wrap justify-between mt-7 ml-6 lg:mr-0 mr-6 space-y-6 md:space-y-0 md:space-x-6">
+            <div className={`w-full md:w-[48%]  rounded-lg shadow-lg`}>
               <div className="w-full">
                 <CardHeader
                   FundName="NAV HISTORY"
@@ -102,7 +98,7 @@ function Dashboard() {
               </div>
               <FinancialChart data={data} year="2024" chartType="bar" />
             </div>
-            <div className="w-full md:w-[48%] lg:w-[48%] xl:w-[48%] rounded-lg shadow-lg">
+            <div className="w-full md:w-[48%] rounded-lg shadow-lg">
               <div className="w-full">
                 <CardHeader
                   FundName="PRICE CHART"
@@ -115,8 +111,8 @@ function Dashboard() {
               <FinancialChart data={data} year="2024" chartType="line" />
             </div>
           </div>
-          <div className="flex flex-wrap justify-between mt-7 ml-6 space-y-6 md:space-y-0 md:space-x-6">
-            <div className="w-full md:w-[33%] lg:w-[33%] xl:w-[33%] rounded-lg shadow-lg">
+          <div className="flex flex-wrap justify-between mt-7 ml-6 lg:mr-0 mr-6 space-y-6 md:space-y-0 md:space-x-6">
+            <div className="w-full md:w-[42%] md:h-[100%] lg:w-[33%] xl:w-[33%] rounded-lg shadow-lg">
               <div className="w-full">
                 <CardHeader
                   FundName="PERFORMANCE HISTORY"
@@ -128,7 +124,7 @@ function Dashboard() {
               </div>
               <FinancialChart data={data} year="2024" chartType="bar" />
             </div>
-            <div className="w-full md:w-[65%] lg:w-[65%] xl:w-[65%] rounded-lg shadow-lg">
+            <div className="w-full md:w-[54%] lg:w-[64%] xl:w-[64%] rounded-lg shadow-lg">
               <div className="w-full">
                 <CardHeader
                   FundName="LATEST ACTIVITY"

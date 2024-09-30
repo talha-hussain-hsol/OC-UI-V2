@@ -3,7 +3,6 @@ import { FiCheckCircle } from "react-icons/fi";
 import StepsStatus from "./StepsStatus";
 import { useTheme } from "../../contexts/themeContext";
 import CardHeader from "../header/CardHeader";
-
 const SummaryCard = () => {
   const { theme } = useTheme();
   const rightContent = (
@@ -51,7 +50,7 @@ const SummaryCard = () => {
       />
       <CardHeader
         FundName="Reference Documents"
-        fundClassName={`text-color-text-${theme} text-xs sm:text-md uppercase`}
+        fundClassName={`text-color-text-${theme} text-[10px] xs:text-sm uppercase`}
         showButton={false}
         showLogo={false}
         className="mb-6"
@@ -63,9 +62,15 @@ const SummaryCard = () => {
           <div
             className={`bg-gradient-profile-card-${theme} rounded-md border-color-${theme} border-b-[1px] shadow-${theme}  py-4 px-8 flex justify-between h-full w-full`}
           >
-            <p>Profile</p>
+            <p className={`text-[10px] xs:text-sm`}>Profile</p>
           </div>
-         
+          {/* <CardHeader
+            FundName="Profile"
+            showButton={false}
+            showLogo={false}
+            fundClassName={`text-[#6881a3] `}
+            // className="w-full"
+          /> */}
           <div className={`flex flex-col ml-4 my-8 gap-3`}>
             <p className="text-white uppercase text-sm">Name : testa daSA AX</p>
             <p className="text-white uppercase text-sm">

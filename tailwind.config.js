@@ -83,6 +83,15 @@ module.exports = {
         "color-header-Ascent": "#01214a",
         "color-table-header-Ascent": "#030c32",
         "color-table-header-SC": "#",
+        "color-table-bg-Ascent": "#030c32",
+        "color-table-bg-SC": "#FAFAFB",
+        "color-search-Ascent": "#1e3a5c",
+        "color-search-SC": "#FAFAFB",
+        "color-tab-buttons-inactive-SC": "#F5F5F5",
+        "color-tab-buttons-inactive-Ascent": "#0d3e80",
+        "color-sidebar-nav-SC": "#243279",
+        "color-sidebar-nav-Ascent": "#152e4d",
+        "color-sidebar-nav-lightTheme": "",
       },
 
       borderColor: {
@@ -139,6 +148,7 @@ module.exports = {
         Ascent: "1px 10px 24px rgba(0, 0, 0, 0.9)",
       },
       screens: {
+        "2xs": "0px",
         xs: "350px",
         // => @media (min-width: 350px) { ... }
 
@@ -195,6 +205,15 @@ module.exports = {
       pattern: /bg-color-header-(SC|lightTheme|Ascent)/,
     },
     {
+      pattern: /bg-color-search-(SC|lightTheme|Ascent)/,
+    },
+    {
+      pattern: /bg-color-sidebar-nav-(SC|lightTheme|Ascent)/,
+    },
+    {
+      pattern: /bg-color-tab-buttons-inactive-(SC|lightTheme|Ascent)/,
+    },
+    {
       pattern: /bg-color-profile-icon-(SC|lightTheme|Ascent)/,
     },
     {
@@ -216,6 +235,9 @@ module.exports = {
       pattern: /text-color-icon-(SC|lightTheme|Ascent)/,
     },
     {
+      pattern: /text-color-icon-text-(SC|lightTheme|Ascent)/,
+    },
+    {
       pattern: /text-color-status-(SC|lightTheme|Ascent)/,
     },
     {
@@ -225,7 +247,8 @@ module.exports = {
       pattern: /text-color-profile-icon-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /hover:text-color-sidebar-icon-hover-(SC|lightTheme|Ascent)/,
+      pattern: /text-color-sidebar-icon-hover-(SC|lightTheme|Ascent)/,
+      variants: ["hover"],
     },
     {
       pattern: /bg-color-(SC|lightTheme|Ascent)/,
@@ -237,14 +260,15 @@ module.exports = {
       pattern: /bg-color-table-header-(SC|lightTheme|Ascent)/,
     },
     {
+      pattern: /bg-color-table-bg-(SC|lightTheme|Ascent)/,
+    },
+    {
       pattern: /bg-color-barchart-(SC|lightTheme|Ascent)/, // Background color for bar chart theme 1
     },
     {
       pattern: /bg-color-barchart1-(SC|lightTheme|Ascent)/,
     },
-    {
-      pattern: /bg-color-dropdown-(SC|lightTheme|Ascent)/, // Background color for dropdowns
-    },
+
     {
       pattern: /bg-color-(SC|lightTheme|Ascent)/,
     },
@@ -264,10 +288,14 @@ module.exports = {
       pattern: /bg-color-textfield-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /hover:bg-color-(SC|lightTheme|Ascent)/, // Hover background
+      pattern: /bg-color-(SC|lightTheme|Ascent)/,
+      variants: ["hover"],
     },
     {
       pattern: /bg-color-button-(SC|lightTheme|Ascent)/,
+    },
+    {
+      pattern: /bg-color-button1-(SC|lightTheme|Ascent)/,
     },
     {
       pattern: /border-color-(SC|lightTheme|Ascent)/,
@@ -276,25 +304,24 @@ module.exports = {
       pattern: /border-color-dropdown-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /border-color-loader-(SC|lightTheme|Ascent)/,
-    },
-    {
       pattern: /border-color-button-(SC|lightTheme|Ascent)/,
     },
     {
       pattern: /border-color-modal-(SC|lightTheme|Ascent)/, // Hover border color
     },
     {
-      pattern: /hover:border-color-(SC|lightTheme|Ascent)/, // Hover border color
+      pattern: /border-color-button-border-(SC|lightTheme|Ascent)/, // Hover border color
     },
     {
-      pattern: /hover:text-color-(SC|lightTheme|Ascent)/, // Hover text color
+      pattern: /border-color-(SC|lightTheme|Ascent)/, // Hover border color
+      variants: ["hover"],
+    },
+    {
+      pattern: /text-color-(SC|lightTheme|Ascent)/, // Hover text color
+      variants: ["hover"],
     },
     {
       pattern: /font-(SC|lightTheme|Ascent)/, // Font family for each theme
-    },
-    {
-      pattern: /text-size-(SC|lightTheme|Ascent)/, // Font size for each theme
     },
   ],
   plugins: [require("tailwindcss-animate")],
