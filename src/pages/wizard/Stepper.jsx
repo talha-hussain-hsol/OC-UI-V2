@@ -47,6 +47,8 @@ function Stepper() {
     const response = await getIdentityList(cancelTokenSource.token, fundData?.id);
     setIsLoader(false);
     console.log("Fund Id Response:", response);
+    console.log("Fund Data is here:", fundData);
+    
 
     let stepsData = [
       { title: 'Select Account' },
