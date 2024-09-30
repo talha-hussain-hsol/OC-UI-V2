@@ -1,21 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import Button from "../../../components/ui/button/Button";
 import Modal from "../../../components/modal/Modal";
 import { useTheme } from "../../../contexts/themeContext";
 import { getIdentityDocument } from "../../../api/userApi";
+import Loader from "../../../components/ui/loader";
 
 function Documents() {
-  const [documentUploadedSelected, setDocumentUploadedSelected] = useState([]);
-  const [identityUploadDocList, setIdentityUploadDocList] = useState([]);
+  const [identityUploadDocList, setIdentityUploadDocList] = useState([]);  // state will be used in future
   const [isLoader, setIsLoader] = useState(false);
-
-
 
 
   let { identity_id, account_id } = useParams();
   useEffect(() => {
     handleGetIdentityDocumentApi();
-  }, [identity_id]);
+  }, [identity_id, account_id]);
 
 
   const { theme } = useTheme();
@@ -42,14 +41,14 @@ function Documents() {
     setIsModalOpen(false);
   }
 
-  const handleGetIdentityDocumentApi = async () => {
+  const handleGetIdentityDocumentApi = async (identity_id, cancelTokenSource) => {
     setIsLoader(true);
 
     const response = await getIdentityDocument(
       identity_id,
       cancelTokenSource.token,
     );
-    if (response.success == true) {
+    if (response.success === true) {
       setIsLoader(false);
       setIdentityUploadDocList(response?.data?.IdentityDocuments);
     } else {
@@ -59,6 +58,7 @@ function Documents() {
 
   return (
     <>
+    {!isLoader ? <Loader /> :
       <div className="bg-transparent flex flex-col md:flex-row md:space-y-0 md:space-x-6">
         <div
           className={`bg-transparent mx-auto md:ml-16 mt-6 rounded-lg  p-6 w-full max-w-md h-[390px] overflow-y-auto custom-scrollbar`}
@@ -113,6 +113,7 @@ function Documents() {
           </div>
         </div>
       </div>
+}
 
       {isModalOpen && (
         <Modal
