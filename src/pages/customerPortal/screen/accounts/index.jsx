@@ -5,7 +5,7 @@ import { useTheme } from "../../../../contexts/themeContext";
 import useAccountsHook from "../../../../hooks/useAccountsHook";
 import { getCustomerAccounts } from "../../../../api/userApi";
 import useEntityStore from "../../../../store/useEntityStore";
-import {removeQueryParams} from "../../../../utils/helperFunctions"
+import { removeQueryParams } from "../../../../utils/helperFunctions";
 import axios from "axios";
 import Loader from "../../../../components/ui/loader";
 import useIdentityHook from "../../../../hooks/useIdentityHook";
@@ -20,7 +20,7 @@ const Accounts = () => {
   const { theme } = useTheme();
   const [offset, setOffset] = useState(0);
   const [limit] = useState(10);
-  // const [ isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [isFetchingMore, setIsFetchingMore] = useState(false);
   const observerRef = useRef();
   const [accountData, setAccountData] = useState([]);
@@ -54,25 +54,29 @@ const Accounts = () => {
 
   useEffect(() => {
     const fetchAccountData = async () => {
-      try {
-        // setIsLoading(true);
-        let currentOffset = offset;
-        const response = await getCustomerAccounts(
-          currentOffset,
-          limit,
-          cancelTokenSource.token
-        );
-        if (response.success) {
-          setAccountData((prevData) => [
-            ...prevData,
-            ...response?.data?.customer_accounts,
-          ]);
-          setOffset((prevOffset) => prevOffset + limit);
+      setIsLoading(true);
+      let currentOffset = offset;
+      let keepLoading = true;
+      while (keepLoading) {
+        try {
+          const response = await getCustomerAccounts(
+            currentOffset,
+            limit,
+            cancelTokenSource.token
+          );
+          const newAccounts = response.data?.customer_accounts || [];
+          if (response?.success && newAccounts.length > 0) {
+            setAccountData((prevAccounts) => [...prevAccounts, ...newAccounts]);
+            currentOffset += limit;
+            setOffset(currentOffset);
+          } else {
+            keepLoading = false; // Stop loading if no more accounts are returned
+          }
+        } catch (error) {
+          console.error("Failed to fetch customer accounts", error);
+        } finally {
+          // setIsLoading(false);
         }
-      } catch (error) {
-        console.error("Failed to fetch customer accounts", error);
-      } finally {
-        // setIsLoading(false);
       }
     };
     fetchAccountData();
@@ -144,7 +148,7 @@ const Accounts = () => {
           </>
         )}
         <div ref={observerRef}>
-          {isFetchingMore && <Loader theme={theme} />}
+          {isFetchingMore && <Loader theme={theme} halfScreen={true} />}
         </div>
       </div>
     </div>

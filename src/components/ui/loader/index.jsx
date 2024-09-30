@@ -1,5 +1,4 @@
-const Loader = ({theme}) => {
-  
+const Loader = ({ theme }) => {
   return (
     <div className={`flex items-center justify-center h-screen`}>
       <div
