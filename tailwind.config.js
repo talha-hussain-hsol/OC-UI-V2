@@ -35,7 +35,7 @@ module.exports = {
           "linear-gradient(to bottom, #24357C 0%, #0B76A8 100%)",
         "color-card-Ascent":
           "linear-gradient(to bottom, #0d345d 0%, #151c39 100%)", // Card header in stepper ex: Face Snap
-       
+
         "color-Ascent": "linear-gradient(to right, #0c2138 0%, #113c4d 100%)",
       },
       backgroundColor: {
@@ -59,7 +59,7 @@ module.exports = {
         "color-button-SC": "#3DA500", // For All Buttons + Processing Case
         "color-button-Ascent": "#2C75E6", // For All Buttons + Processing Case
         "color-button1-SC": "#8DC63F",
-        "color-button1-Ascent": "#00da7e", 
+        "color-button1-Ascent": "#00da7e",
         "color-button2-SC": "#F74036", // For Rejected Case
         "color-button3-SC": "#F2A428", // For Pending Case
         "color-button4-SC": "#EE381F", // For On Hold Case
@@ -87,11 +87,11 @@ module.exports = {
         "color-table-bg-SC": "#FAFAFB",
         "color-search-Ascent": "#1e3a5c",
         "color-search-SC": "#FAFAFB",
-        "color-tab-buttons-inactive-SC" : "#F5F5F5",
-        "color-tab-buttons-inactive-Ascent" : "#0d3e80",
-        "color-sidebar-nav-SC": '#243279',
-        "color-sidebar-nav-Ascent": '#152e4d',
-        "color-sidebar-nav-lightTheme": '',
+        "color-tab-buttons-inactive-SC": "#F5F5F5",
+        "color-tab-buttons-inactive-Ascent": "#0d3e80",
+        "color-sidebar-nav-SC": "#243279",
+        "color-sidebar-nav-Ascent": "#152e4d",
+        "color-sidebar-nav-lightTheme": "",
       },
 
       borderColor: {
@@ -248,7 +248,8 @@ module.exports = {
       pattern: /text-color-profile-icon-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /hover:text-color-sidebar-icon-hover-(SC|lightTheme|Ascent)/,
+      pattern: /text-color-sidebar-icon-hover-(SC|lightTheme|Ascent)/,
+      variants: ["hover"],
     },
     {
       pattern: /bg-color-(SC|lightTheme|Ascent)/,
@@ -290,7 +291,8 @@ module.exports = {
       pattern: /bg-color-textfield-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /hover:bg-color-(SC|lightTheme|Ascent)/, // Hover background
+      pattern: /bg-color-(SC|lightTheme|Ascent)/,
+      variants: ["hover"],
     },
     {
       pattern: /bg-color-button-(SC|lightTheme|Ascent)/,
@@ -314,10 +316,12 @@ module.exports = {
       pattern: /border-color-button-border-(SC|lightTheme|Ascent)/, // Hover border color
     },
     {
-      pattern: /hover:border-color-(SC|lightTheme|Ascent)/, // Hover border color
+      pattern: /border-color-(SC|lightTheme|Ascent)/, // Hover border color
+      variants: ["hover"],
     },
     {
-      pattern: /hover:text-color-(SC|lightTheme|Ascent)/, // Hover text color
+      pattern: /text-color-(SC|lightTheme|Ascent)/, // Hover text color
+      variants: ["hover"],
     },
     {
       pattern: /font-(SC|lightTheme|Ascent)/, // Font family for each theme
