@@ -103,7 +103,7 @@ function Stepper() {
           {steps.map((step, index) => (
             <li
               key={index}
-              className={` lg:flex-1 group ${
+              className={` lg:flex-1 ${
                 index + 1 < currentStep ? "complete" : ""
               }`}
             >

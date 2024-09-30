@@ -188,7 +188,7 @@ const SideBar = ({ portalType }) => {
     <>
       {/* {/ Hamburger Menu Button /} */}
       <div
-        className={`fixed flex justify-between items-center bg-color-sidebar-nav-${theme} py-2 px-8 w-full focus:outline-none lg:hidden`}
+        className={`fixed z-20 flex justify-between items-center bg-color-sidebar-nav-${theme} py-2 px-8 w-full focus:outline-none lg:hidden`}
       >
         <div>
           <button
