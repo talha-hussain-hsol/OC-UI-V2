@@ -11,22 +11,22 @@ const AccountCard = () => {
 
   const leftContentCard = (
     <div className="flex flex-col gap-1">
-      <h3 className={`text-lg font-semibold text-color-${theme}`}>
+      <h3 className={`xs:text-lg text-sm font-semibold text-color-${theme}`}>
         Muhammad Imran AX
       </h3>
-      <p className={`text-[#6881a3] flex items-center gap-2`}>
+      <p className={`text-[#6881a3] xs:text-lg text-xs flex items-center gap-2`}>
         Nationality: Aland Islands{" "}
         <span>
           <FiCheckCircle color="#01cc7a" size={16} />
         </span>
       </p>
-      <p className="text-[#6881a3] flex items-center gap-2">
+      <p className="text-[#6881a3] xs:text-lg text-xs flex items-center gap-2">
         Country of residence: Akrotiri{" "}
         <span>
           <FiCheckCircle color="#01cc7a" size={16} />
         </span>
       </p>
-      <p className="text-[#6881a3] flex items-center gap-2">
+      <p className="text-[#6881a3] xs:text-lg text-xs flex items-center gap-2">
         Customer Type: Individual{" "}
         <span>
           <FiCheckCircle color="#01cc7a" size={16} />

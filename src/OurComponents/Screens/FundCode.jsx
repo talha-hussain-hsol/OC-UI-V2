@@ -48,12 +48,12 @@ const FundCode = () => {
         className={`bg-color-${theme} h-screen border-color-${theme} border-[1px] shadow-${theme}  lg:px-20 px-8 py-20 flex flex-col gap-4 items-center`}
       >
         <div
-          className={`bg-gradient-stepper-card-${theme}  border-color-${theme} border-[1px] shadow-${theme} rounded-lg w-full lg:ml-16 pt-20 pb-4 sm:px-20 px-10 flex flex-col gap-4 items-center`}
+          className={`bg-gradient-stepper-card-${theme}  border-color-${theme} border-[1px] shadow-${theme} rounded-lg w-full lg:ml-16 pt-20 pb-4 sm:px-20 xs:px-10 px-4 flex flex-col gap-4 items-center`}
         >
-          <h3 className={`text-white text-2xl`}>
+          <h3 className={`text-white xs:text-2xl text-md`}>
             Let's start with the basics.
           </h3>
-          <p className={`text-white`}>
+          <p className={`text-white xs:text-lg text-xs`}>
             Please enter the account joining code which you would have received
             from the account owner.
           </p>
@@ -65,12 +65,12 @@ const FundCode = () => {
               placeholder="Enter the account code"
               value={inputValue}
               onChange={handleInputChange}
-              className={`bg-color-textfield-dropdown-${theme} text-color-text-${theme} w-full p-3 pl-8 rounded-full border border-color-dropdown-${theme} shadow-${theme} focus:outline-none `}
+              className={`bg-color-textfield-dropdown-${theme} text-color-text-${theme} w-full p-3 xs:pl-8 pl-4 rounded-full border border-color-dropdown-${theme} shadow-${theme} focus:outline-none xs:text-lg text-xs`}
             />
 
             <button
               disabled={!inputValue}
-              className={`absolute right-[1px] top-[1px] py-4 px-8 rounded-r-full  ${
+              className={`absolute right-[1px] top-[1px] xs:py-[18px] py-[12px] sm:px-8 xs:px-6 px-4 rounded-r-full  ${
                 inputValue ? "bg-green-500" : "bg-green-500 opacity-80"
               } text-white`}
               onClick={handleClick}

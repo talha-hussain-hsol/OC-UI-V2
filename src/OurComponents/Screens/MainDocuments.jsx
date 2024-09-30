@@ -68,7 +68,7 @@ const MainDocuments = () => {
             theme={theme}
             //   onButtonClick={handleClick}
           />
-          <hr className=" border-t-[1px] border-t-[#6e84a3] opacity-20 mb-6 mt-4 sm:ml-6 ml-6 mr-0" /> 
+          <hr className=" border-t-[1px] border-t-[#6e84a3] opacity-20 mb-6 mt-4 sm:ml-6 ml-6 mr-0" />
           <div
             className={`bg-color-card-${theme} rounded-md  mb-8 flex flex-col items-center justify-center h-full  ml-6 shadow-${theme}`}
           >
@@ -98,7 +98,9 @@ const MainDocuments = () => {
               <div
                 className={`relative flex flex-col text-color-h1-${theme} sm:w-1/4 w-full`}
               >
-                <label className="mb-2 text-md sm:text-xs lg:text-md">As of Date</label>
+                <label className="mb-2 text-md sm:text-xs lg:text-md">
+                  As of Date
+                </label>
                 <input
                   type="text"
                   value={asOfDate}
@@ -122,12 +124,13 @@ const MainDocuments = () => {
           >
             <CardHeader
               FundName="Search Result"
-              fundClassName={`text-color-text-${theme} `}
+              fundClassName={`text-color-text-${theme} 2xs:text-md text-xs`}
               showButton={false}
               BtnText="Add New Bank"
               showLogo={false}
               showField={true}
               fieldPlaceholder="Filter Document"
+              fieldClassname="2xs:text-md text-xs"
             />
             <div className="w-full mt-4">
               <Table

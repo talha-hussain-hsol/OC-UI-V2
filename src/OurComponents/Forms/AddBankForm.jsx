@@ -34,7 +34,7 @@ const AddBankForm = ({ isOpen, onClose }) => {
       onClick={(e) => e.stopPropagation()}
     >
       <div
-        className={`bg-gradient-stepper-card-${theme} rounded-md sm:w-8/12 w-full mb-5 sm:mt-40 mt-80 py-6 px-6 shadow-sm text-white`}
+        className={`bg-gradient-stepper-card-${theme} rounded-md sm:w-8/12 w-full mb-5 sm:mt-0 xs:mt-40 2xs:mt-10 py-6 px-6 shadow-sm text-white`}
       >
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-sm font-light">Add Bank</h2>

@@ -150,6 +150,7 @@ module.exports = {
         Ascent: "1px 10px 24px rgba(0, 0, 0, 0.9)",
       },
       screens: {
+        "2xs": "0px",
         xs: "350px",
         // => @media (min-width: 350px) { ... }
 
@@ -269,9 +270,7 @@ module.exports = {
     {
       pattern: /bg-color-barchart1-(SC|lightTheme|Ascent)/,
     },
-    {
-      pattern: /bg-color-dropdown-(SC|lightTheme|Ascent)/, // Background color for dropdowns
-    },
+
     {
       pattern: /bg-color-(SC|lightTheme|Ascent)/,
     },
@@ -325,9 +324,6 @@ module.exports = {
     },
     {
       pattern: /font-(SC|lightTheme|Ascent)/, // Font family for each theme
-    },
-    {
-      pattern: /text-size-(SC|lightTheme|Ascent)/, // Font size for each theme
     },
   ],
   plugins: [require("tailwindcss-animate")],

@@ -39,7 +39,7 @@ const BankCard = () => {
         showButton={true}
         BtnText="Add New Bank"
         showLogo={false}
-        BtnClassName={`bg-color-button-${theme} text-white font-medium rounded-lg py-6 px-7`}
+        BtnClassName={`bg-color-button-${theme} text-white font-medium rounded-lg py-6 sm:px-7 px-2 text-xs sm:text-lg`}
         onClick={handleOpenModal} // Open the modal here
         showField={false}
       />

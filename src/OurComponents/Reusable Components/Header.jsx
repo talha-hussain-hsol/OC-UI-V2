@@ -37,7 +37,7 @@ const Header = ({
               {subheading}
             </h6>
             <h1
-              className={`text-2xl text-color-${theme} sm:font-medium`}
+              className={`xs:text-2xl text-lg text-color-${theme} sm:font-medium`}
             >
               {heading}
             </h1>

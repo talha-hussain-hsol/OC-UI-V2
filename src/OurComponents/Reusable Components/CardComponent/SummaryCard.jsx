@@ -53,7 +53,7 @@ const SummaryCard = () => {
       />
       <CardHeader
         FundName="Reference Documents"
-        fundClassName={`text-color-text-${theme} text-xs sm:text-md uppercase`}
+        fundClassName={`text-color-text-${theme} text-[10px] xs:text-sm uppercase`}
         showButton={false}
         showLogo={false}
         className="mb-6"
@@ -65,7 +65,7 @@ const SummaryCard = () => {
           <div
             className={`bg-gradient-profile-card-${theme} rounded-md border-color-${theme} border-b-[1px] shadow-${theme}  py-4 px-8 flex justify-between h-full w-full`}
           >
-            <p>Profile</p>
+            <p className={`text-[10px] xs:text-sm`}>Profile</p>
           </div>
           {/* <CardHeader
             FundName="Profile"
