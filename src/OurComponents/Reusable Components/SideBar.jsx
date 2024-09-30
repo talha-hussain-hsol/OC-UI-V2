@@ -26,6 +26,7 @@ const SideBar = ({ portalType }) => {
   }, []);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isThemeSidebarOpen, setIsThemeSidebarOpen] = useState(false);
+  const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [lightThemeEnabled, setLightThemeEnabled] = useState(false);
   const [darkThemeEnabled, setDarkThemeEnabled] = useState(false);
@@ -35,6 +36,7 @@ const SideBar = ({ portalType }) => {
 
   const sidebarRef = useRef(null);
   const themeSidebarRef = useRef(null);
+  const themeMenuRef = useRef(null);
   const profileMenuRef = useRef(null);
   const profileSidebarRef = useRef(null);
 
@@ -47,6 +49,9 @@ const SideBar = ({ portalType }) => {
 
   const toggleThemeSidebar = () => {
     setIsThemeSidebarOpen(!isThemeSidebarOpen);
+  };
+  const toggleThemeMenu = () => {
+    setIsThemeMenuOpen(!isThemeMenuOpen);
   };
   const toggleProfileMenu = () => {
     setIsProfileMenuOpen(!isProfileMenuOpen);
@@ -127,27 +132,7 @@ const SideBar = ({ portalType }) => {
       if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
         closeSidebar();
       }
-      if (
-        isThemeSidebarOpen &&
-        themeSidebarRef.current &&
-        !themeSidebarRef.current.contains(event.target)
-      ) {
-        setIsThemeSidebarOpen(false);
-      }
-    };
 
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isThemeSidebarOpen]);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-        closeSidebar();
-      }
       if (
         isProfileMenuOpen &&
         profileMenuRef.current &&
@@ -155,19 +140,7 @@ const SideBar = ({ portalType }) => {
       ) {
         setIsProfileMenuOpen(false);
       }
-    };
 
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isProfileMenuOpen]);
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-        closeSidebar();
-      }
       if (
         isProfileSidebarOpen &&
         profileSidebarRef.current &&
@@ -175,6 +148,22 @@ const SideBar = ({ portalType }) => {
       ) {
         setIsProfileSidebarOpen(false);
       }
+
+      if (
+        isThemeSidebarOpen &&
+        themeSidebarRef.current &&
+        !themeSidebarRef.current.contains(event.target)
+      ) {
+        setIsThemeSidebarOpen(false);
+      }
+
+      if (
+        isThemeMenuOpen &&
+        themeMenuRef.current &&
+        !themeMenuRef.current.contains(event.target)
+      ) {
+        setIsThemeMenuOpen(false);
+      }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
@@ -182,13 +171,18 @@ const SideBar = ({ portalType }) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isProfileSidebarOpen]);
+  }, [
+    isProfileMenuOpen,
+    isProfileSidebarOpen,
+    isThemeSidebarOpen,
+    isThemeMenuOpen,
+  ]);
 
   return (
     <>
       {/* {/ Hamburger Menu Button /} */}
       <div
-        className={`fixed flex justify-between items-center bg-color-sidebar-nav-${theme} py-2 px-8 w-full focus:outline-none lg:hidden`}
+        className={`fixed z-20 flex justify-between items-center bg-color-sidebar-nav-${theme} py-2 px-8 w-full focus:outline-none lg:hidden`}
       >
         <div>
           <button
@@ -202,34 +196,94 @@ const SideBar = ({ portalType }) => {
         <div>
           <img src={LogoGif} alt="" className={`w-20`} />
         </div>
-        <div>
-          <button onClick={toggleProfileMenu}>
-            <div
-              className={`bg-color-profile-icon-${theme} rounded-full text-sm text-color-profile-icon-${theme} w-10 h-10 flex items-center justify-center`}
-            >
-              <p>U</p>
-            </div>
+        <div className="flex gap-4">
+          <button
+            onClick={toggleThemeMenu}
+            className={`text-white hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
+          >
+            <MdInvertColors size={28} />
           </button>
-
-          {isProfileMenuOpen && (
+          {isThemeMenuOpen && (
             <div
-              ref={profileMenuRef}
-              className={`absolute  border-color-${theme} border w-40 right-10 text-sm bg-color-sidebar-${theme} text-color-sidebar-icon-${theme} shadow-md p-2 rounded-md`}
+              ref={themeMenuRef}
+              className={`absolute  border-color-${theme} border w-60 right-20 top-12 text-sm bg-color-sidebar-${theme} text-color-sidebar-icon-${theme} shadow-md p-2 rounded-md`}
             >
               <ul>
                 <li
                   className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}
                 >
-                  Notifications
+                  Light
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={lightThemeEnabled}
+                      onChange={() => handleThemeSwitch("lightTheme")}
+                      className="sr-only peer"
+                    />
+                    <div className="w-9 h-5 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2c7be5]"></div>
+                  </label>
                 </li>
                 <li
                   className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}
                 >
-                  Log Out
+                  Dark
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={darkThemeEnabled}
+                      onChange={() => handleThemeSwitch("Ascent")}
+                      className="sr-only peer"
+                    />
+                    <div className="w-9 h-5 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2c7be5]"></div>
+                  </label>
+                </li>
+                <li
+                  className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}
+                >
+                  Standard Chartered
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={standardCharteredEnabled}
+                      onChange={() => handleThemeSwitch("standardChartered")}
+                      className="sr-only peer"
+                    />
+                    <div className="w-9 h-5 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2c7be5]"></div>
+                  </label>
                 </li>
               </ul>
             </div>
           )}
+
+          <div>
+            <button onClick={toggleProfileMenu}>
+              <div
+                className={`bg-color-profile-icon-${theme} rounded-full text-sm text-color-profile-icon-${theme} w-10 h-10 flex items-center justify-center`}
+              >
+                <p>U</p>
+              </div>
+            </button>
+
+            {isProfileMenuOpen && (
+              <div
+                ref={profileMenuRef}
+                className={`absolute  border-color-${theme} border w-40 right-10 text-sm bg-color-sidebar-${theme} text-color-sidebar-icon-${theme} shadow-md p-2 rounded-md`}
+              >
+                <ul>
+                  <li
+                    className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}
+                  >
+                    Notifications
+                  </li>
+                  <li
+                    className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}
+                  >
+                    Log Out
+                  </li>
+                </ul>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

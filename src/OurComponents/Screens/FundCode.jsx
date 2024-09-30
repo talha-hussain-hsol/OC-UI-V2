@@ -45,10 +45,10 @@ const FundCode = () => {
     <>
       <SideBar portalType="Customer" />
       <div
-        className={`bg-color-${theme} h-screen border-color-${theme} border-[1px] shadow-${theme}  py-20 px-20 flex flex-col gap-4 items-center`}
+        className={`bg-color-${theme} h-screen border-color-${theme} border-[1px] shadow-${theme}  lg:px-20 px-8 py-20 flex flex-col gap-4 items-center`}
       >
         <div
-          className={`bg-gradient-stepper-card-${theme}  border-color-${theme} border-[1px] shadow-${theme} rounded-lg w-full ml-16 pt-20 pb-4 px-20 flex flex-col gap-4 items-center`}
+          className={`bg-gradient-stepper-card-${theme}  border-color-${theme} border-[1px] shadow-${theme} rounded-lg w-full lg:ml-16 pt-20 pb-4 sm:px-20 px-10 flex flex-col gap-4 items-center`}
         >
           <h3 className={`text-white text-2xl`}>
             Let's start with the basics.
@@ -79,16 +79,16 @@ const FundCode = () => {
             </button>
           </div>
           <hr className="w-full border-t-[1px] border-t-[#6e84a3] opacity-30 my-6 mx-8" />
-          <div className="flex lg:space-x-[75%] md:justify-between sm:justify-center w-full p-4">
+          <div className="flex lg:space-x-[75%] sm:justify-between justify-center gap-2 w-full p-4">
             <Button
               text="Cancel"
-              className={`py-6 px-8 border b-white hover:border-0 rounded-lg text-white focus:outline-none`}
+              className={`sm:py-6 sm:px-8 py-6 px-4 border b-white hover:border-0 rounded-lg text-white focus:outline-none`}
               onClick={handlePrev}
               // disabled={currentStep === 1}
             />
             <Button
               text="Next"
-              className={`bg-color-button-${theme} py-6 px-8 rounded-lg text-white`}
+              className={`bg-color-button-${theme} sm:py-6 sm:px-8 py-6 px-4 rounded-lg text-white`}
               onClick={() => handleNext()}
               // disabled={currentStep === steps.length}
             />
