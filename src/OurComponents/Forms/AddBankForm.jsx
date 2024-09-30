@@ -34,7 +34,7 @@ const AddBankForm = ({ isOpen, onClose }) => {
       onClick={(e) => e.stopPropagation()}
     >
       <div
-        className={`bg-gradient-stepper-card-${theme} rounded-md w-full sm:w-1/2 lg:w-8/12 mb-5 mt-40 py-6 px-6 shadow-sm text-white`}
+        className={`bg-gradient-stepper-card-${theme} rounded-md sm:w-8/12 w-full mb-5 sm:mt-40 mt-80 py-6 px-6 shadow-sm text-white`}
       >
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-sm font-light">Add Bank</h2>
@@ -44,7 +44,7 @@ const AddBankForm = ({ isOpen, onClose }) => {
         </div>
         <hr className="w-full border-t-[1px] border-t-[#6e84a3] opacity-30 my-8" />
         <form>
-          <div className="grid grid-cols-1 gap-6 px-2 sm:grid-cols-2">
+          <div className=" md:gap-6 gap-1 px-2 sm:grid sm:grid-cols-2">
             {/* Currency Dropdown */}
             <div>
               <label className="block mb-2 text-sm font-light">Currency*</label>
