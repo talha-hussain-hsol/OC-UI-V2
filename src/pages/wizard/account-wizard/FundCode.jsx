@@ -6,7 +6,7 @@ import SideBar from "../../../components/sidebar/Sidebar";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../components/ui/button/Button";
 import { getFundForJoin, verifyFundExist } from "../../../api/userApi"; // Ensure API function is correctly imported
-import axios from "axios"; // If needed for CancelToken
+import axios from "axios";            // If needed for CancelToken
 import Loader from "../../../components/ui/loader";
 
 const FundCode = () => {
@@ -15,8 +15,8 @@ const FundCode = () => {
   const [fundCode, setFundCode] = useState("");
   const [isLoader, setIsLoader] = useState(false);
   const cancelTokenSource = axios.CancelToken.source();
-  const [alertJoinFund, setAlertJoinFund] = useState(false);
-  const [fundData, setFundData] = useState(null);
+  const [alertJoinFund, setAlertJoinFund] = useState(false);    // will use this in future
+  const [fundData, setFundData] = useState(null);               // will use this in future
 
   useEffect(() => {
     
@@ -88,11 +88,14 @@ const FundCode = () => {
       setIsLoader(false);
       const fundData = response?.data;
       const referenceDocuments = fundData?.reference_document?.documents;
+      const fundField = fundData?.fund_fields;
+      const fundSetting = fundData?.fund_setting;
       setFundData(response?.data);
       navigate("/stepper", {
         state: { fundData,
-          referenceDocuments
-
+          referenceDocuments,
+          fundSetting,
+          fundField
         }, 
       });
       localStorage.setItem("fundRegion", response?.data?.fund_setting?.region);

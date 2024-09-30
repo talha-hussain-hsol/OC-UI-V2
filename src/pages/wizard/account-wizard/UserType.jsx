@@ -5,7 +5,6 @@ import { FaEye } from "react-icons/fa";
 import { useTheme } from "../../../contexts/themeContext";
 
 const UserType = ({ onSelection, referenceDocuments }) => {
-  console.log(referenceDocuments,"These are the Ref. Documents")
   const { theme } = useTheme();
   const [userType, setUserType] = useState("");
   const [isCollapsed, setIsCollapsed] = useState(true);
@@ -24,18 +23,18 @@ const UserType = ({ onSelection, referenceDocuments }) => {
       <div
         className={`w-full flex flex-col items-center bg-transparent font-${theme} text-${theme}`}
       >
-        <h3 className={`text-color-h3-${theme} text-2xl font-light mt-6`}>
+        <h3 className={`text-color-h3-${theme} text-2xl sm:text-xl md:text-2xl font-light mt-6`}>
           Let's start with the basics.
         </h3>
-        <p className="text-slate-500 text-xs font-light mt-2">
+        <p className="text-slate-500 text-xs sm:text-sm font-light mt-2 text-center sm:text-left">
           Please select if you are applying as an individual or corporate. You
           may attach an existing identity or create a new one.
         </p>
 
         <div
-          className={`flex bg-color-card-${theme} rounded-lg shadow-lg h-[10%] w-[80%] mt-8 items-center`}
+          className={`flex flex-col sm:flex-row bg-color-card-${theme} rounded-lg shadow-lg h-auto sm:h-[10%] w-[90%] sm:w-[80%] mt-8 items-center p-4`}
         >
-          <div className="flex items-center ml-2">
+          <div className="flex items-center mb-4 sm:mb-0 sm:ml-2">
             <img
               src="https://storage.googleapis.com/ascentfs-media-public/public-data/application/logo.investor.entity.png"
               alt="Image"
@@ -45,7 +44,7 @@ const UserType = ({ onSelection, referenceDocuments }) => {
               Demo Fund
             </h2>
           </div>
-          <div className={`text-color-${theme} ml-[20%] text-xs font-light`}>
+          <div className={`text-color-${theme} sm:ml-[10%] lg:ml-[20%] text-xs font-light mb-4 sm:mb-0`}>
             <p className="flex items-center">
               <IoCheckmarkDoneCircleOutline
                 className={`text-color-button1-${theme}`}
@@ -59,7 +58,7 @@ const UserType = ({ onSelection, referenceDocuments }) => {
               Fund Domicile: Singapore
             </p>
           </div>
-          <div className={`text-color-${theme} ml-[20%] text-xs font-light`}>
+          <div className={`text-color-${theme} sm:ml-[10%] lg:ml-[20%] text-xs font-light`}>
             <p className="flex items-center">
               <FaRegClock className={`text-color-button1-${theme}`} /> Dealing
               Cycle: Interval
@@ -73,7 +72,7 @@ const UserType = ({ onSelection, referenceDocuments }) => {
           </div>
         </div>
         <div
-        className={`bg-color-card-${theme} rounded-lg shadow-lg h-[20%] w-[80%] mt-8`}
+        className={`bg-color-card-${theme} rounded-lg shadow-lg h-auto sm:h-[20%] w-[90%] sm:w-[80%] mt-8 p-4`}
       >
         <div
           className={`flex bg-color-card-${theme} rounded-lg shadow-lg h-[50%] w-[100%]`}
@@ -82,14 +81,14 @@ const UserType = ({ onSelection, referenceDocuments }) => {
             Account Description
           </p>
         </div>
-        <p className={`text-color-${theme} text-xs font-light p-3`}>Demo</p>
+        <p className={`text-color-${theme} text-xs sm:text-sm font-light p-3`}>Demo</p>
       </div>
 
 
         <div
-          className={`flex bg-color-card-${theme} rounded-lg shadow-lg h-[10%] mt-4 w-[80%] justify-between items-center`}
+          className={`flex bg-color-card-${theme} rounded-lg shadow-lg h-[10%] sm:h-[10%] sm:w-[80%] mt-4 w-[80%] justify-between items-center`}
         >
-          <p className={`text-color-${theme} text-xs font-extrabold m-3`}>
+          <p className={`text-color-${theme} text-xs sm:text-sm font-extrabold m-3`}>
             Reference Documents
           </p>
           <button
@@ -133,13 +132,13 @@ const UserType = ({ onSelection, referenceDocuments }) => {
 
         <hr className="w-[80%] border-t-[1px] border-t-[#6e84a3] opacity-30 my-6 mx-8" />
 
-        <div className="flex w-[80%]">
-          <div className="w-[50] mr-[20%]">
+        <div className="flex flex-col sm:flex-row w-[90%] sm:w-[80%]">
+          <div className="w-full sm:w-[50%] mr-0 sm:mr-[5%]">
             <p className={`text-color-${theme} text-sm`}>
               Are you applying as an Individual or Corporate?
             </p>
 
-            <div className="flex mt-4">
+            <div className="flex mt-4 lg:w-[80%]">
               <button
                 onClick={() => handleSelection("individual")}
                 className={`flex-1 py-2 rounded-l-full text-white ${
@@ -158,7 +157,7 @@ const UserType = ({ onSelection, referenceDocuments }) => {
               </button>
             </div>
           </div>
-          <div className="flex w-[50]">
+          <div className="w-full sm:w-[50%] mt-6 sm:mt-0">
             <p className={`text-color-${theme} text-sm`}>
               How would you like to create your identity?
             </p>

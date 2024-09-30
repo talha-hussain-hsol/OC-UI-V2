@@ -174,7 +174,7 @@ export const verifyFundExist = async (data, cancelToken) => {
 };
 
 export const getIdentityDocument = async (identityId, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/Identity/${identityId}/documents`;
+  const url = `/${entityId}/CAPI/Identity/${identityId}/documents`;
   const request = { type: "GET", urlString: url };
 
   try {

@@ -4,6 +4,7 @@ import Button from "../../../components/ui/button/Button";
 import Modal from "../../../components/modal/Modal";
 import { useTheme } from "../../../contexts/themeContext";
 import { getIdentityDocument } from "../../../api/userApi";
+import axios from "axios";
 
 function Documents() {
   const [documentUploadedSelected, setDocumentUploadedSelected] = useState([]);
@@ -21,6 +22,7 @@ function Documents() {
 
   const { theme } = useTheme();
 
+  const cancelTokenSource = axios.CancelToken.source();
   const [selectedDocument, setSelectedDocument] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -50,7 +52,7 @@ function Documents() {
       identity_id,
       cancelTokenSource.token,
     );
-    if (response.success == true) {
+    if (response === true) {
       setIsLoader(false);
       setIdentityUploadDocList(response?.data?.IdentityDocuments);
     } else {

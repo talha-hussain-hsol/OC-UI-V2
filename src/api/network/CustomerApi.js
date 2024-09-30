@@ -69,7 +69,6 @@ export const getCustomerAccounts = async (offset ,limit,cancelToken) => {
 
   try {
     const response = await processRequest(request, cancelToken)
-    console.log("loginCustomer Response Headers", response)
     return response.data
   } catch (error) {
     return getErrorResponse(error)
@@ -165,7 +164,6 @@ export const postIdentityAttatchWithFund = async (
 }
 
 export const logoutCustomer = () => {
-  console.log("debug::1")
 
   axios.defaults.headers = null
   localStorage.removeItem("user-token")
