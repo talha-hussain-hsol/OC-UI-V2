@@ -3,7 +3,6 @@ import { useTheme } from "../../contexts/themeContext";
 
 const AUMCard = ({ date, amount, icon, text }) => {
   const { theme } = useTheme();
-  console.log("theme", theme);
 
   return (
     <div

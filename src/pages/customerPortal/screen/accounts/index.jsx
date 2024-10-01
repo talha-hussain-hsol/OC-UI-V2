@@ -31,7 +31,7 @@ const Accounts = () => {
           });
         }
       },
-      { threshold: 0.1 }
+      { threshold: 1 }
     );
 
     if (observerRef.current) {

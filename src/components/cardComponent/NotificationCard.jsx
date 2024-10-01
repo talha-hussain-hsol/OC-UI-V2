@@ -3,7 +3,6 @@ import { useTheme } from "../../contexts/themeContext";
 
 const NotificationCard = ({ iconLeft, message, dateTime, iconRight }) => {
   const { theme } = useTheme();
-  console.log("theme", theme);
 
   return (
     <div className="flex items-center justify-between p-4">
