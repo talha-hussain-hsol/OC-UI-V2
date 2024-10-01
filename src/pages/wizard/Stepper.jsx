@@ -10,7 +10,7 @@ import Application from "../wizard/account-wizard/Application";
 import BankWallets from "../wizard/account-wizard/BankWallets";
 import Summary from "../wizard/account-wizard/Summary";
 import { useTheme } from "../../contexts/themeContext";
-import { getIdentityList } from "../../api/userApi";
+import { getIdentityList, getSingleAccountDetailByIdAPI } from "../../api/userApi";
 import { useLocation,useNavigate,useParams } from "react-router-dom";
 import axios from "axios";
 import Loader from "../../components/ui/loader";
@@ -36,7 +36,26 @@ function Stepper() {
   const location = useLocation();
   const [fundData, setFundData] = useState(location.state?.fundData || null);
   const [referenceDocuments, setreferenceDocuments] = useState(location.state?.referenceDocuments || null);
+  const [dataOfAccountSetup, setDataOfAccountSetup] = useState({});
+  const [isAssistanceData, setIsAssistanceData] = useState(false);
+  const [isAssistAvail, setIsAssistAvail] = useState(false);
+  const [faceResponse, setFaceResponse] = useState(false);
+  const [imagesForfaceVerification, setImagesForfaceVerification] = useState({
+    img2_base64: null,
+    img1_base64: null,
+  });
+  const [
+    handleCallAPIForFaceVerficationData,
+    setHandleCallAPIForFaceVerficationData,
+  ] = useState(false);
+  const handleSetFaceImages = (data) => {
+    setImagesForfaceVerification(data);
+  };
+  const handleCallAPIForFaceVerficationDataUpdateFalse = () => {
+    setHandleCallAPIForFaceVerficationData(false);
+  };
 
+  
   const [isLoader, setIsLoader] = useState(false);
   const navigate = useNavigate();
   const params = useParams();
@@ -45,8 +64,46 @@ function Stepper() {
   const [selectedIdentity, setSelectedIdentity] = useState({ value: "" });
   const [selectedIdentityData, setSelectedIdentityData] = useState();
   const [identitiesData, setIdentitiesData] = useState([]);
-
+  const [submitFaceVerificationAPI, setSubmitFaceVerificationAPI] = useState(false);
+  
   const cancelTokenSource = axios.CancelToken.source();
+
+  const handleAssistanceData = (data) => {
+    setIsAssistanceData(data);
+  };
+  const isHandleAssistanceData = (data) => {
+    setIsAssistAvail(data);
+  };
+  const handleApiResponseFace = (data) => {
+    console.log('data', data);
+    setFaceResponse(data);
+  };
+  function advanceSection() {
+    console.log("helo");
+}
+const faceVerificationCompleted = (data, redirect = false) => {
+  dataOfAccountSetup['faceVerification'] = data;
+  handleGetAccountDetail();
+  if (redirect) {
+   
+  }
+};
+const handleGetAccountDetail = async () => {
+  const response = await getSingleAccountDetailByIdAPI(
+    dataOfAccountSetup?.account_id
+      ? dataOfAccountSetup?.account_id
+      : params?.account_id,
+    cancelTokenSource.token,
+  );
+  if (response.success === true) {
+    setIsLoader(false);
+    dataOfAccountSetup['accountData'] = response?.data?.account_detail;
+    setDataOfAccountSetup(dataOfAccountSetup);
+  }
+};
+const submitFaceVerification = (data) => {
+  setSubmitFaceVerificationAPI(data);
+};
   console.log(referenceDocuments,"reefefefe")
   useEffect(() => {
     if (fundData) {
@@ -54,7 +111,9 @@ function Stepper() {
 
     }
   }, [fundData]);
-
+  function setComplete(){
+    console.log("Complete all steps");
+  }
   const handleNext = (data) => {
     if (currentStep === steps.length) {
       setComplete(true);
@@ -91,7 +150,23 @@ function Stepper() {
       case 3:
         return <Documents />;
       case 4:
-        return <FaceVerification />;
+        return <FaceVerification 
+            dataOfAccountSetup={dataOfAccountSetup}
+            handleAssistanceData={handleAssistanceData}
+            advanceSection={advanceSection}
+            isHandleAssistanceData={isHandleAssistanceData}
+            handleApiResponseFace={handleApiResponseFace}
+            faceVerificationCompleted={faceVerificationCompleted}
+            submitFaceVerification={submitFaceVerification}
+            handleCallAPIForFaceVerficationData={
+              handleCallAPIForFaceVerficationData
+            }
+            handleCallAPIForFaceVerficationDataUpdateFalse={
+              handleCallAPIForFaceVerficationDataUpdateFalse
+            }
+            handleSetFaceImages={handleSetFaceImages}
+            faceImages={imagesForfaceVerification}
+        />;
       case 5:
         return <VCIP />;
       case 6:
@@ -116,8 +191,8 @@ function Stepper() {
         fundData?.fund_setting?.account?.applicant?.identity?.corporate?.enabled && fundData?.fund_setting?.account?.applicant?.identity?.indivisual?.enabled
           ? response?.data
           : fundData?.fund_setting?.account?.applicant?.identity?.indivisual?.enabled
-            ? response?.data?.filter((item) => item?.type == "INDIVIDUAL")
-            : response?.data?.filter((item) => item?.type == "CORPORATE");
+            ? response?.data?.filter((item) => item?.type === "INDIVIDUAL")
+            : response?.data?.filter((item) => item?.type === "CORPORATE");
       setTimeout(function () {
         if (params?.identity_id) {
           selectedIdentity.value = params?.identity_id;
@@ -125,7 +200,7 @@ function Stepper() {
         }
       }, 200);
       const selectedIdentityData = response?.data.filter((item) => {
-        return item.id == params?.identity_id;
+        return item.id === params?.identity_id;
       });
       setSelectedIdentityData(...selectedIdentityData);
 

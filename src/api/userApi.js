@@ -264,3 +264,44 @@ export const getRequiredDocumentCRP = async (
     return getErrorResponse(error)
   }
 }
+
+
+
+//faceverification
+export const getSingleAccountDetailByIdAPI = async (accountId, cancelToken) => {
+  const url = `/${entityId}/CAPI/Account/detail/c6ac4369-c4b1-4682-a661-4c4d1987c9cc`
+  const request = { type: "GET", urlString: url }
+  try {
+    const response = await processRequest(request, cancelToken)
+    return response.data
+  } catch (error) {
+    return getErrorResponse(error)
+  }
+}
+export const FaceVerificationApi = async (
+  data,
+  cancelToken,
+  identityId,
+  accountShareHolderId
+) => {
+  // http://localhost:8384/:entityId/CAPI/Identity/:identityId/AccountShareHolder/:accountShareHolderId/FaceVerification
+  const url = `/${entityId}/CAPI/Identity/2fcd9229-6206-428c-9a81-fa70c4b3b147/AccountShareHolder/cd761a4e-aae3-4854-b298-a4186dc26e23/FaceVerification`
+  const request = { type: "POST", urlString: url, params: data }
+  try {
+    const response = await processRequest(request, cancelToken)
+    return response.data
+  } catch (error) {
+    return getErrorResponse(error)
+  }
+};
+
+export const getDataSignedUrl = async (data, cancelToken) => {
+  const url = `/${entityId}/CAPI/getDataSignedUrl`;
+  const request = { type: "POST", urlString: url, params: data };
+  try {
+    const response = await processRequest(request, cancelToken);
+    return response.data;
+  } catch (error) {
+    return getErrorResponse(error);
+  }
+};
