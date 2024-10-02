@@ -19,6 +19,7 @@ const useIdentityHook = (setProfileListData) => {
     try {
       const response = await getIdentityList(cancelTokenSource.token);
       if (response.success) {
+        console.log("Responseeee Identities:",  response);
         setProfileListData(response?.data); // Pass profile data to the state in Identities component
       }
     } catch (error) {
