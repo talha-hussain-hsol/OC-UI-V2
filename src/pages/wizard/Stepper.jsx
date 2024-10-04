@@ -11,7 +11,7 @@ import BankWallets from "./account-wizard/BankWallets";
 import Summary from "./account-wizard/Summary";
 import { useTheme } from "../../contexts/themeContext";
 import { getIdentityList } from "../../api/userApi";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import Loader from "../../components/ui/loader";
 
@@ -23,6 +23,7 @@ function Stepper() {
   const [userType, setUserType] = useState("");
   const [formData, setFormData] = useState({});
   const location = useLocation();
+  const params = useParams();
   const [fundData, setFundData] = useState(location.state?.fundData || null);                                 // will use this in future
   const [fundFields, setFundFields] = useState(location.state?.fundField || null);                            // will use this in future
   const [fundSetting, setFundSetting] = useState(location.state?.fundSetting || null);                        // will use this in future
@@ -30,10 +31,11 @@ function Stepper() {
   const [isLoader, setIsLoader] = useState(false);
   const [steps, setSteps] = useState(initialSteps);                                                           // Initialize with 3 steps
   const isShowFaceVerificationVCIP = true;
+  const identitiesData = [];
   const cancelTokenSource = axios.CancelToken.source();
   
   
-  
+  console.log("paramzzzz", params);
 
   useEffect(() => {
     if (fundData && fundFields && fundSetting) {
@@ -44,9 +46,9 @@ function Stepper() {
 
   const handleDynamicSteps = async () => {
     setIsLoader(true);
-    const response = await getIdentityList(cancelTokenSource.token, fundData?.id);
+    const identitiesData = await getIdentityList(cancelTokenSource.token, fundData?.id);
     setIsLoader(false);
-    console.log("Fund Id Response:", response);
+    console.log("Fund Id Response:", identitiesData);
     console.log("Fund Data is here:", fundData);
     
 
@@ -122,8 +124,8 @@ function Stepper() {
 
   const renderContent = () => {
     const stepComponents = {
-      "Select Account": <UserType onSelection={handleUserTypeSelection} fundData={fundData} referenceDocuments={referenceDocuments} fundFields={fundFields}/>,
-      "Identity Setup": <UserForm userType={userType} onNext={(formValues) => handleNext(formValues)} />,
+      "Select Account": <UserType onSelection={handleUserTypeSelection} fundData={fundData} referenceDocuments={referenceDocuments} fundFields={fundFields} identitiesData={identitiesData}/>,
+      "Identity Setup": <UserForm userType={userType} fundData={fundData} fundFields={fundFields} identitiesData={identitiesData} onNext={(formValues) => handleNext(formValues)} />,
       "Documents": <Documents />,
       "Face Verification": <FaceVerification />,
       "VCIP": <VCIP />,

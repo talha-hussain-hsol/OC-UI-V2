@@ -97,7 +97,7 @@ export const getCustomerAccounts = async (offset, limit, cancelToken) => {
 };
 
 export const getEntityTypeAPI = async (cancelToken) => {
-  const url = `/${entityId}/${baseURL}/entity-types-list`;
+  const url = `/${entityId}/CAPI/entity-types-list`;
   const request = { type: "GET", urlString: url };
 
   try {
@@ -183,6 +183,61 @@ export const getIdentityDocument = async (identityId, cancelToken) => {
     return response.data;
   } catch (error) {}
 };
+
+export const getParticularFieldsFromFundIdApi = async (
+  fund_id = null,
+  cancelToken
+) => {
+  var url = `/${entityId}/CAPI/Identity/fields?fundId=${fund_id}`
+  const request = { type: "GET", urlString: url }
+  try {
+    const response = await processRequest(request, cancelToken)
+    return response.data
+  } catch (error) {
+    // return getErrorResponse(error)
+  }
+}
+
+export const getParticularsDetailByIdentityIdAPI = async (
+  identity_id,
+  cancelToken
+) => {
+  const url = `/${entityId}/CAPI/Identity/${identity_id}/get`
+  const request = { type: "GET", urlString: url }
+  try {
+    const response = await processRequest(request, cancelToken)
+    return response.data
+  } catch (error) {
+    // return getErrorResponse(error)
+  }
+}
+
+export const postIdentityAPI = async (data, cancelToken) => {
+  const url = `/${entityId}/CAPI/Identity/create`
+  const request = { type: "POST", urlString: url, params: data }
+  try {
+    const response = await processRequest(request, cancelToken)
+    return response.data
+  } catch (error) {
+    // return getErrorResponse(error)
+  }
+}
+
+export const postIdentityAttatchWithFund = async (
+  identityId,
+  data,
+  cancelToken
+) => {
+  const url = `/${entityId}/CAPI/Identity/${identityId}/attach`
+  const request = { type: "POST", urlString: url, params: data }
+
+  try {
+    const response = await processRequest(request, cancelToken)
+    return response.data
+  } catch (error) {
+    return getErrorResponse(error)
+  }
+}
 
 export const logoutAPI = async (cancelToken) => {
   const url = `/auth/user/logout`;

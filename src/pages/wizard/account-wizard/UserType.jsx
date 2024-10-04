@@ -4,7 +4,7 @@ import { FaRegClock } from "react-icons/fa6";
 import { FaEye } from "react-icons/fa";
 import { useTheme } from "../../../contexts/themeContext";
 
-const UserType = ({ onSelection, referenceDocuments }) => {
+const UserType = ({ onSelection, referenceDocuments, fundFields }) => {
   const { theme } = useTheme();
   const [userType, setUserType] = useState("");
   const [isCollapsed, setIsCollapsed] = useState(true);
@@ -17,6 +17,16 @@ const UserType = ({ onSelection, referenceDocuments }) => {
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);
   };
+
+  let arrayCombined = [
+    ...(Array.isArray(fundFields?.s_f) ? fundFields.s_f : []),
+    ...(Array.isArray(fundFields?.e_f) ? fundFields.e_f : []),
+    ...(Array.isArray(fundFields?.c_f) ? fundFields.c_f : []),
+  ];
+  
+  console.log("Combined Array is:", arrayCombined);
+  
+  
 
   return (
     <>
