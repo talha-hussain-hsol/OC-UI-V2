@@ -57,6 +57,8 @@ module.exports = {
         "color-textfield-SC": "transparent",
         "color-textfield-lightTheme": "#004e89",
         "color-textfield-Ascent": "#043f63",
+        "color-modal-button-SC": '#6e84a3',
+        "color-modal-button-Ascent": '#6e84a3',
         "color-button-SC": "#3DA500", // For All Buttons + Processing Case
         "color-button-Ascent": "#2C75E6", // For All Buttons + Processing Case
         "color-button1-SC": "#8DC63F", //For Accepted Case
@@ -92,6 +94,9 @@ module.exports = {
         "color-sidebar-nav-SC": "#243279",
         "color-sidebar-nav-Ascent": "#152e4d",
         "color-sidebar-nav-lightTheme": "",
+        "color-modal-SC": "#FFFFFF",
+        "color-modal-Ascent": "#152e4d",
+        "color-modal-lightTheme": "",
       },
 
       borderColor: {
@@ -131,6 +136,8 @@ module.exports = {
         "color-profile-icon-Ascent": "#FFFFFF",
         "color-icon-SC": "#3DA500",
         "color-icon-Ascent": "#ed9b0a",
+        "color-modal-SC": "#000000",
+        "color-modal-Ascent": "#FFFFFF",
       },
       fontFamily: {
         SC: ['"Roboto"', "sans-serif"], // Theme 1
@@ -205,6 +212,9 @@ module.exports = {
       pattern: /bg-color-header-(SC|lightTheme|Ascent)/,
     },
     {
+      pattern: /bg-color-modal-button-(SC|lightTheme|Ascent)/,
+    },
+    {
       pattern: /bg-color-search-(SC|lightTheme|Ascent)/,
     },
     {
@@ -215,6 +225,9 @@ module.exports = {
     },
     {
       pattern: /bg-color-profile-icon-(SC|lightTheme|Ascent)/,
+    },
+    {
+      pattern: /bg-color-modal-(SC|lightTheme|Ascent)/,
     },
     {
       pattern: /bg-gradient-profile-card-(SC|lightTheme|Ascent)/,
@@ -230,6 +243,9 @@ module.exports = {
     },
     {
       pattern: /text-color-h1-(SC|lightTheme|Ascent)/,
+    },
+    {
+      pattern: /text-color-modal-(SC|lightTheme|Ascent)/,
     },
     {
       pattern: /text-color-icon-(SC|lightTheme|Ascent)/,

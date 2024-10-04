@@ -1,9 +1,8 @@
-
-import React from 'react';
+import React from "react";
 import { useTheme } from "../../../contexts/themeContext";
 
 const InputField = ({ placeholder, value, onChange }) => {
-  const { theme } = useTheme(); 
+  const { theme } = useTheme();
 
   return (
     <input
@@ -17,5 +16,3 @@ const InputField = ({ placeholder, value, onChange }) => {
 };
 
 export default InputField;
-
-

@@ -5,6 +5,7 @@ import ResponseModel, {
   RequestType,
 } from "./config";
 import useEntityStore from "../store/useEntityStore";
+// import {getErrorResponse }from "../api/network/CommonAPI";
 const { entityId } = useEntityStore.getState();
 
 const { baseURL } = "CAPI"; // Zustand store se entityId le lo
@@ -191,5 +192,75 @@ export const logoutAPI = async (cancelToken) => {
     return response.data;
   } catch (error) {
     return getErrorResponse(error);
+  }
+};
+
+export const getWalletAddressListAPI = async (cancelToken) => {
+  const url = `/${entityId}/CAPI/1429ba2d-cbcd-4187-ae12-b13d66ca3aac/getIdentityWalletAddress`;
+  const request = { type: "GET", urlString: url };
+
+  try {
+    const response = await processRequest(request, cancelToken);
+    return response.data;
+  } catch (error) {
+    // return getErrorResponse(error);
+  }
+};
+export const addWalletAddressAPI = async (data, cancelToken) => {
+  const url = `/${entityId}/CAPI/1429ba2d-cbcd-4187-ae12-b13d66ca3aac/addWalletAddress`;
+  const request = { type: "POST", urlString: url, params: data };
+
+  try {
+    const response = await processRequest(request, cancelToken);
+    return response.data;
+  } catch (error) {
+    // return getErrorResponse(error)
+  }
+};
+export const getBankIdentitiesAPI = async (cancelToken) => {
+  const url = `/${entityId}/CAPI/1429ba2d-cbcd-4187-ae12-b13d66ca3aac/getIdentityBankList`;
+  const request = { type: "GET", urlString: url };
+
+  try {
+    const response = await processRequest(request, cancelToken);
+    return response.data;
+  } catch (error) {
+    // return getErrorResponse(error);
+  }
+};
+export const deleteBankWalletAPI = async (cancelToken) => {
+  const url = `/${entityId}/${baseURL}/BankWalletIdentityDelete/1429ba2d-cbcd-4187-ae12-b13d66ca3aac/getIdentityBankList`;
+  const request = { type: "DELETE", urlString: url };
+
+  try {
+    const response = await processRequest(request, cancelToken);
+    return response.data;
+  } catch (error) {
+    // return getErrorResponse(error);
+  }
+};
+
+export const submitBankIdentityAPI = async (data, cancelToken) => {
+  const url = `/${entityId}/CAPI/1429ba2d-cbcd-4187-ae12-b13d66ca3aac/addBankAddress`;
+  const request = { type: "POST", urlString: url, params: data };
+
+  try {
+    const response = await processRequest(request, cancelToken);
+    return response.data;
+  } catch (error) {
+    // return getErrorResponse(error);
+  }
+};
+export const getParticularFieldsFromFundIdApi = async (
+  fund_id = null,
+  cancelToken
+) => {
+  var url = `/${entityId}/${baseURL}/Identity/fields?fundId=${fund_id}`;
+  const request = { type: "GET", urlString: url };
+  try {
+    const response = await processRequest(request, cancelToken);
+    return response.data;
+  } catch (error) {
+    // return getErrorResponse(error);
   }
 };

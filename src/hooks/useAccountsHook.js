@@ -12,24 +12,27 @@ const useAccountsHook = () => {
   const limit = 10;
 
   // Memoize the API call to prevent recreating the function on every render
-  const fetchAccountsAPI = useCallback(async (currentOffset = 0) => {
-    try {
-      setIsLoader(true);
-      const response = await getCustomerAccounts(
-        currentOffset,
-        limit,
-        cancelTokenSource.token
-      );
-      if (response.success) {
-        return response?.data?.customer_accounts || [];
+  const fetchAccountsAPI = useCallback(
+    async (currentOffset = 0) => {
+      try {
+        setIsLoader(true);
+        const response = await getCustomerAccounts(
+          currentOffset,
+          limit,
+          cancelTokenSource.token
+        );
+        if (response.success) {
+          return response?.data?.customer_accounts || [];
+        }
+      } catch (error) {
+        console.error("Failed to fetch customer accounts", error);
+      } finally {
+        setIsLoader(false);
       }
-    } catch (error) {
-      console.error("Failed to fetch customer accounts", error);
-    } finally {
-      setIsLoader(false);
-    }
-    return [];
-  }, [limit]);
+      return [];
+    },
+    [limit]
+  );
 
   // Memoize the function to fetch more accounts
   const fetchMoreAccounts = useCallback(async () => {
