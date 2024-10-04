@@ -129,7 +129,7 @@ function Stepper() {
       "Documents": <Documents />,
       "Face Verification": <FaceVerification />,
       "VCIP": <VCIP />,
-      "Bank/Wallets": <BankWallets />,
+      "Bank/Wallets": <BankWallets fundData={fundData}/>,
       "Application": <Application />,
       "Summary": <Summary />
     };

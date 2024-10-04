@@ -188,56 +188,56 @@ export const getParticularFieldsFromFundIdApi = async (
   fund_id = null,
   cancelToken
 ) => {
-  var url = `/${entityId}/CAPI/Identity/fields?fundId=${fund_id}`
-  const request = { type: "GET", urlString: url }
+  var url = `/${entityId}/CAPI/Identity/fields?fundId=${fund_id}`;
+  const request = { type: "GET", urlString: url };
   try {
-    const response = await processRequest(request, cancelToken)
-    return response.data
+    const response = await processRequest(request, cancelToken);
+    return response.data;
   } catch (error) {
     // return getErrorResponse(error)
   }
-}
+};
 
 export const getParticularsDetailByIdentityIdAPI = async (
   identity_id,
   cancelToken
 ) => {
-  const url = `/${entityId}/CAPI/Identity/${identity_id}/get`
-  const request = { type: "GET", urlString: url }
+  const url = `/${entityId}/CAPI/Identity/${identity_id}/get`;
+  const request = { type: "GET", urlString: url };
   try {
-    const response = await processRequest(request, cancelToken)
-    return response.data
+    const response = await processRequest(request, cancelToken);
+    return response.data;
   } catch (error) {
     // return getErrorResponse(error)
   }
-}
+};
 
 export const postIdentityAPI = async (data, cancelToken) => {
-  const url = `/${entityId}/CAPI/Identity/create`
-  const request = { type: "POST", urlString: url, params: data }
+  const url = `/${entityId}/CAPI/Identity/create`;
+  const request = { type: "POST", urlString: url, params: data };
   try {
-    const response = await processRequest(request, cancelToken)
-    return response.data
+    const response = await processRequest(request, cancelToken);
+    return response.data;
   } catch (error) {
     // return getErrorResponse(error)
   }
-}
+};
 
 export const postIdentityAttatchWithFund = async (
   identityId,
   data,
   cancelToken
 ) => {
-  const url = `/${entityId}/CAPI/Identity/${identityId}/attach`
-  const request = { type: "POST", urlString: url, params: data }
+  const url = `/${entityId}/CAPI/Identity/${identityId}/attach`;
+  const request = { type: "POST", urlString: url, params: data };
 
   try {
-    const response = await processRequest(request, cancelToken)
-    return response.data
+    const response = await processRequest(request, cancelToken);
+    return response.data;
   } catch (error) {
-    return getErrorResponse(error)
+    return getErrorResponse(error);
   }
-}
+};
 
 export const logoutAPI = async (cancelToken) => {
   const url = `/auth/user/logout`;
@@ -299,19 +299,6 @@ export const submitBankIdentityAPI = async (data, cancelToken) => {
   const url = `/${entityId}/CAPI/1429ba2d-cbcd-4187-ae12-b13d66ca3aac/addBankAddress`;
   const request = { type: "POST", urlString: url, params: data };
 
-  try {
-    const response = await processRequest(request, cancelToken);
-    return response.data;
-  } catch (error) {
-    // return getErrorResponse(error);
-  }
-};
-export const getParticularFieldsFromFundIdApi = async (
-  fund_id = null,
-  cancelToken
-) => {
-  var url = `/${entityId}/${baseURL}/Identity/fields?fundId=${fund_id}`;
-  const request = { type: "GET", urlString: url };
   try {
     const response = await processRequest(request, cancelToken);
     return response.data;

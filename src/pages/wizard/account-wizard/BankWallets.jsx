@@ -4,9 +4,9 @@ import useBankWalletHook from "../../../hooks/useBankWalletHook";
 import Loader from "../../../components/ui/loader";
 import { useTheme } from "../../../contexts/themeContext";
 
-const BankWallets = () => {
+const BankWallets = (fundData) => {
   const theme = useTheme();
-
+  console.log("Fund Data iss: ", fundData);
   const {
     isLoader,
     isLoaderBank,
@@ -34,6 +34,7 @@ const BankWallets = () => {
           setWalletAddresses={setWalletAddresses}
           fetchBankAddressIdentities={fetchBankIdentities}
           setbankAddresses={setbankAddresses}
+          fundId={fundData.fundData.id}
         />
       )}
     </div>

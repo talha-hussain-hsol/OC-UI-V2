@@ -21,10 +21,12 @@ const BankCard = ({
   setWalletAddresses,
   fetchWalletAddresses,
   fetchBankAddressIdentities,
+  fundId,
 }) => {
   const { isLoaderBank, fetchAllData, fetchBankIdentities } =
     useBankWalletHook();
   const { theme } = useTheme();
+  console.log("fundID", fundId)
   const [isAddBankModalOpen, setAddBankModalOpen] = useState(false);
   const [CryptoCurrency, setCryptoCurrency] = useState("");
   const [walletAddress, setWalletAddress] = useState("");
@@ -279,6 +281,7 @@ const BankCard = ({
           isOpen={isAddBankModalOpen}
           onClose={handleCloseModal}
           fetchBankIdentities={fetchBankIdentities}
+          fundId={fundId}
         />
       </div>
     </>
