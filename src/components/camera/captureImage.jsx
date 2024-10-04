@@ -161,6 +161,7 @@ function CameraCapture({
                 opacity: "1",
                 paddingBottom: "30px",
               }}
+              alt=""
             />
             <video
               ref={videoRef}

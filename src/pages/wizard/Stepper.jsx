@@ -65,6 +65,11 @@ function Stepper() {
   const [selectedIdentityData, setSelectedIdentityData] = useState();
   const [identitiesData, setIdentitiesData] = useState([]);
   const [submitFaceVerificationAPI, setSubmitFaceVerificationAPI] = useState(false);
+
+
+  const [submitVCIPAPI, setSubmitVCIPAPI] = useState(false);
+  const [buttonDisabledForVCIP, setButtonDisabledForVCIP] = useState(false);
+  const [handleCallAPIForVCIPData, setHandleCallAPIForVCIPData] = useState(false);
   
   const cancelTokenSource = axios.CancelToken.source();
 
@@ -136,6 +141,20 @@ const submitFaceVerification = (data) => {
     handleNext(); 
   };
 
+  const vcipUpload = (data) => {
+    setButtonDisabledForVCIP(data?.status);
+    dataOfAccountSetup['vcip'] = data?.status;
+   
+  };
+  const submitVCIP = (data) => {
+    console.log(data, 'data submitVCIP submitVCIP');
+    setSubmitVCIPAPI(data);
+    setButtonDisabledForVCIP(data);
+  };
+  const handleCallAPIForVCIPDataUpdateFalse = () => {
+    setHandleCallAPIForVCIPData(false);
+  };
+
   const renderContent = () => {
     switch (currentStep) {
       case 1:
@@ -168,7 +187,14 @@ const submitFaceVerification = (data) => {
             faceImages={imagesForfaceVerification}
         />;
       case 5:
-        return <VCIP />;
+        return <VCIP
+            dataOfAccountSetup={dataOfAccountSetup}
+            vcipUpload={vcipUpload}
+            submitVCIP={submitVCIP}
+            handleCallAPIForVCIPData={handleCallAPIForVCIPData}
+            handleCallAPIForVCIPDataUpdateFalse={
+              handleCallAPIForVCIPDataUpdateFalse
+            } />;
       case 6:
         return <BankWallets />;
       case 7:

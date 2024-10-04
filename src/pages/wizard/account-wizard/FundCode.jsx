@@ -5,8 +5,8 @@ import { FiSearch } from "react-icons/fi";
 import SideBar from "../../../components/sidebar/Sidebar";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../components/ui/button/Button";
-import { getFundForJoin, verifyFundExist } from "../../../api/userApi"; // Ensure API function is correctly imported
-import axios from "axios"; // If needed for CancelToken
+import { getFundForJoin, verifyFundExist } from "../../../api/userApi"; 
+import axios from "axios"; 
 import Loader from "../../../components/ui/loader";
 
 const FundCode = () => {
