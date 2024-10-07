@@ -10,7 +10,7 @@ import Application from "./account-wizard/Application";
 import BankWallets from "./account-wizard/BankWallets";
 import Summary from "./account-wizard/Summary";
 import { useTheme } from "../../contexts/themeContext";
-import { getIdentityList } from "../../api/userApi";
+import { getIdentityList, getSingleAccountDetailByIdAPI } from "../../api/userApi";
 import { useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import Loader from "../../components/ui/loader";
@@ -31,11 +31,78 @@ function Stepper() {
   const [isLoader, setIsLoader] = useState(false);
   const [steps, setSteps] = useState(initialSteps);                                                           // Initialize with 3 steps
   const isShowFaceVerificationVCIP = true;
-  const identitiesData = [];
+  // const identitiesData = [];
   const cancelTokenSource = axios.CancelToken.source();
+  const [dataOfAccountSetup, setDataOfAccountSetup] = useState({});
+  const [isAssistanceData, setIsAssistanceData] = useState(false);
+  const [isAssistAvail, setIsAssistAvail] = useState(false);
+  const [faceResponse, setFaceResponse] = useState(false);
+  const [imagesForfaceVerification, setImagesForfaceVerification] = useState({
+    img2_base64: null,
+    img1_base64: null,
+  });
+  const [
+    handleCallAPIForFaceVerficationData,
+    setHandleCallAPIForFaceVerficationData,
+  ] = useState(false);
+  const handleSetFaceImages = (data) => {
+    setImagesForfaceVerification(data);
+  };
+  const handleCallAPIForFaceVerficationDataUpdateFalse = () => {
+    setHandleCallAPIForFaceVerficationData(false);
+  };
+
+
+  // const [activeStep, setActiveStep] = useState(1);
+  // const [fundCode, setFundCode] = useState("");
+  // const [selectedIdentity, setSelectedIdentity] = useState({ value: "" });
+  // const [selectedIdentityData, setSelectedIdentityData] = useState();
+  const [identitiesData, setIdentitiesData] = useState([]);
+  const [submitFaceVerificationAPI, setSubmitFaceVerificationAPI] = useState(false);
+
+
+  const [submitVCIPAPI, setSubmitVCIPAPI] = useState(false);
+  const [buttonDisabledForVCIP, setButtonDisabledForVCIP] = useState(false);
+  const [handleCallAPIForVCIPData, setHandleCallAPIForVCIPData] = useState(false);
   
+  const handleAssistanceData = (data) => {
+    setIsAssistanceData(data);
+  };
+  const isHandleAssistanceData = (data) => {
+    setIsAssistAvail(data);
+  };
+  const handleApiResponseFace = (data) => {
+    console.log('data', data);
+    setFaceResponse(data);
+  };
+  function advanceSection() {
+    console.log("helo");
+}
+const faceVerificationCompleted = (data, redirect = false) => {
+  dataOfAccountSetup['faceVerification'] = data;
+  handleGetAccountDetail();
+  if (redirect) {
+   
+  }
+};
+const handleGetAccountDetail = async () => {
+  const response = await getSingleAccountDetailByIdAPI(
+    dataOfAccountSetup?.account_id
+      ? dataOfAccountSetup?.account_id
+      : params?.account_id,
+    cancelTokenSource.token,
+  );
+  if (response.success === true) {
+    setIsLoader(false);
+    dataOfAccountSetup['accountData'] = response?.data?.account_detail;
+    setDataOfAccountSetup(dataOfAccountSetup);
+  }
+};
+const submitFaceVerification = (data) => {
+  setSubmitFaceVerificationAPI(data);
+};
+  console.log(referenceDocuments,"reefefefe")
   
-  console.log("paramzzzz", params);
 
   useEffect(() => {
     if (fundData && fundFields && fundSetting) {
@@ -122,13 +189,50 @@ function Stepper() {
     handleNext();
   };
 
+  const vcipUpload = (data) => {
+    setButtonDisabledForVCIP(data?.status);
+    dataOfAccountSetup['vcip'] = data?.status;
+   
+  };
+  const submitVCIP = (data) => {
+    console.log(data, 'data submitVCIP submitVCIP');
+    setSubmitVCIPAPI(data);
+    setButtonDisabledForVCIP(data);
+  };
+  const handleCallAPIForVCIPDataUpdateFalse = () => {
+    setHandleCallAPIForVCIPData(false);
+  };
+
   const renderContent = () => {
     const stepComponents = {
       "Select Account": <UserType onSelection={handleUserTypeSelection} fundData={fundData} referenceDocuments={referenceDocuments} fundFields={fundFields} identitiesData={identitiesData}/>,
       "Identity Setup": <UserForm userType={userType} fundData={fundData} fundFields={fundFields} identitiesData={identitiesData} onNext={(formValues) => handleNext(formValues)} />,
       "Documents": <Documents />,
-      "Face Verification": <FaceVerification />,
-      "VCIP": <VCIP />,
+      "Face Verification": <FaceVerification 
+      dataOfAccountSetup={dataOfAccountSetup}
+      handleAssistanceData={handleAssistanceData}
+      advanceSection={advanceSection}
+      isHandleAssistanceData={isHandleAssistanceData}
+      handleApiResponseFace={handleApiResponseFace}
+      faceVerificationCompleted={faceVerificationCompleted}
+      submitFaceVerification={submitFaceVerification}
+      handleCallAPIForFaceVerficationData={
+        handleCallAPIForFaceVerficationData
+      }
+      handleCallAPIForFaceVerficationDataUpdateFalse={
+        handleCallAPIForFaceVerficationDataUpdateFalse
+      }
+      handleSetFaceImages={handleSetFaceImages}
+      faceImages={imagesForfaceVerification}
+  />,
+      "VCIP": <VCIP
+      dataOfAccountSetup={dataOfAccountSetup}
+      vcipUpload={vcipUpload}
+      submitVCIP={submitVCIP}
+      handleCallAPIForVCIPData={handleCallAPIForVCIPData}
+      handleCallAPIForVCIPDataUpdateFalse={
+        handleCallAPIForVCIPDataUpdateFalse
+      } />,
       "Bank/Wallets": <BankWallets />,
       "Application": <Application />,
       "Summary": <Summary />

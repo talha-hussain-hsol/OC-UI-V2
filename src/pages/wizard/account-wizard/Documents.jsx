@@ -10,6 +10,7 @@ function Documents() {
   const [documentUploadedSelected, setDocumentUploadedSelected] = useState([]);
   const [identityUploadDocList, setIdentityUploadDocList] = useState([]);
   const [isLoader, setIsLoader] = useState(false);
+  const cancelTokenSource = axios.CancelToken.source();
 
 
 
@@ -17,12 +18,12 @@ function Documents() {
   let { identity_id, account_id } = useParams();
   useEffect(() => {
     handleGetIdentityDocumentApi();
+    handleGetRequiredDocumentApi();
   }, [identity_id]);
 
 
   const { theme } = useTheme();
 
-  const cancelTokenSource = axios.CancelToken.source();
   const [selectedDocument, setSelectedDocument] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -57,6 +58,27 @@ function Documents() {
       setIdentityUploadDocList(response?.data?.IdentityDocuments);
     } else {
       setIsLoader(false);
+    }
+  };
+  const handleGetRequiredDocumentApi = async () => {
+    setIsLoader(true);
+    if (account_id) {
+      const response = await getRequiredDocumentCRP(
+        account_id,
+        identity_id,
+        cancelTokenSource.token,
+      );
+      if (response.success == true) {
+        setIsLoader(false);
+        setRequiredDocList(response?.data?.required_documents_types);
+
+      } else {
+        setIsLoader(false);
+      }
+    } else {
+      setIsLoader(false);
+      setRequiredDocList([]);
+      setIsRequiredDocListExist(false);
     }
   };
 
