@@ -17,7 +17,6 @@ function VCIP(props) {
   const fund_id = "1";
   const account_id = "185c546b-cbf1-4550-bdee-705799f6513e";
 
-  // console.log("sdasjkdhljahsd", params);
   const [locationData, setLocationData] = useState({
     latitude: null,
     longitude: null,
