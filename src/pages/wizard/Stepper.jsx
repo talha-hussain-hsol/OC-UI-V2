@@ -105,10 +105,10 @@ const submitFaceVerification = (data) => {
 };
   console.log(referenceDocuments,"reefefefe")
 
-  useEffect(() => {
-    if (fundData) {
-      handleGetIdentityList();
-    }})
+  // useEffect(() => {
+  //   if (fundData) {
+  //     handleGetIdentityList();
+  //   }})
   
   console.log("paramzzzz", params);
 
