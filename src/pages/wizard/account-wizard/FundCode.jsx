@@ -15,8 +15,8 @@ const FundCode = () => {
   const [fundCode, setFundCode] = useState("");
   const [isLoader, setIsLoader] = useState(false);
   const cancelTokenSource = axios.CancelToken.source();
-  const [alertJoinFund, setAlertJoinFund] = useState(false);
-  const [fundData, setFundData] = useState(null);
+  const [alertJoinFund, setAlertJoinFund] = useState(false);    // will use this in future
+  const [fundData, setFundData] = useState(null);               // will use this in future
 
   useEffect(() => {
     
@@ -85,16 +85,17 @@ const FundCode = () => {
     
     const response = await getFundForJoin(fundCode, cancelTokenSource.token);
     if (response.success == true) {
-      console.log(response)
       setIsLoader(false);
       const fundData = response?.data;
       const referenceDocuments = fundData?.reference_document?.documents;
-      console.log("referenceDocuments",referenceDocuments)
+      const fundField = fundData?.fund_fields;
+      const fundSetting = fundData?.fund_setting;
       setFundData(response?.data);
       navigate("/stepper", {
         state: { fundData,
-          referenceDocuments
-
+          referenceDocuments,
+          fundSetting,
+          fundField
         }, 
       });
       localStorage.setItem("fundRegion", response?.data?.fund_setting?.region);
@@ -113,12 +114,7 @@ const FundCode = () => {
       ) {
         props.handleChangeTermsCondition();
       }
-      console.log(
-        response?.data?.reference_document?.term_documents?.[
-          response?.data?.reference_document?.term_documents?.length - 1
-        ]?.is_required,
-        "response?.data?.reference_document?.term_documents?.[response?.data?.reference_document?.term_documents?.length-1]?.is_required"
-      );
+      
     } else {
       setIsLoader(false);
       setAlertJoinFund(true);
@@ -143,7 +139,7 @@ const FundCode = () => {
           </p>
           {isLoader ? (
           
-          <Loader/>
+          <Loader theme={theme}/>
           
           ) : (
             <>

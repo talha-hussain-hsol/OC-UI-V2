@@ -42,7 +42,7 @@ const SideBar = ({ portalType }) => {
   const logoutApiHandle = async () => {
     setIsLoading(true);
     const response = await logoutAPI(cancelTokenSource.token);
-    // return;
+
     if (response.success === true) {
       deleteAllCookies();
 
@@ -185,6 +185,27 @@ const SideBar = ({ portalType }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isThemeSidebarOpen]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        closeSidebar();
+      }
+      if (
+        isProfileSidebarOpen &&
+        profileSidebarRef.current &&
+        !profileSidebarRef.current.contains(event.target)
+      ) {
+        setIsProfileSidebarOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isProfileSidebarOpen]);
 
   return (
     <>

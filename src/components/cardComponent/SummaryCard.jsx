@@ -1,7 +1,5 @@
 import React from "react";
-import Button from "../ui/button/Button";
 import { FiCheckCircle } from "react-icons/fi";
-import { MdOutlineAccessTime } from "react-icons/md";
 import StepsStatus from "./StepsStatus";
 import { useTheme } from "../../contexts/themeContext";
 import CardHeader from "../header/CardHeader";

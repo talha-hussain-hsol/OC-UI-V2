@@ -11,7 +11,6 @@ function Documents() {
   const [documentUploadedSelected, setDocumentUploadedSelected] = useState([]);
   const [identityUploadDocList, setIdentityUploadDocList] = useState([]);
   const [isLoader, setIsLoader] = useState(false);
-  const cancelTokenSource = axios.CancelToken.source();
 
 
 
@@ -25,6 +24,7 @@ function Documents() {
 
   const { theme } = useTheme();
 
+  const cancelTokenSource = axios.CancelToken.source();
   const [selectedDocument, setSelectedDocument] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -54,7 +54,7 @@ function Documents() {
       identity_id,
       cancelTokenSource.token,
     );
-    if (response.success == true) {
+    if (response === true) {
       setIsLoader(false);
       setIdentityUploadDocList(response?.data?.IdentityDocuments);
     } else {

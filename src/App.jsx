@@ -9,11 +9,11 @@ import useEntityStore from "./store/useEntityStore";
 import {  } from "./utils/helperFunctions";
 import Callback from "./pages/callback";
 import { ToastContainer } from "react-toastify";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";        // will use the useEffect in future
 import PropTypes from "prop-types";
-import axios from "axios";
+import axios from "axios";                          //will use this in future
 import Loader from "./components/ui/loader";
-import { getLocalStorage } from "./utils/cookies";
+import { getLocalStorage } from "./utils/cookies";  //will use this in future
 
 import 'react-toastify/dist/ReactToastify.css';
 import SignIn from "./pages/sign-in";
@@ -102,7 +102,7 @@ const AppWrapper = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center w-full">
-        <Loader />
+        <Loader theme={theme}/>
       </div>
     );
   }

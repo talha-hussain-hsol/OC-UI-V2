@@ -26,7 +26,6 @@ function deleteAllCookies() {
 }
 API.interceptors.response.use(
   function (response) {
-    console.log(response, "responseresponseresponseresponseresponse");
     generateResponseForLoggin(response, true)
     if (response?.data?.success == false && response?.data?.status_code?.value == 401) {
       console.log(response, "response in response");
@@ -39,7 +38,6 @@ API.interceptors.response.use(
   },
   function (error) {
     generateResponseForLoggin(error, false)
-    console.log("responseresponseresponseresponseresponse error", error);
     console.log(error?.toJSON(), "response?.data?.status_code?.value");
     console.log(error?.response?.status, "error?.response?.status");
     if (401 === error?.response?.status && error?.toJSON()?.config?.url != "/auth/userDetails") {
@@ -50,7 +48,6 @@ API.interceptors.response.use(
       return Promise.reject(error);
     } else if (403 === error?.response?.status) {
 
-      console.log("error", error);
       if (error?.response?.data?.system_message === "This entity is IP restricted, You are not allowed access this entity outside the designated IP address ") {
         handleSplashScreenForIp();
         return Promise.reject(error);

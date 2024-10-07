@@ -6,7 +6,6 @@ import { MdOutlineAccessTime } from "react-icons/md";
 import { useTheme } from "../../contexts/themeContext";
 
 const AccountCard = ({ accountData }) => {
-  console.log("accountDataa", accountData)
   const { theme } = useTheme();
 
   return (
