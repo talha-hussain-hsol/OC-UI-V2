@@ -26,7 +26,7 @@ const BankCard = ({
   const { isLoaderBank, fetchAllData, fetchBankIdentities } =
     useBankWalletHook();
   const { theme } = useTheme();
-  console.log("fundID", fundId)
+  console.log("fundID", fundId);
   const [isAddBankModalOpen, setAddBankModalOpen] = useState(false);
   const [CryptoCurrency, setCryptoCurrency] = useState("");
   const [walletAddress, setWalletAddress] = useState("");
@@ -256,18 +256,20 @@ const BankCard = ({
             <>
               <td className="py-4 px-2 sm:px-6 uppercase">{row.label}</td>
               <td className="py-4 px-2 sm:px-6 uppercase">
-                {row.meta.data["bank.basic.bank_name"]}
+                {row?.meta?.data?.bank?.basic?.bank_name}
               </td>
               <td className="py-4 px-2 sm:px-6 uppercase">
-                {row.meta.data["bank.basic.account_number"]}
+                {row?.meta?.data?.bank?.basic?.account_number}
               </td>
               <td className="py-4 px-2 sm:px-6 uppercase">
-                {row.meta.data["bank.basic.swift_bic__ifsc_code"]}
+              {row?.meta?.data?.bank?.basic?.swift_bic__ifsc_code}
               </td>
               <td className="py-4 px-2 sm:px-6 uppercase">
-                {row.meta.data["bank.basic.currency"]}
+              {row?.meta?.data?.bank?.basic?.currency}
               </td>
-              <td className="py-4 px-2 sm:px-6 text-[#f39f08] uppercase">{row.status}</td>
+              <td className="py-4 px-2 sm:px-6 text-[#f39f08] uppercase">
+                {row.status}
+              </td>
               <td className="py-4 px-2 sm:px-6 flex gap-2 items-center">
                 <RiDeleteBin7Line size={18} color="red" />
                 <MdOutlineWorkHistory size={18} color="white" />

@@ -13,23 +13,19 @@ const AddBankForm = ({ isOpen, onClose, fundId, fetchBankIdentities }) => {
   const [particularFields, setParticularFields] = useState([]);
   const [isLoaderBank, setIsLoaderBank] = useState(false);
   const [isLoader, setIsLoader] = useState(false);
-  const [showIdentityLabel, setShowIdentityLabel] = useState(false);
+  const [showIdentityLabel, setShowIdentityLabel] = useState(true);
   const [label, setLabel] = useState("");
   const [particularAddedData, setParticularAddedData] = useState([]);
-
-  console.log("Fund ID in AddBankForm: ", fundId);
+  const [identityDataFields, setIdentityDataFields] = useState({
+    bankName: "",
+    accountHolderName: "",
+  });
   const getParticularFields = async () => {
-    setIsLoader(true);
-
     try {
       const response = await getParticularFieldsFromFundIdApi(
         fundId,
         cancelTokenSource.token
       );
-
-      // Print the response to the console
-      console.log("Response from getParticularFieldsFromFundIdApi:", response);
-
       setIsLoader(false);
       let array = [];
       if (response.success === true) {
@@ -51,14 +47,13 @@ const AddBankForm = ({ isOpen, onClose, fundId, fetchBankIdentities }) => {
             return 0;
           });
 
-        console.log(filteredObj, "filteredObj filteredObj filteredObj");
         setParticularFields(filteredObj);
       } else {
-        setIsLoader(false);
+        setIsLoaderBank(false);
       }
     } catch (error) {
       console.error("Error fetching particular fields:", error);
-      setIsLoader(false);
+      setIsLoaderBank(false);
     }
   };
 
@@ -68,26 +63,66 @@ const AddBankForm = ({ isOpen, onClose, fundId, fetchBankIdentities }) => {
     }
   }, [isOpen, fundId]);
 
+  const autoPopulateLabel = () => {
+    const { bankName, accountHolderName } = identityDataFields;
+    const newLabel = `${bankName} ${accountHolderName}`.trim();
+    setLabel(newLabel);
+  };
+
+  useEffect(() => {
+    autoPopulateLabel();
+  }, [identityDataFields]);
+
   const {
     register,
     watch,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors , isValid},
   } = useForm({
-    mode: "onChange",
+    mode: "onSubmit",
   });
 
   if (!isOpen) return null;
 
-  const getBorderClass = (field, value) => {
-    return errors[field]
-      ? "border border-[#a9712c]"
-      : value
-      ? "border-none"
-      : "border border-[#a9712c]";
+  const getBorderClass = (field, value, required) => {
+    if (required) {
+      return errors[field]
+        ? "border border-[#a9712c]"
+        : value
+        ? "border-none"
+        : "border border-[#a9712c]";
+    }
+    return "border-none";
   };
+
   const onSubmit = async (data) => {
-    console.log("Form data:", data);
+    if (!isValid) {
+      // Trigger a re-validation to show errors if form is not valid
+      return;
+    }
+    onClose();
+    const payload = {
+      label,
+      data: data,
+    };
+
+    try {
+      const response = await submitBankIdentityAPI(
+        payload,
+        cancelTokenSource.token
+      );
+      console.log("Add Bank API Response: ", response);
+
+      if (response && response.success === true) {
+        await fetchBankIdentities();
+      } else {
+        console.error(response?.message || "Failed to add bank address.");
+      }
+    } catch (error) {
+      console.error("Error adding bank address:", error);
+    } finally {
+      setIsLoaderBank(false);
+    }
   };
 
   return (
@@ -107,32 +142,77 @@ const AddBankForm = ({ isOpen, onClose, fundId, fetchBankIdentities }) => {
         <hr className="w-full border-t-[1px] border-t-[#6e84a3] opacity-30 my-8" />
         {isLoaderBank && <Loader theme={theme} />}
         <form onSubmit={handleSubmit(onSubmit)}>
+          {/* Identity Label field */}
           {showIdentityLabel && (
             <div className="mb-4">
               <label className="block mb-2 text-sm font-light">
                 Identity Label
+                <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
+                placeholder="Label Of Identity"
                 value={label}
                 readOnly
-                placeholder="Label Of Identity"
-                className={`w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md ${getBorderClass(
-                  "identityLabel",
-                  watch("identityLabel")
-                )}`}
-                {...register("identityLabel", {
-                  required: "Identity Label is required",
-                })}
+                className={`w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md`}
               />
-              {errors.identityLabel && (
-                <p className="text-red-500 text-sm">
-                  {errors.identityLabel.message}
-                </p>
-              )}
             </div>
           )}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {particularFields.map((fieldObj, index) => {
+              const fieldKey = Object.keys(fieldObj)[0];
+              const field = fieldObj[fieldKey];
 
+              if (!field.enabled) return null;
+
+              return (
+                <>
+                  <div className="mb-4" key={index}>
+                    <label className="block mb-2 text-sm font-light">
+                      {field.label}
+                      {field.required && (
+                        <span className="text-red-500">*</span>
+                      )}
+                    </label>
+                    <input
+                      type={field.type}
+                      placeholder={field.label}
+                      className={`w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md ${getBorderClass(
+                        fieldKey,
+                        watch(fieldKey),
+                        field.required
+                      )}`}
+                      {...register(fieldKey, {
+                        required: field.required
+                          ? `${field.label} is required`
+                          : false,
+                        onChange: (e) => {
+                          if (fieldKey === "bank.basic.bank_name") {
+                            setIdentityDataFields((prev) => ({
+                              ...prev,
+                              bankName: e.target.value,
+                            }));
+                          } else if (
+                            fieldKey === "bank.basic.account_holder_name"
+                          ) {
+                            setIdentityDataFields((prev) => ({
+                              ...prev,
+                              accountHolderName: e.target.value,
+                            }));
+                          }
+                        },
+                      })}
+                    />
+                    {errors[fieldKey] && (
+                      <p className="text-red-500 text-sm">
+                        {errors[fieldKey].message}
+                      </p>
+                    )}
+                  </div>
+                </>
+              );
+            })}
+          </div>
           <div className="mt-6 flex px-2">
             <Button
               text="Submit"
