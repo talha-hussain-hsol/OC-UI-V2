@@ -20,6 +20,7 @@ const initialSteps = ["Select Account", "Identity Setup", "Summary"];
 function Stepper() {
   const { theme } = useTheme();
   const [currentStep, setCurrentStep] = useState(1);
+  const location = useLocation();
   const [fundFields, setFundFields] = useState(location.state?.fundField || null);                            // will use this in future
   const [fundSetting, setFundSetting] = useState(location.state?.fundSetting || null);                        // will use this in future
   const [steps, setSteps] = useState(initialSteps);                                                           // Initialize with 3 steps
@@ -27,7 +28,6 @@ function Stepper() {
   // const identitiesData = [];
   const [userType, setUserType] = useState("");
   const [formData, setFormData] = useState({});
-  const location = useLocation();
   const [fundData, setFundData] = useState(location.state?.fundData || null);
   const [referenceDocuments, setreferenceDocuments] = useState(location.state?.referenceDocuments || null);
   const [dataOfAccountSetup, setDataOfAccountSetup] = useState({});
@@ -104,7 +104,7 @@ const submitFaceVerification = (data) => {
   setSubmitFaceVerificationAPI(data);
 };
   console.log(referenceDocuments,"reefefefe")
-  
+
   useEffect(() => {
     if (fundData) {
       handleGetIdentityList();
