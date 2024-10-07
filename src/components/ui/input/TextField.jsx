@@ -21,7 +21,7 @@ const TextField = ({
       value={value}
       placeholder={placeholder}
       onChange={onChange}
-      className={`p-3 rounded-md shadow-${theme} bg-color-textfield-dropdown-${theme} h-9 text-sm w-full focus:outline-none focus:ring-2  ${
+      className={`p-3 rounded-md shadow-${theme} text-color-text-${theme} bg-color-textfield-dropdown-${theme} h-9 text-sm w-full focus:outline-none focus:ring-2  ${
         required ? `border border-yellow-500` : `border-0`
       }`}
     />
