@@ -233,7 +233,7 @@ const submitFaceVerification = (data) => {
       handleCallAPIForVCIPDataUpdateFalse={
         handleCallAPIForVCIPDataUpdateFalse
       } />,
-      "Bank/Wallets": <BankWallets />,
+      "Bank/Wallets": <BankWallets fundData={fundData}/>,
       "Application": <Application />,
       "Summary": <Summary />
     };

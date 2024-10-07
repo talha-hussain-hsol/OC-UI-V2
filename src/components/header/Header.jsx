@@ -1,7 +1,9 @@
-import React from "react";
+import React, {useState} from "react";
 import Button from "../ui/button/Button";
 import fundLogo from "../../assets/logo.investor.entity.png";
 import TabBar from "../tabBar/TabBar";
+import { FaBars } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Header = ({
   subheading,
@@ -12,10 +14,17 @@ const Header = ({
   showTabBar,
   theme,
   className,
+  onTabChange,
 }) => {
+  const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // Dropdown state for small screens
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   return (
-    <div className="ml-6 sm:mt-0 mt-10 ">
+    <div className="ml-6 lg:mr-0 mr-6 lg:mt-0 mt-16 ">
       <div className={`flex items-center justify-between`}>
         <div className="flex items-center gap-4">
           {showLogo && (
@@ -23,11 +32,11 @@ const Header = ({
           )}
 
           <div className="flex flex-col gap-1">
-            <h6 className="text-[10px] text-[#6e84a3] uppercase tracking-wider ">
+            <h6 className="text-[10px] text-[#6e84a3] uppercase tracking-wider">
               {subheading}
             </h6>
             <h1
-              className={`sm:text-2xl text-xs text-color-${theme} sm:font-medium`}
+              className={`xs:text-2xl text-lg text-color-${theme} sm:font-medium`}
             >
               {heading}
             </h1>
@@ -38,22 +47,65 @@ const Header = ({
           <Button
             text="Create An Account"
             onClick={onButtonClick}
-            className={`bg-color-button-${theme} text-white font-light mr-8 rounded-lg py-6 px-8 text-sm sm:text-md`}
+            className={`bg-color-button-${theme} text-white font-light mr-8 rounded-lg py-6 sm:px-8 px-2 text-xs sm:text-md`}
             iconPosition="left"
           />
         )}
+
         {showTabBar && (
-          <TabBar
-            tabs={[
-              "Dashboard",
-              "KYC/KYB",
-              "KYW",
-              "Transaction Monitoring",
-              "Restricted Lists",
-            ]}
-            className="font-light py-8"
-          />
+          <>
+            <div className="hidden lg:flex">
+              <TabBar
+                tabs={[
+                  "Dashboard",
+                  "KYC/KYB",
+                  "KYW",
+                  "Transaction Monitoring",
+                  "Restricted Lists",
+                ]}
+                className="font-light py-8"
+                onTabChange={onTabChange}
+              />
+            </div>
+
+            <div className="lg:hidden">
+              <button
+                onClick={toggleMenu}
+                className={`text-color-${theme} text-sm px-4 py-2`}
+              >
+                <FaBars size={24} />
+              </button>
+            </div>
+
+            {isMenuOpen && (
+              <div
+                className={`lg:hidden absolute  top-24 right-10 mt-2 shadow-lg rounded-md z-10 border border-color-${theme} bg-color-header-${theme} text-color-text-${theme} text-xs`}
+              >
+                <ul className="flex flex-col items-start">
+                  {[
+                    "Dashboard",
+                    "KYC/KYB",
+                    "KYW",
+                    "Transaction Monitoring",
+                    "Restricted Lists",
+                  ].map((tab, index) => (
+                    <li
+                      key={index}
+                      className="px-4 py-2 w-full hover:bg-gray-100"
+                      onClick={() => {
+                        onTabChange(tab, index);
+                        setIsMenuOpen(false); // Close the menu on tab selection
+                      }}
+                    >
+                      {tab}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </>
         )}
+
         {showLogo && (
           <img
             src={fundLogo}
@@ -62,7 +114,7 @@ const Header = ({
           />
         )}
       </div>
-      <hr className=" w-full border-t-[1px] border-t-[#6e84a3] opacity-20 mb-6 " />
+      {/* <hr className="w-full border-t-[1px] border-t-[#6e84a3] opacity-20 mb-6" /> */}
     </div>
   );
 };

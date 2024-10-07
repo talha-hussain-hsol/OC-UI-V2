@@ -12,7 +12,7 @@ const AccountCard = ({ accountData }) => {
     <div className="flex flex-col gap-6">
       <div
         key={accountData.id}
-        className={`bg-color-card-${theme} w-full rounded-lg border-color-${theme} border-[1px] shadow-${theme} mb-6 px-4`}
+        className={`bg-color-card-${theme}  rounded-lg border-color-${theme} border-[1px] shadow-${theme} mb-6 px-4 lg:ml-0 ml-6 lg:mr-0 mr-6`}
       >
         <div className="flex flex-col items-center gap-4">
           <CardHeader
@@ -28,10 +28,14 @@ const AccountCard = ({ accountData }) => {
               <MiniCards
                 leftContent={
                   <div className="flex flex-col gap-1">
-                    <h3 className={`text-lg font-semibold text-color-${theme}`}>
+                    <h3
+                      className={`xs:text-lg  text-sm font-semibold text-color-${theme}`}
+                    >
                       {accountData.identity.label}
                     </h3>
-                    <p className="text-[#6881a3] flex items-center gap-2">
+                    <p
+                      className={`text-[#6881a3] xs:text-md text-xs flex items-center gap-2`}
+                    >
                       Nationality:{" "}
                       {
                         accountData.identity.meta.data[
@@ -40,7 +44,9 @@ const AccountCard = ({ accountData }) => {
                       }
                       <FiCheckCircle color="#01cc7a" size={16} />
                     </p>
-                    <p className="text-[#6881a3] flex items-center gap-2">
+                    <p
+                      className={`text-[#6881a3] xs:text-md text-xs flex items-center gap-2`}
+                    >
                       Country of residence:{" "}
                       {
                         accountData.identity.meta.data[
@@ -49,7 +55,9 @@ const AccountCard = ({ accountData }) => {
                       }
                       <FiCheckCircle color="#01cc7a" size={16} />
                     </p>
-                    <p className="text-[#6881a3] flex items-center gap-2">
+                    <p
+                      className={`text-[#6881a3] xs:text-md text-xs flex items-center gap-2`}
+                    >
                       Customer Type: {accountData.identity.type}
                       <FiCheckCircle color="#01cc7a" size={16} />
                     </p>

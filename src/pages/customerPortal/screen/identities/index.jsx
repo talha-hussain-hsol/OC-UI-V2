@@ -14,19 +14,30 @@ const Identities = () => {
   const [profileListData, setProfileListData] = useState([]);
   const { theme } = useTheme();
   const navigate = useNavigate();
-  const { entites, activePortal, portals, handleActivePortal, isLoader, fetchIdentities } = useIdentityHook(setProfileListData); // Pass state setter function
+  const {
+    entites,
+    activePortal,
+    portals,
+    handleActivePortal,
+    isLoader,
+    fetchIdentities,
+  } = useIdentityHook(setProfileListData); // Pass state setter function
 
   // Fetch identity list on mount
   useEffect(() => {
-    fetchIdentities(); 
+    fetchIdentities();
   }, []);
 
   // Change theme based on user's choice
   useEffect(() => {
     document.body.style.backgroundColor =
-      theme === "SC" ? "#ffffff" :
-      theme === "Ascent" ? "rgba(18, 38, 63)" :
-      theme === "lightTheme" ? "#000000" : "";
+      theme === "SC"
+        ? "#ffffff"
+        : theme === "Ascent"
+        ? "rgba(18, 38, 63)"
+        : theme === "lightTheme"
+        ? "#000000"
+        : "";
 
     return () => {
       document.body.style.backgroundColor = "";
@@ -39,52 +50,69 @@ const Identities = () => {
 
   const handleToggle = () => {
     console.log("Toggle Button Clicked!");
-    
-  }
+  };
 
   const headers = ["Name", "Type", "Status", "Actions"];
-  
+
   // Manage toggle status for rows
-  const [status, setStatus] = useState(profileListData.map(row => row.status === "Active"));
+  const [status, setStatus] = useState(
+    profileListData.map((row) => row.status === "Active")
+  );
   const handleToggleStatus = (index) => {
-    setStatus((prevStatus) => prevStatus.map((stat, i) => (i === index ? !stat : stat)));
+    setStatus((prevStatus) =>
+      prevStatus.map((stat, i) => (i === index ? !stat : stat))
+    );
   };
 
   return (
     <div className={`bg-color-${theme}`}>
       <SideBar portalType="Customer" />
-      <div className="py-6 sm:ml-12 mx-4 sm:px-10 ">
-        <Header heading="My Identities" subheading="Overview" showButton={false} theme={theme} />
-        <div className="flex items-center justify-between">
-          <TabBar tabs={["My Identities"]} className={`text-color-h1-${theme} font-medium ml-6 pt-8 pb-8`} />
-          <Button
-            className={`bg-color-button-${theme} text-white font-light rounded-lg py-6 px-8 text-sm sm:text-md`}
-            text="Create New Identity"
-            onClick={handleClick}
+      <div className="py-6 lg:ml-12 ml-4 lg:px-10 ">
+        <div className="w-full">
+          <Header
+            heading="My Identities"
+            subheading="Overview"
+            showButton={false}
+            theme={theme}
           />
-        </div>
-        <hr className="border-t-[1px] border-t-[#6e84a3] opacity-20 mb-6 ml-6" />
-        <div className="flex flex-col w-full items-center justify-center sm:ml-6">
-          <div className={`bg-color-card-${theme} shadow-${theme} rounded-md w-full`}>
-          <div
-            className={`bg-color-card-${theme} rounded-t-md border-color-${theme} border-b-[1px] shadow-${theme} flex flex-col items-center justify-center h-full w-full`}
-          >
-            <p
-              className={`py-2 text-color-para-${theme} sm:text-xs text-[8px] w-full px-4`}
-            >
-              Please note that you can set your identities to "Inactive" or
-              "Active" by using the toggle button. Your submitted account
-              applications will not be impacted if you set your identities as
-              "Inactive" <br />
-              To delete/withdraw an account application, please proceed to the
-              Account Details page to perform this action. <br />
-              Please note that you can only delete/withdraw an application which
-              are in "Draft" or "Pending" statuses. Applications that have
-              already been processed for KYC screening cannot be deleted or
-              withdrawn. <br />
-              You may contact your Account Manager to assist you in this case.
-            </p>
+
+          <hr className=" border-t-[1px] border-t-[#6e84a3] opacity-20 mb-6 mt-4 sm:ml-6 sm:mr-6 lg:mr-0 ml-6 mr-6" />
+          <div className="flex items-center justify-between ml-6 sm:ml-0 lg:mr-0 mr-6 ">
+            <TabBar
+              tabs={["My Identities"]}
+              className={`text-color-h1-${theme} font-medium sm:ml-6 pt-8 pb-8`}
+            />
+            <Button
+              className={`bg-color-button-${theme} text-white font-light rounded-lg xs:py-6 xs:px-8 py-6 px-4 text-sm sm:text-md`}
+              text="Create New Identity"
+              onClick={handleClick}
+            />
           </div>
+          <hr className="border-t-[1px] border-t-[#6e84a3] opacity-20 mb-6 ml-6 lg:mr-0 mr-6" />
+        </div>
+        <div className="flex flex-col  items-center justify-center ml-6 lg:mr-0 mr-6">
+          <div
+            className={`bg-color-card-${theme} shadow-${theme} rounded-md w-full`}
+          >
+            <div
+              className={`bg-color-card-${theme} rounded-t-md border-color-${theme} border-b-[1px] shadow-${theme} flex flex-col items-center justify-center h-full w-full`}
+            >
+              <p
+                className={`py-2 text-color-para-${theme} sm:text-xs text-[8px] w-full px-4`}
+              >
+                Please note that you can set your identities to "Inactive" or
+                "Active" by using the toggle button. Your submitted account
+                applications will not be impacted if you set your identities as
+                "Inactive" <br />
+                To delete/withdraw an account application, please proceed to the
+                Account Details page to perform this action. <br />
+                Please note that you can only delete/withdraw an application
+                which are in "Draft" or "Pending" statuses. Applications that
+                have already been processed for KYC screening cannot be deleted
+                or withdrawn. <br />
+                You may contact your Account Manager to assist you in this case.
+              </p>
+            </div>
             {isLoader ? (
               <Loader theme={theme} />
             ) : (
@@ -96,12 +124,16 @@ const Identities = () => {
                   <>
                     <td className="py-4 px-6 font-light">{row.label}</td>
                     <td className="py-4 px-6 font-light">{row.type}</td>
-                    <td className={`py-4 px-6 text-color-status-${theme} font-light`}>
+                    <td
+                      className={`py-4 px-6 text-color-status-${theme} font-light`}
+                    >
                       {status[index] ? "Active" : "Inactive"}
                     </td>
                     <td className="py-4 px-6">
                       <div className="flex items-center space-x-4">
-                        <AiFillEdit className={`text-color-h1-${theme} cursor-pointer hover:text-[#ee9d0b]`} />
+                        <AiFillEdit
+                          className={`text-color-h1-${theme} cursor-pointer hover:text-[#ee9d0b]`}
+                        />
                         <label className="relative inline-flex items-center cursor-pointer">
                           <input
                             type="checkbox"

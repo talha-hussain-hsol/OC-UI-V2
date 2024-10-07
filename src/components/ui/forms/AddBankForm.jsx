@@ -1,32 +1,129 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "../button/Button";
 import { useTheme } from "../../../contexts/themeContext";
+import { useForm } from "react-hook-form";
+import { submitBankIdentityAPI } from "../../../api/userApi";
+import axios from "axios";
+import Loader from "../loader";
+import { getParticularFieldsFromFundIdApi } from "../../../api/userApi";
 
-const AddBankForm = ({ isOpen, onClose }) => {
-  const [formData, setFormData] = useState({
-    currency: "",
-    bankName: "",
-    accountNumber: "",
-    accountHolder: "",
-    swiftCode: "",
-  });
+const AddBankForm = ({ isOpen, onClose, fundId, fetchBankIdentities }) => {
   const { theme } = useTheme();
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const cancelTokenSource = axios.CancelToken.source();
+  const [particularFields, setParticularFields] = useState([]);
+  const [isLoaderBank, setIsLoaderBank] = useState(false);
+  const [isLoader, setIsLoader] = useState(false);
+  const [showIdentityLabel, setShowIdentityLabel] = useState(true);
+  const [label, setLabel] = useState("");
+  const [particularAddedData, setParticularAddedData] = useState([]);
+  const [identityDataFields, setIdentityDataFields] = useState({
+    bankName: "",
+    accountHolderName: "",
+  });
+  const getParticularFields = async () => {
+    try {
+      const response = await getParticularFieldsFromFundIdApi(
+        fundId,
+        cancelTokenSource.token
+      );
+      setIsLoader(false);
+      let array = [];
+      if (response.success === true) {
+        array = [
+          ...response.data.account_fields.s_b_f,
+          ...response.data.account_fields.e_b_f,
+        ];
+        const filteredObj = array
+          .sort((a, b) => {
+            const indexA = a[Object.keys(a)[0]].index;
+            const indexB = b[Object.keys(b)[0]].index;
+            return indexA - indexB;
+          })
+          .sort((a, b) => {
+            if (Object.keys(a)[0] === "bank.extended.bank_branch_address")
+              return 1;
+            if (Object.keys(b)[0] === "bank.extended.bank_branch_address")
+              return -1;
+            return 0;
+          });
+
+        setParticularFields(filteredObj);
+      } else {
+        setIsLoaderBank(false);
+      }
+    } catch (error) {
+      console.error("Error fetching particular fields:", error);
+      setIsLoaderBank(false);
+    }
   };
 
-  const isFieldEmpty = (field) => !formData[field];
-  const isFormValid = () => {
-    return (
-      formData.currency &&
-      formData.bankName &&
-      formData.accountNumber &&
-      formData.accountHolder &&
-      formData.swiftCode
-    );
+  useEffect(() => {
+    if (isOpen) {
+      getParticularFields();
+    }
+  }, [isOpen, fundId]);
+
+  const autoPopulateLabel = () => {
+    const { bankName, accountHolderName } = identityDataFields;
+    const newLabel = `${bankName} ${accountHolderName}`.trim();
+    setLabel(newLabel);
   };
+
+  useEffect(() => {
+    autoPopulateLabel();
+  }, [identityDataFields]);
+
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { errors , isValid},
+  } = useForm({
+    mode: "onSubmit",
+  });
 
   if (!isOpen) return null;
+
+  const getBorderClass = (field, value, required) => {
+    if (required) {
+      return errors[field]
+        ? "border border-[#a9712c]"
+        : value
+        ? "border-none"
+        : "border border-[#a9712c]";
+    }
+    return "border-none";
+  };
+
+  const onSubmit = async (data) => {
+    if (!isValid) {
+      // Trigger a re-validation to show errors if form is not valid
+      return;
+    }
+    onClose();
+    const payload = {
+      label,
+      data: data,
+    };
+
+    try {
+      const response = await submitBankIdentityAPI(
+        payload,
+        cancelTokenSource.token
+      );
+      console.log("Add Bank API Response: ", response);
+
+      if (response && response.success === true) {
+        await fetchBankIdentities();
+      } else {
+        console.error(response?.message || "Failed to add bank address.");
+      }
+    } catch (error) {
+      console.error("Error adding bank address:", error);
+    } finally {
+      setIsLoaderBank(false);
+    }
+  };
 
   return (
     <div
@@ -34,7 +131,7 @@ const AddBankForm = ({ isOpen, onClose }) => {
       onClick={(e) => e.stopPropagation()}
     >
       <div
-        className={`bg-gradient-stepper-card-${theme} rounded-md w-full sm:w-1/2 lg:w-8/12 mb-5 mt-40 py-6 px-6 shadow-sm text-white`}
+        className={`bg-gradient-stepper-card-${theme} rounded-md sm:w-8/12 w-full mb-5 lg:mt-40 sm:mt-0 xs:mt-40 2xs:mt-10 py-6 px-6 shadow-sm text-white`}
       >
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-sm font-light">Add Bank</h2>
@@ -43,158 +140,89 @@ const AddBankForm = ({ isOpen, onClose }) => {
           </button>
         </div>
         <hr className="w-full border-t-[1px] border-t-[#6e84a3] opacity-30 my-8" />
-        <form>
-          <div className="grid grid-cols-1 gap-6 px-2 sm:grid-cols-2">
-            {/* Currency Dropdown */}
-            <div>
-              <label className="block mb-2 text-sm font-light">Currency*</label>
-              <input
-                type="text"
-                name="currency"
-                value={formData.currency}
-                onChange={handleChange}
-                placeholder="Currency"
-                className={`w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md ${
-                  isFieldEmpty("currency")
-                    ? "border border-[#a9712c]"
-                    : "border border-[#1c3758]"
-                }`}
-              />
-            </div>
-            {/* Bank Name */}
-            <div>
+        {isLoaderBank && <Loader theme={theme} />}
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {/* Identity Label field */}
+          {showIdentityLabel && (
+            <div className="mb-4">
               <label className="block mb-2 text-sm font-light">
-                Bank Name*
+                Identity Label
+                <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
-                name="bankName"
-                value={formData.bankName}
-                onChange={handleChange}
-                placeholder="Bank Name"
-                className={`w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md ${
-                  isFieldEmpty("bankName")
-                    ? "border border-[#a9712c]"
-                    : "border border-[#1c3758]"
-                }`}
+                placeholder="Label Of Identity"
+                value={label}
+                readOnly
+                className={`w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md`}
               />
             </div>
-            {/* Account Number */}
-            <div>
-              <label className="block mb-2 text-sm font-light">
-                Account Number*
-              </label>
-              <input
-                type="text"
-                name="accountNumber"
-                value={formData.accountNumber}
-                onChange={handleChange}
-                placeholder="Account Number"
-                className={`w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md ${
-                  isFieldEmpty("accountNumber")
-                    ? "border border-[#a9712c]"
-                    : "border border-[#1c3758]"
-                }`}
-              />
-            </div>
-            {/* Account Holder's Name */}
-            <div>
-              <label className="block mb-2 text-sm font-light">
-                Account Holder's Name*
-              </label>
-              <input
-                type="text"
-                name="accountHolder"
-                value={formData.accountHolder}
-                onChange={handleChange}
-                placeholder="Account Holder's Name"
-                className={`w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md ${
-                  isFieldEmpty("accountHolder")
-                    ? "border border-[#a9712c]"
-                    : "border border-[#1c3758]"
-                }`}
-              />
-            </div>
-            {/* SWIFT/BIC/IFSC Code */}
-            <div>
-              <label className="block mb-2 text-sm font-light">
-                SWIFT/BIC/IFSC Code*
-              </label>
-              <input
-                type="text"
-                name="swiftCode"
-                value={formData.swiftCode}
-                onChange={handleChange}
-                placeholder="SWIFT/BIC/IFSC Code"
-                className={`w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md ${
-                  isFieldEmpty("swiftCode")
-                    ? "border border-[#a9712c]"
-                    : "border border-[#1c3758]"
-                }`}
-              />
-            </div>
-            {/* IBAN */}
-            <div>
-              <label className="block mb-2 text-sm font-light">IBAN</label>
-              <input
-                type="text"
-                placeholder="IBAN (International Bank Account Number)"
-                className={`w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white border border-[#1c3758] rounded-md`}
-              />
-            </div>
-            {/* Sort Code */}
-            <div>
-              <label className="block mb-2 text-sm font-light">
-                Sort Code (for UK banks)
-              </label>
-              <input
-                type="text"
-                placeholder="Sort Code (for UK banks)"
-                className={`w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white border border-[#1c3758] rounded-md`}
-              />
-            </div>
-            {/* Routing Number */}
-            <div>
-              <label className="block mb-2 text-sm font-light">
-                Routing Number
-              </label>
-              <input
-                type="text"
-                placeholder="Routing Number"
-                className={`w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white border border-[#1c3758] rounded-md`}
-              />
-            </div>
-            {/* Reference Description */}
-            <div>
-              <label className="block mb-2 text-sm font-light">
-                Reference Description
-              </label>
-              <input
-                type="text"
-                placeholder="Reference description"
-                className={`w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white border border-[#1c3758] rounded-md`}
-              />
-            </div>
-            {/* Bank/Branch Address */}
-            <div className="col-span-2">
-              <label className="block mb-2 text-sm font-light">
-                Bank/Branch Address
-              </label>
-              <textarea
-                placeholder="Bank/Branch Address"
-                className={`w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white border border-[#1c3758] rounded-md h-24`}
-              />
-            </div>
+          )}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {particularFields.map((fieldObj, index) => {
+              const fieldKey = Object.keys(fieldObj)[0];
+              const field = fieldObj[fieldKey];
+
+              if (!field.enabled) return null;
+
+              return (
+                <>
+                  <div className="mb-4" key={index}>
+                    <label className="block mb-2 text-sm font-light">
+                      {field.label}
+                      {field.required && (
+                        <span className="text-red-500">*</span>
+                      )}
+                    </label>
+                    <input
+                      type={field.type}
+                      placeholder={field.label}
+                      className={`w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md ${getBorderClass(
+                        fieldKey,
+                        watch(fieldKey),
+                        field.required
+                      )}`}
+                      {...register(fieldKey, {
+                        required: field.required
+                          ? `${field.label} is required`
+                          : false,
+                        onChange: (e) => {
+                          if (fieldKey === "bank.basic.bank_name") {
+                            setIdentityDataFields((prev) => ({
+                              ...prev,
+                              bankName: e.target.value,
+                            }));
+                          } else if (
+                            fieldKey === "bank.basic.account_holder_name"
+                          ) {
+                            setIdentityDataFields((prev) => ({
+                              ...prev,
+                              accountHolderName: e.target.value,
+                            }));
+                          }
+                        },
+                      })}
+                    />
+                    {errors[fieldKey] && (
+                      <p className="text-red-500 text-sm">
+                        {errors[fieldKey].message}
+                      </p>
+                    )}
+                  </div>
+                </>
+              );
+            })}
           </div>
           <div className="mt-6 flex px-2">
             <Button
               text="Submit"
+              disabled={!isValid}
               className={`py-6 px-8 rounded-lg ${
-                isFormValid()
+                isValid
                   ? `bg-color-button-${theme}`
                   : `bg-color-button-${theme} opacity-70`
               }`}
-              disabled={!isFormValid()}
+              type="submit"
             />
           </div>
         </form>
