@@ -142,6 +142,9 @@ const UserType = ({ onSelection, referenceDocuments, fundFields }) => {
 
         <hr className="w-[80%] border-t-[1px] border-t-[#6e84a3] opacity-30 my-6 mx-8" />
 
+        
+        {/* Started Working on the UserType Screen from here */}
+        
         <div className="flex flex-col sm:flex-row w-[90%] sm:w-[80%]">
           <div className="w-full sm:w-[50%] mr-0 sm:mr-[5%]">
             <p className={`text-color-${theme} text-sm`}>
@@ -173,6 +176,10 @@ const UserType = ({ onSelection, referenceDocuments, fundFields }) => {
             </p>
           </div>
         </div>
+
+          {/* Till Here */}
+
+
       </div>
     </>
   );
