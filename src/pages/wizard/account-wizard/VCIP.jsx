@@ -16,6 +16,8 @@ function VCIP(props) {
   const identity_id = "53c8a88a-cc42-4da4-958b-71e79df5ad5f";
   const fund_id = "1";
   const account_id = "185c546b-cbf1-4550-bdee-705799f6513e";
+  const { dataOfAccountSetups } = props; 
+  console.log('dataOfAccountSetups5',dataOfAccountSetups)
 
   const [locationData, setLocationData] = useState({
     latitude: null,
@@ -35,6 +37,7 @@ function VCIP(props) {
   const cancelTokenSource = axios.CancelToken.source();
 
   useEffect(() => {
+    
     handleGetSingleAccountDetailById();
   }, []);
 

@@ -1,12 +1,11 @@
-
 import React, { useState, useEffect } from "react";
 import { useTheme } from "../../../contexts/themeContext";
 import { FiSearch } from "react-icons/fi";
 import SideBar from "../../../components/sidebar/Sidebar";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../components/ui/button/Button";
-import { getFundForJoin, verifyFundExist } from "../../../api/userApi"; // Ensure API function is correctly imported
-import axios from "axios";            // If needed for CancelToken
+import { getFundForJoin, verifyFundExist } from "../../../api/userApi"; 
+import axios from "axios"; 
 import Loader from "../../../components/ui/loader";
 
 const FundCode = () => {
@@ -15,12 +14,37 @@ const FundCode = () => {
   const [fundCode, setFundCode] = useState("");
   const [isLoader, setIsLoader] = useState(false);
   const cancelTokenSource = axios.CancelToken.source();
-  const [alertJoinFund, setAlertJoinFund] = useState(false);    // will use this in future
-  const [fundData, setFundData] = useState(null);               // will use this in future
+  const [alertJoinFund, setAlertJoinFund] = useState(false); // will use this in future
+  let [fundData, setFundData] = useState([]); // will use this in future
+  // let fundData;
+  let entity_id=localStorage.getItem("entityId")
+  console.log("entity_id",entity_id);
+  let fund_id;
+  let fund_named_id;
+  let dataOfAccountSetups=[];
+  function addFundDetails(fund_id) {
+    const account_detail = {data:{
+
+      fund_id: fund_id,
+      fund_named_id:fund_named_id,  
+      identity: {
+      },      
+      entity: {
+        entityId: entity_id,
+      },        
+      account: {},
+      fundData:{
+        fund_data:fundData
+      }        
+    }
+    };
+    dataOfAccountSetups.push(account_detail);
+  
+    console.log(`Fund with ID ${fund_id} added.`);
+    console.log("dataOfAccountSetups",dataOfAccountSetups);
+  }
 
   useEffect(() => {
-    
-
     document.body.style.backgroundColor =
       theme === "SC"
         ? "#ffffff"
@@ -53,7 +77,6 @@ const FundCode = () => {
     navigate("/accounts");
   }
 
-
   const handleGetCustomersAccounts = async () => {
     setIsLoader(true);
     try {
@@ -82,38 +105,25 @@ const FundCode = () => {
   const getFundForJoinApi = async () => {
     setIsLoader(true);
     setAlertJoinFund(false);
-    
+
     const response = await getFundForJoin(fundCode, cancelTokenSource.token);
     if (response.success == true) {
       setIsLoader(false);
-      const fundData = response?.data;
+      fundData = response?.data;
+      fund_id=fundData?.id;
+      fund_named_id=fundData?.named_id;
       const referenceDocuments = fundData?.reference_document?.documents;
       const fundField = fundData?.fund_fields;
       const fundSetting = fundData?.fund_setting;
       setFundData(response?.data);
+      addFundDetails(fund_id);
       navigate("/stepper", {
-        state: { fundData,
-          referenceDocuments,
-          fundSetting,
-          fundField
-        }, 
+        state: { fundData, referenceDocuments, fundSetting, fundField, dataOfAccountSetups, 
+          fundId: fund_id,
+         },
+       
       });
       localStorage.setItem("fundRegion", response?.data?.fund_setting?.region);
-      if (!response?.data?.reference_document?.term_documents) {
-        props.handleChangeTermsCondition();
-      }
-      if (response?.data?.reference_document?.term_documents?.length == 0) {
-        props.handleChangeTermsCondition();
-      } else if (
-        response?.data?.reference_document?.term_documents?.[
-          response?.data?.reference_document?.term_documents?.length - 1
-        ]?.is_required == "false" ||
-        response?.data?.reference_document?.term_documents?.[
-          response?.data?.reference_document?.term_documents?.length - 1
-        ]?.is_required == false
-      ) {
-        props.handleChangeTermsCondition();
-      }
       
     } else {
       setIsLoader(false);
@@ -138,9 +148,7 @@ const FundCode = () => {
             from the account owner.
           </p>
           {isLoader ? (
-          
-          <Loader theme={theme}/>
-          
+            <Loader theme={theme} />
           ) : (
             <>
               <div className="relative w-full mt-4 mb-10">
