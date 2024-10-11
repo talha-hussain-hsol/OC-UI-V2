@@ -19,6 +19,7 @@ const UserForm = ({ userType, onNext, fundData, identitiesData, dataOfAccountSet
   const fund_id = fundData?.id;
   let fund_named_id=fundData?.named_id;
   var account_id;
+  var field_data;
   console.log("fund_named_id",fund_named_id)
   let identity_id;
   var identities;
@@ -234,6 +235,7 @@ const UserForm = ({ userType, onNext, fundData, identitiesData, dataOfAccountSet
       if (response) {
         setErrorMessage(null); 
         identity_id = response?.data?.id; 
+        field_data = response?.data;
         console.log("Identity ID is here:", identity_id);
         
         await handleCreateAccount(identity_id, fund_named_id, data, response?.data);
@@ -271,6 +273,8 @@ const UserForm = ({ userType, onNext, fundData, identitiesData, dataOfAccountSet
         if (account_id) {
           dataOfAccountSetups[0].data.identity.identity_id = identity_id;
           dataOfAccountSetups[0].data.account.account_id = account_id;
+          dataOfAccountSetups[0].data.identity.field_data = field_data;
+
   
           updateDataOfAccountSetups({
             dataOfAccountSetups,
