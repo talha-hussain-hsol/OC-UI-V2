@@ -7,6 +7,7 @@ import Loader from "../../../../components/ui/loader";
 import SideBar from "../../../../components/sidebar/Sidebar";
 import Header from "../../../../components/header/Header";
 import AccountCard from "../../../../components/cardComponent/AccountCard";
+import IconButton from "../../../../components/ui/button/IconButton";
 
 const Accounts = () => {
   const { accounts, isLoader, fetchMoreAccounts } = useAccountsHook();
@@ -19,8 +20,20 @@ const Accounts = () => {
   function handleClick() {
     navigate("/fund-code");
   }
+  useEffect(() => {
+    document.body.style.backgroundColor =
+      theme === "SC"
+        ? "#ffffff"
+        : theme === "Ascent"
+        ? "rgba(18, 38, 63)"
+        : theme === "lightTheme"
+        ? "#000000"
+        : "";
 
-  // Use the observer to trigger API call when reaching the bottom of the list
+    return () => {
+      document.body.style.backgroundColor = "";
+    };
+  }, [theme]);
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {

@@ -262,10 +262,10 @@ const BankCard = ({
                 {row?.meta?.data?.bank?.basic?.account_number}
               </td>
               <td className="py-4 px-2 sm:px-6 uppercase">
-              {row?.meta?.data?.bank?.basic?.swift_bic__ifsc_code}
+                {row?.meta?.data?.bank?.basic?.swift_bic__ifsc_code}
               </td>
               <td className="py-4 px-2 sm:px-6 uppercase">
-              {row?.meta?.data?.bank?.basic?.currency}
+                {row?.meta?.data?.bank?.basic?.currency}
               </td>
               <td className="py-4 px-2 sm:px-6 text-[#f39f08] uppercase">
                 {row.status}

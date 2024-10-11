@@ -57,8 +57,8 @@ module.exports = {
         "color-textfield-SC": "transparent",
         "color-textfield-lightTheme": "#004e89",
         "color-textfield-Ascent": "#043f63",
-        "color-modal-button-SC": '#6e84a3',
-        "color-modal-button-Ascent": '#6e84a3',
+        "color-modal-button-SC": "#6e84a3",
+        "color-modal-button-Ascent": "#6e84a3",
         "color-button-SC": "#3DA500", // For All Buttons + Processing Case
         "color-button-Ascent": "#2C75E6", // For All Buttons + Processing Case
         "color-button1-SC": "#8DC63F", //For Accepted Case
@@ -97,6 +97,8 @@ module.exports = {
         "color-modal-SC": "#FFFFFF",
         "color-modal-Ascent": "#152e4d",
         "color-modal-lightTheme": "",
+        "color-iconButton-SC": "#f2f0f0",
+        "color-iconButton-Ascent": "#12273f",
       },
 
       borderColor: {
@@ -109,6 +111,12 @@ module.exports = {
         "color-button-Ascent": "#FFFFFF",
         "color-loader-SC": "#8DC63F",
         "color-loader-Ascent": "#ffffff",
+        "color-tooltip-SC": "#000000",
+        "color-tooltip-Ascent": "#ffffff",
+        "color-iconButton-hover-Ascent": "#1e3a5c",
+        "color-iconButton-hover-SC": "#d9d9d9",
+        "color-iconButton-Ascent": "#ffffff",
+        "color-iconButton-SC": "#e0e0e0",
       },
       textColor: {
         "color-SC": "#3DA500",
@@ -250,9 +258,7 @@ module.exports = {
     {
       pattern: /text-color-icon-(SC|lightTheme|Ascent)/,
     },
-    {
-      pattern: /text-color-icon-text-(SC|lightTheme|Ascent)/,
-    },
+
     {
       pattern: /text-color-status-(SC|lightTheme|Ascent)/,
     },
@@ -325,8 +331,9 @@ module.exports = {
     {
       pattern: /border-color-modal-(SC|lightTheme|Ascent)/, // Hover border color
     },
+
     {
-      pattern: /border-color-button-border-(SC|lightTheme|Ascent)/, // Hover border color
+      pattern: /border-color-tooltip-(SC|lightTheme|Ascent)/, // Hover border color
     },
     {
       pattern: /border-color-(SC|lightTheme|Ascent)/, // Hover border color
@@ -334,6 +341,17 @@ module.exports = {
     },
     {
       pattern: /text-color-(SC|lightTheme|Ascent)/, // Hover text color
+      variants: ["hover"],
+    },
+    {
+      pattern: /bg-color-iconButton-(SC|lightTheme|Ascent)/, // Hover text color
+      variants: ["hover"],
+    },
+    {
+      pattern: /border-color-iconButton-(SC|lightTheme|Ascent)/, // Hover text color
+    },
+    {
+      pattern: /border-color-iconButton-hover-(SC|lightTheme|Ascent)/, // Hover text color
       variants: ["hover"],
     },
     {

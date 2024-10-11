@@ -9,7 +9,6 @@ const useBankWalletHook = () => {
   const [bankIdentities, setBankIdentities] = useState([]);
   const [walletAddresses, setWalletAddresses] = useState([]);
 
-
   // Memoize fetchBankIdentities to avoid recreating it on each render
   const fetchBankIdentities = useCallback(async () => {
     try {
@@ -45,8 +44,6 @@ const useBankWalletHook = () => {
     await fetchWalletAddresses();
   }, [fetchBankIdentities, fetchWalletAddresses]);
 
- 
-
   return {
     isLoader,
     isLoaderBank,
@@ -54,7 +51,7 @@ const useBankWalletHook = () => {
     walletAddresses,
     fetchAllData,
     fetchWalletAddresses,
-    fetchBankIdentities
+    fetchBankIdentities,
   };
 };
 

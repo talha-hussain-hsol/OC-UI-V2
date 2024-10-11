@@ -15,7 +15,9 @@ const Modal = ({ id, title, children, onClose, selectedType }) => {
         className={`relative bg-gradient-stepper-card-${theme} rounded-lg shadow-lg w-full max-w-4xl mx-4 md:mx-6 lg:mx-8`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className={`bg-gradient-stepper-card-${theme} flex items-center justify-between p-4 border-[#151c39] rounded-t-lg`}>
+        <div
+          className={`bg-gradient-stepper-card-${theme} flex items-center justify-between p-4 border-[#151c39] rounded-t-lg`}
+        >
           <h3 className="text-lg font-semibold text-white">{title}</h3>
           <button
             type="button"
@@ -41,7 +43,9 @@ const Modal = ({ id, title, children, onClose, selectedType }) => {
           </button>
         </div>
         <div className="flex flex-col lg:flex-row">
-        <div className={`flex flex-col items-center justify-center bg-transparent p-4 md:p-6 lg:p-8 rounded-l-lg lg:w-[50%] w-full`}>
+          <div
+            className={`flex flex-col items-center justify-center bg-transparent p-4 md:p-6 lg:p-8 rounded-l-lg lg:w-[50%] w-full`}
+          >
             {children}
           </div>
           <div className="flex flex-col justify-center p-4 md:p-6 lg:p-8 w-full lg:w-[50%]">
@@ -91,7 +95,9 @@ const Modal = ({ id, title, children, onClose, selectedType }) => {
               </div>
             </div>
 
-            <button className={`bg-color-button-${theme} w-[180px] bg-blue-600 py-2 px-2 mt-6 rounded-2xl text-white`}>
+            <button
+              className={`bg-color-button-${theme} w-[180px] bg-blue-600 py-2 px-2 mt-6 rounded-2xl text-white`}
+            >
               Upload Document
             </button>
           </div>

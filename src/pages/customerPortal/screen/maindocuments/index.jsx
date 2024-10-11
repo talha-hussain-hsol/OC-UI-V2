@@ -96,9 +96,7 @@ const MainDocuments = () => {
               <div
                 className={`relative flex flex-col text-color-h1-${theme} sm:w-1/4 w-full`}
               >
-                <label className="mb-2 text-md ">
-                  As of Date
-                </label>
+                <label className="mb-2 text-md ">As of Date</label>
                 <input
                   type="text"
                   value={asOfDate}
@@ -110,7 +108,7 @@ const MainDocuments = () => {
                 />
               </div>
               <div>
-              <Button
+                <Button
                   className={`bg-color-button-${theme} text-white py-6 px-6 font-light rounded-md text-nowrap mt-6`}
                   text="Clear Filter"
                 />

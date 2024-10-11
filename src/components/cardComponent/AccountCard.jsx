@@ -21,6 +21,7 @@ const AccountCard = ({ accountData }) => {
             fundClassName={`text-color-text-${theme} text-base`}
             showButton={false}
             showLogo={true}
+            iconButton={true}
           />
 
           <div className="flex flex-col gap-6 md:flex-row justify-center mb-5 w-full">

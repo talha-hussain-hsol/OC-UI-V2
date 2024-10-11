@@ -1,31 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import { FiCheckCircle } from "react-icons/fi";
 import StepsStatus from "./StepsStatus";
 import { useTheme } from "../../contexts/themeContext";
 import CardHeader from "../header/CardHeader";
+
 const SummaryCard = () => {
   const { theme } = useTheme();
+  const [isCollapsed, setIsCollapsed] = useState(true);
+
   const rightContent = (
     <div className="flex flex-col gap-1 py-2">
-      <p className="text-[#6881a3] text-xs sm:text-sm flex items-center gap-1">
+      <p className="text-white text-xs sm:text-lg flex items-center gap-1">
         <span>
           <FiCheckCircle color="#01cc7a" size={16} />
         </span>
         Dealing Cycle: Open
       </p>
+      <p className="text-[#6881a3] text-xs sm:text-lg flex items-center gap-1">
+        <span>
+          <FiCheckCircle color="#01cc7a" size={16} />
+        </span>
+        Digital Fund: Active
+      </p>
     </div>
   );
   const middleContent = (
     <div className="flex flex-col gap-1 py-2">
-      <p
-        className={`text-[#6881a3] text-xs sm:text-sm flex items-center gap-1`}
-      >
+      <p className={`text-white text-xs sm:text-lg flex items-center gap-1`}>
         <span>
           <FiCheckCircle color="#01cc7a" size={16} />
         </span>
         Fund's KYC: Accepted
       </p>
-      <p className="text-[#6881a3] text-xs sm:text-sm flex items-center gap-1">
+      <p className="text-[#6881a3] text-xs sm:text-lg flex items-center gap-1">
         <span>
           <FiCheckCircle color="#01cc7a" size={16} />
         </span>
@@ -50,7 +57,7 @@ const SummaryCard = () => {
       />
       <CardHeader
         FundName="Reference Documents"
-        fundClassName={`text-color-text-${theme} text-[10px] xs:text-sm uppercase`}
+        fundClassName={`text-color-text-${theme} text-[10px] xs:text-sm sm:text-lg`}
         showButton={false}
         showLogo={false}
         className="mb-6"

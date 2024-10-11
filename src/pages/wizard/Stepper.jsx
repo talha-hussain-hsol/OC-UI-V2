@@ -85,6 +85,21 @@ const faceVerificationCompleted = (data, redirect = false) => {
    
   }
 };
+
+useEffect(() => {
+  document.body.style.backgroundColor =
+    theme === "SC"
+      ? "#ffffff"
+      : theme === "Ascent"
+      ? "rgba(18, 38, 63)"
+      : theme === "lightTheme"
+      ? "#000000"
+      : "";
+
+  return () => {
+    document.body.style.backgroundColor = "";
+  };
+}, [theme]);
 const handleGetAccountDetail = async () => {
   const response = await getSingleAccountDetailByIdAPI(
     dataOfAccountSetup?.account_id
