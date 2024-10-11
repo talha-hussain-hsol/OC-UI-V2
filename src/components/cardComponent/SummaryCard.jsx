@@ -6,7 +6,6 @@ import CardHeader from "../header/CardHeader";
 
 const SummaryCard = () => {
   const { theme } = useTheme();
-  const [isCollapsed, setIsCollapsed] = useState(true);
 
   const rightContent = (
     <div className="flex flex-col gap-1 py-2">
