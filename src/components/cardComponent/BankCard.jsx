@@ -4,7 +4,7 @@ import Table from "../table/Table";
 import AddBankForm from "../ui/forms/AddBankForm";
 import { useTheme } from "../../contexts/themeContext";
 import { RiDeleteBin7Line } from "react-icons/ri";
-
+import Tooltip from "../tooltip/Tooltip";
 import { MdOutlineWorkHistory } from "react-icons/md";
 import { LuInfo } from "react-icons/lu";
 import Button from "../ui/button/Button";
