@@ -258,14 +258,13 @@ export const logoutAPI = async (cancelToken) => {
   }
 };
 
-//documents api
 export const postIdentityAttatchWithFund = async (
   identityId,
   data,
   cancelToken
 ) => {
-  const url = `/${entityId}/${baseURL}/Identity/${identityId}/attach`;
-  const request = { type: "POST", urlString: url, params: data };
+  const url = `/${entityId}/CAPI/Identity/${identityId}/attach`
+  const request = { type: "POST", urlString: url, params: data }
 
   try {
     const response = await processRequest(request, cancelToken);

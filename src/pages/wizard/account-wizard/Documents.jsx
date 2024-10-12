@@ -6,19 +6,18 @@ import { useTheme } from "../../../contexts/themeContext";
 import { getIdentityDocument } from "../../../api/userApi";
 import axios from "axios";
 
-function Documents() {
+function Documents(dataOfAccountSetups) {
+
   const [documentUploadedSelected, setDocumentUploadedSelected] = useState([]);
   const [identityUploadDocList, setIdentityUploadDocList] = useState([]);
   const [isLoader, setIsLoader] = useState(false);
   const cancelTokenSource = axios.CancelToken.source();
 
-
-
-
   let { identity_id, account_id } = useParams();
   useEffect(() => {
     handleGetIdentityDocumentApi();
     handleGetRequiredDocumentApi();
+    console.log('dataOfAccountSetups33',dataOfAccountSetups);
   }, [identity_id]);
 
 

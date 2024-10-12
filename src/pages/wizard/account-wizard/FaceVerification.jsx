@@ -651,6 +651,8 @@ import Loader from "../../../components/ui/loader";
 import faceimg from "../../../assets/face.png";
 
 function FaceVerification(props) {
+  const { dataOfAccountSetups } = props; 
+  console.log('dataOfAccountSetups4', dataOfAccountSetups);  
   const { theme } = useTheme();
   const [isLoader, setIsLoader] = useState(false);
   const [apiResponse, setApiResponse] = useState([]);
@@ -659,6 +661,7 @@ function FaceVerification(props) {
 
   const cancelTokenSource = axios.CancelToken.source();
 
+  
   const handleGetAccountDetail = async () => {
     setIsLoader(true);
     try {
