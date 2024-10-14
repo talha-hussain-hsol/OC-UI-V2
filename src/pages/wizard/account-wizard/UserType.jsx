@@ -599,22 +599,26 @@ const UserType = ({ onSelection, onNext, fundData, referenceDocuments }) => {
     }
   };
 
-    const handleSelection = (type) => {
+  //   const handleSelection = (type) => {
+  //   setUserType(type);
+  //   onSelection(type);
+  // };
+  const handleSelection = (type) => {
     setUserType(type);
-    onSelection(type);
+    onSelection({ type, isNewIdentity: true });
   };
 
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);
   };
 
-  const isNextButtonDisabled = () => {
-    if (isNewIdentity) {
-      return !userType;
-    } else {
-      return !selectedIdentity;
-    }
-  };
+  // const isNextButtonDisabled = () => {
+  //   if (isNewIdentity) {
+  //     return !userType;
+  //   } else {
+  //     return !selectedIdentity;
+  //   }
+  // };
 
   return (
     <div className={`w-full flex flex-col items-center bg-transparent font-${theme} text-${theme}`}>
@@ -701,7 +705,66 @@ const UserType = ({ onSelection, onNext, fundData, referenceDocuments }) => {
       <hr className="w-[80%] border-t-[1px] border-t-[#6e84a3] opacity-30 my-6 mx-8" />
 
       {/* Identity selection UI */}
-      <div className="flex flex-col sm:flex-row w-[90%] sm:w-[80%] mt-8">
+      {/* <div className="flex flex-col sm:flex-row w-[90%] sm:w-[80%] mt-8">
+        {isNewIdentity ? (
+          <div className="flex flex-col sm:flex-row w-[90%] sm:w-[80%]">
+            <div className="w-full sm:w-[50%] mr-0 sm:mr-[5%]">
+              <p className={`text-color-${theme} text-sm`}>Are you applying as an Individual or Corporate?</p>
+                <div className="flex mt-4 lg:w-[80%]">
+                 <button
+                  onClick={() => handleSelection("individual")}
+                  className={`flex-1 py-2 rounded-l-full text-white ${
+                    userType === "individual" ? "bg-[#3e9b3e]" : "bg-[#1e3a5c]"
+                  } hover:bg-[#3e9b3e] focus:outline-none`}
+                >
+                  Individual
+                </button>
+                <button
+                  onClick={() => handleSelection("corporate")}
+                  className={`flex-1 py-2 rounded-r-full text-white ${
+                    userType === "corporate" ? "bg-[#3e9b3e]" : "bg-[#1e3a5c]"
+                  } hover:bg-[#3e9b3e] focus:outline-none`}
+                >
+                  Corporate
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="w-full">
+            {isLoading ? (
+              <div className="min-h-[50px] flex justify-center items-center">
+                <Loader theme={theme} />
+              </div>
+            ) : (
+              <>
+                <p className={`text-color-${theme} text-sm`}>Select your identity</p>
+                <div className="flex mt-4">
+                  <select
+                    style={{ width: '80%', borderRadius: '15px', backgroundColor: "#152e4d" }}
+                    value={selectedIdentity ? selectedIdentity.id : ""}
+                    onChange={handleIdentityChange}
+                  >
+                    <option value="" disabled>Select the identity</option>
+                    {identitiesData.length > 0
+                      ? identitiesData.map((identity) => (
+                          <option key={identity.id} value={identity.id}>
+                            {identity.label}
+                          </option>
+                        ))
+                      : <option value="">No Identity Available</option>
+                    }
+                  </select>
+
+                  <button
+                    className="ml-3 p-2 rounded-full bg-gradient-to-r from-green-400 to-green-600"
+                    onClick={() => setIsNewIdentity(true)}
+                  >
+                    <HiUserAdd color="white" size="24px" />
+                  </button>
+                </div>
+              </> */}
+              <div className="flex flex-col sm:flex-row w-[90%] sm:w-[80%] mt-8">
         {isNewIdentity ? (
           <div className="flex flex-col sm:flex-row w-[90%] sm:w-[80%]">
             <div className="w-full sm:w-[50%] mr-0 sm:mr-[5%]">
@@ -765,7 +828,7 @@ const UserType = ({ onSelection, onNext, fundData, referenceDocuments }) => {
         )}
       </div>
 
-      <button
+      {/* <button
         onClick={onNext}
         disabled={isNextButtonDisabled()}
         className={`mt-8 bg-gradient-to-r from-blue-500 to-blue-700 text-white p-2 rounded-full ${
@@ -773,7 +836,7 @@ const UserType = ({ onSelection, onNext, fundData, referenceDocuments }) => {
         }`}
       >
         Next
-      </button>
+      </button> */}
     </div>
   );
 };
