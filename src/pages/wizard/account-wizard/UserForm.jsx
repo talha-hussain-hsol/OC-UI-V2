@@ -6,7 +6,7 @@ import Loader from '../../../components/ui/loader';
 import { getParticularFieldsFromFundIdApi, postIdentityAPI, getEntityTypeAPI, getParticularsDetailByIdentityIdAPI, postIdentityAttatchWithFund } from '../../../api/userApi';
 import axios from 'axios';
 
-const UserForm = ({ userType, onNext, fundData, identitiesData, dataOfAccountSetups,fundId, updateDataOfAccountSetups }) => {
+const UserForm = ({ userType, onNext, fundData, identitiesData, dataOfAccountSetups,fundId, updateDataOfAccountSetups, onFormChange }) => {
   const { theme } = useTheme();
   const [formValues, setFormValues] = useState({});
   const [newFields, setNewFields] = useState({});
