@@ -9,13 +9,13 @@ const SummaryCard = () => {
 
   const rightContent = (
     <div className="flex flex-col gap-1 py-2">
-      <p className="text-white text-xs sm:text-lg flex items-center gap-1">
+      <p className={`text-color-text-${theme} text-xs sm:text-lg flex items-center gap-1`}>
         <span>
           <FiCheckCircle color="#01cc7a" size={16} />
         </span>
         Dealing Cycle: Open
       </p>
-      <p className="text-[#6881a3] text-xs sm:text-lg flex items-center gap-1">
+      <p className={`text-color-text-${theme} text-xs sm:text-lg flex items-center gap-1`}>
         <span>
           <FiCheckCircle color="#01cc7a" size={16} />
         </span>
@@ -25,13 +25,13 @@ const SummaryCard = () => {
   );
   const middleContent = (
     <div className="flex flex-col gap-1 py-2">
-      <p className={`text-white text-xs sm:text-lg flex items-center gap-1`}>
+      <p className={`text-color-text-${theme} text-xs sm:text-lg flex items-center gap-1`}>
         <span>
           <FiCheckCircle color="#01cc7a" size={16} />
         </span>
         Fund's KYC: Accepted
       </p>
-      <p className="text-[#6881a3] text-xs sm:text-lg flex items-center gap-1">
+      <p className={`text-color-text-${theme} text-xs sm:text-lg flex items-center gap-1`}>
         <span>
           <FiCheckCircle color="#01cc7a" size={16} />
         </span>
@@ -74,7 +74,7 @@ const SummaryCard = () => {
             FundName="Profile"
             showButton={false}
             showLogo={false}
-            fundClassName={`text-[#6881a3] `}
+            fundClassName={`text-color-text-${theme} `}
             // className="w-full"
           /> */}
           <div className={`flex flex-col ml-4 my-8 gap-3`}>

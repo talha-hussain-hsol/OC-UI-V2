@@ -35,6 +35,11 @@ function Stepper() {
     dataOfAccountSetups || []
   );
 
+  const wizardData = localStorage.getItem('dataofAccountSetup');
+  const wizardDataSetup = JSON.parse(wizardData);
+
+console.log("wizardDataSetup",wizardDataSetup);
+
   const [fundData, setFundData] = useState(location.state?.fundData || null); // will use this in future
   const [fundFields, setFundFields] = useState(
     location.state?.fundField || null

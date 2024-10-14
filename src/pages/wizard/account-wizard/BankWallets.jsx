@@ -4,11 +4,12 @@ import useBankWalletHook from "../../../hooks/useBankWalletHook";
 import Loader from "../../../components/ui/loader";
 import { useTheme } from "../../../contexts/themeContext";
 
-const BankWallets = (fundData,dataOfAccountSetup) => {
+const BankWallets = (fundData,dataOfAccountSetups) => {
   const theme = useTheme();
   console.log("Fund Data iss: ", fundData);
-  const { dataOfAccountSetups } = dataOfAccountSetup; 
-  console.log('dataOfAccountSetups6',dataOfAccountSetups)
+  console.log('dataOfAccountSetups6',fundData.dataOfAccountSetups)
+
+  
   const {
     isLoader,
     isLoaderBank,
