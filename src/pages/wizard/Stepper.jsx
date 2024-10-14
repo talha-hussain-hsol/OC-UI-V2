@@ -31,7 +31,7 @@ function Stepper() {
   const [isLoader, setIsLoader] = useState(false);
   const [steps, setSteps] = useState(initialSteps);                                                           // Initialize with 3 steps
   const isShowFaceVerificationVCIP = true;
-  // const identitiesData = [];
+  let identitiesData = [];
   const cancelTokenSource = axios.CancelToken.source();
   const [dataOfAccountSetup, setDataOfAccountSetup] = useState({});
   const [isAssistanceData, setIsAssistanceData] = useState(false);
@@ -57,13 +57,14 @@ function Stepper() {
   // const [fundCode, setFundCode] = useState("");
   // const [selectedIdentity, setSelectedIdentity] = useState({ value: "" });
   // const [selectedIdentityData, setSelectedIdentityData] = useState();
-  const [identitiesData, setIdentitiesData] = useState([]);
+  // const [identitiesData, setIdentitiesData] = useState([]);
   const [submitFaceVerificationAPI, setSubmitFaceVerificationAPI] = useState(false);
 
 
   const [submitVCIPAPI, setSubmitVCIPAPI] = useState(false);
   const [buttonDisabledForVCIP, setButtonDisabledForVCIP] = useState(false);
   const [handleCallAPIForVCIPData, setHandleCallAPIForVCIPData] = useState(false);
+  // let identitiesData = [];
   
   const handleAssistanceData = (data) => {
     setIsAssistanceData(data);
@@ -112,18 +113,21 @@ const submitFaceVerification = (data) => {
   }, [fundData]);
 
   const handleDynamicSteps = async () => {
-    setIsLoader(true);
-    const identitiesData = await getIdentityList(cancelTokenSource.token, fundData?.id);
-    setIsLoader(false);
-    console.log("Fund Id Response:", identitiesData);
-    console.log("Fund Data is here:", fundData);
+    // setIsLoader(true);
+    // const responce = await getIdentityList(cancelTokenSource.token, fundData?.id);
+    // setIsLoader(false);
+    // console.log("Fund Id Response:", responce);
+    // console.log("Fund Data is here:", fundData);
+    // setIdentitiesData(responce.data);
     
-
+    
     let stepsData = [
       { title: 'Select Account' },
       { title: 'Identity Setup' },
     ];
-
+    
+    // identitiesData = responce?.data;
+    // console.log("Yeh Hai Identities ka data new new:", identitiesData);
     const fundAccountSettings = fundData?.fund_setting?.account?.applicant?.identity;
     const fundApplicationStatus = fundData?.fund_setting?.account?.subscription;
  
@@ -140,7 +144,7 @@ const submitFaceVerification = (data) => {
       }
     } else {
       // Check if the account type is individual or corporate
-      let customerType = fundData?.isIndividual ? 'indivisual' : 'corporate';
+      let customerType = fundData?.isIndividual ? 'individual' : 'corporate';
 
       if (fundAccountSettings?.[customerType]?.provider?.verify?.face?.enabled && isShowFaceVerificationVCIP) {
         stepsData.push({ title: 'Face Verification' });
@@ -168,6 +172,7 @@ const submitFaceVerification = (data) => {
     // Update the steps
     setSteps(stepsData.map(step => step.title));
   };
+  
 
   const handleNext = (data) => {
     if (data) {
@@ -205,7 +210,7 @@ const submitFaceVerification = (data) => {
 
   const renderContent = () => {
     const stepComponents = {
-      "Select Account": <UserType onSelection={handleUserTypeSelection} fundData={fundData} referenceDocuments={referenceDocuments} fundFields={fundFields} identitiesData={identitiesData}/>,
+      "Select Account": <UserType onSelection={handleUserTypeSelection} fundData={fundData} referenceDocuments={referenceDocuments} fundFields={fundFields}/>,
       "Identity Setup": <UserForm userType={userType} fundData={fundData} fundFields={fundFields} identitiesData={identitiesData} onNext={(formValues) => handleNext(formValues)} />,
       "Documents": <Documents />,
       "Face Verification": <FaceVerification 
