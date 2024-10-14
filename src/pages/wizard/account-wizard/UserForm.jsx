@@ -6,7 +6,7 @@ import Loader from '../../../components/ui/loader';
 import { getParticularFieldsFromFundIdApi, postIdentityAPI, getEntityTypeAPI, getParticularsDetailByIdentityIdAPI, postIdentityAttatchWithFund } from '../../../api/userApi';
 import axios from 'axios';
 
-const UserForm = ({ userType, onNext, fundData, identitiesData, dataOfAccountSetups,fundId, updateDataOfAccountSetups }) => {
+const UserForm = ({ userType, onNext, fundData, identitiesData, dataOfAccountSetups,fundId, updateDataOfAccountSetups, onFormChange }) => {
   const { theme } = useTheme();
   const [formValues, setFormValues] = useState({});
   const [newFields, setNewFields] = useState({});
@@ -24,6 +24,7 @@ const UserForm = ({ userType, onNext, fundData, identitiesData, dataOfAccountSet
   let identity_id;
   var identities;
   const cancelTokenSource = axios.CancelToken.source();
+  const [identityId, setIdentityId] = useState('');
 
   console.log("Fund Data iss: ", fundData);
   
@@ -34,17 +35,28 @@ const UserForm = ({ userType, onNext, fundData, identitiesData, dataOfAccountSet
     if (
       name.includes("first_name") ||
       name.includes("last_name") ||
-      name.includes("nationality_code")
+      name.includes("nationality_code") ||
+      name.includes("country_of_major_operation_code") ||
+      name.includes("name")
     ) {
       handleIdentityLabel(updatedValues);
     }
+    
+    // Notify parent component of form changes
+    onFormChange({
+      label,
+      fund_id,
+      customer_type_key: identitiesData?.type === "INDIVIDUAL" ? "INDIVIDUAL" : "CORPORATE",
+      data: updatedValues,
+      entity_type_id: identitiesData?.type === "INDIVIDUAL" ? null : entityType?.toString() || null,
+    });
   };
 
   useEffect(() => {
     if (fundData) {
       handleParticularFields();
       handleEntityType();
-      // getSpecificIdentity();
+      getSpecificIdentity();
     }
 
     return () => {
@@ -87,46 +99,52 @@ const UserForm = ({ userType, onNext, fundData, identitiesData, dataOfAccountSet
         const country = data["individual_basic_nationality_code"] || "";
         newLabel = `${firstName} ${lastName} ${country}`;
       }
+      else{
+        const companyName = data["corporate_basic_name"] || "";
+        const country = data["corporate_basic_country_of_major_operation_code"] || "";
+        newLabel = `${companyName} ${country}`;
+      }
       setLabel(newLabel);
       setFormValues((prev) => ({ ...prev, label: newLabel }));
     }
   };
 
-  // const getSpecificIdentity = async (identity_id_val) => {
-  //   console.log( 'Heres the Identity ID Value:', identity_id_val );
-  //   setIsLoader(true);
-  //   const response = await getParticularsDetailByIdentityIdAPI(
-  //     identity_id_val,
-  //     cancelTokenSource.token,
-  //   );
-  //   if (response == true) {
-  //     setIsLoader(false);
-  //     // if (props?.outDated == null) {
-  //     //   props?.updateUpdatedData(response.data?.meta?.identity?.outDated);
-  //     // }
-  //     // setParticularAddedData(response.data?.meta?.data);
-  //     // setParticularEditMetaData(response.data?.meta);
-  //     setEntityType(response.data?.entityTypeId);
-  //     // props?.handleEntityType(response.data?.entityTypeId);
-  //     console.log(response.data?.label, 'response.data?.label');
-  //     // setLabel(response.data?.label);
-  //     // setIsCrp(response.data?.parentId == "0" ? false : true);
-  //     if (response.data?.meta?.data) {
+  const getSpecificIdentity = async (identity_id) => {
+    identity_id = '569c71f5-8944-4c01-b51a-ad2047e7ae27';
+    setIdentityId(identity_id);
+    setIsLoader(true);
+    const response = await getParticularsDetailByIdentityIdAPI(
+      identity_id,
+      cancelTokenSource.token,
+    );
+    if (response == true) {
+      setIsLoader(false);
+      // if (props?.outDated == null) {
+      //   props?.updateUpdatedData(response.data?.meta?.identity?.outDated);
+      // }
+      setParticularAddedData(response.data?.meta?.data);
+      // setParticularEditMetaData(response.data?.meta);
+      setEntityType(response.data?.entityTypeId);
+      // props?.handleEntityType(response.data?.entityTypeId);
+      console.log(response.data?.label, 'response.data?.label');
+      // setLabel(response.data?.label);
+      // setIsCrp(response.data?.parentId == "0" ? false : true);
+      if (response.data?.meta?.data) {
 
-  //       const transformedData = {};
+        const transformedData = {};
 
-  //       for (const key in response.data?.meta?.data) {
-  //         const property = response.data?.meta?.data[key];
-  //         transformedData[key] = property.value;
-  //       }
-  //       setNewFields(transformedData);
-  //     }
+        for (const key in response.data?.meta?.data) {
+          const property = response.data?.meta?.data[key];
+          transformedData[key] = property.value;
+        }
+        setNewFields(transformedData);
+      }
 
-  //     setIsLoader(false);
-  //   } else {
-  //     setIsLoader(false);
-  //   }
-  // };
+      setIsLoader(false);
+    } else {
+      setIsLoader(false);
+    }
+  };
 
   const combinedArray = fundData?.fund_setting?.sections?.show_cf_to_customer
     ? [
@@ -363,18 +381,16 @@ const UserForm = ({ userType, onNext, fundData, identitiesData, dataOfAccountSet
         <Loader theme={theme} />
       ) : (
         <>
-          {userType === "individual" && (
-            <div className="my-3">
-              Identity Label:
-              <TextField
-                name="label"
-                value={label}
-                placeholder="Label Of Identity"
-                label="Identity Label"
-                onChange={handleInputChange}
-              />
-            </div>
-          )}
+          <div className="my-3">
+            Identity Label:
+            <TextField
+              name="label"
+              value={label}
+              placeholder="Label Of Identity"
+              label="Identity Label"
+              onChange={handleInputChange}
+            />
+          </div>
           <form
             onSubmit={(e) => e.preventDefault()}
             className="flex-grow grid grid-cols-1 md:grid-cols-2 gap-4"
@@ -394,18 +410,6 @@ const UserForm = ({ userType, onNext, fundData, identitiesData, dataOfAccountSet
           </form>
         </>
       )}
-      {errorMessage && (
-        <div className="text-red-500">{errorMessage.message}</div>
-      )}
-      <div className="mt-auto flex justify-end w-full p-6">
-        <button
-          className="py-2 px-4 mb-3 bg-green-500 text-white p-3 rounded-md hover:bg-green-600 focus:outline-none"
-          onClick={handleNextClick}
-          disabled={submitLoader}
-        >
-          {submitLoader ? "Submitting..." : "Save"}
-        </button>
-      </div>
     </div>
   );
 };
