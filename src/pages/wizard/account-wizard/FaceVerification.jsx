@@ -403,7 +403,7 @@ function FaceVerification(props) {
     message: "",
   });
   const [faceKey, setFaceKey] = useState(
-    props?.dataOfAccountSetups?.fund_data?.fund_setting?.account?.applicant
+    props?.dataOfAccountSetups?.data?.fundData?.fund_data?.fund_setting?.account?.applicant
       ?.identity[
       dataOfAccountSetups?.isIndividual ? "individual" : "corporate"
     ]?.provider?.verify?.face?.steps?.[0]?.key || null
@@ -506,7 +506,7 @@ function FaceVerification(props) {
   };
 
   const submitFaceVerification = async () => {
-    debugger
+    
     props?.handleApiResponseFace(false);
     setIsLoader(true);
 
