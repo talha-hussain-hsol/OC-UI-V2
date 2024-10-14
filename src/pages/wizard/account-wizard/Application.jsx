@@ -4,8 +4,10 @@ import useApplicationHook from "../../../hooks/useApplicationHook";
 import Loader from "../../../components/ui/loader";
 import { useTheme } from "../../../contexts/themeContext";
 
-const Application = () => {
+const Application = (dataOfAccountSetup) => {
   const { theme } = useTheme();
+  const { dataOfAccountSetups } = dataOfAccountSetup; 
+  console.log('dataOfAccountSetups7',dataOfAccountSetups)
   const {
     transactionHistory,
     documentHistory,
