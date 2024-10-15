@@ -349,7 +349,6 @@ function Stepper() {
   // const [referenceDocuments, setreferenceDocuments] = useState(location.state?.referenceDocuments || null);
   const cancelTokenSource = axios.CancelToken.source();
 
-  // ... (other state variables and useEffects remain the same)
   const [dataOfAccountSetup, setDataOfAccountSetup] = useState({});
   const [isAssistanceData, setIsAssistanceData] = useState(false);
   const [isAssistAvail, setIsAssistAvail] = useState(false);
