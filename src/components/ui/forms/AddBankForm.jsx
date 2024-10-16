@@ -77,7 +77,7 @@ const AddBankForm = ({ isOpen, onClose, fundId, fetchBankIdentities }) => {
     register,
     watch,
     handleSubmit,
-    formState: { errors , isValid},
+    formState: { errors, isValid },
   } = useForm({
     mode: "onSubmit",
   });

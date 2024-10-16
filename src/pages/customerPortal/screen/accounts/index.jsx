@@ -70,7 +70,7 @@ const Accounts = () => {
           theme={theme}
         />
         <hr className=" border-t-[1px] border-t-[#6e84a3] opacity-20 mb-6 mt-4 lg:ml-0 ml-6 sm:mr-6 lg:mr-0 mr-6" />
-        {isLoader && <Loader theme={theme} />}
+        {isLoader}
         {accounts.length > 0 && (
           <>
             {accounts.map((account) => (

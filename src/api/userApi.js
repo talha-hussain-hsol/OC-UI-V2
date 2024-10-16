@@ -263,20 +263,8 @@ export const postIdentityAttatchWithFund = async (
   data,
   cancelToken
 ) => {
-  const url = `/${entityId}/CAPI/Identity/${identityId}/attach`
-  const request = { type: "POST", urlString: url, params: data }
-
-  try {
-    const response = await processRequest(request, cancelToken);
-    return response.data;
-  } catch (error) {
-    return getErrorResponse(error);
-  }
-};
-
-export const getIdentityDocument = async (cancelToken) => {
-  const url = `/${entityId}/CAPI/Identity/f7e650e3-21c2-43da-87bc-98ed9e3bd8c8/documents`;
-  const request = { type: "GET", urlString: url };
+  const url = `/${entityId}/CAPI/Identity/${identityId}/attach`;
+  const request = { type: "POST", urlString: url, params: data };
 
   try {
     const response = await processRequest(request, cancelToken);
@@ -506,5 +494,81 @@ export const submitBankIdentityAPI = async (data, cancelToken) => {
     return response.data;
   } catch (error) {
     // return getErrorResponse(error);
+  }
+};
+
+export const getIdentityDocument = async (cancelToken) => {
+  const url = `/${entityId}/CAPI/Identity/f7e650e3-21c2-43da-87bc-98ed9e3bd8c8/documents`;
+  const request = { type: "GET", urlString: url };
+
+  try {
+    const response = await processRequest(request, cancelToken);
+    return response.data;
+  } catch (error) {
+    return getErrorResponse(error);
+  }
+};
+
+export const getSingleDocument = async (documentId, cancelToken) => {
+  const url = `/${entityId}/CAPI/document`;
+  const request = {
+    type: "POST",
+    urlString: url,
+    params: { identity_document_id: documentId },
+  };
+  try {
+    const response = await processRequest(request, cancelToken);
+    return response.data;
+  } catch (error) {
+    return getErrorResponse(error);
+  }
+};
+
+export const postIdentityDocument = async (data, cancelToken) => {
+  const url = `/${entityId}/CAPI/IdentityDocument/add`;
+  const request = { type: "POST", urlString: url, params: data };
+  try {
+    const response = await processRequest(request, cancelToken);
+    return response.data;
+  } catch (error) {
+    return getErrorResponse(error);
+  }
+};
+
+export const postVerifyUploadDocument = async (identityId, cancelToken) => {
+  const url = `/${entityId}/${baseURL}/IdentityDocument/${identityId}/verifyUpload`;
+  const request = { type: "POST", urlString: url };
+  try {
+    const response = await processRequest(request, cancelToken);
+    return response.data;
+  } catch (error) {
+    return getErrorResponse(error);
+  }
+};
+
+export const getCRPsByIdentityIdAPI = async (cancelToken) => {
+  const url = `/${entityId}/CAPI/Identity/f7e650e3-21c2-43da-87bc-98ed9e3bd8c8/Crp/list`;
+  const request = { type: "GET", urlString: url };
+  try {
+    const response = await processRequest(request, cancelToken);
+    return response.data;
+  } catch (error) {
+    return getErrorResponse(error);
+  }
+};
+
+export const deleteDocument = async (documentId, cancelToken) => {
+  const url = `/${entityId}/${baseURL}/document/${documentId}/delete`;
+  const request = {
+    type: "DELETE",
+    urlString: url,
+    params: { identity_document_id: documentId },
+  };
+
+  try {
+    const response = await processRequest(request, cancelToken);
+    return response.data;
+  } catch (error) {
+    return getErrorResponse(error);
   }
 };

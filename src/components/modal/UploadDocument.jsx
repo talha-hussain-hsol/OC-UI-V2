@@ -62,7 +62,7 @@ const UploadDocument = ({ onClose, handleSubmit, isLoading }) => {
         />
         {errorMessage && <p className="text-red-500">{errorMessage}</p>}
         <div className="flex justify-between gap-6">
-            {isLoading && <Loader theme={theme}/>}
+          {isLoading && <Loader theme={theme} />}
           <button
             onClick={handleSubmit}
             className="px-6 py-3 text-white bg-[#2c7be5] rounded-md hover:bg-[#2569c3] transition-all duration-300 ease-in-out"

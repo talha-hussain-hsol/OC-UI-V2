@@ -55,7 +55,7 @@ const useApplicationHook = () => {
         setAccountData(response.data.account_detail || []);
       }
     } catch (error) {
-      console.error("Error fetching User Details:", error);
+      console.error("Error fetching Account Details:", error);
     } finally {
       setLoading(false);
     }
@@ -68,7 +68,7 @@ const useApplicationHook = () => {
         setRequiredDoc(response.data || []);
       }
     } catch (error) {
-      console.error("Error fetching User Details:", error);
+      console.error("Error fetching Required Documents:", error);
     } finally {
       setLoading(false);
     }
@@ -90,7 +90,7 @@ const useApplicationHook = () => {
         }
       }
     } catch (error) {
-      console.error("Error fetching User Details:", error);
+      console.error("Error fetching Transaction  Documents:", error);
     } finally {
       setLoading(false);
     }

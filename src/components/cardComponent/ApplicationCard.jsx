@@ -10,7 +10,6 @@ import { transactionDocAddApi } from "../../api/userApi";
 import axios from "axios";
 import Loader from "../ui/loader";
 import { MdOutlineFileDownload } from "react-icons/md";
-import moment from "moment/moment";
 
 const ApplicationCard = ({
   transactionHistory,
