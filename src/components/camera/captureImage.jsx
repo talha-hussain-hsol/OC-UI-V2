@@ -12,8 +12,10 @@ function CameraCapture({
   cameraCloseBrowser,
   handleSetFaceImages,
   faceImages,
-  dataOfAccountSetup,
+  dataOfAccountSetups,
 }) {
+
+  console.log("dataOfAccountSetups1231",dataOfAccountSetups)
   console.log(faceSnapkey, "faceSnapkey");
   const { theme } = useTheme();
   const [showCamera, setShowCamera] = useState(true);
@@ -140,15 +142,14 @@ function CameraCapture({
               display: "flex",
               justifyContent: "center",
               position: "relative",
-              filter: dataOfAccountSetup?.fund_data?.fund_setting?.account
-                ?.applicant?.identity?.indivisual?.provider?.verify?.face
-                ?.isBlured
+              filter:  dataOfAccountSetups?.[0]?.fundData?.fund_data?.fund_setting?.account?.applicant
+              ?.identity?.indivisual?.provider?.verify?.face?.isBlured
                 ? "blur(5px)"
                 : "",
             }}
           >
             {console.log(
-              dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant
+              dataOfAccountSetups?.[0]?.fundData?.fund_data?.fund_setting?.account?.applicant
                 ?.identity?.indivisual?.provider?.verify?.face?.isBlured,
               "check"
             )}
@@ -208,9 +209,8 @@ function CameraCapture({
             alt="Captured"
             style={{
               height: "340px",
-              filter: dataOfAccountSetup?.fund_data?.fund_setting?.account
-                ?.applicant?.identity?.indivisual?.provider?.verify?.face
-                ?.isBlured
+              filter: dataOfAccountSetups?.[0]?.fundData?.fund_data?.fund_setting?.account?.applicant
+              ?.identity?.indivisual?.provider?.verify?.face?.isBlured
                 ? "blur(8px)"
                 : "",
             }}

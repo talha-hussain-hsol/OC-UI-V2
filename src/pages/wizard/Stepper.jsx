@@ -120,8 +120,8 @@ console.log("wizardDataSetup",wizardDataSetup);
   const faceVerificationCompleted = (data, redirect = false) => {
     dataOfAccountSetup["faceVerification"] = data;
     handleGetAccountDetail();
-    if (redirect) {
-    }
+    // if (redirect) {
+    // }
   };
   const handleGetAccountDetail = async () => {
     const response = await getSingleAccountDetailByIdAPI(
@@ -276,7 +276,6 @@ console.log("wizardDataSetup",wizardDataSetup);
       Documents: <Documents dataOfAccountSetups={dataOfAccountSetupsState} />,
       "Face Verification": (
         <FaceVerification
-          dataOfAccountSetup={dataOfAccountSetup}
           handleAssistanceData={handleAssistanceData}
           advanceSection={advanceSection}
           isHandleAssistanceData={isHandleAssistanceData}
