@@ -767,28 +767,36 @@ const UserType = ({ onSelection, onNext, fundData, referenceDocuments }) => {
               <div className="flex flex-col sm:flex-row w-[90%] sm:w-[80%] mt-8">
         {isNewIdentity ? (
           <div className="flex flex-col sm:flex-row w-[90%] sm:w-[80%]">
-            <div className="w-full sm:w-[50%] mr-0 sm:mr-[5%]">
-              <p className={`text-color-${theme} text-sm`}>Are you applying as an Individual or Corporate?</p>
-                <div className="flex mt-4 lg:w-[80%]">
-                 <button
-                  onClick={() => handleSelection("individual")}
-                  className={`flex-1 py-2 rounded-l-full text-white ${
-                    userType === "individual" ? "bg-[#3e9b3e]" : "bg-[#1e3a5c]"
-                  } hover:bg-[#3e9b3e] focus:outline-none`}
-                >
-                  Individual
-                </button>
-                <button
-                  onClick={() => handleSelection("corporate")}
-                  className={`flex-1 py-2 rounded-r-full text-white ${
-                    userType === "corporate" ? "bg-[#3e9b3e]" : "bg-[#1e3a5c]"
-                  } hover:bg-[#3e9b3e] focus:outline-none`}
-                >
-                  Corporate
-                </button>
-              </div>
+          <div className="w-full sm:w-[50%] mr-0 sm:mr-[5%]">
+            <p className={`text-color-${theme} text-sm`}>
+              Are you applying as an Individual or Corporate?
+            </p>
+
+            <div className="flex mt-4 lg:w-[80%]">
+              <button
+                onClick={() => handleSelection("individual")}
+                className={`flex-1 py-2 rounded-l-full text-white ${
+                  userType === "individual" ? "bg-[#3e9b3e]" : "bg-[#1e3a5c]"
+                } hover:bg-[#3e9b3e] focus:outline-none`}
+              >
+                Individual
+              </button>
+              <button
+                onClick={() => handleSelection("corporate")}
+                className={`flex-1 py-2 rounded-r-full text-white ${
+                  userType === "corporate" ? "bg-[#3e9b3e]" : "bg-[#1e3a5c]"
+                } hover:bg-[#3e9b3e] focus:outline-none`}
+              >
+                Corporate
+              </button>
             </div>
           </div>
+          <div className="w-full sm:w-[50%] mt-6 sm:mt-0">
+            <p className={`text-color-${theme} text-sm`}>
+              How would you like to create your identity?
+            </p>
+          </div>
+        </div>
         ) : (
           <div className="w-full">
             {isLoading ? (
@@ -827,16 +835,6 @@ const UserType = ({ onSelection, onNext, fundData, referenceDocuments }) => {
           </div>
         )}
       </div>
-
-      {/* <button
-        onClick={onNext}
-        disabled={isNextButtonDisabled()}
-        className={`mt-8 bg-gradient-to-r from-blue-500 to-blue-700 text-white p-2 rounded-full ${
-          isNextButtonDisabled() ? "opacity-50 cursor-not-allowed" : "hover:opacity-80"
-        }`}
-      >
-        Next
-      </button> */}
     </div>
   );
 };
