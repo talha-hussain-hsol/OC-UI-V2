@@ -25,7 +25,7 @@ const useDocumentHook = () => {
       setLoading(true);
       const response = await getIdentityDocument(cancelTokenSource.token);
       if (response.success) {
-        setIdentityDocument(response.data || []);
+        setIdentityDocument(response.data.IdentityDocuments || []);
       }
     } catch (error) {
       console.error("Error fetching identity documents:", error);
