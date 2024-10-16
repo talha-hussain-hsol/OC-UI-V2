@@ -22,6 +22,7 @@ const BankCard = ({
   fetchWalletAddresses,
   fetchBankAddressIdentities,
   fundId,
+  setbankAddresses,
 }) => {
   const { isLoaderBank, fetchAllData, fetchBankIdentities } =
     useBankWalletHook();

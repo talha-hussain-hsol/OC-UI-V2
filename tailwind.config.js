@@ -35,9 +35,10 @@ module.exports = {
           "linear-gradient(to bottom, #24357C 0%, #0B76A8 100%)",
         "color-card-Ascent":
           "linear-gradient(to bottom, #0d345d 0%, #151c39 100%)", // Card header in stepper ex: Face Snap
-        "gradient-stepper-card-Ascent":
-          "linear-gradient(to bottom, #0d345d 0%, #151c39 100%)",
+       
         "color-Ascent": "linear-gradient(to right, #0c2138 0%, #113c4d 100%)",
+        "color-modal-SC":
+          "linear-gradient(to bottom, #243279 0%, #0055BB 100%)",
       },
       backgroundColor: {
         "theme-SC": "#edf2f4", // Color for Theme 1 (SC)
@@ -94,7 +95,7 @@ module.exports = {
         "color-sidebar-nav-SC": "#243279",
         "color-sidebar-nav-Ascent": "#152e4d",
         "color-sidebar-nav-lightTheme": "",
-        "color-modal-SC": "#FFFFFF",
+        // "color-modal-SC": "#FFFFFF",
         "color-modal-Ascent": "#152e4d",
         "color-modal-lightTheme": "",
         "color-iconButton-SC": "#f2f0f0",
@@ -103,7 +104,8 @@ module.exports = {
 
       borderColor: {
         "color-SC": "#e0e0e0",
-        "color-modal-SC": "#8DC63F",
+        "color-modal-SC": "#FFFFFF",
+        "color-modal-Ascent": "#053d60",
         "color-lightTheme": "#004e89",
         "color-Ascent": "#1b3050",
         "color-dropdown-Ascent": "#06d3de",
