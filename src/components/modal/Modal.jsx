@@ -3,7 +3,6 @@ import { useTheme } from "../../contexts/themeContext";
 import { postIdentityDocument } from "../../api/userApi";
 import axios from "axios";
 import Loader from "../ui/loader";
-// import useDocumentHook from "../../hooks/useDocumentHook";
 
 const Modal = ({
   id,
@@ -20,12 +19,7 @@ const Modal = ({
   identityDocument,
   setAccountDetails,
   setIdentityDocument,
-  // expiryDate,
-  // setExpiryDate,
-  // issueDate, 
-  // setIssueDate
 }) => {
-  // const { fetchAccountDetails, fetchIdentityDocuments } = useDocumentHook();
   const { theme } = useTheme();
   const [errorMessage, setErrorMessage] = useState("");
   const [issueDate, setIssueDate] = useState(null);
@@ -62,12 +56,18 @@ const Modal = ({
       const data = {
         document_type_id: requiredDocumentSelected?.id,
         sub_document_type_id: parseInt(documentTypeSelected) || null,
-        issued_date: issueDate,
-        expiry_date: expiryDate,
+        issued_date: issueDate ,  
+      expiry_date: expiryDate, 
         document_number: documentNumber,
         content_type: "img/png",
         identity_id: identity_id,
       };
+      if (issueDate) {
+        data.issued_date = issueDate;
+      }
+      if (expiryDate) {
+        data.expiry_date = expiryDate;
+      }
       console.log(data);
       const response = await postIdentityDocument(
         data,
@@ -77,17 +77,18 @@ const Modal = ({
         onClose();
         setErrorMessage("");
 
-        setAccountDetails(prev => ({
-          ...prev,
-          documents: [
-            ...(prev.documents || []), 
-            {
-              type: requiredDocumentSelected?.name,
-              issueDate: issueDate,
-              expiryDate: expiryDate,
-            },
-          ],
-        }));
+        // setAccountDetails((prev) => ({
+        //   ...prev,
+        //   // documents: [
+        //   //   ...(prev.documents || []),
+        //   //   {
+        //   //     type: requiredDocumentSelected?.name,
+        //   //     issuedDate: issueDate || null,  // Ensure issued date is included
+        //   //   expiryDate: expiryDate || null,
+        //   //   },
+        //   // ],
+        // }));
+        // setIdentityDocument(data);
         await fetchIdentityDocuments();
         await fetchAccountDetails();
       } else {
@@ -233,7 +234,10 @@ const Modal = ({
                     )}`}
                     value={issueDate}
                     disabled={!documentTypeSelected}
-                    onChange={(e) => setIssueDate(e.target.value)}
+                    onChange={(e) => {
+                      setIssueDate(e.target.value);
+                      console.log("Issue Date:", e.target.value); // Log the issue date
+                    }}
                   />
                 </div>
               </div>

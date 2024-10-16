@@ -50,6 +50,12 @@ function Documents(dataOfAccountSetups) {
           doc.category_key === "DOCUMENT" && doc.key !== "FACE_VERIFICATION"
       )
       .sort((a, b) => {
+        if (a.isRequired && !b.isRequired) {
+          return -1;
+        }
+        if (!a.isRequired && b.isRequired) {
+          return 1;
+        }
         if (a.key === "OTHER" && b.key !== "OTHER") {
           return 1;
         }
@@ -175,13 +181,6 @@ function Documents(dataOfAccountSetups) {
     fileInputRef.current && fileInputRef.current.click();
   };
 
-  const getUploadedIdentityDocData = (id) => {
-    const keysOfIdentityDocumentData = identityUploadDocList[id];
-    if (keysOfIdentityDocumentData) {
-      return keysOfIdentityDocumentData[0];
-    }
-  };
-
   return (
     <>
       {loading ? (
@@ -222,10 +221,18 @@ function Documents(dataOfAccountSetups) {
                           <IoArrowForward size={14} color="black" />
                         </button>
                       </div>
-                      <div className="flex justify-between text-xs text-gray-500">
-                        <p>Issue Date: {uploadedFiles.issueDate}</p>
-                        <p>Expiry Date: {uploadedFiles.expiryDate}</p>
-                      </div>
+                      {uploadedFiles[doc.key] && (
+                        <div className="flex justify-between text-xs text-gray-500">
+                          <p>
+                            Issue Date:{" "}
+                            {uploadedFiles[doc.key].issueDate || "N/A"}
+                          </p>
+                          <p>
+                            Expiry Date:{" "}
+                            {uploadedFiles[doc.key].expiryDate || "N/A"}
+                          </p>
+                        </div>
+                      )}
                     </div>
                   );
                 })}
