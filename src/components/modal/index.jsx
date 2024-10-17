@@ -9,7 +9,7 @@ function DynamicModal({
   title,
   body,
   proceedBtn = true,
-  className
+  className,
 }) {
   const { theme } = useTheme();
   if (!show) return null;

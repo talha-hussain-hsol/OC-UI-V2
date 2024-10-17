@@ -18,8 +18,9 @@ const Application = (props) => {
     fetchTransactionHistory,
     fetchTransactionHistoryAPI,
   } = useApplicationHook();
+  const account_id = dataSetup[0]?.data?.account?.account_id;
   useEffect(() => {
-    fetchAPIs();
+    fetchAPIs(account_id);
   }, []);
   return (
     <div className="flex flex-col justify-center items-center">
@@ -31,6 +32,7 @@ const Application = (props) => {
           fetchTransactionHistory={fetchTransactionHistory}
           fetchTransactionHistoryAPI={fetchTransactionHistoryAPI}
           documentHistory={documentHistory}
+          account_id={account_id}
         />
       )}
     </div>

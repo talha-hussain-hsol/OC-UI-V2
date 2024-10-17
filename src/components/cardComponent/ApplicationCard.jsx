@@ -16,6 +16,7 @@ const ApplicationCard = ({
   fetchTransactionHistory,
   fetchTransactionHistoryAPI,
   documentHistory,
+  account_id,
 }) => {
   const { theme } = useTheme();
   const [showModal, setShowModal] = useState(null);
@@ -129,7 +130,7 @@ const ApplicationCard = ({
     setCurrencyError(false);
     setAmountError(false);
     let dataToSend = {
-      account_id: "751550b6-e031-439c-bc7e-e2343ce52baf",
+      account_id,
       currency: currency,
       amount: amount,
       type: "subscription",
@@ -247,6 +248,7 @@ const ApplicationCard = ({
             />
 
             <DynamicModal
+             
               show={showModal}
               handleClose={handleModalClose}
               title="Please Select Document Signing Mode"
@@ -371,6 +373,7 @@ const ApplicationCard = ({
                       onClose={closeUploadDocument}
                       handleSubmit={handleSubmit}
                       isLoading={isLoading}
+                      account_id={account_id}
                     />
                   )}
                 </div>

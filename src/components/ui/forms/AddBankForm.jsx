@@ -7,7 +7,13 @@ import axios from "axios";
 import Loader from "../loader";
 import { getParticularFieldsFromFundIdApi } from "../../../api/userApi";
 
-const AddBankForm = ({ isOpen, onClose, fundId, fetchBankIdentities, identityId }) => {
+const AddBankForm = ({
+  isOpen,
+  onClose,
+  fundId,
+  fetchBankIdentities,
+  identityId,
+}) => {
   const { theme } = useTheme();
   const cancelTokenSource = axios.CancelToken.source();
   const [particularFields, setParticularFields] = useState([]);

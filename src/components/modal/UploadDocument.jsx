@@ -3,7 +3,7 @@ import { IoCameraOutline } from "react-icons/io5";
 import { useTheme } from "../../contexts/themeContext";
 import Loader from "../ui/loader";
 
-const UploadDocument = ({ onClose, handleSubmit, isLoading }) => {
+const UploadDocument = ({ onClose, handleSubmit, isLoading, account_id }) => {
   const { theme } = useTheme();
   const fileInputRef = useRef(null);
   const [errorMessage, setErrorMessage] = useState("");
