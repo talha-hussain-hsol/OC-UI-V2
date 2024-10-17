@@ -7,7 +7,7 @@ import axios from "axios";
 import Loader from "../loader";
 import { getParticularFieldsFromFundIdApi } from "../../../api/userApi";
 
-const AddBankForm = ({ isOpen, onClose, fundId, fetchBankIdentities }) => {
+const AddBankForm = ({ isOpen, onClose, fundId, fetchBankIdentities, identityId }) => {
   const { theme } = useTheme();
   const cancelTokenSource = axios.CancelToken.source();
   const [particularFields, setParticularFields] = useState([]);
@@ -108,13 +108,14 @@ const AddBankForm = ({ isOpen, onClose, fundId, fetchBankIdentities }) => {
 
     try {
       const response = await submitBankIdentityAPI(
+        identityId,
         payload,
         cancelTokenSource.token
       );
       console.log("Add Bank API Response: ", response);
 
       if (response && response.success === true) {
-        await fetchBankIdentities();
+        await fetchBankIdentities(identityId);
       } else {
         console.error(response?.message || "Failed to add bank address.");
       }

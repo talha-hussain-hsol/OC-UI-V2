@@ -286,8 +286,8 @@ export const getRequiredDocumentCRP = async (cancelToken) => {
   }
 };
 
-export const getRequiredDocumentAPI = async (cancelToken) => {
-  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Account/requiredDocuments/751550b6-e031-439c-bc7e-e2343ce52baf`;
+export const getRequiredDocumentAPI = async (accountId, cancelToken) => {
+  const url = `/${entityId}/CAPI/Account/requiredDocuments/${accountId}`;
   const request = { type: "GET", urlString: url };
 
   try {
@@ -297,8 +297,8 @@ export const getRequiredDocumentAPI = async (cancelToken) => {
     return getErrorResponse(error);
   }
 };
-export const getCustomTransactionAPI = async (cancelToken) => {
-  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Account/transactions/751550b6-e031-439c-bc7e-e2343ce52baf`;
+export const getCustomTransactionAPI = async (accountId, cancelToken) => {
+  const url = `/${entityId}/CAPI/Account/transactions/${accountId}`;
   const request = { type: "GET", urlString: url };
 
   try {
@@ -308,8 +308,8 @@ export const getCustomTransactionAPI = async (cancelToken) => {
     return getErrorResponse(error);
   }
 };
-export const getTransactionHistoryAPI = async (cancelToken) => {
-  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/getAccountSubscriptionDocs?accountId=751550b6-e031-439c-bc7e-e2343ce52baf`;
+export const getTransactionHistoryAPI = async (accountId, cancelToken) => {
+  const url = `/${entityId}/CAPI/getAccountSubscriptionDocs?accountId=${accountId}`;
   const request = { type: "GET", urlString: url };
 
   try {
@@ -341,8 +341,8 @@ export const transactionDocAddApi = async (data, cancelToken) => {
   }
 };
 //faceverification //application
-export const getSingleAccountDetailByIdAPI = async (cancelToken) => {
-  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Account/detail/751550b6-e031-439c-bc7e-e2343ce52baf`;
+export const getSingleAccountDetailByIdAPI = async (accountId, cancelToken) => {
+  const url = `/${entityId}/CAPI/Account/detail/${accountId}`;
   const request = { type: "GET", urlString: url };
   try {
     const response = await processRequest(request, cancelToken);
@@ -440,60 +440,60 @@ export const postVerifyUploadVideo = async (
   }
 };
 
-export const getWalletAddressListAPI = async (cancelToken) => {
-  const url = `/${entityId}/CAPI/1429ba2d-cbcd-4187-ae12-b13d66ca3aac/getIdentityWalletAddress`;
+export const getWalletAddressListAPI = async (identityId, cancelToken) => {
+  const url = `/${entityId}/CAPI/${identityId}/getIdentityWalletAddress`;
   const request = { type: "GET", urlString: url };
 
   try {
     const response = await processRequest(request, cancelToken);
     return response.data;
   } catch (error) {
-    // return getErrorResponse(error);
+    return getErrorResponse(error);
   }
 };
-export const addWalletAddressAPI = async (data, cancelToken) => {
-  const url = `/${entityId}/CAPI/1429ba2d-cbcd-4187-ae12-b13d66ca3aac/addWalletAddress`;
+export const addWalletAddressAPI = async (data, identityId, cancelToken) => {
+  const url = `/${entityId}/CAPI/${identityId}/addWalletAddress`;
   const request = { type: "POST", urlString: url, params: data };
 
   try {
     const response = await processRequest(request, cancelToken);
     return response.data;
   } catch (error) {
-    // return getErrorResponse(error)
+    return getErrorResponse(error);
   }
 };
-export const getBankIdentitiesAPI = async (cancelToken) => {
-  const url = `/${entityId}/CAPI/1429ba2d-cbcd-4187-ae12-b13d66ca3aac/getIdentityBankList`;
+export const getBankIdentitiesAPI = async (identityId, cancelToken) => {
+  const url = `/${entityId}/CAPI/${identityId}/getIdentityBankList`;
   const request = { type: "GET", urlString: url };
 
   try {
     const response = await processRequest(request, cancelToken);
     return response.data;
   } catch (error) {
-    // return getErrorResponse(error);
+    return getErrorResponse(error);
   }
 };
-export const deleteBankWalletAPI = async (cancelToken) => {
-  const url = `/${entityId}/${baseURL}/BankWalletIdentityDelete/1429ba2d-cbcd-4187-ae12-b13d66ca3aac/getIdentityBankList`;
+export const deleteBankWalletAPI = async (identityId, cancelToken) => {
+  const url = `/${entityId}/CAPI/BankWalletIdentityDelete/${identityId}`;
   const request = { type: "DELETE", urlString: url };
 
   try {
     const response = await processRequest(request, cancelToken);
     return response.data;
   } catch (error) {
-    // return getErrorResponse(error);
+    return getErrorResponse(error);
   }
 };
 
-export const submitBankIdentityAPI = async (data, cancelToken) => {
-  const url = `/${entityId}/CAPI/1429ba2d-cbcd-4187-ae12-b13d66ca3aac/addBankAddress`;
+export const submitBankIdentityAPI = async (identityId, data, cancelToken) => {
+  const url = `/${entityId}/CAPI/${identityId}/addBankAddress`;
   const request = { type: "POST", urlString: url, params: data };
 
   try {
     const response = await processRequest(request, cancelToken);
     return response.data;
   } catch (error) {
-    // return getErrorResponse(error);
+    return getErrorResponse(error);
   }
 };
 

@@ -35,6 +35,7 @@ function Documents(dataOfAccountSetups) {
     useState(identityDocument);
   const [issueDate, setIssueDate] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
+  const identity_id = dataOfAccountSetups[0]?.data?.identity?.identity_id;
 
   useEffect(() => {
     fetchAPIs();

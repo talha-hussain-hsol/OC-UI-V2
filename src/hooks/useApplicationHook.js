@@ -18,10 +18,13 @@ const useApplicationHook = () => {
   const [documentHistory, setDocumentHistory] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchTransactionHistory = useCallback(async () => {
+  const fetchTransactionHistory = useCallback(async (accountId) => {
     try {
       setLoading(true);
-      const response = await getCustomTransactionAPI(cancelTokenSource.token);
+      const response = await getCustomTransactionAPI(
+        accountId,
+        cancelTokenSource.token
+      );
       if (response.success) {
         setTransactionHistory(response.data || []);
       }
@@ -45,10 +48,11 @@ const useApplicationHook = () => {
       setLoading(false);
     }
   });
-  const fetchAccountDetails = useCallback(async () => {
+  const fetchAccountDetails = useCallback(async (accountId) => {
     try {
       setLoading(true);
       const response = await getSingleAccountDetailByIdAPI(
+        accountId,
         cancelTokenSource.token
       );
       if (response.success) {
@@ -60,10 +64,13 @@ const useApplicationHook = () => {
       setLoading(false);
     }
   });
-  const fetchRequiredDocuments = useCallback(async () => {
+  const fetchRequiredDocuments = useCallback(async (accountId) => {
     try {
       setLoading(true);
-      const response = await getRequiredDocumentAPI(cancelTokenSource.token);
+      const response = await getRequiredDocumentAPI(
+        accountId,
+        cancelTokenSource.token
+      );
       if (response.success) {
         setRequiredDoc(response.data || []);
       }
@@ -73,10 +80,13 @@ const useApplicationHook = () => {
       setLoading(false);
     }
   });
-  const fetchTransactionHistoryAPI = useCallback(async () => {
+  const fetchTransactionHistoryAPI = useCallback(async (accountId) => {
     try {
       setLoading(true);
-      const response = await getTransactionHistoryAPI(cancelTokenSource.token);
+      const response = await getTransactionHistoryAPI(
+        accountId,
+        cancelTokenSource.token
+      );
       // if (response.success) {
       //   console.log('Response Data:', response.data);
       //   setDocumentHistory(response.data || []);
@@ -96,19 +106,22 @@ const useApplicationHook = () => {
     }
   });
 
-  const fetchAPIs = useCallback(async () => {
-    await fetchTransactionHistory();
-    await fetchUserDetails();
-    await fetchAccountDetails();
-    await fetchRequiredDocuments();
-    await fetchTransactionHistoryAPI();
-  }, [
-    fetchTransactionHistory,
-    fetchUserDetails,
-    fetchAccountDetails,
-    fetchRequiredDocuments,
-    fetchTransactionHistoryAPI,
-  ]);
+  const fetchAPIs = useCallback(
+    async (accountId) => {
+      await fetchTransactionHistory(accountId);
+      await fetchUserDetails();
+      await fetchAccountDetails(accountId);
+      await fetchRequiredDocuments(accountId);
+      await fetchTransactionHistoryAPI(accountId);
+    },
+    [
+      fetchTransactionHistory,
+      fetchUserDetails,
+      fetchAccountDetails,
+      fetchRequiredDocuments,
+      fetchTransactionHistoryAPI,
+    ]
+  );
 
   return {
     transactionHistory,

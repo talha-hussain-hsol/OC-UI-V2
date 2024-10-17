@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { getBankIdentitiesAPI, getWalletAddressListAPI } from "../api/userApi";
 import axios from "axios";
 
@@ -9,11 +9,13 @@ const useBankWalletHook = () => {
   const [bankIdentities, setBankIdentities] = useState([]);
   const [walletAddresses, setWalletAddresses] = useState([]);
 
-  // Memoize fetchBankIdentities to avoid recreating it on each render
-  const fetchBankIdentities = useCallback(async () => {
+  const fetchBankIdentities = useCallback(async (identityId) => {
     try {
       setIsLoaderBank(true);
-      const response = await getBankIdentitiesAPI(cancelTokenSource.token);
+      const response = await getBankIdentitiesAPI(
+        identityId,
+        cancelTokenSource.token
+      );
       if (response.success) {
         setBankIdentities(response.data || []);
       }
@@ -24,11 +26,13 @@ const useBankWalletHook = () => {
     }
   }, []);
 
-  // Wrap fetchWalletAddresses in useCallback as well
-  const fetchWalletAddresses = useCallback(async () => {
+  const fetchWalletAddresses = useCallback(async (identityId) => {
     try {
       setIsLoader(true);
-      const response = await getWalletAddressListAPI(cancelTokenSource.token);
+      const response = await getWalletAddressListAPI(
+        identityId,
+        cancelTokenSource.token
+      );
       if (response.success) {
         setWalletAddresses(response.data || []);
       }
@@ -39,10 +43,13 @@ const useBankWalletHook = () => {
     }
   }, []);
 
-  const fetchAllData = useCallback(async () => {
-    await fetchBankIdentities();
-    await fetchWalletAddresses();
-  }, [fetchBankIdentities, fetchWalletAddresses]);
+  const fetchAllData = useCallback(
+    async (identityId) => {
+      await fetchBankIdentities(identityId);
+      await fetchWalletAddresses(identityId);
+    },
+    [fetchBankIdentities, fetchWalletAddresses]
+  );
 
   return {
     isLoader,

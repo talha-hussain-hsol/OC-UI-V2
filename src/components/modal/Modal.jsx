@@ -56,8 +56,8 @@ const Modal = ({
       const data = {
         document_type_id: requiredDocumentSelected?.id,
         sub_document_type_id: parseInt(documentTypeSelected) || null,
-        issued_date: issueDate ,  
-      expiry_date: expiryDate, 
+        issued_date: issueDate,
+        expiry_date: expiryDate,
         document_number: documentNumber,
         content_type: "img/png",
         identity_id: identity_id,

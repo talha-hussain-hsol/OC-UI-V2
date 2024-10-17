@@ -23,6 +23,7 @@ const BankCard = ({
   fetchBankAddressIdentities,
   fundId,
   setbankAddresses,
+  identityId,
 }) => {
   const { isLoaderBank, fetchAllData, fetchBankIdentities } =
     useBankWalletHook();
@@ -76,12 +77,13 @@ const BankCard = ({
     try {
       const response = await addWalletAddressAPI(
         dataToSend,
+        identityId,
         cancelTokenSource.token
       );
       console.log("Add Wallet API Response:", response);
       // setIsLoader(false);
       if (response.success === true) {
-        await fetchWalletAddresses();
+        await fetchWalletAddresses(identityId);
       } else {
         console.error(response.message || "Failed to add wallet address.");
       }
@@ -130,7 +132,10 @@ const BankCard = ({
     if (walletToDelete) {
       try {
         console.log("Deleting Wallet:", walletToDelete);
-        const response = await deleteBankWalletAPI(cancelTokenSource.token);
+        const response = await deleteBankWalletAPI(
+          identityId,
+          cancelTokenSource.token
+        );
         console.log("Delete API Response:", response);
 
         setWalletAddresses((prev) =>
@@ -285,6 +290,7 @@ const BankCard = ({
           onClose={handleCloseModal}
           fetchBankIdentities={fetchBankIdentities}
           fundId={fundId}
+          identityId={identityId}
         />
       </div>
     </>
