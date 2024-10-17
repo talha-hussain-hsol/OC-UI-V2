@@ -488,7 +488,7 @@ function FaceVerification(props) {
 
 
   const handleGetAccountDetail = async () => {
-    debugger
+    
     console.log("account_id",dataOfAccountSetups?.[0]?.data?.account?.account_id);
     setIsLoader(true);
       const response = await getSingleAccountDetailByIdAPI(
@@ -505,11 +505,14 @@ function FaceVerification(props) {
         //   response?.data?.account_detail?.attach_identities?.[0]?.meta
         //     ?.identities?.["53c8a88a-cc42-4da4-958b-71e79df5ad5f"]
         //     ?.faceVerification;
+
+        console.log("response handleGetAccountDetail",response?.data)
         const accountDetails =
           response?.data?.account_detail?.attach_identities?.[0]?.meta
             ?.identities?.[
             dataOfAccountSetups?.[0]?.data?.identity?.identity_id
           ]?.faceVerification;
+          console.log("accountDetails",accountDetails);
 
         setApiResponse(accountDetails);
       }
@@ -731,7 +734,7 @@ function FaceVerification(props) {
     const response = await FaceVerificationApi(
       modifiedImageCapturedData,
       cancelTokenSource.token,
-      props?.dataOfAccountSetup?.[0]?.data?.identity?.identity_id,
+      dataOfAccountSetups?.[0]?.data?.identity?.identity_id,
       shareHolderID,
     );
     setIsLoader(false);
@@ -769,12 +772,7 @@ function FaceVerification(props) {
         message: `${response?.user_message} Please again capture the images`,
       });
       props?.handleApiResponseFace(false);
-      setAlertProps({
-        variant: 'danger',
-        message: ` Please again capture the images`,
-        show: true,
-        hideAuto: true,
-      });
+     
     }
   };
 

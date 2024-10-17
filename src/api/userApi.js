@@ -353,16 +353,16 @@ export const transactionDocAddApi = async (data, cancelToken) => {
   }
 };
 //faceverification //application
-export const getSingleAccountDetailByIdAPI = async (cancelToken) => {
-  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Account/detail/751550b6-e031-439c-bc7e-e2343ce52baf`;
-  const request = { type: "GET", urlString: url };
+export const getSingleAccountDetailByIdAPI = async (accountId, cancelToken) => {
+  const url = `/${entityId}/CAPI/Account/detail/${accountId}`
+  const request = { type: "GET", urlString: url }
   try {
-    const response = await processRequest(request, cancelToken);
-    return response.data;
+    const response = await processRequest(request, cancelToken)
+    return response.data
   } catch (error) {
-    return getErrorResponse(error);
+    return getErrorResponse(error)
   }
-};
+}
 
 export const getParticularFieldsApi = async (account_id, cancelToken) => {
   var url = `/${entityId}/CAPI/Identity/fields`;
