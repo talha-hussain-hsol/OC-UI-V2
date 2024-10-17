@@ -1221,6 +1221,10 @@ const UserForm = ({ userType, fundData, identitiesData, onFormChange, dataOfAcco
   const [identityId, setIdentityId] = useState('');
 
   console.log("Fund Data iss: ", fundData);
+  useEffect(() => {
+   console.log("formValues",formValues)
+  }, [formValues])
+  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
