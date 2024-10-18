@@ -7,70 +7,129 @@ import { AiFillEdit } from "react-icons/ai";
 import TabBar from "../Reusable Components/TabBar";
 import { useTheme } from "../../contexts/themeContext";
 import { useNavigate } from "react-router-dom";
+import useIdentityHook from "../../hooks/useIdentityHook";
 
-const Identities = () => {
+
+import {
+  getCustomerIdentityList,
+  updateIdentityStatusAPI,
+} from "../../api/userApi";
+import axios from "axios";
+import Loader from "../../components/ui/loader/index";
+// import Pagination from "../../shared-components/pagination";
+
+export default function Identities() {
   const { theme } = useTheme();
-  const navigate = useNavigate();
-  function handleClick() {
-    navigate("/stepper");
-  }
-  useEffect(() => {
-    console.log("Current theme:", theme);
 
-    document.body.style.backgroundColor =
-      theme === "SC"
-        ? "#ffffff"
-        : theme === "Ascent"
-        ? "rgba(18, 38, 63)"
-        : theme === "lightTheme"
-        ? "#000000"
-        : "";
+  const [profileListData, setProfileListData] = useState([]);
+  const [isLoader, setIsLoader] = useState(false);
+  const [isLoaderIdentites, setIsLoaderIdentities] = useState(false);
+  const cancelTokenSource = axios.CancelToken.source();
+  const [hasMore, setHasMore] = useState(true);
+  const [offset, setOffset] = useState(0);
+  const [limit] = useState(10);
+  const [pageIndex, setPageIndex] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [totalIdentitiesCount, setTotalIdentitiesCount] = useState(0);
+  const [pageOptions, setPageOptions] = useState([]);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    handleGetIdentityList();
+  }, [pageIndex]);
+
+  const handleGetIdentityList = async () => {
+    if (!hasMore) return;
+
+    setIsLoaderIdentities(true);
+    try {
+      const response = await getCustomerIdentityList(
+        offset,
+        limit,
+        cancelTokenSource.token
+      );
+      const newIdentities = response.data?.rows || [];
+      setTotalIdentitiesCount(response.data?.count || 0);
+
+      if (response?.success && newIdentities.length > 0) {
+        setProfileListData(newIdentities);
+        setOffset((prevOffset) => prevOffset + limit);
+      } else {
+        setHasMore(false);
+      }
+    } catch (error) {
+      console.error("Error fetching identities", error);
+    } finally {
+      setIsLoaderIdentities(false);
+    }
+  };
+
+  useEffect(() => {
+    const abortController = new AbortController();
+
+    handleGetIdentityList(abortController);
 
     return () => {
-      document.body.style.backgroundColor = "";
+      abortController.abort();
     };
-  }, [theme]);
-  const Headers = ["Name", "Type", "Status", "Actions"];
-  const Rows = [
-    {
-      name: "Hamilton sosa sn",
-      type: "Individual",
-      status: "Active",
-      //   actionText: "Sign & Submit",
-    },
-    {
-      name: "Testa dasa ax",
-      type: "Individual",
-      status: "Active",
-      //   actionText: "Sign & Submit",
-    },
-    {
-      name: "Dsdsad adsd af",
-      type: "Individual",
-      status: "Active",
-      //   actionText: "Sign & Submit",
-    },
-    {
-      name: "Wqwd aasd ax",
-      type: "Individual",
-      status: "Active",
-      //   actionText: "Sign & Submit",
-    },
-    {
-      name: "Egdfg ewer al",
-      type: "Individual",
-      status: "Active",
-      //   actionText: "Sign & Submit",
-    },
-  ];
-  const [status, setStatus] = useState(
-    Rows.map((row) => row.status === "Active")
-  );
-  const handleToggle = (index) => {
-    setStatus((prevStatus) =>
-      prevStatus.map((stat, i) => (i === index ? !stat : stat))
+  }, []);
+
+  const handleEditClick = (identityId, identityType) => {
+    navigate(
+      `/profile/identity/${identityType.toLowerCase()}/particular/${identityId}`
     );
   };
+
+  const handleChangeStatus = async (value, identityId) => {
+    let dataToSend = { status: value };
+    setIsLoader(true);
+    const response = await updateIdentityStatusAPI(
+      dataToSend,
+      identityId,
+      cancelTokenSource.token
+    );
+    if (response.success === true) {
+      setIsLoader(false);
+      handleGetIdentityList();
+    } else {
+      setIsLoader(false);
+    }
+  };
+
+  const headerButtonCallBack = (e) => {
+    e.preventDefault();
+    navigate("/profile/identities");
+  };
+
+  const handleClickPrevious = () => {
+    if (pageIndex > 0) {
+      setPageIndex(pageIndex - 1);
+      setOffset((pageIndex - 1) * limit);
+    }
+  };
+
+  const handleClickNext = () => {
+    if ((pageIndex + 1) * limit < totalIdentitiesCount) {
+      setPageIndex(pageIndex + 1);
+      setOffset((pageIndex + 1) * limit);
+    }
+  };
+
+  const totalPages = Math.ceil(totalIdentitiesCount / limit);
+  const Headers = ["Name", "Type", "Status", "Actions"];
+  const {
+    entites,
+    activePortal,
+    portals,
+    handleActivePortal,
+    fetchIdentities,
+  } = useIdentityHook(setProfileListData);
+
+  useEffect(() => {
+    fetchIdentities();
+  }, []);
+
   return (
     <div className={`bg-color-${theme}`}>
       <SideBar portalType="Customer" />
@@ -82,7 +141,7 @@ const Identities = () => {
             showButton={false}
             theme={theme}
           />
-          <hr className=" border-t-[1px] border-t-[#6e84a3] opacity-20 mb-6 mt-4 sm:ml-6 sm:mr-6 lg:mr-0 ml-6 mr-6" /> 
+          <hr className=" border-t-[1px] border-t-[#6e84a3] opacity-20 mb-6 mt-4 sm:ml-6 sm:mr-6 lg:mr-0 ml-6 mr-6" />
           <div className="flex items-center justify-between ml-6 sm:ml-0 lg:mr-0 mr-6 ">
             <TabBar
               tabs={["My Identities"]}
@@ -91,7 +150,7 @@ const Identities = () => {
             <Button
               className={`bg-color-button-${theme} text-white font-light rounded-lg xs:py-6 xs:px-8 py-6 px-4 text-sm sm:text-md`}
               text="Create New Identity"
-              onClick={handleClick}
+              onClick={headerButtonCallBack}
             />
           </div>
           <hr className="border-t-[1px] border-t-[#6e84a3] opacity-20 mb-6 ml-6 lg:mr-0 mr-6" />
@@ -119,45 +178,55 @@ const Identities = () => {
           <div
             className={`bg-color-card-${theme} shadow-${theme} rounded-b-md border-color-${theme} border-[1px] w-full`}
           >
-            <Table
-              headers={Headers}
-              rows={Rows}
-              headerClassName={`bg-color-table-color-${theme}`}
-              renderRow={(row, index) => (
-                <>
-                  <td className="py-4 px-6 font-light">{row.name}</td>
-                  <td className="py-4 px-6 font-light">{row.type}</td>
-                  <td
-                    className={`py-4 px-6 text-color-status-${theme} font-light`}
-                  >
-                    {status[index] ? "Active" : "Inactive"}
-                  </td>
-                  <td className="py-4 px-6">
-                    <div className="flex items-center space-x-4">
-                      <AiFillEdit
-                        className={`text-color-h1-${theme} cursor-pointer hover:text-[#ee9d0b] transition-colors duration-200`}
-                      />
-
-                      <label className="relative inline-flex items-center cursor-pointer">
-                        <input
-                          type="checkbox"
-                          checked={status[index]}
-                          onChange={() => handleToggle(index)}
-                          className="sr-only peer"
+            {isLoader ? (
+              <Loader theme={theme} />
+            ) : (
+              <Table
+                headers={Headers}
+                rows={profileListData}
+                headerClassName={`bg-color-table-color-${theme}`}
+                renderRow={(row, index) => (
+                  <>
+                    <td className="py-4 px-6 font-light">{row.label}</td>
+                    <td className="py-4 px-6 font-light">{row.type}</td>
+                    <td
+                      className={`py-4 px-6 text-color-status-${theme} font-light`}
+                    >
+                      {status[index] ? "Active" : "Inactive"}
+                    </td>
+                    <td className="py-4 px-6">
+                      <div className="flex items-center space-x-4">
+                        <AiFillEdit
+                          className={`text-color-h1-${theme} cursor-pointer hover:text-[#ee9d0b] transition-colors duration-200`}
+                          onClick={() => handleEditClick(index.id, index.type)}
                         />
-                        <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#2c7be5]"></div>
-                      </label>
-                      <p className="font-light">Active</p>
-                    </div>
-                  </td>
-                </>
-              )}
-            />
+
+                        <label className="relative inline-flex items-center cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={status[index]}
+                            onChange={(event) => {
+                              handleChangeStatus(
+                                event.target.checked
+                                  ? "activate"
+                                  : "deactivate",
+                                index
+                              );
+                            }}
+                            className="sr-only peer"
+                          />
+                          <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#2c7be5]"></div>
+                        </label>
+                        <p className="font-light">Active</p>
+                      </div>
+                    </td>
+                  </>
+                )}
+              />
+            )}
           </div>
         </div>
       </div>
     </div>
   );
-};
-
-export default Identities;
+}
