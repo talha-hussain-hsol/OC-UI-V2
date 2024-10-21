@@ -118,6 +118,30 @@ export const getIdentityCount = async (
   return customResponse;
 };
 
+export const getCustomerIdentityList = async (
+  offset,
+  limit,
+  cancelToken,
+  fundId
+) => {
+  if (!limit) {
+    return;
+  }
+  let url;
+  fundId
+    ? (url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Identity/list?fundId=${fundId}`)
+    : (url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/identities?offset=${offset}&limit=${limit}`);
+
+  const request = { type: "GET", urlString: url };
+
+  try {
+    const response = await processRequest(request, cancelToken);
+    return response.data;
+  } catch (error) {
+    return getErrorResponse(error);
+  }
+};
+
 export const getCustomerAccounts = async (offset, limit, cancelToken) => {
   if (!limit) {
     return;
