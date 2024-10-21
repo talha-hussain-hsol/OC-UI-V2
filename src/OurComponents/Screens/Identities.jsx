@@ -198,7 +198,7 @@ export default function Identities() {
                       <div className="flex items-center space-x-4">
                         <AiFillEdit
                           className={`text-color-h1-${theme} cursor-pointer hover:text-[#ee9d0b] transition-colors duration-200`}
-                          onClick={() => handleEditClick(index.id, index.type)}
+                          onClick={() => handleEditClick(row.label, row.type)}
                         />
 
                         <label className="relative inline-flex items-center cursor-pointer">
