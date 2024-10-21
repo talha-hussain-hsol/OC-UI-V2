@@ -222,6 +222,21 @@ export const getIdentityList = async (cancelToken, fundId) => {
   }
 };
 
+export const getRegistrationProviderForSingpass = async (
+  singpassValue,
+  cancelToken
+) => {
+  const url = `/${entityId}/${baseURL}/registrationProvider/configurations?provider=${singpassValue}`
+  const request = { type: "GET", urlString: url }
+
+  try {
+    const response = await processRequest(request, cancelToken)
+    return response.data
+  } catch (error) {
+    return getErrorResponse(error)
+  }
+}
+
 export const verifyFundExist = async (data, cancelToken) => {
   //post url:CAPI/Account/list/verify
   const url = `/${entityId}/CAPI/Account/list/verify`;
@@ -333,6 +348,25 @@ export const getRequiredDocumentAPI = async (cancelToken) => {
     return getErrorResponse(error);
   }
 };
+
+export const updateIdentityStatusAPI = async (
+  data,
+  identityId,
+  cancelToken
+) => {
+  const url = `/${entityId}/${baseURL}/Identity/${identityId}/updateStatus`;
+  const request = { type: "PUT", urlString: url, params: data };
+
+  try {
+    const response = await processRequest(request, cancelToken);
+    return response.data;
+  } catch (error) {
+    return getErrorResponse(error);
+  }
+};
+
+
+
 export const getCustomTransactionAPI = async (cancelToken) => {
   const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Account/transactions/751550b6-e031-439c-bc7e-e2343ce52baf`;
   const request = { type: "GET", urlString: url };
