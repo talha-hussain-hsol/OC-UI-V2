@@ -80,7 +80,7 @@ export const getCustomerAccounts = async (offset, limit, cancelToken) => {
 
   console.log("in get api");
 
-  const url = `/${entityId}/${baseURL}/Account/list?offset=${offset}&limit=${limit}`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Account/list?offset=${offset}&limit=${limit}`;
   const request = { type: "GET", urlString: url };
 
   try {
