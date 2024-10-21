@@ -146,7 +146,7 @@ export const getCustomerAccounts = async (offset, limit, cancelToken) => {
   if (!limit) {
     return;
   }
-  const url = `/${entityId}/CAPI/Account/list?offset=${offset}&limit=${limit}`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Account/list?offset=${offset}&limit=${limit}`;
   const request = { type: "GET", urlString: url };
 
   try {
@@ -447,6 +447,24 @@ export const getFlatCPRListAPI = async (cancelToken) => {
     return getErrorResponse(error);
   }
 };
+
+export const handleSubmitScreeningApi = async (
+  identityId,
+  accountId,
+  cancelToken
+) => {
+  const url = `/${entityId}/${baseURL}/${identityId}/${accountId}/application/submit`;
+  const request = { type: "POST", urlString: url };
+
+  try {
+    const response = await processRequest(request, cancelToken);
+    return response.data;
+  } catch (error) {
+    return getErrorResponse(error);
+  }
+};
+
+
 export const FaceVerificationApi = async (
   data,
   cancelToken,
