@@ -1,12 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import DropdownField from "../../../components/ui/dropdown/DropdownField";
 import TextField from "../../../components/ui/input/TextField";
 import { useTheme } from "../../../contexts/themeContext";
-import Loader from '../../../components/ui/loader';
-import { getParticularFieldsFromFundIdApi, postIdentityAPI, getEntityTypeAPI, getParticularsDetailByIdentityIdAPI, postIdentityAttatchWithFund } from '../../../api/userApi';
-import axios from 'axios';
+import Loader from "../../../components/ui/loader";
+import {
+  getParticularFieldsFromFundIdApi,
+  postIdentityAPI,
+  getEntityTypeAPI,
+  getParticularsDetailByIdentityIdAPI,
+  postIdentityAttatchWithFund,
+} from "../../../api/userApi";
+import axios from "axios";
 
-const UserForm = ({ userType, onNext, fundData, identitiesData, dataOfAccountSetups,fundId, updateDataOfAccountSetups }) => {
+const UserForm = ({
+  userType,
+  onNext,
+  fundData,
+  identitiesData,
+  dataOfAccountSetups,
+  fundId,
+  updateDataOfAccountSetups,
+}) => {
   const { theme } = useTheme();
   const [formValues, setFormValues] = useState({});
   const [newFields, setNewFields] = useState({});
@@ -17,16 +31,16 @@ const UserForm = ({ userType, onNext, fundData, identitiesData, dataOfAccountSet
   const [entityType, setEntityType] = useState([]);
   const [label, setLabel] = useState("");
   const fund_id = fundData?.id;
-  let fund_named_id=fundData?.named_id;
+  let fund_named_id = fundData?.named_id;
   var account_id;
   var field_data;
-  console.log("fund_named_id",fund_named_id)
+  console.log("fund_named_id", fund_named_id);
   let identity_id;
   var identities;
   const cancelTokenSource = axios.CancelToken.source();
 
   console.log("Fund Data iss: ", fundData);
-  
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     const updatedValues = { ...formValues, [name]: value };
@@ -258,19 +272,22 @@ const UserForm = ({ userType, onNext, fundData, identitiesData, dataOfAccountSet
       .sort(([keyA, valueA], [keyB, valueB]) => valueA.index - valueB.index) ||
     [];
 
- 
   const handleSubmitCall = async (data) => {
     setSubmitLoader(true);
     try {
       const response = await postIdentityAPI(data, cancelTokenSource.token);
       if (response) {
-        setErrorMessage(null); 
-        identity_id = response?.data?.id; 
+        setErrorMessage(null);
+        identity_id = response?.data?.id;
         field_data = response?.data;
         console.log("Identity ID is here:", identity_id);
-        
-        await handleCreateAccount(identity_id, fund_named_id, data, response?.data);
-        
+
+        await handleCreateAccount(
+          identity_id,
+          fund_named_id,
+          data,
+          response?.data
+        );
       } else {
         setErrorMessage({ error: true, message: response.user_message });
       }
@@ -283,7 +300,6 @@ const UserForm = ({ userType, onNext, fundData, identitiesData, dataOfAccountSet
       setSubmitLoader(false);
     }
   };
-  
 
   const dataToSend = {
     label: label,
@@ -300,19 +316,17 @@ const UserForm = ({ userType, onNext, fundData, identitiesData, dataOfAccountSet
   const handleNextClick = async () => {
     try {
       await handleSubmitCall(dataToSend);
-  
+
       if (identity_id) {
-       
         if (account_id) {
           dataOfAccountSetups[0].data.identity.identity_id = identity_id;
           dataOfAccountSetups[0].data.account.account_id = account_id;
           dataOfAccountSetups[0].data.identity.field_data = field_data;
 
-  
           updateDataOfAccountSetups({
             dataOfAccountSetups,
           });
-  
+
           console.log("Updated Account Setup:", dataOfAccountSetups);
         } else {
           console.log("Account ID is not available");
@@ -320,7 +334,7 @@ const UserForm = ({ userType, onNext, fundData, identitiesData, dataOfAccountSet
       } else {
         console.log("Identity creation failed, identity_id is undefined.");
       }
-  
+
       onNext(dataToSend);
       console.log("Form Values:", dataToSend);
     } catch (error) {
@@ -328,12 +342,11 @@ const UserForm = ({ userType, onNext, fundData, identitiesData, dataOfAccountSet
     }
   };
 
-
   const handleCreateAccount = async (
     identity_id,
     fund_named_id,
     identityData,
-    addedIdentityData,
+    addedIdentityData
   ) => {
     setIsLoader(true);
     const data = {
@@ -347,15 +360,14 @@ const UserForm = ({ userType, onNext, fundData, identitiesData, dataOfAccountSet
     const response = await postIdentityAttatchWithFund(
       identity_id,
       data,
-      cancelTokenSource.token,
+      cancelTokenSource.token
     );
-    console.log('checking response', response);
-    if(response){
-      account_id=response?.data?.accountId;
-      console.log("account_id",account_id);
+    console.log("checking response", response);
+    if (response) {
+      account_id = response?.data?.accountId;
+      console.log("account_id", account_id);
     }
   };
-  
 
   return (
     <div className="w-full flex flex-col justify-between h-full">

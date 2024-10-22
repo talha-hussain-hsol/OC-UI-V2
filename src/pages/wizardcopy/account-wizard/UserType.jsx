@@ -23,17 +23,17 @@ const UserType = ({ onSelection, referenceDocuments, fundFields }) => {
     ...(Array.isArray(fundFields?.e_f) ? fundFields.e_f : []),
     ...(Array.isArray(fundFields?.c_f) ? fundFields.c_f : []),
   ];
-  
+
   console.log("Combined Array is:", arrayCombined);
-  
-  
 
   return (
     <>
       <div
         className={`w-full flex flex-col items-center bg-transparent font-${theme} text-${theme}`}
       >
-        <h3 className={`text-color-h3-${theme} text-2xl sm:text-xl md:text-2xl font-light mt-6`}>
+        <h3
+          className={`text-color-h3-${theme} text-2xl sm:text-xl md:text-2xl font-light mt-6`}
+        >
           Let's start with the basics.
         </h3>
         <p className="text-slate-500 text-xs sm:text-sm font-light mt-2 text-center sm:text-left">
@@ -54,7 +54,9 @@ const UserType = ({ onSelection, referenceDocuments, fundFields }) => {
               Demo Fund
             </h2>
           </div>
-          <div className={`text-color-${theme} sm:ml-[10%] lg:ml-[20%] text-xs font-light mb-4 sm:mb-0`}>
+          <div
+            className={`text-color-${theme} sm:ml-[10%] lg:ml-[20%] text-xs font-light mb-4 sm:mb-0`}
+          >
             <p className="flex items-center">
               <IoCheckmarkDoneCircleOutline
                 className={`text-color-button1-${theme}`}
@@ -68,7 +70,9 @@ const UserType = ({ onSelection, referenceDocuments, fundFields }) => {
               Fund Domicile: Singapore
             </p>
           </div>
-          <div className={`text-color-${theme} sm:ml-[10%] lg:ml-[20%] text-xs font-light`}>
+          <div
+            className={`text-color-${theme} sm:ml-[10%] lg:ml-[20%] text-xs font-light`}
+          >
             <p className="flex items-center">
               <FaRegClock className={`text-color-button1-${theme}`} /> Dealing
               Cycle: Interval
@@ -82,23 +86,28 @@ const UserType = ({ onSelection, referenceDocuments, fundFields }) => {
           </div>
         </div>
         <div
-        className={`bg-color-card-${theme} rounded-lg shadow-lg h-auto sm:h-[20%] w-[90%] sm:w-[80%] mt-8 p-4`}
-      >
-        <div
-          className={`flex bg-color-card-${theme} rounded-lg shadow-lg h-[50%] w-[100%]`}
+          className={`bg-color-card-${theme} rounded-lg shadow-lg h-auto sm:h-[20%] w-[90%] sm:w-[80%] mt-8 p-4`}
         >
-          <p className={`text-color-${theme} text-xs font-extrabold m-3`}>
-            Account Description
+          <div
+            className={`flex bg-color-card-${theme} rounded-lg shadow-lg h-[50%] w-[100%]`}
+          >
+            <p className={`text-color-${theme} text-xs font-extrabold m-3`}>
+              Account Description
+            </p>
+          </div>
+          <p
+            className={`text-color-${theme} text-xs sm:text-sm font-light p-3`}
+          >
+            Demo
           </p>
         </div>
-        <p className={`text-color-${theme} text-xs sm:text-sm font-light p-3`}>Demo</p>
-      </div>
-
 
         <div
           className={`flex bg-color-card-${theme} rounded-lg shadow-lg h-[10%] sm:h-[10%] sm:w-[80%] mt-4 w-[80%] justify-between items-center`}
         >
-          <p className={`text-color-${theme} text-xs sm:text-sm font-extrabold m-3`}>
+          <p
+            className={`text-color-${theme} text-xs sm:text-sm font-extrabold m-3`}
+          >
             Reference Documents
           </p>
           <button
@@ -118,14 +127,20 @@ const UserType = ({ onSelection, referenceDocuments, fundFields }) => {
                   className={`flex justify-between items-center bg-color-card-${theme} rounded-lg shadow-lg p-3 mb-2`}
                 >
                   <div>
-                    <p className={`mb-0 text-xs font-semibold text-color-${theme}`}>{item?.title}</p>
-                    <p className={`mb-0 text-xs text-gray-500`}>{item?.description}</p>
+                    <p
+                      className={`mb-0 text-xs font-semibold text-color-${theme}`}
+                    >
+                      {item?.title}
+                    </p>
+                    <p className={`mb-0 text-xs text-gray-500`}>
+                      {item?.description}
+                    </p>
                   </div>
                   <button
                     className={`p-2 rounded-full bg-gradient-card-${theme} flex items-center justify-center`}
                     style={{
-                      height: '30px',
-                      width: '30px',
+                      height: "30px",
+                      width: "30px",
                     }}
                   >
                     <FaEye />

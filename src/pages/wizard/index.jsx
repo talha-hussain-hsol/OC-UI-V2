@@ -1,9 +1,8 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState, useRef } from "react";
-import { Button, Card, Col, Container, Form, Nav, Row, Alert, OverlayTrigger } from "react-bootstrap";
 import Tooltip from "../../components/tooltip/Tooltip";
-
-import axios, { CancelTokenSource } from "axios";
+import { useTheme } from "../../contexts/themeContext";
+import axios from "axios";
 import Stepper from "react-stepper-horizontal";
 // import LoadingSpinner from "../../../widgets/bootstrap-component/Spinner";
 import {
@@ -24,15 +23,15 @@ import FaceVerification from "../wizardcopy/account-wizard/FaceVerification";
 import IdentityStep from "../wizardcopy/account-wizard/UserForm";
 import SummaryStep from "../wizardcopy/account-wizard/Summary";
 import Vcip from "../wizardcopy/account-wizard/VCIP";
-import { FaBullseye } from "react-icons/fa";
-import { getMissingDataOfIdentity } from "../../helpers";
+import getMissingDataOfIdentity from "../../helpers/getMissingDataOfIdentity";
 import CustomAlert from "../../widgets/components/Alerts";
 import Loader from "../../components/ui/loader";
 import Modal from "../../components/modal/MainModal";
+import SideBar from "../../components/sidebar/Sidebar";
 
 export default function Wizard() {
+  const { theme } = useTheme();
   const [entityType, setEntityType] = useState(null);
-
   const [isAssistanceData, setIsAssistanceData] = useState(false);
   const [isAssistAvail, setIsAssistAvail] = useState(false);
   const [faceResponse, setFaceResponse] = useState(false);
@@ -42,10 +41,8 @@ export default function Wizard() {
   const cancelTokenSource = axios.CancelToken.source();
   const [isLoader, setIsLoader] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
-  const [nextButtonDisabled, setNextButtonDisabled] = useState(false);
   const [isAcceptedTermsAndCondition, setIsAcceptedTermsAndCondition] =
     useState(false);
-
   const [currentSection, setCurrentSection] = useState(0);
   const [dataOfIdentityStep, setDataOfIdentityStep] = useState(false);
   const [buttonIsDisabledDocumentStep, setButtonIsDisabledDocumentStep] =
@@ -69,7 +66,7 @@ export default function Wizard() {
   const [buttonDisabledForVCIP, setButtonDisabledForVCIP] = useState(false);
   const [submitVCIPAPI, setSubmitVCIPAPI] = useState(false);
 
-  const [tooltipMessage, setTooltipMessage] = useState('');
+  const [tooltipMessage, setTooltipMessage] = useState("");
   const [isShowFaceVerificationVCIP, setIsShowFaceVerificationVCIP] =
     useState(true);
   const [isShowModalAccurate, setIsShowModalAccurate] = useState(false);
@@ -85,19 +82,19 @@ export default function Wizard() {
   const [dataOfAccountSetup, setDataOfAccountSetup] = useState({});
   const [transactionHistoryData, setTransactionHistoryData] = useState({});
   const [steps, setSteps] = useState([
-    { title: 'Select Account' },
-    { title: 'Identity Setup' },
-    { title: 'Documents' },
-    { title: 'Face Verification' },
-    { title: 'VCIP' },
-    { title: 'Bank/Wallets' },
-    { title: 'Application' },
-    { title: 'Summary' },
+    { title: "Select Account" },
+    { title: "Identity Setup" },
+    { title: "Documents" },
+    { title: "Face Verification" },
+    { title: "VCIP" },
+    { title: "Bank/Wallets" },
+    { title: "Application" },
+    { title: "Summary" },
   ]);
   const navigate = useNavigate();
   const [alertProps, setAlertProps] = useState({
-    variant: '',
-    message: '',
+    variant: "",
+    message: "",
     show: false,
     hideAuto: false,
   });
@@ -110,47 +107,36 @@ export default function Wizard() {
   };
 
   useEffect(() => {
-    console.log('imagesForfaceVerificationp', imagesForfaceVerification);
+    console.log("imagesForfaceVerificationp", imagesForfaceVerification);
   }, [imagesForfaceVerification]);
   useEffect(() => {
-    console.log('imagesForfaceVerificationp entityType', entityType);
-    if (entityType !== null || entityType !== '') {
-      console.log('dsdasdas', typeof entityType);
-      console.log('dsdasdas aaa', entityType);
+    console.log("imagesForfaceVerificationp entityType", entityType);
+    if (entityType !== null || entityType !== "") {
+      console.log("dsdasdas", typeof entityType);
+      console.log("dsdasdas aaa", entityType);
     }
   }, [entityType]);
 
   const handleChangeCkyc = (value) => {
-    console.log('value ssdasdada', value);
+    console.log("value ssdasdada", value);
     setProviderCkyc(value);
   };
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     if (queryParams) {
-      console.log(queryParams.get('step'), 'quersdsd');
-      const event = queryParams.get('event');
+      console.log(queryParams.get("step"), "quersdsd");
+      const event = queryParams.get("event");
 
-      const step = queryParams.get('step');
+      const step = queryParams.get("step");
       if (event) {
-        let accountWizardAllData = localStorage.getItem('accountWizardAllData');
-        if (accountWizardAllData != 'null' && accountWizardAllData != null) {
-          // setDataOfAccountSetup(JSON.parse(accountWizardAllData));
-          handleGoToStep('Application');
+        let accountWizardAllData = localStorage.getItem("accountWizardAllData");
+        if (accountWizardAllData != "null" && accountWizardAllData != null) {
+          handleGoToStep("Application");
           setCurrentSection(6);
           setActiveStep(6);
-          // localStorage.setItem("accountWizardAllData", null)
         }
       }
-      // if (step) {
-      //   if (step === 'Identity_Setup') {
-      //     handleGoToStep('Identity Setup');
-      //     setCurrentSection(2);
-      //     setActiveStep(2);
-      //   }
-      //   setCurrentSection(1);
-      //   setActiveStep(1);
-      // }
     }
   }, []);
   useEffect(() => {
@@ -162,7 +148,9 @@ export default function Wizard() {
     }
   }, [params]);
   useEffect(() => {
-    let dataFromLocalStorage = JSON.parse(localStorage.getItem("accountWizardAllData"))
+    let dataFromLocalStorage = JSON.parse(
+      localStorage.getItem("accountWizardAllData")
+    );
 
     if (dataFromLocalStorage?.identityId) {
       handleGetAccountDetailFirstTime(dataFromLocalStorage?.accountId);
@@ -170,13 +158,9 @@ export default function Wizard() {
       getBankIdentities(dataFromLocalStorage?.identityId);
       getTransactionHistory(dataFromLocalStorage?.accountId);
     }
-    // setTimeout(function(){
-    //   localStorage.setItem('accountWizardAllData',null)
-    // },5000)
   }, []);
 
   useEffect(() => {
-    // Set tooltip message based on the conditions
     if (params?.account_id && dataOfAccountSetup?.fundData) {
       const {
         accountData,
@@ -195,12 +179,12 @@ export default function Wizard() {
         getMissingDataOfIdentity(
           selectedIdentityData,
           dataOfAccountSetup?.fundData,
-          null,
+          null
         )?.missingDocuments?.length === 0;
 
       const isFaceVerificationEnabled =
         fundData?.fund_setting?.account?.applicant?.identity[
-          isIndividual ? 'indivisual' : 'corporate'
+          isIndividual ? "indivisual" : "corporate"
         ]?.provider?.verify?.face?.enabled;
       const isFaceVerificationCompleted = isFaceVerificationEnabled
         ? faceVerification
@@ -209,7 +193,7 @@ export default function Wizard() {
       // Check if VCIP is enabled for the specific identity
       const isVcipEnabled =
         fundData?.fund_setting?.account?.applicant?.identity[
-          isIndividual ? 'indivisual' : 'corporate'
+          isIndividual ? "indivisual" : "corporate"
         ]?.provider?.verify?.vcip?.enabled;
 
       // Check VCIP completion status only if it's enabled
@@ -231,36 +215,36 @@ export default function Wizard() {
       // const isApplicationDocumentCompleted = application;
 
       if (!isParticularFormCompleted) {
-        setTooltipMessage('Please complete the particulars form.');
+        setTooltipMessage("Please complete the particulars form.");
       } else if (!isDocumentUploadCompleted) {
-        setTooltipMessage('Please upload all required documents.');
+        setTooltipMessage("Please upload all required documents.");
       } else if (!isFaceVerificationCompleted) {
-        setTooltipMessage('Please complete the face verification process.');
+        setTooltipMessage("Please complete the face verification process.");
       } else if (!isVcipCompleted) {
-        setTooltipMessage('Please complete the VCIP process.');
+        setTooltipMessage("Please complete the VCIP process.");
       } else {
-        setTooltipMessage('');
+        setTooltipMessage("");
       }
     }
   }, [dataOfAccountSetup?.fundData, dataOfAccountSetup?.isIndividual]);
 
   useEffect(() => {
-    console.log('currentSection', currentSection);
+    console.log("currentSection", currentSection);
   }, [currentSection]);
   const getTransactionHistory = async (account_id) => {
     const response = await getTransactionHistoryAPI(
       account_id,
-      cancelTokenSource.token,
+      cancelTokenSource.token
     );
     if (response.success == true) {
       setTransactionHistoryData(response?.data);
       let isSubscriptionDocument = Object.keys(response?.data);
-      dataOfAccountSetup['AccountSubscriptionDocs'] = response?.data;
-      console.log(isSubscriptionDocument, 'isSubscriptionDocument');
+      dataOfAccountSetup["AccountSubscriptionDocs"] = response?.data;
+      console.log(isSubscriptionDocument, "isSubscriptionDocument");
       if (isSubscriptionDocument && isSubscriptionDocument?.length > 0) {
-        dataOfAccountSetup['application'] = true;
+        dataOfAccountSetup["application"] = true;
       } else {
-        dataOfAccountSetup['application'] = false;
+        dataOfAccountSetup["application"] = false;
       }
       setDataOfAccountSetup(dataOfAccountSetup);
     }
@@ -285,11 +269,11 @@ export default function Wizard() {
       getMissingDataOfIdentity(
         selectedIdentityData,
         dataOfAccountSetup?.fundData,
-        null,
+        null
       )?.missingDocuments?.length === 0;
     const isFaceVerificationEnabled =
       fundData?.fund_setting?.account?.applicant?.identity[
-        isIndividual ? 'indivisual' : 'corporate'
+        isIndividual ? "indivisual" : "corporate"
       ]?.provider?.verify?.face?.enabled;
     const isFaceVerificationCompleted = isFaceVerificationEnabled
       ? faceVerification
@@ -298,7 +282,7 @@ export default function Wizard() {
     // Check if VCIP is enabled for the specific identity
     const isVcipEnabled =
       fundData?.fund_setting?.account?.applicant?.identity[
-        isIndividual ? 'indivisual' : 'corporate'
+        isIndividual ? "indivisual" : "corporate"
       ]?.provider?.verify?.vcip?.enabled;
 
     // Check VCIP completion status only if it's enabled
@@ -334,11 +318,11 @@ export default function Wizard() {
     // setIsLoader(true);
     const response = await getWalletAddressListAPI(
       identityId,
-      cancelTokenSource.token,
+      cancelTokenSource.token
     );
     // setIsLoader(false);
     if (response.success == true) {
-      dataOfAccountSetup['wallet'] = response?.data?.length > 0 ? true : false;
+      dataOfAccountSetup["wallet"] = response?.data?.length > 0 ? true : false;
       setDataOfAccountSetup(dataOfAccountSetup);
     } else {
     }
@@ -347,11 +331,11 @@ export default function Wizard() {
     // setIsLoader(true);
     const response = await getBankIdentitiesAPI(
       identityId,
-      cancelTokenSource.token,
+      cancelTokenSource.token
     );
     // setIsLoader(false);
     if (response.success == true) {
-      dataOfAccountSetup['bank'] = response?.data?.length > 0 ? true : false;
+      dataOfAccountSetup["bank"] = response?.data?.length > 0 ? true : false;
       setDataOfAccountSetup(dataOfAccountSetup);
     } else {
     }
@@ -359,12 +343,12 @@ export default function Wizard() {
   const checkIfFaceVerficationVCIPEnable = () => {
     if (dataOfAccountSetup) {
       if (
-        dataOfAccountSetup?.accountData?.meta?.created_by?.portal == 'customer'
+        dataOfAccountSetup?.accountData?.meta?.created_by?.portal == "customer"
       ) {
         return true;
       } else if (
         dataOfAccountSetup?.accountData?.meta?.created_by?.id !=
-        localStorage.getItem('login_user_id')
+        localStorage.getItem("login_user_id")
       ) {
         return true;
       }
@@ -377,9 +361,9 @@ export default function Wizard() {
     if (params?.account_id) {
       if (dataOfAccountSetup) {
         stepsData = [
-          { title: 'Summary' },
-          { title: 'Identity Setup' },
-          { title: 'Documents' },
+          { title: "Summary" },
+          { title: "Identity Setup" },
+          { title: "Documents" },
         ];
         if (dataOfAccountSetup?.fund_id) {
           if (dataOfAccountSetup?.isIndividual === undefined) {
@@ -388,26 +372,26 @@ export default function Wizard() {
                 ?.identity?.indivisual?.provider?.verify?.face?.enabled &&
               isShowFaceVerificationVCIP
             ) {
-              stepsData.push({ title: 'Face Verification' });
+              stepsData.push({ title: "Face Verification" });
             }
             if (
               dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant
                 ?.identity?.indivisual?.provider?.verify?.vcip?.enabled &&
               isShowFaceVerificationVCIP
             ) {
-              stepsData.push({ title: 'VCIP' });
+              stepsData.push({ title: "VCIP" });
             }
             console.log(
               dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant
                 ?.identity?.indivisual?.provider?.verify?.face,
-              'dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant?.identity[customerType]?.provider?.verify?.face',
+              "dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant?.identity[customerType]?.provider?.verify?.face"
             );
           } else {
-            let customerType = '';
+            let customerType = "";
             if (dataOfAccountSetup?.isIndividual) {
-              customerType = 'indivisual';
+              customerType = "indivisual";
             } else {
-              customerType = 'corporate';
+              customerType = "corporate";
             }
 
             if (
@@ -415,14 +399,14 @@ export default function Wizard() {
                 ?.identity[customerType]?.provider?.verify?.face?.enabled &&
               checkIfFaceVerficationVCIPEnable()
             ) {
-              stepsData.push({ title: 'Face Verification' });
+              stepsData.push({ title: "Face Verification" });
             }
             if (
               dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant
                 ?.identity[customerType]?.provider?.verify?.vcip?.enabled &&
               checkIfFaceVerficationVCIPEnable()
             ) {
-              stepsData.push({ title: 'VCIP' });
+              stepsData.push({ title: "VCIP" });
             }
           }
           const fundSetting =
@@ -431,33 +415,33 @@ export default function Wizard() {
 
           if (
             (fundSetting?.bank?.enabled === true ||
-              fundSetting?.bank?.enabled === 'true' ||
+              fundSetting?.bank?.enabled === "true" ||
               fundSetting?.wallet?.enabled === true ||
-              fundSetting?.wallet?.enabled === 'true') &&
-            dataOfAccountSetup?.fund_data?.named_id?.toUpperCase() !== 'AXSA-WM'
+              fundSetting?.wallet?.enabled === "true") &&
+            dataOfAccountSetup?.fund_data?.named_id?.toUpperCase() !== "AXSA-WM"
           ) {
-            stepsData.push({ title: 'Bank/Wallets' });
+            stepsData.push({ title: "Bank/Wallets" });
           }
           if (
             dataOfAccountSetup?.fund_data?.fund_setting?.account?.subscription
               ?.status
           ) {
-            stepsData.push({ title: 'Application' });
+            stepsData.push({ title: "Application" });
           }
         }
         setSteps(stepsData);
         setActiveStep(stepsData?.length);
         console.log(
           dataOfAccountSetup,
-          'dataOfAccountSetup dataOfAccountSetup    dataOfAccountSetupdataOfAccountSetupdataOfAccountSetup',
+          "dataOfAccountSetup dataOfAccountSetup    dataOfAccountSetupdataOfAccountSetupdataOfAccountSetup"
         );
       }
     } else {
       if (dataOfAccountSetup) {
         stepsData = [
-          { title: 'Select Account' },
-          { title: 'Identity Setup' },
-          { title: 'Documents' },
+          { title: "Select Account" },
+          { title: "Identity Setup" },
+          { title: "Documents" },
         ];
         if (dataOfAccountSetup?.isIndividual === undefined) {
           if (
@@ -465,26 +449,26 @@ export default function Wizard() {
               ?.identity?.indivisual?.provider?.verify?.face?.enabled &&
             isShowFaceVerificationVCIP
           ) {
-            stepsData.push({ title: 'Face Verification' });
+            stepsData.push({ title: "Face Verification" });
           }
           if (
             dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant
               ?.identity?.indivisual?.provider?.verify?.vcip?.enabled &&
             isShowFaceVerificationVCIP
           ) {
-            stepsData.push({ title: 'VCIP' });
+            stepsData.push({ title: "VCIP" });
           }
           console.log(
             dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant
               ?.identity?.indivisual?.provider?.verify?.face,
-            'dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant?.identity[customerType]?.provider?.verify?.face',
+            "dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant?.identity[customerType]?.provider?.verify?.face"
           );
         } else {
-          let customerType = '';
+          let customerType = "";
           if (dataOfAccountSetup?.isIndividual) {
-            customerType = 'indivisual';
+            customerType = "indivisual";
           } else {
-            customerType = 'corporate';
+            customerType = "corporate";
           }
 
           if (
@@ -492,14 +476,14 @@ export default function Wizard() {
               ?.identity[customerType]?.provider?.verify?.face?.enabled &&
             isShowFaceVerificationVCIP
           ) {
-            stepsData.push({ title: 'Face Verification' });
+            stepsData.push({ title: "Face Verification" });
           }
           if (
             dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant
               ?.identity[customerType]?.provider?.verify?.vcip?.enabled &&
             isShowFaceVerificationVCIP
           ) {
-            stepsData.push({ title: 'VCIP' });
+            stepsData.push({ title: "VCIP" });
           }
         }
         const fundSetting =
@@ -508,61 +492,61 @@ export default function Wizard() {
 
         if (
           (fundSetting?.bank?.enabled === true ||
-            fundSetting?.bank?.enabled === 'true' ||
+            fundSetting?.bank?.enabled === "true" ||
             fundSetting?.wallet?.enabled === true ||
-            fundSetting?.wallet?.enabled === 'true') &&
-          dataOfAccountSetup?.fund_data?.named_id?.toUpperCase() !== 'AXSA-WM'
+            fundSetting?.wallet?.enabled === "true") &&
+          dataOfAccountSetup?.fund_data?.named_id?.toUpperCase() !== "AXSA-WM"
         ) {
-          stepsData.push({ title: 'Bank/Wallets' });
+          stepsData.push({ title: "Bank/Wallets" });
         }
 
         if (
           dataOfAccountSetup?.fund_data?.fund_setting?.account?.subscription
             ?.status
         ) {
-          stepsData.push({ title: 'Application' });
+          stepsData.push({ title: "Application" });
         }
-        stepsData.push({ title: 'Summary' });
+        stepsData.push({ title: "Summary" });
       }
       setSteps(stepsData);
       console.log(
         dataOfAccountSetup,
-        'dataOfAccountSetup dataOfAccountSetup    dataOfAccountSetupdataOfAccountSetupdataOfAccountSetup',
+        "dataOfAccountSetup dataOfAccountSetup    dataOfAccountSetupdataOfAccountSetupdataOfAccountSetup"
       );
     }
     const queryParams = new URLSearchParams(location.search);
     if (queryParams) {
-      const event = queryParams.get('event');
+      const event = queryParams.get("event");
 
       if (event) {
-        let accountWizardAllData = localStorage.getItem('accountWizardAllData');
-        if (accountWizardAllData != 'null' && accountWizardAllData != null) {
+        let accountWizardAllData = localStorage.getItem("accountWizardAllData");
+        if (accountWizardAllData != "null" && accountWizardAllData != null) {
           if (stepsData?.length > 0) {
             for (let a = 0; a < stepsData?.length; a++) {
-              if (stepsData[a].title == 'Application') {
+              if (stepsData[a].title == "Application") {
                 console.log(
                   stepsData[a].title,
-                  'stepsData[a].title stepsData[a].title',
+                  "stepsData[a].title stepsData[a].title"
                 );
                 setCurrentSection(a);
                 setActiveStep(a);
-                queryParams.delete('event');
-                history.replaceState(null, null, '?' + queryParams.toString());
+                queryParams.delete("event");
+                history.replaceState(null, null, "?" + queryParams.toString());
               }
             }
           }
           // localStorage.setItem("accountWizardAllData", null)
         } else if (stepsData?.length > 0) {
           for (let a = 0; a < stepsData?.length; a++) {
-            if (stepsData[a].title == 'Application') {
+            if (stepsData[a].title == "Application") {
               console.log(
                 stepsData[a].title,
-                'stepsData[a].title stepsData[a].title',
+                "stepsData[a].title stepsData[a].title"
               );
               setCurrentSection(a);
               setActiveStep(a);
-              queryParams.delete('event');
-              history.replaceState(null, null, '?' + queryParams.toString());
+              queryParams.delete("event");
+              history.replaceState(null, null, "?" + queryParams.toString());
             }
           }
         }
@@ -572,11 +556,11 @@ export default function Wizard() {
   useEffect(() => {
     const query = new URLSearchParams(location.search);
     if (
-      query?.get('state') == 'SINGPASS' ||
-      query?.get('state') == 'CORPPASS'
+      query?.get("state") == "SINGPASS" ||
+      query?.get("state") == "CORPPASS"
     ) {
       setDataOfAccountSetup(
-        JSON.parse(localStorage.getItem('accountSetupData')),
+        JSON.parse(localStorage.getItem("accountSetupData"))
       );
       setCurrentSection(1);
       setActiveStep(1);
@@ -585,48 +569,48 @@ export default function Wizard() {
   const getRegistrationProviderForSingpassApi = async () => {
     setIsLoader(true);
     let singPassValue = dataOfAccountSetup?.isIndividual
-      ? 'SINGPASS'
-      : 'CORPPASS';
+      ? "SINGPASS"
+      : "CORPPASS";
     const response = await getRegistrationProviderForSingpass(
       singPassValue,
-      cancelTokenSource.token,
+      cancelTokenSource.token
     );
     if (response.success == true) {
       setIsLoader(false);
-      console.log('blsdalsdlka', response);
+      console.log("blsdalsdlka", response);
       let authoriseUrl;
       dataOfAccountSetup?.isIndividual
         ? (authoriseUrl =
             response?.data?.singpass?.configurations.auth_api_url +
-            '?client_id=' +
+            "?client_id=" +
             response?.data?.singpass?.configurations.client_id +
-            '&attributes=' +
+            "&attributes=" +
             response?.data?.singpass?.configurations.attributes.replace(
               /"/g,
-              '',
+              ""
             ) +
-            '&purpose=' +
+            "&purpose=" +
             response?.data?.singpass?.configurations.purpose +
-            '&state=' +
-            'SINGPASS' +
-            '&redirect_uri=' +
-            process.env.SINGPASS_CALL_BACK_URL)
+            "&state=" +
+            "SINGPASS" +
+            "&redirect_uri=" +
+            process.env.VITE_SINGPASS_CALL_BACK_URL)
         : (authoriseUrl =
             response?.data?.corppass?.configurations.auth_api_url +
-            '?client_id=' +
+            "?client_id=" +
             response?.data?.corppass?.configurations.client_id +
-            '&attributes=' +
+            "&attributes=" +
             response?.data?.corppass?.configurations.attributes.replace(
               /"/g,
-              '',
+              ""
             ) +
-            '&purpose=' +
+            "&purpose=" +
             response?.data?.corppass?.configurations.purpose +
-            '&state=' +
-            'CORPPASS' +
-            '&redirect_uri=' +
-            process.env.CORPPASS_CALL_BACK_URL);
-      console.log('sdasda', authoriseUrl);
+            "&state=" +
+            "CORPPASS" +
+            "&redirect_uri=" +
+            process.env.VITE_CORPPASS_CALL_BACK_URL);
+      console.log("sdasda", authoriseUrl);
       //   return;
       window.location.href = authoriseUrl;
     } else {
@@ -634,7 +618,7 @@ export default function Wizard() {
     }
   };
   const handleClickSpecificTab = (index) => {
-    console.log(index, 'index handleClickSpecificTab');
+    console.log(index, "index handleClickSpecificTab");
   };
   const customSteps = steps.map((step, index) => {
     const isCompleted = index < activeStep;
@@ -657,29 +641,29 @@ export default function Wizard() {
   };
   const getDataFromAccountStep = (data) => {
     // localStorage.setItem('accountSetup', data)
-    console.log(data, 'data getDataFromAccountStep');
+    console.log(data, "data getDataFromAccountStep");
     setDataOfAccountSetup(data);
   };
   const getDataForButtonEnableDisable = (data) => {
-    console.log(data, 'data getDataFromIdentityStep');
+    console.log(data, "data getDataFromIdentityStep");
     setDataOfIdentityStep(data);
   };
   const handleNextButtonClickDocumentStep = (data) => {
-    console.log(data, 'data handleNextButtonClickDocumentStep');
+    console.log(data, "data handleNextButtonClickDocumentStep");
     setButtonIsDisabledDocumentStep(data);
   };
   const setWalletData = (data) => {
-    dataOfAccountSetup['wallet'] = data;
+    dataOfAccountSetup["wallet"] = data;
   };
   const setBankData = (data) => {
-    dataOfAccountSetup['bank'] = data;
+    dataOfAccountSetup["bank"] = data;
   };
   const setBanKDataValue = (data) => {
-    dataOfAccountSetup['BanKData'] = data;
+    dataOfAccountSetup["BanKData"] = data;
   };
   const setApplicationStepData = (data) => {
-    console.log(data, 'data data setApplicationStepData');
-    dataOfAccountSetup['application'] = data;
+    console.log(data, "data data setApplicationStepData");
+    dataOfAccountSetup["application"] = data;
   };
   const handleSetFaceImages = (data) => {
     setImagesForfaceVerification(data);
@@ -709,10 +693,10 @@ export default function Wizard() {
     }
   };
   const getIdentityData = (data) => {
-    dataOfAccountSetup['identityData'] = data;
+    dataOfAccountSetup["identityData"] = data;
   };
   const getAccountData = (data) => {
-    dataOfAccountSetup['accountData'] = data;
+    dataOfAccountSetup["accountData"] = data;
   };
   const handleUpdateSubmitCallIdentityStep = (data) => {
     setHandleSubmitIdentityStep(data);
@@ -722,14 +706,14 @@ export default function Wizard() {
     account_id,
     identityData,
     accountData,
-    isStore = true,
+    isStore = true
   ) => {
     if (isStore) {
-      dataOfAccountSetup['identity_id'] = identity_id;
-      dataOfAccountSetup['account_id'] = account_id;
-      dataOfAccountSetup['accountData'] = accountData;
-      dataOfAccountSetup['selectedIdentityData'] = identityData;
-      console.log(dataOfAccountSetup, 'dataOfAccountSetup');
+      dataOfAccountSetup["identity_id"] = identity_id;
+      dataOfAccountSetup["account_id"] = account_id;
+      dataOfAccountSetup["accountData"] = accountData;
+      dataOfAccountSetup["selectedIdentityData"] = identityData;
+      console.log(dataOfAccountSetup, "dataOfAccountSetup");
       setDataOfAccountSetup(dataOfAccountSetup);
     }
     if (!isCrp) {
@@ -739,7 +723,7 @@ export default function Wizard() {
   };
   const faceVerificationCompleted = (data, redirect = false) => {
     setButtonDisabledForFaceVerification(data);
-    dataOfAccountSetup['faceVerification'] = data;
+    dataOfAccountSetup["faceVerification"] = data;
     handleGetAccountDetail();
     if (redirect) {
       setCurrentSection(currentSection + 1);
@@ -751,7 +735,7 @@ export default function Wizard() {
     setButtonDisabledForFaceVerification(data);
   };
   const submitVCIP = (data) => {
-    console.log(data, 'data submitVCIP submitVCIP');
+    console.log(data, "data submitVCIP submitVCIP");
     setSubmitVCIPAPI(data);
     setButtonDisabledForVCIP(data);
   };
@@ -762,39 +746,45 @@ export default function Wizard() {
     setHandleCallAPIForVCIPData(false);
   };
   const handleGetAccountDetail = async () => {
-    let dataFromLocalStorage = JSON.parse(localStorage.getItem("accountWizardAllData"))
+    let dataFromLocalStorage = JSON.parse(
+      localStorage.getItem("accountWizardAllData")
+    );
 
     const response = await getSingleAccountDetailByIdAPI(
       dataOfAccountSetup?.account_id
         ? dataOfAccountSetup?.account_id
-        : params?.account_id?params?.account_id:dataFromLocalStorage?.accountId,
-      cancelTokenSource.token,
+        : params?.account_id
+        ? params?.account_id
+        : dataFromLocalStorage?.accountId,
+      cancelTokenSource.token
     );
     if (response.success == true) {
       setIsLoader(false);
-      dataOfAccountSetup['accountData'] = response?.data?.account_detail;
+      dataOfAccountSetup["accountData"] = response?.data?.account_detail;
       setDataOfAccountSetup(dataOfAccountSetup);
     }
   };
   const handleGetAccountDetailFirstTime = async (accId = null) => {
     setIsLoader(true);
-    
+
     const response = await getSingleAccountDetailByIdAPI(
       dataOfAccountSetup?.account_id
         ? dataOfAccountSetup?.account_id
-        : params?.account_id?params?.account_id:accId,
-      cancelTokenSource.token,
+        : params?.account_id
+        ? params?.account_id
+        : accId,
+      cancelTokenSource.token
     );
     if (response.success == true) {
       if (params?.account_id || accId) {
         setIsShowFaceVerificationVCIP(
-          response?.data?.account_detail?.meta?.created_by?.portal != 'customer'
+          response?.data?.account_detail?.meta?.created_by?.portal != "customer"
             ? false
-            : true,
+            : true
         );
         getFundData(
           response?.data?.account_detail?.fund?.namedId,
-          response?.data?.account_detail,
+          response?.data?.account_detail
         );
       }
     }
@@ -803,25 +793,29 @@ export default function Wizard() {
     const response = await getFundForJoin(named_id, cancelTokenSource.token);
     setIsLoader(false);
     if (response.success == true) {
-      localStorage.setItem('fundRegion', response?.data?.fund_setting?.region);
-      let dataFromLocalStorage = JSON.parse(localStorage.getItem("accountWizardAllData"))
+      localStorage.setItem("fundRegion", response?.data?.fund_setting?.region);
+      let dataFromLocalStorage = JSON.parse(
+        localStorage.getItem("accountWizardAllData")
+      );
 
       if (params?.account_id || dataFromLocalStorage?.accountId) {
-        dataOfAccountSetup['fund_id'] = data?.fundId;
-        dataOfAccountSetup['identity_id'] =
+        dataOfAccountSetup["fund_id"] = data?.fundId;
+        dataOfAccountSetup["identity_id"] =
           data?.attach_identities[0]?.identityId;
-        dataOfAccountSetup['selectedIdentityData'] =
+        dataOfAccountSetup["selectedIdentityData"] =
           data?.attach_identities[0]?.identity;
-        dataOfAccountSetup['isIndividual'] =
-          data?.attach_identities[0]?.identity?.type == 'INDIVIDUAL'
+        dataOfAccountSetup["isIndividual"] =
+          data?.attach_identities[0]?.identity?.type == "INDIVIDUAL"
             ? true
             : false;
-        dataOfAccountSetup['fund_data'] = response?.data;
-        dataOfAccountSetup['fundData'] = data?.fund;
-        dataOfAccountSetup['account_id'] = params?.account_id ?params?.account_id :dataFromLocalStorage?.accountId;
-        dataOfAccountSetup['accountData'] = data;
-        dataOfAccountSetup['faceVerification'] = false;
-        dataOfAccountSetup['vcip'] = false;
+        dataOfAccountSetup["fund_data"] = response?.data;
+        dataOfAccountSetup["fundData"] = data?.fund;
+        dataOfAccountSetup["account_id"] = params?.account_id
+          ? params?.account_id
+          : dataFromLocalStorage?.accountId;
+        dataOfAccountSetup["accountData"] = data;
+        dataOfAccountSetup["faceVerification"] = false;
+        dataOfAccountSetup["vcip"] = false;
         if (data?.attach_identities) {
           if (data?.attach_identities?.length > 0) {
             if (data?.attach_identities) {
@@ -836,14 +830,14 @@ export default function Wizard() {
                       data?.attach_identities[0]?.identityId
                     ]?.faceVerification
                   ) {
-                    dataOfAccountSetup['faceVerification'] = true;
+                    dataOfAccountSetup["faceVerification"] = true;
                   }
                   if (
                     data?.attach_identities[0]?.meta?.identities[
                       data?.attach_identities[0]?.identityId
                     ]?.vcip
                   ) {
-                    dataOfAccountSetup['vcip'] = true;
+                    dataOfAccountSetup["vcip"] = true;
                   }
                 }
               }
@@ -853,28 +847,28 @@ export default function Wizard() {
       }
       console.log(
         dataOfAccountSetup,
-        'dataOfAccountSetup getSingleAccountDetailByIdAPI',
+        "dataOfAccountSetup getSingleAccountDetailByIdAPI"
       );
       setDataOfAccountSetup(dataOfAccountSetup);
     }
   };
   const vcipUpload = (data) => {
     setButtonDisabledForVCIP(data?.status);
-    dataOfAccountSetup['vcip'] = data?.status;
+    dataOfAccountSetup["vcip"] = data?.status;
     if (data?.redirect) {
       setCurrentSection(currentSection + 1);
       setActiveStep(currentSection + 1);
     }
   };
   const setIsNewIdentity = (data) => {
-    console.log(data, 'data setIsNewIdentity');
-    dataOfAccountSetup['isNewIdentity'] = data;
-    console.log(dataOfAccountSetup, 'dataOfAccountSetup');
+    console.log(data, "data setIsNewIdentity");
+    dataOfAccountSetup["isNewIdentity"] = data;
+    console.log(dataOfAccountSetup, "dataOfAccountSetup");
     setDataOfAccountSetup(dataOfAccountSetup);
   };
   const _getSelectedSection = (section) => {
     if (steps[section]) {
-      if (steps[section]?.title == 'Select Account') {
+      if (steps[section]?.title == "Select Account") {
         return (
           <AccountStep
             checkIfDataSelectedForButtons={getDataFromAccountStep}
@@ -885,7 +879,7 @@ export default function Wizard() {
           />
         );
       }
-      if (steps[section]?.title == 'Identity Setup') {
+      if (steps[section]?.title == "Identity Setup") {
         return (
           <IdentityStep
             providerCkyc={providerCkyc}
@@ -907,7 +901,7 @@ export default function Wizard() {
           />
         );
       }
-      if (steps[section]?.title == 'Documents') {
+      if (steps[section]?.title == "Documents") {
         return (
           <DocumentsStep
             dataOfAccountSetup={dataOfAccountSetup}
@@ -921,7 +915,7 @@ export default function Wizard() {
           />
         );
       }
-      if (steps[section]?.title == 'Face Verification') {
+      if (steps[section]?.title == "Face Verification") {
         return (
           <FaceVerification
             dataOfAccountSetup={dataOfAccountSetup}
@@ -942,7 +936,7 @@ export default function Wizard() {
           />
         );
       }
-      if (steps[section]?.title == 'VCIP') {
+      if (steps[section]?.title == "VCIP") {
         return (
           <Vcip
             dataOfAccountSetup={dataOfAccountSetup}
@@ -955,7 +949,7 @@ export default function Wizard() {
           />
         );
       }
-      if (steps[section]?.title == 'Bank/Wallets') {
+      if (steps[section]?.title == "Bank/Wallets") {
         return (
           <BankWalletsStep
             dataOfAccountSetup={dataOfAccountSetup}
@@ -965,7 +959,7 @@ export default function Wizard() {
           />
         );
       }
-      if (steps[section]?.title == 'Application') {
+      if (steps[section]?.title == "Application") {
         return (
           <ApplicationStep
             dataOfAccountSetup={dataOfAccountSetup}
@@ -975,7 +969,7 @@ export default function Wizard() {
           />
         );
       }
-      if (steps[section]?.title == 'Summary') {
+      if (steps[section]?.title == "Summary") {
         return (
           <SummaryStep
             getTransactionHistory={getTransactionHistory}
@@ -995,7 +989,7 @@ export default function Wizard() {
         if (steps[a].title == step) {
           console.log(
             a,
-            'setCurrentSection setCurrentSection setCurrentSection setCurrentSection ',
+            "setCurrentSection setCurrentSection setCurrentSection setCurrentSection "
           );
           setCurrentSection(a);
           setActiveStep(a);
@@ -1004,7 +998,7 @@ export default function Wizard() {
     }
   };
   const checkIfNextButtonDisabled = (e) => {
-    console.log(dataOfAccountSetup, 'dataOfAccountSetup');
+    console.log(dataOfAccountSetup, "dataOfAccountSetup");
 
     if (currentSection == 0) {
       if (dataOfAccountSetup) {
@@ -1029,13 +1023,13 @@ export default function Wizard() {
           }
           if (
             dataOfAccountSetup.fund_id &&
-            dataOfAccountSetup?.selectedProvider == 'manual'
+            dataOfAccountSetup?.selectedProvider == "manual"
           ) {
             return false;
           } else if (
             dataOfAccountSetup.fund_id &&
-            dataOfAccountSetup?.selectedProvider != 'manual' &&
-            dataOfAccountSetup?.selectedProvider == 'adhar'
+            dataOfAccountSetup?.selectedProvider != "manual" &&
+            dataOfAccountSetup?.selectedProvider == "adhar"
           ) {
             if (dataOfAccountSetup?.isIndividual) {
               if (
@@ -1060,8 +1054,8 @@ export default function Wizard() {
             }
           } else if (
             dataOfAccountSetup.fund_id &&
-            dataOfAccountSetup?.selectedProvider != 'manual' &&
-            dataOfAccountSetup?.selectedProvider != 'adhar'
+            dataOfAccountSetup?.selectedProvider != "manual" &&
+            dataOfAccountSetup?.selectedProvider != "adhar"
           ) {
             return false;
           }
@@ -1071,10 +1065,10 @@ export default function Wizard() {
       }
     }
     if (currentSection == 1) {
-      console.log(dataOfIdentityStep, 'dataOfIdentityStep');
+      console.log(dataOfIdentityStep, "dataOfIdentityStep");
       if (dataOfIdentityStep) {
         if (!dataOfAccountSetup?.isIndividual) {
-          if (entityType === null || entityType === '') {
+          if (entityType === null || entityType === "") {
             return true;
           } else {
             return false;
@@ -1086,15 +1080,15 @@ export default function Wizard() {
         return true;
       }
     }
-    if (steps[currentSection]?.title == 'Documents') {
-      console.log(buttonIsDisabledDocumentStep, 'buttonIsDisabledDocumentStep');
+    if (steps[currentSection]?.title == "Documents") {
+      console.log(buttonIsDisabledDocumentStep, "buttonIsDisabledDocumentStep");
       if (buttonIsDisabledDocumentStep) {
         return false;
       } else {
         return true;
       }
     }
-    if (steps[currentSection]?.title == 'Face Verification') {
+    if (steps[currentSection]?.title == "Face Verification") {
       if (
         imagesForfaceVerification?.img1_base64 !== null &&
         imagesForfaceVerification?.img2_base64 !== null
@@ -1112,7 +1106,7 @@ export default function Wizard() {
       //   return true;
       // }
     }
-    if (steps[currentSection]?.title == 'VCIP') {
+    if (steps[currentSection]?.title == "VCIP") {
       if (buttonDisabledForVCIP) {
         return false;
       } else {
@@ -1123,7 +1117,7 @@ export default function Wizard() {
   const handleBackCancel = (e) => {
     if (currentSection == 0) {
       setDataOfAccountSetup(null);
-      navigate('/subscription-list');
+      navigate("/subscription-list");
     } else {
       if (currentSection == 1) {
         setCrpId(null);
@@ -1144,22 +1138,22 @@ export default function Wizard() {
     const response = await postIdentityAttatchWithFund(
       dataOfAccountSetup?.identity_id,
       data,
-      cancelTokenSource.token,
+      cancelTokenSource.token
     );
     setIsLoader(false);
-    console.log('checking response', response);
+    console.log("checking response", response);
     if (response.success == true) {
-      dataOfAccountSetup['isAadhaarVerified'] = false;
-      dataOfAccountSetup['isCKYCVerified'] = false;
-      dataOfAccountSetup['isIndividual'] = dataOfAccountSetup?.isIndividual
-        ? 'individual'
-        : 'corporate';
-      dataOfAccountSetup['isNewIdentity'] = false;
-      dataOfAccountSetup['isPanVerified'] = false;
-      dataOfAccountSetup['isStandAlone'] = true;
-      dataOfAccountSetup['selectedProvider'] = null;
-      dataOfAccountSetup['account_id'] = response?.data?.accountId;
-      dataOfAccountSetup['accountData'] = response?.data;
+      dataOfAccountSetup["isAadhaarVerified"] = false;
+      dataOfAccountSetup["isCKYCVerified"] = false;
+      dataOfAccountSetup["isIndividual"] = dataOfAccountSetup?.isIndividual
+        ? "individual"
+        : "corporate";
+      dataOfAccountSetup["isNewIdentity"] = false;
+      dataOfAccountSetup["isPanVerified"] = false;
+      dataOfAccountSetup["isStandAlone"] = true;
+      dataOfAccountSetup["selectedProvider"] = null;
+      dataOfAccountSetup["account_id"] = response?.data?.accountId;
+      dataOfAccountSetup["accountData"] = response?.data;
       setCurrentSection(currentSection + 1);
       setActiveStep(currentSection + 1);
       // setSubmitLoader(false);
@@ -1181,7 +1175,7 @@ export default function Wizard() {
     setIsAssistAvail(data);
   };
   const handleApiResponseFace = (data) => {
-    console.log('data', data);
+    console.log("data", data);
     setFaceResponse(data);
   };
   function advanceSection() {
@@ -1191,35 +1185,35 @@ export default function Wizard() {
   const handleNextButton = (e) => {
     if (currentSection + 1 == steps?.length) {
       if (params?.account_id) {
-        navigate('/subscription-list');
+        navigate("/subscription-list");
       } else {
         handleSubmitApplication();
       }
     } else if (currentSection == 0) {
       console.log(
         dataOfAccountSetup.selectedProvider,
-        'dataOfAccountSetup.selectedProvider',
+        "dataOfAccountSetup.selectedProvider"
       );
       if (!dataOfAccountSetup.selectedProvider) {
         // handleJoinFund()
         setCurrentSection(currentSection + 1);
         setActiveStep(currentSection + 1);
       }
-      if (dataOfAccountSetup.selectedProvider == 'manual') {
+      if (dataOfAccountSetup.selectedProvider == "manual") {
         setCurrentSection(currentSection + 1);
         setActiveStep(currentSection + 1);
-      } else if (dataOfAccountSetup.selectedProvider != 'manual') {
-        console.log(dataOfAccountSetup, 'dataOfAccountSetup for next');
+      } else if (dataOfAccountSetup.selectedProvider != "manual") {
+        console.log(dataOfAccountSetup, "dataOfAccountSetup for next");
         if (
-          dataOfAccountSetup.selectedProvider == 'singpass' ||
-          dataOfAccountSetup.selectedProvider == 'corppass'
+          dataOfAccountSetup.selectedProvider == "singpass" ||
+          dataOfAccountSetup.selectedProvider == "corppass"
         ) {
           localStorage.setItem(
-            'accountSetupData',
-            JSON.stringify(dataOfAccountSetup),
+            "accountSetupData",
+            JSON.stringify(dataOfAccountSetup)
           );
           getRegistrationProviderForSingpassApi();
-        } else if (dataOfAccountSetup.selectedProvider == 'adhar') {
+        } else if (dataOfAccountSetup.selectedProvider == "adhar") {
           setCurrentSection(currentSection + 1);
           setActiveStep(currentSection + 1);
         }
@@ -1227,7 +1221,7 @@ export default function Wizard() {
       if (
         dataOfAccountSetup?.fund_data?.fund_setting?.region
           .toLowerCase()
-          .includes('india')
+          .includes("india")
       ) {
         setIsShowModalFundWarning(true);
       }
@@ -1244,14 +1238,14 @@ export default function Wizard() {
         setHandleSubmitIdentityStep(true);
       }
     } else if (currentSection == 2) {
-      if (dataOfAccountSetup.selectedProvider == 'adhar' && outDated == null) {
+      if (dataOfAccountSetup.selectedProvider == "adhar" && outDated == null) {
         setIsShowModalAccurate(true);
       } else {
         setCurrentSection(currentSection + 1);
         setActiveStep(currentSection + 1);
       }
     } else {
-      if (steps[currentSection]?.title == 'Face Verification') {
+      if (steps[currentSection]?.title == "Face Verification") {
         if (submitFaceVerificationAPI) {
           if (faceResponse) {
             setCurrentSection(currentSection + 1);
@@ -1260,9 +1254,9 @@ export default function Wizard() {
             return;
           }
 
-          console.log('isAssistanceData', isAssistanceData);
-          console.log('isAssistanceData faceResponse', faceResponse);
-          console.log('isAssistanceData visAssistAvail', isAssistAvail);
+          console.log("isAssistanceData", isAssistanceData);
+          console.log("isAssistanceData faceResponse", faceResponse);
+          console.log("isAssistanceData visAssistAvail", isAssistAvail);
           if (!isAssistanceData) {
             if (isAssistAvail) {
               setHandleCallAPIForFaceVerficationData(true);
@@ -1303,7 +1297,7 @@ export default function Wizard() {
       //     }
       //   }
       // }
-      else if (steps[currentSection]?.title == 'VCIP') {
+      else if (steps[currentSection]?.title == "VCIP") {
         if (submitVCIPAPI) {
           setHandleCallAPIForVCIPData(true);
         } else if (dataOfAccountSetup?.vcip) {
@@ -1325,7 +1319,7 @@ export default function Wizard() {
     const response = await handleSubmitScreeningApi(
       dataOfAccountSetup?.identity_id,
       account_id,
-      cancelTokenSource.token,
+      cancelTokenSource.token
     );
     setIsLoader(false);
     if (response.success == true) {
@@ -1336,7 +1330,7 @@ export default function Wizard() {
   };
   const handleSubmitReview = async () => {
     handleSubmitApplication();
-    console.log('handleSubmitReview');
+    console.log("handleSubmitReview");
   };
 
   const handleRefreshAccountDetail = () => {
@@ -1345,19 +1339,25 @@ export default function Wizard() {
   };
   const handleGetAccountDetailOnRequest = async () => {
     // setIsLoader(true)
-    let dataFromLocalStorage = JSON.parse(localStorage.getItem("accountWizardAllData"))
+    let dataFromLocalStorage = JSON.parse(
+      localStorage.getItem("accountWizardAllData")
+    );
     const response = await getSingleAccountDetailByIdAPI(
       dataOfAccountSetup?.account_id
         ? dataOfAccountSetup?.account_id
-        : params?.account_id?params?.account_id:dataFromLocalStorage?.accountId,
-      cancelTokenSource.token,
+        : params?.account_id
+        ? params?.account_id
+        : dataFromLocalStorage?.accountId,
+      cancelTokenSource.token
     );
     if (response.success == true) {
-      let dataFromLocalStorage = JSON.parse(localStorage.getItem("accountWizardAllData"))
+      let dataFromLocalStorage = JSON.parse(
+        localStorage.getItem("accountWizardAllData")
+      );
       if (params?.account_id || dataFromLocalStorage?.accountId) {
         getFundData(
           response?.data?.account_detail?.fund?.namedId,
-          response?.data?.account_detail,
+          response?.data?.account_detail
         );
       }
     }
@@ -1385,173 +1385,167 @@ export default function Wizard() {
     setOutDated(status);
   };
 
-
-
   return (
-    <div className="main-content">
-      {alertProps.show && (
-       <CustomAlert
-       handleCloseAlert={handleCloseAlert}
-       message={alertProps.message}
-       variant={alertProps.variant}
-       show={alertProps.show}
-       hideAuto={alertProps.hideAuto}
-       onClose={() => setAlertProps({ ...alertProps, show: false })}
-     />
-     
-      )}
-      {/* {isLoader && (
-                <div
-                    style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        height: "20rem",
-                    }}
-                >
-                    <LoadingSpinner animation="grow" custom={true} height="36vh" />
-                </div>
-            )
-            } */}
-      <Container fluid="lg">
-        <Row className="justify-content-center">
-          <Stepper
-            steps={customSteps}
-            activeStep={currentSection}
-            activeColor="#007bff" // Customize the color for the active step
-            completeColor="green" // Customize the color for the completed steps
-            activeTitleColor={'white'}
-            completeTitleColor={'white'}
-            completeBorderColor={'green'}
-            completeBarColor={'green'}
-            circleFontColor={'black'}
-            // onClick={(e)=>{handleClickSpecificTab(e)}}
+    <>
+      <SideBar portalType="Customer" />
+      <div
+        className={`bg-color-${theme} w-full px-4 py-4 sm:px-6 md:px-16 lg:px-24 md:py-5 lg:py-6 min-h-screen`}
+      >
+        {alertProps.show && (
+          <CustomAlert
+            handleCloseAlert={handleCloseAlert}
+            message={alertProps.message}
+            variant={alertProps.variant}
+            show={alertProps.show}
+            hideAuto={alertProps.hideAuto}
+            onClose={() => setAlertProps({ ...alertProps, show: false })}
           />
-        </Row>
-      </Container>
+        )}
 
-      <Card className="mt-5">
-        <Card.Body>
-          <Row className="justify-content-center">
-            <Col xs={12} lg={12} xl={12} className="py-4">
-              {isLoader ? (
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    height: '20rem',
-                  }}
-                >
-                 <Loader/>
-                </div>
-              ) : (
-                <>{_getSelectedSection(currentSection)}</>
-              )}
-            </Col>
-          </Row>
-        </Card.Body>
-        <Card.Footer>
-          <div className="d-flex" style={{ justifyContent: 'space-between' }}>
+        <Stepper
+          steps={customSteps}
+          activeStep={currentSection}
+          activeColor="#007bff"
+          completeColor="green"
+          activeTitleColor={"white"}
+          completeTitleColor={"white"}
+          completeBorderColor={"green"}
+          completeBarColor={"green"}
+          circleFontColor={"black"}
+        />
+
+        <div className="">
+          {isLoader ? (
+            <div className="flex justify-center items-center h-[20rem]">
+              <Loader />
+            </div>
+          ) : (
+            <>{_getSelectedSection(currentSection)}</>
+          )}
+
+          <div className="flex lg:justify-between md:justify-center sm:justify-center w-full px-28 py-8">
             <button
-              className="btn btn-white"
+              className={`bg-color-button-${theme} px-6 py-3 rounded-lg text-white outline-none`}
               onClick={(e) => handleBackCancel(e)}
             >
-              {currentSection == 0 ? 'Cancel' : 'Back'}
+              {currentSection == 0 ? "Cancel" : "Back"}
             </button>
-            {dataOfAccountSetup?.isIndividual === false && currentSection == 1 && !isCrp && (
-            <Tooltip content='Please click "Save & Next" to skip this step'>
-              
-               
-                <button className="btn btn-success" disabled={checkIfNextButtonDisabled()} onClick={(e) => handleNextButtonCRP(e, true)}>
-                  Create Organization Chart
-                </button>
+            {dataOfAccountSetup?.isIndividual === false &&
+              currentSection == 1 &&
+              !isCrp && (
+                <Tooltip content='Please click "Save & Next" to skip this step'>
+                  <button
+                    className={`bg-color-button-${theme} px-6 py-3 rounded-lg text-white outline-none`}
+                    disabled={checkIfNextButtonDisabled()}
+                    onClick={(e) => handleNextButtonCRP(e, true)}
+                  >
+                    Create Organization Chart
+                  </button>
                 </Tooltip>
-            )}
+              )}
             {dataOfAccountSetup?.accountData?.attach_identities
               ? dataOfAccountSetup?.accountData?.attach_identities[0]
-                  ?.applicationStatusId === 'DRAFT' &&
+                  ?.applicationStatusId === "DRAFT" &&
                 params?.account_id &&
                 currentSection === 0 && (
                   <>
-                   <Tooltip id="tooltip">{tooltipMessage}
-                    
+                    <Tooltip id="tooltip">
+                      {tooltipMessage}
+
                       <div>
                         <button
-                          className="btn btn-success"
+                          className={`bg-color-button-${theme} px-6 py-3 rounded-lg text-white outline-none`}
                           disabled={checkIfSubmitButtonDisabled()}
                           onClick={handleSubmitReview}
                         >
                           Submit For Review
                         </button>
                       </div>
-                      </Tooltip>
+                    </Tooltip>
                   </>
                 )
               : null}
 
-            <button className="btn btn-success" disabled={checkIfNextButtonDisabled()} onClick={(e) => handleNextButton(e)}>
-              {currentSection + 1 == steps?.length ? (params?.account_id ? "Finish" : "Submit") : currentSection === 0 ? "Next" : "Save & Next"}
+            <button
+              className={`bg-color-button-${theme} px-6 py-3 rounded-lg text-white outline-none`}
+              disabled={checkIfNextButtonDisabled()}
+              onClick={(e) => handleNextButton(e)}
+            >
+              {currentSection + 1 == steps?.length
+                ? params?.account_id
+                  ? "Finish"
+                  : "Submit"
+                : currentSection === 0
+                ? "Next"
+                : "Save & Next"}
             </button>
           </div>
-        </Card.Footer>
-      </Card>
+        </div>
 
-      <Modal
-  size="md"
-  show={isShowModalAccurate}
-  onHide={closeModalAccurate}
-  centered
->
-  <div>
-    <h3 className="text-lg font-bold">CKYC Accurate?</h3>
-  </div>
-  <div className="mt-4">
-    <h3>Is the data retrieved by CKYC accurate?</h3>
-    <div className="flex justify-between mt-4">
-      <button
-        className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
-        onClick={handleApproveClickAccurate}
-      >
-        Approve
-      </button>
-      <button
-        className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
-        onClick={handleModifyClickAccurate}
-      >
-        Modify
-      </button>
-    </div>
-  </div>
-</Modal>
-<Modal
-  size="md"
-  show={isShowModalFundWarning}
-  onHide={handleCloseModal}
-  centered
->
-  <div>
-    <h3 className="text-lg font-bold">Notice</h3>
-  </div>
-  <div className="mt-4">
-    <h3 className="text-gray-700">
-      <p>Please note that you are about to share your personal data and information with the following entities:</p>
-      <p>Fund Administrator: {dataOfAccountSetup?.fund_data?.administration?.entity?.title}</p>
-      {dataOfAccountSetup?.fund_data?.management?.entity?.title && (
-        <p>Investment Manager: {dataOfAccountSetup?.fund_data?.management?.entity?.title}</p>
-      )}
-    </h3>
-    <div className="flex justify-center mt-4">
-      <button
-        className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
-        onClick={handleCloseModal}
-      >
-        Proceed
-      </button>
-    </div>
-  </div>
-</Modal>
-
-    </div>
+        <Modal
+          size="md"
+          show={isShowModalAccurate}
+          onHide={closeModalAccurate}
+          centered
+        >
+          <div>
+            <h3 className="text-lg font-bold">CKYC Accurate?</h3>
+          </div>
+          <div className="mt-4">
+            <h3>Is the data retrieved by CKYC accurate?</h3>
+            <div className="flex justify-between mt-4">
+              <button
+                className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+                onClick={handleApproveClickAccurate}
+              >
+                Approve
+              </button>
+              <button
+                className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
+                onClick={handleModifyClickAccurate}
+              >
+                Modify
+              </button>
+            </div>
+          </div>
+        </Modal>
+        <Modal
+          size="md"
+          show={isShowModalFundWarning}
+          onHide={handleCloseModal}
+          centered
+        >
+          <div>
+            <h3 className="text-lg font-bold">Notice</h3>
+          </div>
+          <div className="mt-4">
+            <h3 className="text-gray-700">
+              <p>
+                Please note that you are about to share your personal data and
+                information with the following entities:
+              </p>
+              <p>
+                Fund Administrator:{" "}
+                {dataOfAccountSetup?.fund_data?.administration?.entity?.title}
+              </p>
+              {dataOfAccountSetup?.fund_data?.management?.entity?.title && (
+                <p>
+                  Investment Manager:{" "}
+                  {dataOfAccountSetup?.fund_data?.management?.entity?.title}
+                </p>
+              )}
+            </h3>
+            <div className="flex justify-center mt-4">
+              <button
+                className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+                onClick={handleCloseModal}
+              >
+                Proceed
+              </button>
+            </div>
+          </div>
+        </Modal>
+      </div>
+    </>
   );
 }
