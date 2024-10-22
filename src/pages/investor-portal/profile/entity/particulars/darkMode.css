@@ -1,0 +1,20 @@
+.react-tel-input {
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .react-tel-input .form-control {
+    background-color: #1E3A5C;
+    width:100%;
+    border :none;
+  }
+  
+  .react-tel-input .selected-flag {
+    background-color: #1E3A5C;
+    color: #622a2a;
+  }
+  .react-tel-input .country-name{
+    color: black;
+  }
+
+  

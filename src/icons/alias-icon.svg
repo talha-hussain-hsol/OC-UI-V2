@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>people_alt-24px</title>
+    <g id="Final" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Phone-Verification" transform="translate(-307.000000, -287.000000)">
+            <g id="people_alt-24px" transform="translate(307.000000, 287.000000)">
+                <rect id="Rectangle" x="0" y="0" width="24" height="24"></rect>
+                <g id="Group" transform="translate(1.000000, 4.000000)" fill="#E6E6E6" fill-rule="nonzero">
+                    <path d="M15.67,9.13 C17.04,10.06 18,11.32 18,13 L18,16 L22,16 L22,13 C22,10.82 18.43,9.53 15.67,9.13 Z" id="Path"></path>
+                    <circle id="Oval" cx="8" cy="4" r="4"></circle>
+                    <path d="M14,8 C16.21,8 18,6.21 18,4 C18,1.79 16.21,0 14,0 C13.53,0 13.09,0.1 12.67,0.24 C13.5,1.27 14,2.58 14,4 C14,5.42 13.5,6.73 12.67,7.76 C13.09,7.9 13.53,8 14,8 Z" id="Path"></path>
+                    <path d="M8,9 C5.33,9 0,10.34 0,13 L0,16 L16,16 L16,13 C16,10.34 10.67,9 8,9 Z" id="Path"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

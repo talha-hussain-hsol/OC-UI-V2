@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>family_restroom-24px</title>
+    <g id="Final" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Required-Documents" transform="translate(-1105.000000, -287.000000)">
+            <g id="family_restroom-24px" transform="translate(1105.000000, 287.000000)">
+                <rect id="Rectangle" x="0" y="0" width="24" height="24"></rect>
+                <path d="M11.82,4 C11.82,2.89 12.71,2 13.82,2 C14.93,2 15.82,2.89 15.82,4 C15.82,5.11 14.93,6 13.82,6 C12.71,6 11.82,5.11 11.82,4 Z M15.82,22 L15.82,16 L18.32,16 L15.78,8.37 C15.5,7.55 14.74,7 13.88,7 L13.76,7 C12.9,7 12.13,7.55 11.86,8.37 L11,10.95 C12.08,11.55 12.82,12.68 12.82,14 L12.82,22 L15.82,22 Z M5.5,6 C6.61,6 7.5,5.11 7.5,4 C7.5,2.89 6.61,2 5.5,2 C4.39,2 3.5,2.89 3.5,4 C3.5,5.11 4.39,6 5.5,6 Z M7.5,22 L7.5,15 L9,15 L9,9 C9,7.9 8.1,7 7,7 L4,7 C2.9,7 2,7.9 2,9 L2,15 L3.5,15 L3.5,22 L7.5,22 Z" id="Shape" fill="#FFFFFF" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,254 @@
+<html lang="en">
+
+<head>
+    <title>
+        Cool School
+    </title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="ico/favicon.ico">
+</head>
+<style>
+    div:focus {
+        border: 2px solid blue;
+        outline: none;
+    }
+
+    p:focus {
+        border: 2px solid blue;
+        outline: none;
+    }
+</style>
+
+<body>
+    <form method="post" action="./Quiz.aspx" id="ctl01">
+        <div class="aspNetHidden">
+            <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE"
+                value="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">
+        </div>
+
+        <div class="aspNetHidden">
+
+            <input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="AA5BEC37">
+        </div>
+        <!-- Begin Main Content -->
+        <div class="gui_page">
+            <div class="gui_wrapper">
+                <div class="gui_header">
+                    <div class="top">
+                        <div class="logo">
+                            <a href="https://staging.thesocialexpresscentralstation.com">
+                                <!-- Go home -->
+                            </a>
+                        </div>
+                        <div class="welcome">
+                            Welcome, Rom Riaz
+                        </div>
+                        <div class="login">
+                            <a id="BackToLexLink" href="https://staging.lexlogin.com">Back to Home Page</a> |
+                            <!--  -->
+                            <a href="logout.aspx">Log Out</a>
+                        </div>
+                    </div>
+                    <div class="gui_menu">
+                        <div class="pagetitle">
+                            <h1>
+                                Quizzes
+                            </h1>
+                        </div>
+                        <div id="Div1" class="mypopdivwrap" style="display: none;"></div>
+
+                        <ul class="menu">
+                            <!--<li class="les"><a href="PremiumStudentWebisodes.aspx" id="menuView1_stu_submenuLes"> Lessons</a></li> -->
+
+                            <li class="cen"><a href="Dashboard.aspx" id="menuView1_stu_submenuCen"
+                                    title="Central Station"></a><!-- Central Station --></li>
+                        </ul>
+
+
+                        <!-- Begin pop -->
+                        <div id="divMyPopupAlert" class="mypop jspopupalertmenu" style="display: none;">
+                            <div id="divPopupAlertMenu" class="popwrapp">
+                                <h2>
+                                    <span id="menuView1_lblMenuTitle" class="txterror">Errors</span>
+                                </h2>
+                                <a href="javascript:void(0)" onclick="CloseMyPop('jspopupalertmenu')"
+                                    class="cclose"></a>
+                                <div class="popcontent">
+                                    <span id="menuView1_lblMenuContent" class="txterror">The group functionality will
+                                        only work with 2 or more student accounts.</span>
+                                    <div class="clear">
+                                    </div>
+                                    <div class="divbtn">
+                                        <input type="button" class="btn_primary" value="OK"
+                                            onclick="CloseMyPop('jspopupalertmenu')">
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End pop -->
+                    </div>
+                </div>
+                <div class="gui_main">
+
+                    <!-- Begin quiz list Webisode 1 default-->
+                    <audio id="quizaudio" preload="false" style="visibility: hidden;">
+                        <source id="quizaudiosource" src="" type="audio/mp3">
+                    </audio>
+                    <div class="gui_quiz">
+                        <div class="gui_top">
+                            <div class="sid">
+                                <h2>
+                                    Student: <b class="jsstudentname">Rom Riaz</b>
+                                </h2>
+                            </div>
+                            <div class="info" style="display: none;">
+                                <a href="#">
+                                    <!-- local question -->
+                                </a>
+                            </div>
+                        </div>
+                        <div class="wrapp">
+                            <div id="MainContent_divLesson" class="col1 Lessonnew24" style="display:block">
+                                <h3>
+                                    <span class="blue">Webisode</span>
+                                    <span id="MainContent_lblName" class="jslessontitle">Your Hands Are a Mess</span>
+                                </h3>
+                                <div id="MainContent_ques_con_grade" class="ques_con_grade1" style="display:block">
+
+                                    <div class="specpha">
+                                        <div class="pharap">
+                                            <span id="MainContent_lessondescription"></span>
+                                        </div>
+
+                                    </div>
+                                    <ol>
+
+                                        <li id="MainContent_rptQuestion_liQuestion_0" style="display:block"
+                                            class="item jsq1">
+                                            <div class="itemcol">
+                                                <div class="itemcol1">
+                                                    <span class="question">Where was Zack?</span>
+                                                    <span class="queskind">3</span>
+                                                    <span class="quesid" style="display: none">506</span>
+                                                </div>
+                                                <div class="itemcol2" tabIndex="0" role="button"
+                                                    aria-label="play audio">
+
+                                                    <span class="tooltiptext">Audio Icon</span>
+                                                </div>
+                                            </div>
+                                            <ol>
+                                                <li>
+
+                                                    <div class="itemcol1">
+                                                        <div class="qitem" tabIndex="0">
+                                                            <span class="jsaws" role="radio">At Tommy´s Cafe</span>
+                                                            <span id="MainContent_rptQuestion_rptAnswer_0_lblabd_0"
+                                                                class="jsabc" style="display: none">a</span>
+                                                            <span class="ansid" style="display: none">1630</span>
+                                                            <span class="iscorrect" style="display: none">1</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="itemcol2" tabIndex="0" aria-label="play audio"
+                                                        role="button">
+                                                        <span class="tooltiptext">Audio Icon</span>
+
+                                                    </div>
+
+                                                    <div class="itemcol1">
+                                                        <div class="qitem" tabIndex="0">
+                                                            <span class="jsaws" role="radio">In the park</span>
+                                                            <span id="MainContent_rptQuestion_rptAnswer_0_lblabd_1"
+                                                                class="jsabc" style="display: none">b</span>
+                                                            <span class="ansid" style="display: none">1631</span>
+                                                            <span class="iscorrect" style="display: none">0</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="itemcol2" tabIndex="0" aria-label=" play audio"
+                                                        role="button">
+                                                        <span class="tooltiptext">Audio Icon</span>
+
+                                                    </div>
+
+                                                </li>
+                                            </ol>
+                                        </li>
+                                    </ol>
+
+                                </div>
+                            </div>
+                            <div class="col2">
+                                <div class="btncon">
+                                    <div class="numquesionof">
+                                        Question
+                                        <span class="jsnumcount">1</span>
+                                        of
+                                        <span class="jsnumtotal">5</span>
+                                    </div>
+                                    <input type="button" class="btnquiz" tabIndex="0" id="Button1" value="Next"
+                                        onclick="UserAnswer()">
+                                </div>
+                                <div class="driver">
+                                    <!-- <img src="TheImages/driver.png" alt="" width="246px" height="396"> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End quiz list Webisode 1 default-->
+
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        <!-- End Main Content -->
+        <!-- Begin Main Footer -->
+        <div class="gui_footer">
+            <div class="wrapper">
+                <div class="footer">
+                    ©2023 Brighten Learning | <a href="">Terms &amp; Conditions</a>
+                    | <a href="">Privacy</a>
+                </div>
+                <ul class="social" style="width:200px; padding-top: 4px;">
+
+                    <li><a href="mailto:help@coolschoolcentral.com" style="width:200px;">For Technical Support Click
+                            Here</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- End Main Footer -->
+    </form>
+<button onClick="handleClick()">hello</button>
+
+
+
+</body>
+<script>
+    const lis = document.querySelector('#MainContent_rptQuestion_liQuestion_0'); // get the parent li
+const qitems = lis.querySelector('.itemcol1:first-child .qitem'); // get the first .qitem element inside the first .itemcol1 element
+console.log(qitems,'qitems');
+qitems.focus()
+    // document.querySelector('div[tabIndex="100"]').focus();
+    // const divs = document.getElementsByTagName('div');
+    // for (let i = 0; i < divs.length; i++) {
+    //     divs[i].addEventListener('keydown', function (event) {
+    //         if (event.key === 'Tab') {
+    //             event.preventDefault();
+    //             const nextTabIndex = parseInt(this.getAttribute('tabIndex')) + 1;
+    //             const nextDiv = document.querySelector(`div[tabIndex="${nextTabIndex}"]`);
+    //             if (nextDiv) {
+    //                 nextDiv.focus();
+    //             } else {
+    //                 document.querySelector('div[tabIndex="100"]').focus();
+    //             }
+    //         }
+    //     });
+    // }
+    function handleClick(){
+        // document.querySelector('div[tabIndex="101"]').focus();
+    }
+</script>
+
+</html>
