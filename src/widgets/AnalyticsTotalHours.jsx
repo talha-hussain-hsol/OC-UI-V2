@@ -21,7 +21,7 @@ export default function AnalyticsValue(props) {
             >
               <FontAwesomeIcon
                 icon={faMoneyBillTrendUp}
-                size="20"
+                size="20px"
                 style={{ position: "absolute", top: "17px", left: "17px" }}
               />
             </div>

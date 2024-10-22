@@ -997,7 +997,7 @@ export default function Summary(props) {
                             style={{ cursor: "pointer" }}
                             onClick={() =>
                               window.open(
-                                `${process.env.AUTH_API_URL}/entity-users-management/${entityId}?invite_user=true`,
+                                `${process.env.VITE_AUTH_API_URL}/entity-users-management/${entityId}?invite_user=true`,
                                 "_blank"
                               )
                             }

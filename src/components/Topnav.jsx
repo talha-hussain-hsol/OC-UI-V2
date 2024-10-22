@@ -62,9 +62,9 @@ export default function Sidenav({ ...props }) {
         port = ":" + location.port;
       }
       let url = `${
-        process.env.AUTH_API_URL
+        process.env.VITE_AUTH_API_URL
       }/logout?user_id=${localStorage.getItem("login_user_id")}&redirect_url=${
-        process.env.LOGOUT_REDIRECT_URL
+        process.env.VITE_LOGOUT_REDIRECT_URL
       }`;
       localStorage.clear();
       window.location.href = url;
@@ -78,9 +78,9 @@ export default function Sidenav({ ...props }) {
         port = ":" + location.port;
       }
       let url = `${
-        process.env.AUTH_API_URL
+        process.env.VITE_AUTH_API_URL
       }/logout?user_id=${localStorage.getItem("login_user_id")}&redirect_url=${
-        process.env.LOGOUT_REDIRECT_URL
+        process.env.VITE_LOGOUT_REDIRECT_URL
       }`;
       localStorage.clear();
       window.location.href = url;

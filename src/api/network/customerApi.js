@@ -377,7 +377,7 @@ export const postVerifyLoginAuth = async (state, cancelToken) => {
 };
 
 export const postgetToken = async (code, code_challenge, cancelToken) => {
-  const url = `/auth/getToken?code=${code}&client_id=${process.env.INVESTOR_CLIENT_ID}&code_verifier=${code_challenge}`;
+  const url = `/auth/getToken?code=${code}&client_id=${process.env.VITE_INVESTOR_CLIENT_ID}&code_verifier=${code_challenge}`;
   const request = { type: "POST", urlString: url };
   try {
     const response = await processRequest(request, cancelToken);

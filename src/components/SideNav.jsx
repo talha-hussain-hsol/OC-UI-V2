@@ -287,9 +287,9 @@ export default function Sidenav({ ...props }) {
       }
       setIsLoader(false);
       let url = `${
-        process.env.AUTH_API_URL
+        process.env.VITE_AUTH_API_URL
       }/logout?user_id=${localStorage.getItem("login_user_id")}&redirect_url=${
-        process.env.LOGOUT_REDIRECT_URL
+        process.env.VITE_LOGOUT_REDIRECT_URL
       }`;
       localStorage.clear();
       window.location.href = url;
@@ -302,22 +302,22 @@ export default function Sidenav({ ...props }) {
         port = ":" + location.port;
       }
       let url = `${
-        process.env.AUTH_API_URL
+        process.env.VITE_AUTH_API_URL
       }/logout?user_id=${localStorage.getItem("login_user_id")}&redirect_url=${
-        process.env.LOGOUT_REDIRECT_URL
+        process.env.VITE_LOGOUT_REDIRECT_URL
       }`;
       localStorage.clear();
       window.location.href = url;
     }
   };
   function handleProfileClick() {
-    window.open(process.env.AUTH_API_URL + "/profile", "_blank");
+    window.open(process.env.VITE_AUTH_API_URL + "/profile", "_blank");
 
     // navigate("/profile/info");
   }
   function handleClickInviteUser() {
     window.open(
-      process.env.AUTH_API_URL +
+      process.env.VITE_AUTH_API_URL +
         "/entity-users-management/" +
         localStorage.getItem("entity_id") +
         "?invite_user=true",

@@ -534,7 +534,7 @@ const CallBack = (props) => {
     return result;
   }
   const handleSignIn = async () => {
-    let scope = process.env.AUTH_SCOPE;
+    let scope = process.env.VITE_VITE_AUTH_SCOPE;
     let state = generateRandomString(40);
     let codeVerifier = generateRandomString(128);
     console.log(codeVerifier, "codeVerifier");
@@ -552,11 +552,11 @@ const CallBack = (props) => {
       .replace(regex, "-")
       .replace(regex2, "_")
       .replace(regex3, "");
-    let url = `${process.env.AUTH_API_URL}/oauth/authorize?client_id=${process.env.INVESTOR_CLIENT_ID}&redirect_uri=${process.env.INVESTOR_REDIRECT_URL}&scope=${scope}&state=${state}&response_type=${process.env.INVESTOR_RESPONSE_TYPE}&code_challenge=${outputString}&code_challenge_method=S256`;
+    let url = `${process.env.VITE_AUTH_API_URL}/oauth/authorize?client_id=${process.env.VITE_VITE_INVESTOR_CLIENT_ID}&redirect_uri=${process.env.VITE_VITE_INVESTOR_REDIRECT_URL}&scope=${scope}&state=${state}&response_type=${process.env.VITE_VITE_INVESTOR_RESPONSE_TYPE}&code_challenge=${outputString}&code_challenge_method=S256`;
     console.log(url, "url");
     window.location.href = url;
     // hash(codeVerifier).then((hex) => {
-    //   let url = `${process.env.AUTH_API_URL}/oauth/authorize?client_id=${process.env.INVESTOR_CLIENT_ID}&redirect_uri=${process.env.INVESTOR_REDIRECT_URL}&scope=*&staet=${state}&response_type=${process.env.INVESTOR_RESPONSE_TYPE}&code_challenge=${hex}&code_challenge_method=S256`;
+    //   let url = `${process.env.VITE_AUTH_API_URL}/oauth/authorize?client_id=${process.env.VITE_INVESTOR_CLIENT_ID}&redirect_uri=${process.env.VITE_INVESTOR_REDIRECT_URL}&scope=*&staet=${state}&response_type=${process.env.VITE_INVESTOR_RESPONSE_TYPE}&code_challenge=${hex}&code_challenge_method=S256`;
     //   window.location.href = url;
     // })
   };
@@ -668,9 +668,9 @@ const CallBack = (props) => {
       }
       setIsLoader(false);
       let url = `${
-        process.env.AUTH_API_URL
+        process.env.VITE_VITE_AUTH_API_URL
       }/logout?user_id=${localStorage.getItem("login_user_id")}&redirect_url=${
-        process.env.LOGOUT_REDIRECT_URL
+        process.env.VITE_VITE_LOGOUT_REDIRECT_URL
       }`;
       localStorage.clear();
       window.location.href = url;
@@ -683,9 +683,9 @@ const CallBack = (props) => {
         port = ":" + location.port;
       }
       let url = `${
-        process.env.AUTH_API_URL
+        process.env.VITE_VITE_AUTH_API_URL
       }/logout?user_id=${localStorage.getItem("login_user_id")}&redirect_url=${
-        process.env.LOGOUT_REDIRECT_URL
+        process.env.VITE_VITE_LOGOUT_REDIRECT_URL
       }`;
       localStorage.clear();
       window.location.href = url;

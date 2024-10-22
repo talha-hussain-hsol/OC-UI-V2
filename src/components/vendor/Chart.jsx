@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import PropTypes from "prop-types";
 import React, { useEffect } from "react";
-import ChartDefaults from "./ChartDefaults";
+// import ChartDefaults from "./ChartDefaults";
 
 //
 // Chart
@@ -16,7 +16,7 @@ function Chart({ layout, size, className, ...props }) {
   );
 
   useEffect(function () {
-    ChartDefaults();
+    // ChartDefaults();
 
     return function () {
       const tooltip = document.getElementById("chart-tooltip");

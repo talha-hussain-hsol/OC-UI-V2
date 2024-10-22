@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@nosferatu500/react-sortable-tree": "^4.4.0",
@@ -12,6 +13,7 @@
     "@testing-library/user-event": "^13.5.0",
     "autoprefixer": "^10.4.19",
     "axios": "^1.7.2",
+    "chart.js": "^4.4.5",
     "classnames": "^2.5.1",
     "countries-list": "^3.1.1",
     "crypto-js": "^4.2.0",
