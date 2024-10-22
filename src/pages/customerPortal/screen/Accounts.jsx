@@ -22,7 +22,7 @@ const Accounts = () => {
   const [offset, setOffset] = useState(0);
   const [limit] = useState(10);
   const [isLoading, setIsLoading] = useState(true);
-  const [isFetchingMore, setIsFetchingMore] = useState(false); 
+  const [isFetchingMore, setIsFetchingMore] = useState(false);
   const observerRef = useRef();
   const [accountData, setAccountData] = useState([]);
 
@@ -81,7 +81,7 @@ const Accounts = () => {
 
   const navigate = useNavigate();
   function handleClick() {
-    navigate("/fund-code");
+    navigate("/subscription/request");
   }
   const fetchMoreAccounts = async () => {
     try {
@@ -104,7 +104,7 @@ const Accounts = () => {
       setIsFetchingMore(false);
     }
   };
-  
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -135,8 +135,8 @@ const Accounts = () => {
           onButtonClick={handleClick}
           theme={theme}
         />
-        
-        {isLoading && <Loader />} 
+
+        {isLoading && <Loader />}
         {accountData.length > 0 && (
           <>
             {accountData.map((account) => (
@@ -144,9 +144,7 @@ const Accounts = () => {
             ))}
           </>
         )}
-        <div ref={observerRef}>
-          {isFetchingMore && <Loader />} 
-        </div>
+        <div ref={observerRef}>{isFetchingMore && <Loader />}</div>
       </div>
     </div>
   );
