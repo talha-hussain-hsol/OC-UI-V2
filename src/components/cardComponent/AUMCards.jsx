@@ -4,10 +4,11 @@ import { useTheme } from "../../contexts/themeContext";
 const AUMCard = ({ date, amount, icon, text }) => {
   const { theme } = useTheme();
 
-
   return (
-    <div className={`flex ml-6 items-center p-[28px] bg-gradient-card-${theme} rounded-lg w-full shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)]`}>
-      <div className="flex-shrink-0 bg-green-500 w-12 h-12 rounded-full flex items-center justify-center">
+    <div
+      className={`flex  md:w-[98%] items-center p-[28px] bg-gradient-card-${theme} rounded-lg w-full shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)]`}
+    >
+      <div className=" bg-green-500 w-12 h-12 rounded-full flex items-center justify-center">
         {icon}
       </div>
 

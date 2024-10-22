@@ -17,13 +17,8 @@ const useSpashHook = () => {
   const [entites, setEntites] = useState([]);
   const [activePortal, setActivePortal] = useState(portals[0].type);
   const [isLoader, setIsLoader] = useState(false);
-
-  const [selectedEntity, setSelectedEntity] = useState(null); 
-
+  const [selectedEntity, setSelectedEntity] = useState(null);
   const cancelTokenSource = axios.CancelToken.source();
-
-
-
   const { setEntityId, setEntityList } = useEntityStore();
 
   const handleEntitiesAPI = useCallback(async () => {
@@ -50,7 +45,6 @@ const useSpashHook = () => {
       }
     }
   }, [setEntityId, setEntityList]);
-
 
   useEffect(() => {
     handleEntitiesAPI();
@@ -97,7 +91,7 @@ const useSpashHook = () => {
     portals,
     handleActivePortal,
     handlePermission,
-    isLoader
+    isLoader,
   };
 };
 

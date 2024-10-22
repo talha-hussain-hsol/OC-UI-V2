@@ -1,3 +1,5 @@
+// This is the sample project used to apply dynamic themeing in the portals
+
 import React from "react";
 import MiniCards from "./MiniCards";
 import { useTheme } from "../contexts/themeContext";

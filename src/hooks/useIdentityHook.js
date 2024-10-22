@@ -1,10 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState, useCallback } from "react";
 import { getIdentityList } from "../api/userApi";
-import { toast } from "react-toastify";
 import axios from "axios";
-import { setLocalStorage } from "../utils/cookies";
-import { useNavigate } from "react-router-dom";
-import useEntityStore from "../store/useEntityStore";
 
 const portals = [
   { label: "Customer Portal", type: "customer" },
@@ -12,30 +8,27 @@ const portals = [
   { label: "Manager Portal", type: "management" },
 ];
 
-const useIdentityHook = () => {
+const useIdentityHook = (setProfileListData) => {
   const [entites, setEntites] = useState([]);
   const [activePortal, setActivePortal] = useState(portals[0].type);
   const [isLoader, setIsLoader] = useState(false);
   const cancelTokenSource = axios.CancelToken.source();
 
-  
-  
-  const handleGetIdentityList = useCallback(async () => {
+  const fetchIdentities = useCallback(async () => {
     setIsLoader(true);
-    const response = await getIdentityList(cancelTokenSource.token);
-    if (response == true) {
-      setIsLoader(false);
-      setProfileListData(response?.data);
-    } else {
+    try {
+      const response = await getIdentityList(cancelTokenSource.token);
+      if (response.success) {
+        console.log("Responseeee Identities:",  response);
+        setProfileListData(response?.data); // Pass profile data to the state in Identities component
+      }
+    } catch (error) {
+      console.error("Error fetching identities", error);
+    } finally {
       setIsLoader(false);
     }
-  }, []);
+  }, [setProfileListData]);
 
-  useEffect(() => {
-    handleGetIdentityList();
-  }, [handleGetIdentityList]);
-
-  
   const handleActivePortal = useCallback((portalType) => {
     setActivePortal(portalType);
   }, []);
@@ -45,7 +38,8 @@ const useIdentityHook = () => {
     activePortal,
     portals,
     handleActivePortal,
-    isLoader
+    isLoader,
+    fetchIdentities,
   };
 };
 

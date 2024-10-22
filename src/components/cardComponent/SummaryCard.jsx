@@ -1,34 +1,37 @@
-import React from "react";
-import Button from "../ui/button/Button";
+import React, { useState } from "react";
 import { FiCheckCircle } from "react-icons/fi";
-import { MdOutlineAccessTime } from "react-icons/md";
 import StepsStatus from "./StepsStatus";
 import { useTheme } from "../../contexts/themeContext";
 import CardHeader from "../header/CardHeader";
 
 const SummaryCard = () => {
   const { theme } = useTheme();
+
   const rightContent = (
     <div className="flex flex-col gap-1 py-2">
-      <p className="text-[#6881a3] text-xs sm:text-sm flex items-center gap-1">
+      <p className="text-white text-xs sm:text-lg flex items-center gap-1">
         <span>
           <FiCheckCircle color="#01cc7a" size={16} />
         </span>
         Dealing Cycle: Open
       </p>
+      <p className="text-[#6881a3] text-xs sm:text-lg flex items-center gap-1">
+        <span>
+          <FiCheckCircle color="#01cc7a" size={16} />
+        </span>
+        Digital Fund: Active
+      </p>
     </div>
   );
   const middleContent = (
     <div className="flex flex-col gap-1 py-2">
-      <p
-        className={`text-[#6881a3] text-xs sm:text-sm flex items-center gap-1`}
-      >
+      <p className={`text-white text-xs sm:text-lg flex items-center gap-1`}>
         <span>
           <FiCheckCircle color="#01cc7a" size={16} />
         </span>
         Fund's KYC: Accepted
       </p>
-      <p className="text-[#6881a3] text-xs sm:text-sm flex items-center gap-1">
+      <p className="text-[#6881a3] text-xs sm:text-lg flex items-center gap-1">
         <span>
           <FiCheckCircle color="#01cc7a" size={16} />
         </span>
@@ -53,7 +56,7 @@ const SummaryCard = () => {
       />
       <CardHeader
         FundName="Reference Documents"
-        fundClassName={`text-color-text-${theme} text-xs sm:text-md uppercase`}
+        fundClassName={`text-color-text-${theme} text-[10px] xs:text-sm sm:text-lg`}
         showButton={false}
         showLogo={false}
         className="mb-6"
@@ -65,9 +68,15 @@ const SummaryCard = () => {
           <div
             className={`bg-gradient-profile-card-${theme} rounded-md border-color-${theme} border-b-[1px] shadow-${theme}  py-4 px-8 flex justify-between h-full w-full`}
           >
-            <p>Profile</p>
+            <p className={`text-[10px] xs:text-sm`}>Profile</p>
           </div>
-         
+          {/* <CardHeader
+            FundName="Profile"
+            showButton={false}
+            showLogo={false}
+            fundClassName={`text-[#6881a3] `}
+            // className="w-full"
+          /> */}
           <div className={`flex flex-col ml-4 my-8 gap-3`}>
             <p className="text-white uppercase text-sm">Name : testa daSA AX</p>
             <p className="text-white uppercase text-sm">

@@ -20,7 +20,7 @@ function isSubDomain() {
 }
 
 export function getErrorResponse(error) {
-  console.log(error, "error error    error ");
+
   let customResponse = [];
   try {
     if (error.data?.masssage == "timeout exceeded") {
@@ -321,8 +321,7 @@ export const updateCustomerToRestrictedList = async (data, restrictedListId, cus
   }
 };
 export const postQuickScanAPI = async (fund_id, data, cancelToken) => {
-  console.log("here isn daaaaaaaaaa", data);
-  console.log("here isn");
+  
 
   const url = `/${entityId}/${baseURL}/${fund_id}/doQuickScan`;
   const request = { type: "POST", urlString: url, params: data };
@@ -847,7 +846,6 @@ export const updateFundConfigurationAPI = async (fund_id, data, cancelToken) => 
 };
 export const getDownloadCustomerProfileAPI = async (fund_id, identity_id, cancelToken) => {
   const url = `/${entityId}/${baseURL}/${fund_id}/getIdentityPdfReport?identityId=${identity_id}`;
-  console.log(url, "urlurlurlurl");
   const request = { type: "GET", urlString: url };
 
   try {
@@ -861,7 +859,6 @@ export const getDownloadAuditReport = async (fund_id, account_id, cancelToken) =
   ///:entityId/AAPI/fund/:fundId/account/:accountId/application-history
 
   const url = `/${entityId}/${baseURL}/fund/${fund_id}/account/${account_id}/application-history`;
-  console.log(url, "urlurlurlurl");
   const request = { type: "GET", urlString: url };
 
   try {
@@ -873,7 +870,6 @@ export const getDownloadAuditReport = async (fund_id, account_id, cancelToken) =
 };
 export const getDownloadCustomerProfilePullAPI = async (fund_id, identity_id, dateTime, cancelToken) => {
   const url = `/${entityId}/${baseURL}/${fund_id}/getIdentityPdfReportPolling?id=${identity_id}&dateTime=${dateTime}`;
-  console.log(url, "urlurlurlurl");
   const request = { type: "GET", urlString: url };
 
   try {
