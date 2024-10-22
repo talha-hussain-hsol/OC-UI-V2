@@ -315,7 +315,7 @@ export default function AccountHeader({ ...props }) {
             "&state=" +
             "SINGPASS" +
             "&redirect_uri=" +
-            process.env.SINGPASS_CALL_BACK_URL)
+            process.env.VITE_SINGPASS_CALL_BACK_URL)
         : (authoriseUrl =
             response?.data?.corppass?.configurations.auth_api_url +
             "?client_id=" +
@@ -330,7 +330,7 @@ export default function AccountHeader({ ...props }) {
             "&state=" +
             "CORPPASS" +
             "&redirect_uri=" +
-            process.env.CORPPASS_CALL_BACK_URL);
+            process.env.VITE_CORPPASS_CALL_BACK_URL);
       console.log("sdasda", authoriseUrl);
 
       // navigate(navigateLink,{ state:{manual:false,authoriseUrl:authoriseUrl} })

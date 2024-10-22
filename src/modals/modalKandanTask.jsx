@@ -94,7 +94,8 @@ export default function ModalKanbanTask({ visible, onDismiss, ...props }) {
                     </OverlayTrigger>
                   </Avatar>
                 </Link>
-                <Link to="/profile-posts" passHref>
+                <Link to="/profile-posts" passHref
+                >
                   <Avatar as="a" size="xs">
                     <OverlayTrigger overlay={<Tooltip>Daniela Dewitt</Tooltip>}>
                       <Avatar.Image

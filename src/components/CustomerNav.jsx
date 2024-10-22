@@ -34,7 +34,6 @@ export default function CustomerNav({ ...props }) {
   const params = useParams();
   const [isLoader, setIsLoader] = useState(false);
   const [isSCB, setIsSCB] = useState(false);
-
   const cancelTokenSource = axios.CancelToken.source();
   const [activeItemId, setActiveItemId] = useState(() => {
     return Object.keys(data).filter((itemId) => {
@@ -257,9 +256,9 @@ export default function CustomerNav({ ...props }) {
       }
 
       let url = `${
-        process.env.AUTH_API_URL
+        process.env.VITE_AUTH_API_URL
       }/logout?user_id=${localStorage.getItem("login_user_id")}&redirect_url=${
-        process.env.LOGOUT_REDIRECT_URL
+        process.env.VITE_LOGOUT_REDIRECT_URL
       }`;
       localStorage.clear();
       window.location.href = url;
@@ -271,9 +270,9 @@ export default function CustomerNav({ ...props }) {
         port = ":" + location.port;
       }
       let url = `${
-        process.env.AUTH_API_URL
+        process.env.VITE_AUTH_API_URL
       }/logout?user_id=${localStorage.getItem("login_user_id")}&redirect_url=${
-        process.env.LOGOUT_REDIRECT_URL
+        process.env.VITE_LOGOUT_REDIRECT_URL
       }`;
       localStorage.clear();
       window.location.href = url;
@@ -281,7 +280,7 @@ export default function CustomerNav({ ...props }) {
   };
   function handleProfileClick() {
     // navigate('/profile/info')
-    window.open(process.env.AUTH_API_URL + "/profile", "_blank");
+    window.open(process.env.VITE_AUTH_API_URL + "/profile", "_blank");
     // window.open('http://auth-dev.ascentfs.sg/profile', '_blank');
   }
   function handleIdentityClick() {

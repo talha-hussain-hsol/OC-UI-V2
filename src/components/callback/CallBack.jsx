@@ -1,38 +1,24 @@
 import React, { useEffect, useState } from "react";
-import {
-  Badge,
-  Button,
-  Card,
-  Nav,
-  Col,
-  Container,
-  Row,
-  Spinner,
-} from "react-bootstrap";
+import { Button, Nav } from "react-bootstrap";
 
+import axios from "axios";
+import CryptoJS from "crypto-js";
+import { FaSignOutAlt } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
-  postgetToken,
   getAuthUserDetailNew,
-  logoutAPI,
-  getUserEntitiesAPI,
   getEntityPermissionAPI,
-  getSyncedUserEntitiesAPI,
   getIdentityCount,
+  getSyncedUserEntitiesAPI,
+  getUserEntitiesAPI,
+  logoutAPI,
+  postgetToken,
 } from "../../api/network/customerApi";
-import axios from "axios";
 import userUtils from "../../helpers/utils";
-import { FaSignOutAlt } from "react-icons/fa";
-import CryptoJS from "crypto-js";
 // import LoadingSpinner from "../../widgets/bootstrap-component/Spinner";
 // import SpinnerWithBackDrop from "../../widgets/bootstrap-component/SpinnerWithBackDrop";
 import Loader from "../ui/loader";
 // import { useDispatch } from "react-redux";
-import {
-  setEntityId,
-  setEntityLogo,
-  setEntityProfileImage,
-} from "../../store/slices/entitySlice";
 // import CustomAlert from "./../../widgets/bootstrap-component/Alert";
 // import {setEntityID,setEntityLogo,setEntityProfileImage,setToken} from './'
 
@@ -314,6 +300,8 @@ const CallBack = (props) => {
         response?.data,
         "response?.dataresponse?.dataresponse?.dataresponse?.data"
       );
+      const url = new URL(window.location.href);
+      const domain = url.hostname.split(".").slice(-2).join(".");
       setUserData(response?.data?.data);
       document.cookie = `lastSynced=${response?.data?.data?.entity?.sync_time};domain=${domain};path=/`;
       localStorage.setItem(
@@ -323,8 +311,6 @@ const CallBack = (props) => {
       const userImage = response?.data?.data?.meta?.user_image;
       setEntityName(response?.data?.data?.name);
       setEntityProfilePic(userImage);
-      const url = new URL(window.location.href);
-      const domain = url.hostname.split(".").slice(-2).join(".");
 
       document.cookie = `login_user_id=${response?.data?.data?.id};domain=${domain};path=/`;
       document.cookie = `user_email=${response?.data?.data?.email};domain=${domain};path=/`;
@@ -534,7 +520,7 @@ const CallBack = (props) => {
     return result;
   }
   const handleSignIn = async () => {
-    let scope = process.env.AUTH_SCOPE;
+    let scope = import.meta.env.VITE_AUTH_SCOPE;
     let state = generateRandomString(40);
     let codeVerifier = generateRandomString(128);
     console.log(codeVerifier, "codeVerifier");
@@ -552,7 +538,13 @@ const CallBack = (props) => {
       .replace(regex, "-")
       .replace(regex2, "_")
       .replace(regex3, "");
-    let url = `${process.env.AUTH_API_URL}/oauth/authorize?client_id=${process.env.INVESTOR_CLIENT_ID}&redirect_uri=${process.env.INVESTOR_REDIRECT_URL}&scope=${scope}&state=${state}&response_type=${process.env.INVESTOR_RESPONSE_TYPE}&code_challenge=${outputString}&code_challenge_method=S256`;
+    let url = `${import.meta.env.VITE_AUTH_API_URL}/oauth/authorize?client_id=${
+      import.meta.env.VITE_INVESTOR_CLIENT_ID
+    }&redirect_uri=${
+      import.meta.env.VITE_INVESTOR_REDIRECT_URL
+    }&scope=${scope}&state=${state}&response_type=${
+      import.meta.env.VITE_INVESTOR_RESPONSE_TYPE
+    }&code_challenge=${outputString}&code_challenge_method=S256`;
     console.log(url, "url");
     window.location.href = url;
     // hash(codeVerifier).then((hex) => {
@@ -668,9 +660,9 @@ const CallBack = (props) => {
       }
       setIsLoader(false);
       let url = `${
-        process.env.AUTH_API_URL
+        import.meta.env.VITE_AUTH_API_URL
       }/logout?user_id=${localStorage.getItem("login_user_id")}&redirect_url=${
-        process.env.LOGOUT_REDIRECT_URL
+        import.meta.env.VITE_LOGOUT_REDIRECT_URL
       }`;
       localStorage.clear();
       window.location.href = url;
@@ -683,9 +675,9 @@ const CallBack = (props) => {
         port = ":" + location.port;
       }
       let url = `${
-        process.env.AUTH_API_URL
+        import.meta.env.VITE_AUTH_API_URL
       }/logout?user_id=${localStorage.getItem("login_user_id")}&redirect_url=${
-        process.env.LOGOUT_REDIRECT_URL
+        import.meta.env.VITE_LOGOUT_REDIRECT_URL
       }`;
       localStorage.clear();
       window.location.href = url;

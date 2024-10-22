@@ -26,7 +26,7 @@ export default function SignIn() {
 
   const handleSignIn = async () => {
     let state = generateRandomString();
-    let url = `${process.env.AUTH_API_URL}/oauth/authorize?client_id=${process.env.INVESTOR_CLIENT_ID}&redirect_uri=${process.env.INVESTOR_REDIRECT_URL}&scope=*&staet=${state}&response_type=${process.env.INVESTOR_RESPONSE_TYPE}`;
+    let url = `${process.env.VITE_AUTH_API_URL}/oauth/authorize?client_id=${process.env.VITE_INVESTOR_CLIENT_ID}&redirect_uri=${process.env.VITE_INVESTOR_REDIRECT_URL}&scope=*&staet=${state}&response_type=${process.env.VITE_INVESTOR_RESPONSE_TYPE}`;
     window.location.href = url;
   };
 

@@ -192,7 +192,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import Info from "./pages/investor-portal/profile/info";
-
+import Store from "./store";
 import CallBack from "../src/components/callback/CallBack";
 import { Sidenav, CustomerNav } from "./components";
 import { useLocation, useParams } from "react-router-dom";

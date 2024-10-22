@@ -5,6 +5,7 @@ import { APIEventName } from "./APIEventName";
 // const navigate = useNavigate()
 
 const TIMEOUT = 360000;
+console.log("Urll", process.env.VITE_API_URL);
 
 const API = axios.create({
   baseURL: _baseUrl(),
@@ -50,7 +51,7 @@ API.interceptors.response.use(
     ) {
       localStorage.clear();
       deleteAllCookies();
-      window.location.href = `${process.env.LOGOUT_REDIRECT_URL}`;
+      window.location.href = `${process.env.VITE_LOGOUT_REDIRECT_URL}`;
 
       return Promise.reject(error);
     } else if (403 === error?.response?.status) {
@@ -218,7 +219,7 @@ function generateResponseForLoggin(data, status) {
 }
 async function handleSaveDataAudit(data) {
   // https://dev-telemetry.one-constellation.com/logs/api/ingest
-  const url = process.env.LOGS_API_URL;
+  const url = process.env.LOGS_VITE_API_URL;
 
   const response = await fetch(url, {
     method: "POST",
@@ -254,8 +255,8 @@ function handleSplashScreenForIp(e) {
 }
 
 function _baseUrl() {
-  console.log(process.env.API_URL);
-  return process.env.API_URL;
+  console.log(process.env.VITE_API_URL);
+  return process.env.VITE_API_URL;
 }
 
 export async function processRequest(request, token) {

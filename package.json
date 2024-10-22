@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "autoprefixer": "^10.4.19",
     "axios": "^1.7.2",
+    "bootstrap": "^5.3.3",
     "classnames": "^2.5.1",
     "countries-list": "^3.1.1",
     "crypto-js": "^4.2.0",

@@ -1,22 +1,22 @@
-import FeatherIcon from 'feather-icons-react';
-import { Link } from 'react-router-dom'
-import React from 'react';
-import { Card, Col, Dropdown, ListGroup, Row } from 'react-bootstrap';
-import { Avatar } from '../components';
+import FeatherIcon from "feather-icons-react";
+import { Link } from "react-router-dom";
+import React from "react";
+import { Card, Col, Dropdown, ListGroup, Row } from "react-bootstrap";
+import { Avatar } from "../components";
 
 export default function WidgetsTeamList({ ...props }) {
   const data = [
     {
-      imgSrc: '/img/avatars/teams/team-logo-1.jpg',
-      title: 'Launchday',
+      imgSrc: "/img/avatars/teams/team-logo-1.jpg",
+      title: "Launchday",
     },
     {
-      imgSrc: '/img/avatars/teams/team-logo-2.jpg',
-      title: 'Medium Corporation',
+      imgSrc: "/img/avatars/teams/team-logo-2.jpg",
+      title: "Medium Corporation",
     },
     {
-      imgSrc: '/img/avatars/teams/team-logo-3.jpg',
-      title: 'Lyft',
+      imgSrc: "/img/avatars/teams/team-logo-3.jpg",
+      title: "Lyft",
     },
   ];
 
