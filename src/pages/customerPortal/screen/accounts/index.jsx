@@ -18,7 +18,7 @@ const Accounts = () => {
 
   const navigate = useNavigate();
   function handleClick() {
-    navigate("/fund-code");
+    navigate("/subscription/request");
   }
   useEffect(() => {
     document.body.style.backgroundColor =
