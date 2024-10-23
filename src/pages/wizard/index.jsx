@@ -15,7 +15,7 @@ import {
   handleSubmitScreeningApi,
   postIdentityAttatchWithFund,
 } from "../../api/network/CustomerApi";
-import AccountStep from "../wizardcopy/account-wizard/UserType";
+import AccountStep from "./components/AccountStep";
 import ApplicationStep from "../wizardcopy/account-wizard/Application";
 import BankWalletsStep from "../wizardcopy/account-wizard/BankWallets";
 import DocumentsStep from "../wizardcopy/account-wizard/Documents";

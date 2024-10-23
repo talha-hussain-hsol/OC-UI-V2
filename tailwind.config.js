@@ -35,7 +35,7 @@ module.exports = {
           "linear-gradient(to bottom, #24357C 0%, #0B76A8 100%)",
         "color-card-Ascent":
           "linear-gradient(to bottom, #0d345d 0%, #151c39 100%)", // Card header in stepper ex: Face Snap
-       
+
         "color-Ascent": "linear-gradient(to right, #0c2138 0%, #113c4d 100%)",
         "color-modal-SC":
           "linear-gradient(to bottom, #243279 0%, #0055BB 100%)",
@@ -61,7 +61,7 @@ module.exports = {
         "color-modal-button-SC": "#6e84a3",
         "color-modal-button-Ascent": "#6e84a3",
         "color-button-SC": "#3DA500", // For All Buttons + Processing Case
-        "color-button-Ascent": "#2C75E6", // For All Buttons + Processing Case
+        "color-button-Ascent": "#2bb02a", // For All Buttons + Processing Case
         "color-button1-SC": "#8DC63F", //For Accepted Case
         "color-button2-SC": "#F74036", // For Rejected Case
         "color-button3-SC": "#F2A428", // For Pending Case

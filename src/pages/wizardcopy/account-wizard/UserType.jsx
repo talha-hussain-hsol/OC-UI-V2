@@ -32,7 +32,7 @@ const UserType = ({ onSelection, referenceDocuments, fundFields }) => {
         className={`w-full flex flex-col items-center bg-transparent font-${theme} text-${theme}`}
       >
         <h3
-          className={`text-color-h3-${theme} text-2xl sm:text-xl md:text-2xl font-light mt-6`}
+          className={`text-color-h3-${theme} text-2xl sm:text-xl md:text-4xl font-light mt-6`}
         >
           Let's start with the basics.
         </h3>

@@ -1,10 +1,8 @@
 import FeatherIcon from "feather-icons-react";
-import { GoPrimitiveDot } from "react-icons/go";
-import Select, { AriaOnFocus } from "react-select";
+import Select from "react-select";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
-import { Tooltip } from "react-bootstrap";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import React, { useEffect, useState, useRef } from "react";
+import Tooltip from "../../../components/tooltip/Tooltip";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -17,127 +15,26 @@ import {
   Alert,
   Modal,
 } from "react-bootstrap";
-import { Dropzone, Flatpickr, Quill } from "../../../../components/vendor";
-import FundBox from "./../../../../widgets/fund-box";
-import CustomerBox from "./../../../../widgets/customer-box";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   getFundForJoin,
   getIdentityList,
-  postIdentityAttatchWithFund,
-} from "../../../../api/network/CustomerApi";
-import axios, { CancelTokenSource } from "axios";
-import { HiPlusCircle } from "react-icons/hi";
+} from "../../../api/network/CustomerApi";
+import axios from "axios";
 import { HiUserAdd } from "react-icons/hi";
 import { HiSearch } from "react-icons/hi";
-import { RiDeleteBin5Line } from "react-icons/ri";
-import { validateEmails } from "../../../../utils/validation/email-validation";
-import LoadingSpinner from "../../..../../../../widgets/bootstrap-component/Spinner";
-import { MissingFields } from "../../../../widgets";
-import EntityIcon from "./../../../../icons/entity-icon-small.svg";
+import Loader from "../../../components/ui/loader";
 import NewIdentitySection from "./NewIdentitySection";
-var theme = localStorage.getItem("portal_theme");
-
-const themeDark = localStorage.getItem("portal_theme");
-const customStyles =
-  themeDark == "dark" || themeDark == undefined
-    ? {
-        option: (provided, state) => ({
-          ...provided,
-          color: "#fff",
-          backgroundColor: state.isSelected ? "#3b82f6" : "#1e3a5c",
-          ":active": {
-            backgroundColor: "#3b82f6",
-            color: "#fff",
-          },
-          ":hover": {
-            backgroundColor: "#3b82f6",
-            color: "#fff",
-          },
-          ":not(:hover)": {
-            backgroundColor: state.isSelected ? "#3b82f6" : "#1e3a5c",
-            color: "##fff",
-          },
-        }),
-        input: (provided) => ({
-          ...provided,
-          color: "#fff",
-        }),
-
-        singleValue: (provided) => ({
-          ...provided,
-          color: "#fff",
-          marginLeft: "10px",
-        }),
-        control: (provided, state) => ({
-          ...provided,
-          minHeight: "40px", // set the minimum height here
-          backgroundColor: "#1e3a5c",
-          color: "#93a6c6",
-          borderColor: state.isFocused ? "#fff" : "#444",
-        }),
-        menu: (provided, state) => ({
-          ...provided,
-          backgroundColor: "#1e3a5c",
-          color: "#93a6c6",
-        }),
-        placeholder: (provided, state) => ({
-          ...provided,
-          color: "#93a6c6", // change the color of the placeholder text here
-        }),
-      }
-    : {
-        option: (provided, state) => ({
-          ...provided,
-          color: state.isSelected ? "#fff" : "#000",
-          backgroundColor: state.isSelected
-            ? "#3b82f6"
-            : state.isFocused
-            ? "#e5e7eb"
-            : "#fff",
-          ":active": {
-            backgroundColor: "#3b82f6",
-            color: "#fff",
-          },
-          ":hover": {
-            backgroundColor: state.isSelected ? "#3b82f6" : "#e5e7eb",
-            color: state.isSelected ? "#fff" : "#000",
-          },
-        }),
-        singleValue: (provided) => ({
-          ...provided,
-          color: "#3b3f45",
-        }),
-        control: (provided, state) => ({
-          ...provided,
-          minHeight: "40px", // set the minimum height here
-          backgroundColor: "#fff",
-          color: "#3b3f45",
-          borderColor: state.isFocused ? "#3b82f6" : "#cbd5e0",
-          boxShadow: state.isFocused ? "0 0 0 1px #3b82f6" : "none",
-          "&:hover": {
-            borderColor: state.isFocused ? "#3b82f6" : "#a0aec0",
-          },
-        }),
-        menu: (provided, state) => ({
-          ...provided,
-          backgroundColor: "#fff",
-          color: "#3b3f45",
-        }),
-        placeholder: (provided, state) => ({
-          ...provided,
-          color: "#a0aec0", // change the color of the placeholder text here
-        }),
-      };
+import { useTheme } from "../../../contexts/themeContext";
 
 export default function AccountStep(props) {
   console.log(props, "props props props props AccountStep");
+  const { theme } = useTheme();
   const [isCollapsed, setIsCollapsed] = useState(true);
   const cancelTokenSource = axios.CancelToken.source();
   const [isLoader, setIsLoader] = useState(false);
   const navigate = useNavigate();
   const params = useParams();
-  const [activeStep, setActiveStep] = useState(1);
   const [fundCode, setFundCode] = useState("");
   const [descriptionText, setDescriptionText] = useState(
     "Please enter the account joining code which you would have received from the account owner."
@@ -145,8 +42,7 @@ export default function AccountStep(props) {
   const [selectedIdentity, setSelectedIdentity] = useState({ value: "" });
   const [isNewIdentity, setIsNewIdentity] = useState(false);
   const [selectedIdentityData, setSelectedIdentityData] = useState();
-  const [selectedIdentityMessageShow, setSelectedIdentityMessageShow] =
-    useState(false);
+
   const [identitiesData, setIdentitiesData] = useState([]);
   const [fundData, setFundData] = useState(null);
   const [customizeModal, setCustomizeModal] = useState(false);
@@ -441,35 +337,32 @@ export default function AccountStep(props) {
     navigate("/");
   };
   return (
-    <div className="main-content">
-      <Container fluid="lg">
-        <Row className="justify-content-center">
-          <Col xs={12} md={12} lg={12} xl={12} className="text-center">
-            <h1 className="mb-3">Let's Start With The Basics.</h1>
-            <p className="mb-5 text-muted">{descriptionText}</p>
-          </Col>
-        </Row>
-        {isLoader ? (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              height: "20rem",
-            }}
-          >
-            <LoadingSpinner animation="grow" custom={true} height="36vh" />
-          </div>
-        ) : (
-          <>
-            {!fundData && (
-              <div className="form-group">
-                {/* <Form.Label>Enter the account code</Form.Label> */}
-
-                <div className="d-flex ">
-                  <Form.Control
+    <div
+      className={`bg-gradient-stepper-card-${theme} w-full shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] mx-auto p-10 md:ml-4 md:mt-12 rounded-lg text-white flex flex-col justify-center`}
+    >
+      <div
+        className={`ml-20 mr-20 flex flex-col items-center bg-transparent font-${theme} text-${theme}`}
+      >
+        <h3
+          className={`text-color-h3-${theme} text-2xl sm:text-xl md:text-2xl font-light mt-6`}
+        >
+          Let's start with the basics.
+        </h3>
+        <p className="text-slate-500 text-xs sm:text-sm font-light mt-2 text-center sm:text-left">
+          {descriptionText}
+        </p>
+        <>
+          {isLoader ? (
+            <div className="flex justify-center items-center h-[20rem]">
+              <Loader />
+            </div>
+          ) : (
+            <>
+              {!fundData && (
+                <div className="relative w-full mt-4 mb-10">
+                  <input
                     placeholder="Enter The Account Code"
-                    className="fund-search-input"
+                    className={`bg-color-textfield-dropdown-${theme} text-color-text-${theme} w-full p-3 xs:pl-8 pl-4 rounded-full border border-color-dropdown-${theme} shadow-${theme} focus:outline-none xs:text-lg text-xs`}
                     type="text"
                     value={fundCode}
                     onChange={(event) => setFundCode(event.target.value)}
@@ -478,192 +371,434 @@ export default function AccountStep(props) {
                   <button
                     disabled={fundCode?.length > 1 ? false : true}
                     onClick={() => getFundForJoinApi()}
-                    className="btn-search-fund btn btn-success"
+                    className={`absolute right-[1px] top-[1px] xs:py-[18px] py-[12px] sm:px-8 xs:px-6 px-4 rounded-r-full  ${
+                      fundCode ? "bg-[#2bb02a]" : "bg-[#0f9969]"
+                    } text-white`}
                   >
                     <HiSearch size="20px" />
                   </button>
                 </div>
-              </div>
-            )}
-            {fundData && (
-              <>
-                <Card>
-                  <Card.Body>
-                    {/* <div className="edit-button-fund-box">
-                                            <p onClick={() => { setFundData(null), setSelectedIdentity({ value: "" }) }}>Edit</p>
-                                        </div> */}
-                    <Row>
-                      {fundData?.fund_setting?.display?.fund_info === true ||
-                      fundData?.fund_setting?.display?.fund_info == "true" ? (
-                        <Col xs={6} lg={4} xl={4} className="d-flex">
-                          <div
-                            className="d-flex"
-                            style={{ alignItems: "center" }}
-                          >
-                            <img
-                              className="fund-logo"
-                              src={
-                                fundData?.logoBucketKey
-                                  ? fundData?.logoBucketKey
-                                  : fundData?.fund_logo_url
-                              }
-                            />
-                            <span className="fund-name-box">
-                              {fundData?.name}
-                            </span>
-                          </div>
-                        </Col>
-                      ) : (
-                        <Col
-                          xs={12}
-                          lg={12}
-                          xl={12}
-                          className="d-flex justify-content-center"
+              )}
+              {fundData && (
+                <>
+                  <div
+                    className={`flex flex-col sm:flex-row bg-color-card-${theme} rounded-lg shadow-lg h-auto sm:h-[10%] w-[90%] sm:w-[80%] mt-8 items-center p-4`}
+                  >
+                    {fundData?.fund_setting?.display?.fund_info === true ||
+                    fundData?.fund_setting?.display?.fund_info == "true" ? (
+                      <div className="flex items-center">
+                        <img
+                          className="w-15 h-12 mr-2 rounded-[3px]"
+                          src={
+                            fundData?.logoBucketKey
+                              ? fundData?.logoBucketKey
+                              : fundData?.fund_logo_url
+                          }
+                        />
+                        <span
+                          className={`text-color-${theme} text-sm font-normal`}
                         >
-                          <div
-                            className="d-flex"
-                            style={{ alignItems: "center" }}
-                          >
-                            <img
-                              className="fund-logo"
-                              src={
-                                fundData?.logoBucketKey
-                                  ? fundData?.logoBucketKey
-                                  : fundData?.fund_logo_url
-                              }
-                            />
-                            <span className="fund-name-box">
-                              {fundData?.name}
-                            </span>
-                          </div>
-                        </Col>
-                      )}
-                      {(fundData?.fund_setting?.display?.fund_info === true ||
-                        fundData?.fund_setting?.display?.fund_info ==
-                          "true") && (
+                          {fundData?.name}
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center">
+                        <img
+                          className="w-15 h-12 mr-2 rounded-[3px]"
+                          src={
+                            fundData?.logoBucketKey
+                              ? fundData?.logoBucketKey
+                              : fundData?.fund_logo_url
+                          }
+                        />
+                        <span
+                          className={`text-color-${theme} text-sm font-normal`}
+                        >
+                          {fundData?.name}
+                        </span>
+                      </div>
+                    )}
+                    {(fundData?.fund_setting?.display?.fund_info === true ||
+                      fundData?.fund_setting?.display?.fund_info == "true") && (
+                      <>
                         <>
-                          <Col xs={6} lg={4} xl={4}>
-                            <>
-                              <div>
-                                <small className="fund_info_small">
-                                  <span class="text-success">
-                                    <FeatherIcon
-                                      className={`text-success`}
-                                      icon="check-circle"
-                                      color="green"
-                                      size="15"
-                                    />
-                                  </span>{" "}
-                                  Fund's KYC:{" "}
-                                  {fundData?.fund_setting?.kyb?.status
-                                    ? fundData?.fund_setting?.kyb?.status
-                                    : fundData?.meta?.config?.kyb?.status}
-                                </small>
-                              </div>
-                              <div>
-                                <small className="text-muted fund_info_small">
-                                  <span class="text-success">
-                                    <FeatherIcon
-                                      className={`text-success`}
-                                      icon="check-circle"
-                                      color="green"
-                                      size="15"
-                                    />
-                                  </span>{" "}
-                                  Fund Domicile:
-                                  {fundData?.fund_setting?.region
-                                    ? fundData?.fund_setting?.region
-                                    : fundData?.meta?.config?.settings?.region}
-                                </small>
-                              </div>
-                            </>
-                          </Col>
-                          <Col xs={6} lg={4} xl={4}>
-                            <>
-                              <div>
-                                <small className="fund_info_small">
+                          <div
+                            className={`text-color-${theme} sm:ml-[10%] lg:ml-[20%] text-xs font-light mb-4 sm:mb-0`}
+                          >
+                            <small className="flex items-center">
+                              <span>
+                                <FeatherIcon
+                                  className={`text-color-button1-${theme}`}
+                                  icon="check-circle"
+                                  color="green"
+                                  size="15"
+                                />
+                              </span>
+                              Fund's KYC:{" "}
+                              {fundData?.fund_setting?.kyb?.status
+                                ? fundData?.fund_setting?.kyb?.status
+                                : fundData?.meta?.config?.kyb?.status}
+                            </small>
+
+                            <small className="text-slate-500 flex items-center">
+                              <span>
+                                <FeatherIcon
+                                  className={`text-color-button1-${theme}`}
+                                  icon="check-circle"
+                                  color="green"
+                                  size="15"
+                                />
+                              </span>{" "}
+                              Fund Domicile:
+                              {fundData?.fund_setting?.region
+                                ? fundData?.fund_setting?.region
+                                : fundData?.meta?.config?.settings?.region}
+                            </small>
+                          </div>
+                        </>
+
+                        <>
+                          <div
+                            className={`text-color-${theme} sm:ml-[10%] lg:ml-[20%] text-xs font-light`}
+                          >
+                            <small className="flex items-center">
+                              <FeatherIcon
+                                className={`text-color-button1-${theme}`}
+                                icon="clock"
+                                color="green"
+                                size="15"
+                              />{" "}
+                              Dealing Cycle:{" "}
+                              {fundData?.fund_setting?.dealing?.type?.end
+                                ? fundData?.fund_setting?.dealing?.type?.end
+                                : fundData?.fund_setting?.dealing?.type?.end}
+                            </small>
+
+                            {fundData?.fund_setting?.account?.applicant?.asset
+                              ?.digital?.status && (
+                              <small className="text-slate-500 flex items-center">
+                                <span>
                                   <FeatherIcon
-                                    className={`text-success`}
-                                    icon="clock"
+                                    className={`text-color-button1-${theme}`}
+                                    icon="check-circle"
                                     color="green"
                                     size="15"
-                                  />{" "}
-                                  Dealing Cycle:{" "}
-                                  {fundData?.fund_setting?.dealing?.type?.end
-                                    ? fundData?.fund_setting?.dealing?.type?.end
-                                    : fundData?.fund_setting?.dealing?.type
-                                        ?.end}
-                                </small>
-                              </div>
-                              {fundData?.fund_setting?.account?.applicant?.asset
-                                ?.digital?.status && (
-                                <div>
-                                  <small className="text-muted fund_info_small">
-                                    <span class="text-success">
-                                      <FeatherIcon
-                                        className={`text-success`}
-                                        icon="check-circle"
-                                        color="green"
-                                        size="15"
-                                      />
-                                    </span>{" "}
-                                    Digital Fund:
-                                    {fundData?.fund_setting?.account?.applicant
+                                  />
+                                </span>{" "}
+                                Digital Fund:
+                                {fundData?.fund_setting?.account?.applicant
+                                  ?.asset?.digital?.status
+                                  ? fundData?.fund_setting?.account?.applicant
                                       ?.asset?.digital?.status
-                                      ? fundData?.fund_setting?.account
-                                          ?.applicant?.asset?.digital?.status
-                                        ? "Active"
-                                        : "Not Active"
-                                      : fundData?.meta?.config?.settings
-                                          ?.account?.applicant?.asset?.digital
-                                          ?.status
-                                      ? "Active"
-                                      : "Not Active"}
-                                  </small>
-                                </div>
-                              )}
-                            </>
-                          </Col>
+                                    ? "Active"
+                                    : "Not Active"
+                                  : fundData?.meta?.config?.settings?.account
+                                      ?.applicant?.asset?.digital?.status
+                                  ? "Active"
+                                  : "Not Active"}
+                              </small>
+                            )}
+                          </div>
                         </>
-                      )}
-                    </Row>
-                  </Card.Body>
-                </Card>
-                {fundData?.description &&
-                  typeof fundData?.description === "string" &&
-                  fundData?.description.trim()?.length > 0 && (
-                    <Card>
-                      <Card.Header>
-                        <h4 className="card-header-title">
-                          Account Description
-                        </h4>
-                      </Card.Header>
-                      <Card.Body>
-                        {fundData?.description && (
-                          <p>{fundData?.description}</p>
-                        )}
-                      </Card.Body>
-                    </Card>
-                  )}
-                {fundData?.reference_document?.documents?.length > 0 && (
-                  <Card>
-                    <Card.Header>
-                      <h4 className="card-header-title">Reference Documents</h4>
-                      <Button
-                        onClick={toggleCollapse}
-                        variant="link"
-                        className="btn-collapse"
+                      </>
+                    )}
+                  </div>
+
+                  {fundData?.description &&
+                    typeof fundData?.description === "string" &&
+                    fundData?.description.trim()?.length > 0 && (
+                      <div
+                        className={`bg-color-card-${theme} rounded-lg shadow-lg h-auto sm:h-[20%] w-[90%] sm:w-[80%] mt-8 p-4`}
                       >
-                        {isCollapsed ? <FaChevronDown /> : <FaChevronUp />}
-                      </Button>
-                    </Card.Header>
-                    {!isCollapsed && (
-                      <Card.Body>
-                        {fundData?.reference_document?.documents &&
-                          fundData?.reference_document?.documents.map(
+                        <div
+                          className={`flex bg-color-card-${theme} rounded-lg shadow-lg h-[50%] w-[100%]`}
+                        >
+                          <h4
+                            className={`text-color-${theme} text-xs font-extrabold m-3`}
+                          >
+                            Account Description
+                          </h4>
+                        </div>
+
+                        {fundData?.description && (
+                          <p
+                            className={`text-color-${theme} text-xs sm:text-sm font-light p-3`}
+                          >
+                            {fundData?.description}
+                          </p>
+                        )}
+                      </div>
+                    )}
+                  {fundData?.reference_document?.documents?.length > 0 && (
+                    <div>
+                      <div
+                        className={`flex bg-color-card-${theme} rounded-lg shadow-lg h-[10%] sm:h-[10%] sm:w-[80%] mt-4 w-[80%] justify-between items-center`}
+                      >
+                        <h4
+                          className={`text-color-${theme} text-xs sm:text-sm font-extrabold m-3`}
+                        >
+                          Reference Documents
+                        </h4>
+                        <Button
+                          onClick={toggleCollapse}
+                          variant="link"
+                          className="text-slate-500 hover:text-slate-700"
+                        >
+                          {isCollapsed ? <FaChevronDown /> : <FaChevronUp />}
+                        </Button>
+                      </div>
+                      {!isCollapsed && (
+                        <div className="w-[80%] mt-4">
+                          {fundData?.reference_document?.documents &&
+                            fundData?.reference_document?.documents.map(
+                              (item, index) => (
+                                <div
+                                  key={index}
+                                  className={`flex justify-between items-center bg-color-card-${theme} rounded-lg shadow-lg p-3 mb-2`}
+                                >
+                                  <div>
+                                    <div
+                                      style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                      }}
+                                    >
+                                      <div>
+                                        <p
+                                          className={`mb-0 text-xs font-semibold text-color-${theme}`}
+                                        >
+                                          {item?.title}
+                                        </p>
+                                        <p
+                                          className={`mb-0 text-xs text-gray-500`}
+                                        >
+                                          {item?.description}
+                                        </p>
+                                      </div>
+                                      <div>
+                                        <Button
+                                          onClick={(e) =>
+                                            handleClickReferenceDocument(
+                                              item?.url
+                                            )
+                                          }
+                                          className={`p-2 rounded-full bg-gradient-card-${theme} flex items-center justify-center`}
+                                          style={{
+                                            height: "30px",
+                                            width: "30px",
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            padding: "6px",
+                                            marginTop: "5px",
+                                            marginBottom: "5px",
+                                          }}
+                                        >
+                                          <FeatherIcon icon="eye" size="1em" />
+                                        </Button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              )
+                            )}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  <hr className="w-[80%] border-t-[1px] border-t-[#6e84a3] opacity-30 my-6 mx-8" />
+                  {props?.isAcceptedTermsAndCondition ? (
+                    !isNewIdentity && (
+                      <div className="flex justify-center">
+                        <div className="flex flex-col w-full">
+                          {shouldShowSelect && (
+                            <label>
+                              Select the identity you would like to attach this
+                              account
+                            </label>
+                          )}
+                          <div className="flex">
+                            {shouldShowSelect ? (
+                              <div
+                                className="form-group"
+                                style={{
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                  width: "100%",
+                                  alignItems: "center",
+                                }}
+                              >
+                                <div style={{ width: "90%" }}>
+                                  {/* <Select
+                                    placeholder="Select Identity"
+                                    isSearchable={true}
+                                    styles={customStyles}
+                                    filterOption={customFilter}
+                                    options={
+                                      options[0] != undefined &&
+                                      options[0] != "undefined"
+                                        ? options
+                                        : {
+                                            value: "",
+                                            label: (
+                                              <div
+                                                style={{
+                                                  display: "flex",
+                                                  alignItems: "center",
+                                                }}
+                                              >
+                                                There is no Identity available
+                                                to attached this fund
+                                              </div>
+                                            ),
+                                          }
+                                    }
+                                    value={
+                                      selectedIdentity.value == ""
+                                        ? {
+                                            value: "",
+                                            label: "Please select an identity", // Change this to your desired prompt
+                                          }
+                                        : selectedIdentity
+                                    }
+                                    onChange={(selectedOption) =>
+                                      setSelectedIdentity(selectedOption)
+                                    }
+                                  /> */}
+                                  <Select
+                                    placeholder="Select Identity"
+                                    isSearchable={true}
+                                    classNamePrefix="tailwind-select" // Tailwind class prefix for customization
+                                    filterOption={customFilter}
+                                    options={
+                                      options && options.length > 0
+                                        ? options
+                                        : [
+                                            {
+                                              value: "",
+                                              label: (
+                                                <div className="flex items-center text-gray-500">
+                                                  There is no Identity available
+                                                  to attach to this fund
+                                                </div>
+                                              ),
+                                            },
+                                          ]
+                                    }
+                                    value={
+                                      selectedIdentity?.value === ""
+                                        ? {
+                                            value: "",
+                                            label: "Please select an identity", // Change this to your desired prompt
+                                          }
+                                        : selectedIdentity
+                                    }
+                                    onChange={(selectedOption) =>
+                                      setSelectedIdentity(selectedOption)
+                                    }
+                                    styles={{
+                                      control: (provided, state) => ({
+                                        ...provided,
+                                        borderRadius: "0.375rem", // Tailwind equivalent for rounded-md
+                                        borderColor: state.isFocused
+                                          ? "rgb(59, 130, 246)"
+                                          : "rgb(229, 231, 235)", // focus:ring-blue-500 and border-gray-300
+                                        boxShadow: state.isFocused
+                                          ? "0 0 0 1px rgb(59, 130, 246)"
+                                          : "", // focus ring
+                                        "&:hover": {
+                                          borderColor: "rgb(209, 213, 219)", // hover:border-gray-300
+                                        },
+                                      }),
+                                      placeholder: (provided) => ({
+                                        ...provided,
+                                        color: "rgb(156, 163, 175)", // text-gray-400
+                                      }),
+                                      option: (provided, state) => ({
+                                        ...provided,
+                                        backgroundColor: state.isSelected
+                                          ? "rgb(59, 130, 246)" // bg-blue-500 for selected
+                                          : state.isFocused
+                                          ? "rgb(229, 231, 235)" // hover:bg-gray-100 for hover
+                                          : "",
+                                        color: state.isSelected
+                                          ? "white"
+                                          : "rgb(17, 24, 39)", // text-white or text-gray-900
+                                      }),
+                                      singleValue: (provided) => ({
+                                        ...provided,
+                                        color: "rgb(17, 24, 39)", // text-gray-900
+                                      }),
+                                    }}
+                                  />
+                                </div>
+                                <Tooltip content="Create New Identity">
+                                  <div
+                                    style={{
+                                      marginLeft: "10px",
+                                      cursor: "pointer",
+                                    }}
+                                    onClick={(e) => {
+                                      setSelectedIdentity({ value: null }),
+                                        setIsNewIdentity(true);
+                                      props.setIsNewIdentity(true);
+                                    }}
+                                  >
+                                    <HiUserAdd color="green" size="50px" />
+                                  </div>
+                                </Tooltip>
+                              </div>
+                            ) : (
+                              <></>
+                            )}
+                          </div>
+                          {!shouldShowSelect && (
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                flexDirection: "column",
+                                alignItems: "center",
+                              }}
+                            >
+                              <p style={{ color: "gray" }}>
+                                No options available. Please create a new one.
+                              </p>
+                              <Tooltip content="Create New Identity">
+                                <div
+                                  style={{
+                                    marginLeft: "10px",
+                                    cursor: "pointer",
+                                  }}
+                                  onClick={(e) => {
+                                    setSelectedIdentity({ value: null }),
+                                      setIsNewIdentity(true);
+                                  }}
+                                >
+                                  <HiUserAdd color="green" size="50px" />
+                                </div>
+                              </Tooltip>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )
+                  ) : (
+                    <div>
+                      <div>
+                        <h4 className="card-header-title">
+                          Terms and Conditions
+                        </h4>
+                      </div>
+                      <div>
+                        {!fundData?.config?.reference?.customizeTC &&
+                          fundData?.reference_document?.term_documents &&
+                          fundData?.reference_document?.term_documents.map(
                             (item, index) => (
-                              <Card>
-                                <Card.Body>
+                              <div key={index}>
+                                <div>
                                   <div
                                     style={{
                                       display: "flex",
@@ -700,323 +835,147 @@ export default function AccountStep(props) {
                                       </Button>
                                     </div>
                                   </div>
-                                </Card.Body>
-                              </Card>
+                                </div>
+                              </div>
                             )
                           )}
-                      </Card.Body>
-                    )}
-                  </Card>
-                )}
-
-                <hr className="my-5" />
-                {props?.isAcceptedTermsAndCondition ? (
-                  !isNewIdentity && (
-                    <Row className="justify-content-center">
-                      <Col xs={12} md={12} lg={12} xl={12}>
-                        {shouldShowSelect && (
-                          <Form.Label>
-                            Select the identity you would like to attach this
-                            account
-                          </Form.Label>
-                        )}
-                        <div className="d-flex">
-                          {shouldShowSelect ? (
-                            <div
-                              className="form-group"
-                              style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                width: "100%",
-                                alignItems: "center",
-                              }}
-                            >
-                              <div style={{ width: "90%" }}>
-                                <Select
-                                  placeholder="Select Identity"
-                                  isSearchable={true}
-                                  styles={customStyles}
-                                  filterOption={customFilter}
-                                  options={
-                                    options[0] != undefined &&
-                                    options[0] != "undefined"
-                                      ? options
-                                      : {
-                                          value: "",
-                                          label: (
-                                            <div
-                                              style={{
-                                                display: "flex",
-                                                alignItems: "center",
-                                              }}
-                                            >
-                                              There is no Identity available to
-                                              attached this fund
-                                            </div>
-                                          ),
-                                        }
-                                  }
-                                  value={
-                                    selectedIdentity.value == ""
-                                      ? {
-                                          value: "",
-                                          label: "Please select an identity", // Change this to your desired prompt
-                                        }
-                                      : selectedIdentity
-                                  }
-                                  onChange={(selectedOption) =>
-                                    setSelectedIdentity(selectedOption)
-                                  }
-                                />
-                              </div>
-                              <OverlayTrigger
-                                overlay={<Tooltip>Create New Identity</Tooltip>}
-                              >
-                                <div
-                                  style={{
-                                    marginLeft: "10px",
-                                    cursor: "pointer",
-                                  }}
-                                  onClick={(e) => {
-                                    setSelectedIdentity({ value: null }),
-                                      setIsNewIdentity(true);
-                                    props.setIsNewIdentity(true);
-                                  }}
-                                >
-                                  <HiUserAdd color="green" size="50px" />
-                                </div>
-                              </OverlayTrigger>
-                            </div>
-                          ) : (
-                            <></>
-                          )}
-                        </div>
-                        {!shouldShowSelect && (
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                              flexDirection: "column",
-                              alignItems: "center",
-                            }}
-                          >
-                            <p style={{ color: "gray" }}>
-                              No options available. Please create a new one.
-                            </p>
-                            <OverlayTrigger
-                              overlay={<Tooltip>Create New Identity</Tooltip>}
-                            >
-                              <div
-                                style={{
-                                  marginLeft: "10px",
-                                  cursor: "pointer",
-                                }}
-                                onClick={(e) => {
-                                  setSelectedIdentity({ value: null }),
-                                    setIsNewIdentity(true);
-                                }}
-                              >
-                                <HiUserAdd color="green" size="50px" />
-                              </div>
-                            </OverlayTrigger>
-                          </div>
-                        )}
-                      </Col>
-                    </Row>
-                  )
-                ) : (
-                  <Card>
-                    <Card.Header>
-                      <h4 className="card-header-title">
-                        Terms and Conditions
-                      </h4>
-                    </Card.Header>
-                    <Card.Body>
-                      {!fundData?.config?.reference?.customizeTC &&
-                        fundData?.reference_document?.term_documents &&
-                        fundData?.reference_document?.term_documents.map(
-                          (item, index) => (
-                            <Card>
-                              <Card.Body>
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    alignItems: "center",
-                                  }}
-                                >
-                                  <div>
-                                    <p className="mb-0">{item?.title}</p>
-                                    <p className="mb-0">{item?.description}</p>
-                                  </div>
-                                  <div>
-                                    <Button
-                                      onClick={(e) =>
-                                        handleClickReferenceDocument(item?.url)
-                                      }
-                                      className="lift"
-                                      style={{
-                                        height: "30px",
-                                        width: "30px",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        padding: "6px",
-                                        marginTop: "5px",
-                                        marginBottom: "5px",
-                                      }}
-                                    >
-                                      <FeatherIcon icon="eye" size="1em" />
-                                    </Button>
-                                  </div>
-                                </div>
-                              </Card.Body>
-                            </Card>
-                          )
-                        )}
-                      <div
-                        style={{ display: "flex", justifyContent: "center" }}
-                      >
-                        <Button
-                          onClick={props.handleChangeTermsCondition}
-                          variant="success"
+                        <div
+                          style={{ display: "flex", justifyContent: "center" }}
                         >
-                          Accept All
-                        </Button>
+                          <Button
+                            onClick={props.handleChangeTermsCondition}
+                            variant="success"
+                          >
+                            Accept All
+                          </Button>
+                        </div>
                       </div>
-                    </Card.Body>
-                  </Card>
-                )}
-              </>
-            )}
-            {isNewIdentity && fundData && (
-              <NewIdentitySection
-                handleChangeCkyc={props?.handleChangeCkyc}
-                checkIfDataSelected={checkIfDataSelected}
-                fundData={fundData}
-              />
-            )}
-          </>
-        )}
+                    </div>
+                  )}
+                </>
+              )}
+              {isNewIdentity && fundData && (
+                <NewIdentitySection
+                  handleChangeCkyc={props?.handleChangeCkyc}
+                  checkIfDataSelected={checkIfDataSelected}
+                  fundData={fundData}
+                />
+              )}
+            </>
+          )}
 
-        {alertJoinFund ? (
-          <Alert
-            closeLabel
-            style={{ marginTop: "30px" }}
-            dismissible={true}
-            onClose={() => setAlertJoinFund(false)}
-            key="danger"
-            variant="danger"
-          >
-            Account Not Found
-          </Alert>
-        ) : null}
-      </Container>
-      <Modal
-        size="md"
-        show={customizeModal}
-        onHide={handleClickCustomizeTC}
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Header>
-          {/* <Modal.Header closeButton> */}
-          <Modal.Title>
-            <div>
-              <h1>Disclaimer Notice</h1>
-            </div>
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>
-            Please review the following Disclaimer and click "I Accept" to
-            continue.
-          </p>
-          <p>
-            First Degree Global Asset Management Pte Ltd (
-            <strong>First Degree</strong>) is regulated as a Capital Markets
-            Services License-holder for Fund Management (LFMC) by the Monetary
-            Authority of Singapore ("MAS). The material on this website is
-            provided for your general information only and does not constitute
-            the giving of investment advice or an offer to sell or the
-            solicitation of an offer to buy any investment(s) managed or advised
-            on by First Degree.
-          </p>
-          <p>
-            By clicking "I accept", this means you accept the following terms
-            and conditions of use of this website:
-          </p>
-          <ol>
-            <li>
-              You agree that you <strong>are an</strong>{" "}
-              <a
-                target="_blank"
-                href="https://storage.googleapis.com/one-constellation-bucket-public/first_degree/terms_and_conditions.pdf"
-              >
-                Accredited Investor or Institutional Investor as defined under
-                section 4A of the Securities and Futures Act (Cap. 289) of
-                Singapore
-              </a>
-              , and that you are aware of the reduced protections being accorded
-              to you by being treated as an Accredited or Institutional Investor
-            </li>
-            <li>
-              No person receiving a copy of the offering documents including any
-              application forms and subscription agreements used herein to
-              subscribe for Participating Shares (the "Subscription Form") in
-              any jurisdiction may treat the same as constituting an invitation
-              to him or her, unless in the relevant jurisdiction such an
-              invitation could lawfully be made to him without compliance with
-              any registration or other legal requirements or where such
-              requirements have been complied with.
-            </li>
-            <li>
-              First Degree makes no representations or warranties whatsoever
-              about any of the content of this website or about content of any
-              other website which you may access by hypertext link through this
-              website. When you access any other website by means of a link from
-              this website, you should understand that your access to that other
-              website is independent of First Degree and First Degree has no
-              control over the content of the website, nor does First Degree in
-              any way endorse or approve the content of that website.
-            </li>
-            <li>
-              You agree with our{" "}
-              <a
-                target="_blank"
-                href="https://storage.googleapis.com/one-constellation-bucket-public/first_degree/privacy_policy.pdf"
-              >
-                data protection policy.
-              </a>
-            </li>
-          </ol>
-          <p>
-            If you are in any doubt about the information contained on this
-            website please contact us or consult your professional{" "}
-            <strong>financial adviser, lawyer or accountant</strong>.
-          </p>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <Button
+          {alertJoinFund ? (
+            <Alert
+              closeLabel
+              style={{ marginTop: "30px" }}
+              dismissible={true}
+              onClose={() => setAlertJoinFund(false)}
+              key="danger"
               variant="danger"
-              onClick={(e) => {
-                handleClickADeclinedCustomize();
-              }}
             >
-              I Decline
-            </Button>
-            <Button
-              variant="primary"
-              onClick={(e) => {
-                handleClickAgreeCustomize();
-              }}
-            >
-              I Accept
-            </Button>
+              Account Not Found
+            </Alert>
+          ) : null}
+        </>
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          {/* Backdrop */}
+          <div className="fixed inset-0 bg-gray-900 opacity-50"></div>
+
+          {/* Modal Content */}
+          <div className="relative bg-white rounded-lg shadow-lg max-w-md w-full p-6 space-y-6">
+            {/* Modal Header */}
+            <div className="border-b pb-4">
+              <h1 className="text-xl font-semibold">Disclaimer Notice</h1>
+            </div>
+
+            {/* Modal Body */}
+            <div className="space-y-4">
+              <p>
+                Please review the following Disclaimer and click "I Accept" to
+                continue.
+              </p>
+              <p>
+                First Degree Global Asset Management Pte Ltd (
+                <strong>First Degree</strong>) is regulated as a Capital Markets
+                Services License-holder for Fund Management (LFMC) by the
+                Monetary Authority of Singapore ("MAS"). The material on this
+                website is provided for your general information only and does
+                not constitute the giving of investment advice or an offer to
+                sell or the solicitation of an offer to buy any investment(s)
+                managed or advised on by First Degree.
+              </p>
+              <p>
+                By clicking "I accept", this means you accept the following
+                terms and conditions of use of this website:
+              </p>
+
+              <ol className="list-decimal list-inside space-y-2">
+                <li>
+                  You agree that you are an{" "}
+                  <a
+                    className="text-blue-600 underline"
+                    target="_blank"
+                    href="https://storage.googleapis.com/one-constellation-bucket-public/first_degree/terms_and_conditions.pdf"
+                  >
+                    Accredited Investor or Institutional Investor
+                  </a>{" "}
+                  as defined under section 4A of the Securities and Futures Act
+                  (Cap. 289) of Singapore, and that you are aware of the reduced
+                  protections being accorded to you by being treated as an
+                  Accredited or Institutional Investor.
+                </li>
+                <li>
+                  No person receiving a copy of the offering documents including
+                  any application forms and subscription agreements used herein
+                  to subscribe for Participating Shares (the "Subscription
+                  Form") in any jurisdiction may treat the same as constituting
+                  an invitation to him or her, unless in the relevant
+                  jurisdiction such an invitation could lawfully be made.
+                </li>
+                <li>
+                  First Degree makes no representations or warranties whatsoever
+                  about any of the content of this website or about content of
+                  any other website which you may access by hypertext link
+                  through this website.
+                </li>
+                <li>
+                  You agree with our{" "}
+                  <a
+                    className="text-blue-600 underline"
+                    target="_blank"
+                    href="https://storage.googleapis.com/one-constellation-bucket-public/first_degree/privacy_policy.pdf"
+                  >
+                    data protection policy
+                  </a>
+                  .
+                </li>
+              </ol>
+
+              <p>
+                If you are in any doubt about the information contained on this
+                website please contact us or consult your professional{" "}
+                <strong>financial adviser, lawyer or accountant</strong>.
+              </p>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="flex justify-between pt-4">
+              <button
+                className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
+                onClick={handleClickADeclinedCustomize}
+              >
+                I Decline
+              </button>
+              <button
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                onClick={handleClickAgreeCustomize}
+              >
+                I Accept
+              </button>
+            </div>
           </div>
-        </Modal.Body>
-      </Modal>
+        </div>
+      </div>
     </div>
   );
 }
