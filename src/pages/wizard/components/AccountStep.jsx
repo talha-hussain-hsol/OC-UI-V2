@@ -5,20 +5,14 @@ import Tooltip from "../../../components/tooltip/Tooltip";
 import React, { useEffect, useState } from "react";
 import {
   Button,
-  Card,
-  Col,
-  Container,
-  Form,
-  Nav,
-  Row,
-  Spinner,
   Alert,
   Modal,
 } from "react-bootstrap";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   getFundForJoin,
   getIdentityList,
+  postIdentityAttatchWithFund,
 } from "../../../api/network/CustomerApi";
 import axios from "axios";
 import { HiUserAdd } from "react-icons/hi";
@@ -34,7 +28,7 @@ export default function AccountStep(props) {
   const cancelTokenSource = axios.CancelToken.source();
   const [isLoader, setIsLoader] = useState(false);
   const navigate = useNavigate();
-  const params = useParams();
+  const [activeStep, setActiveStep] = useState(1);
   const [fundCode, setFundCode] = useState("");
   const [descriptionText, setDescriptionText] = useState(
     "Please enter the account joining code which you would have received from the account owner."
@@ -42,6 +36,8 @@ export default function AccountStep(props) {
   const [selectedIdentity, setSelectedIdentity] = useState({ value: "" });
   const [isNewIdentity, setIsNewIdentity] = useState(false);
   const [selectedIdentityData, setSelectedIdentityData] = useState();
+  const [selectedIdentityMessageShow, setSelectedIdentityMessageShow] =
+    useState(false);
 
   const [identitiesData, setIdentitiesData] = useState([]);
   const [fundData, setFundData] = useState(null);
@@ -877,104 +873,113 @@ export default function AccountStep(props) {
             </Alert>
           ) : null}
         </>
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          {/* Backdrop */}
-          <div className="fixed inset-0 bg-gray-900 opacity-50"></div>
-
-          {/* Modal Content */}
-          <div className="relative bg-white rounded-lg shadow-lg max-w-md w-full p-6 space-y-6">
-            {/* Modal Header */}
-            <div className="border-b pb-4">
-              <h1 className="text-xl font-semibold">Disclaimer Notice</h1>
-            </div>
-
-            {/* Modal Body */}
-            <div className="space-y-4">
-              <p>
-                Please review the following Disclaimer and click "I Accept" to
-                continue.
-              </p>
-              <p>
-                First Degree Global Asset Management Pte Ltd (
-                <strong>First Degree</strong>) is regulated as a Capital Markets
-                Services License-holder for Fund Management (LFMC) by the
-                Monetary Authority of Singapore ("MAS"). The material on this
-                website is provided for your general information only and does
-                not constitute the giving of investment advice or an offer to
-                sell or the solicitation of an offer to buy any investment(s)
-                managed or advised on by First Degree.
-              </p>
-              <p>
-                By clicking "I accept", this means you accept the following
-                terms and conditions of use of this website:
-              </p>
-
-              <ol className="list-decimal list-inside space-y-2">
-                <li>
-                  You agree that you are an{" "}
-                  <a
-                    className="text-blue-600 underline"
-                    target="_blank"
-                    href="https://storage.googleapis.com/one-constellation-bucket-public/first_degree/terms_and_conditions.pdf"
-                  >
-                    Accredited Investor or Institutional Investor
-                  </a>{" "}
-                  as defined under section 4A of the Securities and Futures Act
-                  (Cap. 289) of Singapore, and that you are aware of the reduced
-                  protections being accorded to you by being treated as an
-                  Accredited or Institutional Investor.
-                </li>
-                <li>
-                  No person receiving a copy of the offering documents including
-                  any application forms and subscription agreements used herein
-                  to subscribe for Participating Shares (the "Subscription
-                  Form") in any jurisdiction may treat the same as constituting
-                  an invitation to him or her, unless in the relevant
-                  jurisdiction such an invitation could lawfully be made.
-                </li>
-                <li>
-                  First Degree makes no representations or warranties whatsoever
-                  about any of the content of this website or about content of
-                  any other website which you may access by hypertext link
-                  through this website.
-                </li>
-                <li>
-                  You agree with our{" "}
-                  <a
-                    className="text-blue-600 underline"
-                    target="_blank"
-                    href="https://storage.googleapis.com/one-constellation-bucket-public/first_degree/privacy_policy.pdf"
-                  >
-                    data protection policy
-                  </a>
-                  .
-                </li>
-              </ol>
-
-              <p>
-                If you are in any doubt about the information contained on this
-                website please contact us or consult your professional{" "}
-                <strong>financial adviser, lawyer or accountant</strong>.
-              </p>
-            </div>
-
-            {/* Modal Footer */}
-            <div className="flex justify-between pt-4">
-              <button
-                className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
-                onClick={handleClickADeclinedCustomize}
+        <Modal
+          size="md"
+          show={customizeModal}
+          onHide={handleClickCustomizeTC}
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+          backdrop="static"
+          keyboard={false}
+        >
+          <Modal.Header>
+            {/* <Modal.Header closeButton> */}
+            <Modal.Title>
+              <div>
+                <h1>Disclaimer Notice</h1>
+              </div>
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>
+              Please review the following Disclaimer and click "I Accept" to
+              continue.
+            </p>
+            <p>
+              First Degree Global Asset Management Pte Ltd (
+              <strong>First Degree</strong>) is regulated as a Capital Markets
+              Services License-holder for Fund Management (LFMC) by the Monetary
+              Authority of Singapore ("MAS). The material on this website is
+              provided for your general information only and does not constitute
+              the giving of investment advice or an offer to sell or the
+              solicitation of an offer to buy any investment(s) managed or
+              advised on by First Degree.
+            </p>
+            <p>
+              By clicking "I accept", this means you accept the following terms
+              and conditions of use of this website:
+            </p>
+            <ol>
+              <li>
+                You agree that you <strong>are an</strong>{" "}
+                <a
+                  target="_blank"
+                  href="https://storage.googleapis.com/one-constellation-bucket-public/first_degree/terms_and_conditions.pdf"
+                >
+                  Accredited Investor or Institutional Investor as defined under
+                  section 4A of the Securities and Futures Act (Cap. 289) of
+                  Singapore
+                </a>
+                , and that you are aware of the reduced protections being
+                accorded to you by being treated as an Accredited or
+                Institutional Investor
+              </li>
+              <li>
+                No person receiving a copy of the offering documents including
+                any application forms and subscription agreements used herein to
+                subscribe for Participating Shares (the "Subscription Form") in
+                any jurisdiction may treat the same as constituting an
+                invitation to him or her, unless in the relevant jurisdiction
+                such an invitation could lawfully be made to him without
+                compliance with any registration or other legal requirements or
+                where such requirements have been complied with.
+              </li>
+              <li>
+                First Degree makes no representations or warranties whatsoever
+                about any of the content of this website or about content of any
+                other website which you may access by hypertext link through
+                this website. When you access any other website by means of a
+                link from this website, you should understand that your access
+                to that other website is independent of First Degree and First
+                Degree has no control over the content of the website, nor does
+                First Degree in any way endorse or approve the content of that
+                website.
+              </li>
+              <li>
+                You agree with our{" "}
+                <a
+                  target="_blank"
+                  href="https://storage.googleapis.com/one-constellation-bucket-public/first_degree/privacy_policy.pdf"
+                >
+                  data protection policy.
+                </a>
+              </li>
+            </ol>
+            <p>
+              If you are in any doubt about the information contained on this
+              website please contact us or consult your professional{" "}
+              <strong>financial adviser, lawyer or accountant</strong>.
+            </p>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Button
+                variant="danger"
+                onClick={(e) => {
+                  handleClickADeclinedCustomize();
+                }}
               >
                 I Decline
-              </button>
-              <button
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-                onClick={handleClickAgreeCustomize}
+              </Button>
+              <Button
+                variant="primary"
+                onClick={(e) => {
+                  handleClickAgreeCustomize();
+                }}
               >
                 I Accept
-              </button>
+              </Button>
             </div>
-          </div>
-        </div>
+          </Modal.Body>
+        </Modal>
       </div>
     </div>
   );

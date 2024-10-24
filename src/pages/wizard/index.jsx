@@ -1,5 +1,5 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import Tooltip from "../../components/tooltip/Tooltip";
 import { useTheme } from "../../contexts/themeContext";
 import axios from "axios";
@@ -16,11 +16,12 @@ import {
   postIdentityAttatchWithFund,
 } from "../../api/network/CustomerApi";
 import AccountStep from "./components/AccountStep";
+import IdentityStep from "./components/IdentityStep";
 import ApplicationStep from "../wizardcopy/account-wizard/Application";
 import BankWalletsStep from "../wizardcopy/account-wizard/BankWallets";
 import DocumentsStep from "../wizardcopy/account-wizard/Documents";
 import FaceVerification from "../wizardcopy/account-wizard/FaceVerification";
-import IdentityStep from "../wizardcopy/account-wizard/UserForm";
+// import IdentityStep from "../wizardcopy/account-wizard/UserForm";
 import SummaryStep from "../wizardcopy/account-wizard/Summary";
 import Vcip from "../wizardcopy/account-wizard/VCIP";
 import getMissingDataOfIdentity from "../../helpers/getMissingDataOfIdentity";

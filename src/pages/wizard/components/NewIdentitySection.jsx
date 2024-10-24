@@ -1,9 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Button, Col, Row, Spinner } from "react-bootstrap";
-
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { postRegistrationProviderGetData } from "../../../api/network/CustomerApi";
-import axios, { CancelTokenSource } from "axios";
+import axios from "axios";
 import { FaCheck } from "react-icons/fa";
 
 // var theme = localStorage.getItem("portal_theme");
@@ -540,149 +538,180 @@ export default function NewIdentitySection(props) {
             </div>
           </div> */}
 
-          <div className="w-full md:w-1/2 flex flex-col">
-  <div className="provider-selection-container flex justify-between items-center">
-    <h3 className="text-lg font-semibold">How would you like to create your identity?</h3>
-    <div className={`provider-selection ${selectedProvider === null ? 'before' : ''} flex justify-between w-2/3 mt-8`}>
-      {isIndividual && (
-        <>
-          {props?.fundData?.fund_setting?.account?.applicant?.identity?.indivisual?.provider?.verify?.singpass?.enabled && (
-            <>
-              <input
-                type="radio"
-                id="singpass"
-                name="selectedProvider"
-                value="singpass"
-                defaultChecked={selectedProvider == "singpass"}
-                onClick={() => setSelectedProvider("singpass")}
-              />
-              <label
-                htmlFor="singpass"
-                className={`${selectedProvider == "singpass" ? 'selected' : 'hide-content'}`}
-              >
-                <img
-                  className="w-[150px] h-auto"
-                  src="/img/providers/signpass.png"
-                  alt="Singpass"
-                />
-              </label>
-            </>
-          )}
-          {props?.fundData?.fund_setting?.account?.applicant?.identity?.indivisual?.provider?.verify?.adhaar?.enabled && (
-            <>
-              <input
-                type="radio"
-                id="adhar"
-                name="selectedProvider"
-                value="adhar"
-                onClick={() => setSelectedProvider("adhar")}
-              />
-              <label
-                htmlFor="adhar"
-                className={`${selectedProvider == "adhar" ? 'selected' : ''}`}
-              >
-                <img
-                  className="h-[30px]"
-                  src="/img/providers/adhhar.png"
-                  alt="Adhar"
-                />
-              </label>
-            </>
-          )}
-          {props?.fundData?.fund_setting?.account?.applicant?.identity?.indivisual?.provider?.verify?.manual?.enabled && (
-            <>
-              <input
-                type="radio"
-                id="manual"
-                name="selectedProvider"
-                value="manual"
-                defaultChecked={selectedProvider == "manual"}
-                onClick={() => setSelectedProvider("manual")}
-              />
-              <label
-                htmlFor="manual"
-                className={`${selectedProvider == "manual" ? 'selected' : 'hide-content'}`}
-              >
-                <img
-                  className="h-[30px]"
-                  src="/img/providers/manualwhite.png"
-                  alt="Manual"
-                />
-              </label>
-            </>
-          )}
-        </>
-      )}
-      {!isIndividual && (
-        <>
-          {props?.fundData?.fund_setting?.account?.applicant?.identity?.corporate?.provider?.verify?.corpass?.enabled && (
-            <>
-              <input
-                type="radio"
-                id="corppass"
-                name="selectedProvider"
-                value="corppass"
-                onClick={() => setSelectedProvider("corppass")}
-              />
-              <label
-                htmlFor="corppass"
-                className={`${selectedProvider == "corppass" ? 'selected' : 'hide-content'}`}
-              >
-                <img
-                  className="w-[200px] h-auto"
-                  src="/img/corppassLogo.svg"
-                  alt="Corppass"
-                />
-              </label>
-            </>
-          )}
-          {props?.fundData?.fund_setting?.account?.applicant?.identity?.corporate?.provider?.verify?.pan?.enabled && (
-            <>
-              <input
-                type="radio"
-                id="adhar"
-                name="selectedProvider"
-                value="adhar"
-                onClick={() => setSelectedProvider("adhar")}
-              />
-              <label
-                htmlFor="adhar"
-                className={`${selectedProvider == "adhar" ? 'selected' : ''}`}
-              >
-                <img
-                  className="h-[30px]"
-                  src="/img/providers/pan.png"
-                  alt="Pan"
-                />
-              </label>
-            </>
-          )}
-          {props?.fundData?.fund_setting?.account?.applicant?.identity?.corporate?.provider?.verify?.manual?.enabled && (
-            <>
-              <input
-                type="radio"
-                id="manual"
-                name="selectedProvider"
-                value="manual"
-                onClick={() => setSelectedProvider("manual")}
-              />
-              <label
-                htmlFor="manual"
-                className={`${selectedProvider == "manual" ? 'selected' : 'hide-content'}`}
-              >
-                <img
-                  className="h-[30px]"
-                  src="/img/providers/manualwhite.png"
-                  alt="Manual"
-                />
-              </label>
-            </>
-          )}
-        </>
-      )}
-    </div>
-  </div>
-
+        <div className="w-full md:w-1/2 flex flex-col">
+          <div className="provider-selection-container flex justify-between items-center">
+            <h3 className="text-lg font-semibold">
+              How would you like to create your identity?
+            </h3>
+            <div
+              className={`provider-selection ${
+                selectedProvider === null ? "before" : ""
+              } flex justify-between w-2/3 mt-8`}
+            >
+              {isIndividual && (
+                <>
+                  {props?.fundData?.fund_setting?.account?.applicant?.identity
+                    ?.indivisual?.provider?.verify?.singpass?.enabled && (
+                    <>
+                      <input
+                        type="radio"
+                        id="singpass"
+                        name="selectedProvider"
+                        value="singpass"
+                        defaultChecked={selectedProvider == "singpass"}
+                        onClick={() => setSelectedProvider("singpass")}
+                      />
+                      <label
+                        htmlFor="singpass"
+                        className={`${
+                          selectedProvider == "singpass"
+                            ? "selected"
+                            : "hide-content"
+                        }`}
+                      >
+                        <img
+                          className="w-[150px] h-auto"
+                          src="/img/providers/signpass.png"
+                          alt="Singpass"
+                        />
+                      </label>
+                    </>
+                  )}
+                  {props?.fundData?.fund_setting?.account?.applicant?.identity
+                    ?.indivisual?.provider?.verify?.adhaar?.enabled && (
+                    <>
+                      <input
+                        type="radio"
+                        id="adhar"
+                        name="selectedProvider"
+                        value="adhar"
+                        onClick={() => setSelectedProvider("adhar")}
+                      />
+                      <label
+                        htmlFor="adhar"
+                        className={`${
+                          selectedProvider == "adhar" ? "selected" : ""
+                        }`}
+                      >
+                        <img
+                          className="h-[30px]"
+                          src="/img/providers/adhhar.png"
+                          alt="Adhar"
+                        />
+                      </label>
+                    </>
+                  )}
+                  {props?.fundData?.fund_setting?.account?.applicant?.identity
+                    ?.indivisual?.provider?.verify?.manual?.enabled && (
+                    <>
+                      <input
+                        type="radio"
+                        id="manual"
+                        name="selectedProvider"
+                        value="manual"
+                        defaultChecked={selectedProvider == "manual"}
+                        onClick={() => setSelectedProvider("manual")}
+                      />
+                      <label
+                        htmlFor="manual"
+                        className={`${
+                          selectedProvider == "manual"
+                            ? "selected"
+                            : "hide-content"
+                        }`}
+                      >
+                        <img
+                          className="h-[30px]"
+                          src="/img/providers/manualwhite.png"
+                          alt="Manual"
+                        />
+                      </label>
+                    </>
+                  )}
+                </>
+              )}
+              {!isIndividual && (
+                <>
+                  {props?.fundData?.fund_setting?.account?.applicant?.identity
+                    ?.corporate?.provider?.verify?.corpass?.enabled && (
+                    <>
+                      <input
+                        type="radio"
+                        id="corppass"
+                        name="selectedProvider"
+                        value="corppass"
+                        onClick={() => setSelectedProvider("corppass")}
+                      />
+                      <label
+                        htmlFor="corppass"
+                        className={`${
+                          selectedProvider == "corppass"
+                            ? "selected"
+                            : "hide-content"
+                        }`}
+                      >
+                        <img
+                          className="w-[200px] h-auto"
+                          src="/img/corppassLogo.svg"
+                          alt="Corppass"
+                        />
+                      </label>
+                    </>
+                  )}
+                  {props?.fundData?.fund_setting?.account?.applicant?.identity
+                    ?.corporate?.provider?.verify?.pan?.enabled && (
+                    <>
+                      <input
+                        type="radio"
+                        id="adhar"
+                        name="selectedProvider"
+                        value="adhar"
+                        onClick={() => setSelectedProvider("adhar")}
+                      />
+                      <label
+                        htmlFor="adhar"
+                        className={`${
+                          selectedProvider == "adhar" ? "selected" : ""
+                        }`}
+                      >
+                        <img
+                          className="h-[30px]"
+                          src="/img/providers/pan.png"
+                          alt="Pan"
+                        />
+                      </label>
+                    </>
+                  )}
+                  {props?.fundData?.fund_setting?.account?.applicant?.identity
+                    ?.corporate?.provider?.verify?.manual?.enabled && (
+                    <>
+                      <input
+                        type="radio"
+                        id="manual"
+                        name="selectedProvider"
+                        value="manual"
+                        onClick={() => setSelectedProvider("manual")}
+                      />
+                      <label
+                        htmlFor="manual"
+                        className={`${
+                          selectedProvider == "manual"
+                            ? "selected"
+                            : "hide-content"
+                        }`}
+                      >
+                        <img
+                          className="h-[30px]"
+                          src="/img/providers/manualwhite.png"
+                          alt="Manual"
+                        />
+                      </label>
+                    </>
+                  )}
+                </>
+              )}
+            </div>
+          </div>
 
           {/* <Row>
             <Col xs={12} md={3} lg={3} xl={3}></Col>
@@ -1207,293 +1236,308 @@ export default function NewIdentitySection(props) {
             </Col>
           </Row> */}
 
-<div className="flex flex-wrap">
-  <div className="w-full md:w-3/12 lg:w-3/12 xl:w-3/12"></div>
-  <div className="w-full md:w-9/12 lg:w-9/12 xl:w-9/12">
-    {selectedProvider === "adhar" && (
-      <>
-        <hr className="my-3" />
-        <div className="mb-0">
-          <label className="block text-sm font-medium">Please Enter Pan Number</label>
-          <div className="flex">
-            <div
-              className={`w-full pr-5 flex ${
-                isNotPanVerified.error ? "flex-col items-start" : "items-center"
-              }`}
-            >
-              <input
-                type="text"
-                disabled={isPanVerified}
-                className="form-control w-full p-2"
-                onChange={(event) =>
-                  setRegistrationProvider({
-                    ...registrationProvider,
-                    code: event.target.value,
-                    state: "PAN",
-                  })
-                }
-                style={{
-                  border: isNotPanVerified.error
-                    ? "2px solid red"
-                    : isPanVerified
-                    ? "2px solid green"
-                    : "",
-                }}
-              />
-              {isNotPanVerified.error && (
-                <span className="text-red-500 text-xs mt-2">
-                  {isNotPanVerified.message}
-                </span>
+          <div className="flex flex-wrap">
+            <div className="w-full md:w-3/12 lg:w-3/12 xl:w-3/12"></div>
+            <div className="w-full md:w-9/12 lg:w-9/12 xl:w-9/12">
+              {selectedProvider === "adhar" && (
+                <>
+                  <hr className="my-3" />
+                  <div className="mb-0">
+                    <label className="block text-sm font-medium">
+                      Please Enter Pan Number
+                    </label>
+                    <div className="flex">
+                      <div
+                        className={`w-full pr-5 flex ${
+                          isNotPanVerified.error
+                            ? "flex-col items-start"
+                            : "items-center"
+                        }`}
+                      >
+                        <input
+                          type="text"
+                          disabled={isPanVerified}
+                          className="form-control w-full p-2"
+                          onChange={(event) =>
+                            setRegistrationProvider({
+                              ...registrationProvider,
+                              code: event.target.value,
+                              state: "PAN",
+                            })
+                          }
+                          style={{
+                            border: isNotPanVerified.error
+                              ? "2px solid red"
+                              : isPanVerified
+                              ? "2px solid green"
+                              : "",
+                          }}
+                        />
+                        {isNotPanVerified.error && (
+                          <span className="text-red-500 text-xs mt-2">
+                            {isNotPanVerified.message}
+                          </span>
+                        )}
+                      </div>
+                      {!isPanVerified ? (
+                        <div className="w-1/5 flex justify-end items-center">
+                          <button
+                            className="bg-white border border-gray-300 text-sm px-4 py-2"
+                            onClick={handleGetDataApi}
+                            style={{
+                              height: "40px",
+                              display: "flex",
+                              alignItems: "center",
+                            }}
+                          >
+                            {panLoader ? (
+                              <div className="loader">Loading...</div>
+                            ) : (
+                              "Verify"
+                            )}
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="w-1/3 flex justify-end items-center">
+                          <button
+                            className="border-2 border-green-500 text-green-500 flex items-center px-4 py-2"
+                            disabled
+                          >
+                            <FaCheck className="mr-2" /> Verified
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {isIndividual && isPanVerified && (
+                    <>
+                      <hr className="my-3" />
+                      <div className="mb-0">
+                        <label className="block text-sm font-medium">
+                          Please Enter Aadhaar Number
+                        </label>
+                        <div className="flex">
+                          <div
+                            className={`w-full pr-5 flex ${
+                              isNotAadhaarVerified.error
+                                ? "flex-col items-start"
+                                : "items-center"
+                            }`}
+                          >
+                            <input
+                              type="text"
+                              disabled={isAadhaarVerified}
+                              className="form-control w-full p-2"
+                              onChange={(event) =>
+                                setRegistrationProvider({
+                                  ...registrationProvider,
+                                  code: event.target.value,
+                                  state: "AADHAAR",
+                                })
+                              }
+                              style={{
+                                border: isNotAadhaarVerified.error
+                                  ? "2px solid red"
+                                  : isAadhaarVerified
+                                  ? "2px solid green"
+                                  : "",
+                              }}
+                            />
+                            {isNotAadhaarVerified.error && (
+                              <span className="text-red-500 text-xs mt-2">
+                                {isNotAadhaarVerified.message}
+                              </span>
+                            )}
+                          </div>
+                          {!isAadhaarVerified ? (
+                            <div className="w-1/5 flex justify-end items-center">
+                              <button
+                                className="bg-white border border-gray-300 text-sm px-4 py-2"
+                                onClick={handleGetDataApi}
+                                style={{
+                                  height: "40px",
+                                  display: "flex",
+                                  alignItems: "center",
+                                }}
+                              >
+                                {adharLoader ? (
+                                  <div className="loader">Loading...</div>
+                                ) : (
+                                  "Verify"
+                                )}
+                              </button>
+                            </div>
+                          ) : (
+                            <div className="w-1/3 flex justify-end items-center">
+                              <button
+                                className="border-2 border-green-500 text-green-500 flex items-center px-4 py-2"
+                                disabled
+                              >
+                                <FaCheck className="mr-2" /> Verified
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </>
+                  )}
+
+                  {isIndividual && isPanVerified && isAadhaarVerified && (
+                    <>
+                      <hr className="my-3" />
+                      <div className="mb-0">
+                        <label className="block text-sm font-medium">
+                          Please Enter Date Of Birth
+                        </label>
+                        <div className="flex">
+                          <div
+                            className={`w-full pr-5 flex ${
+                              isNotCKYCVerified.error
+                                ? "flex-col items-start"
+                                : "items-center"
+                            }`}
+                          >
+                            <input
+                              type="date"
+                              disabled={isCKYCVerified}
+                              className="form-control w-full p-2"
+                              onChange={(event) =>
+                                setRegistrationProvider({
+                                  ...registrationProvider,
+                                  code: panData?.data?.result?.validated_data
+                                    ?.pan_number,
+                                  state: "SIGN_DESK_CKYC",
+                                  date: event.target.value,
+                                })
+                              }
+                              style={{
+                                border: isNotCKYCVerified.error
+                                  ? "2px solid red"
+                                  : isCKYCVerified
+                                  ? "2px solid green"
+                                  : "",
+                              }}
+                            />
+                            {isNotCKYCVerified.error && (
+                              <span className="text-red-500 text-xs mt-2">
+                                {isNotCKYCVerified.message}
+                              </span>
+                            )}
+                          </div>
+                          {!isCKYCVerified ? (
+                            <div className="w-1/5 flex justify-end items-center">
+                              <button
+                                className="bg-white border border-gray-300 text-sm px-4 py-2"
+                                onClick={handleGetDataApi}
+                                style={{
+                                  height: "40px",
+                                  display: "flex",
+                                  alignItems: "center",
+                                }}
+                              >
+                                {ckycLoader ? (
+                                  <div className="loader">Loading...</div>
+                                ) : (
+                                  "Verify"
+                                )}
+                              </button>
+                            </div>
+                          ) : (
+                            <div className="w-1/3 flex justify-end items-center">
+                              <button
+                                className="border-2 border-green-500 text-green-500 flex items-center px-4 py-2"
+                                disabled
+                              >
+                                <FaCheck className="mr-2" /> Verified
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </>
+                  )}
+
+                  {!isIndividual && isPanVerified && (
+                    <>
+                      <hr className="my-3" />
+                      <div className="mb-0">
+                        <label className="block text-sm font-medium">
+                          Please Enter Date Of Incorporation
+                        </label>
+                        <div className="flex">
+                          <div
+                            className={`w-full pr-5 flex ${
+                              isNotCKYCVerified.error
+                                ? "flex-col items-start"
+                                : "items-center"
+                            }`}
+                          >
+                            <input
+                              type="date"
+                              disabled={isCKYCVerified}
+                              className="form-control w-full p-2"
+                              onChange={(event) =>
+                                setRegistrationProvider({
+                                  ...registrationProvider,
+                                  code: panData?.data?.result?.validated_data
+                                    ?.pan_number,
+                                  state: "SIGN_DESK_CKYC",
+                                  date: event.target.value,
+                                })
+                              }
+                              style={{
+                                border: isNotCKYCVerified.error
+                                  ? "2px solid red"
+                                  : isCKYCVerified
+                                  ? "2px solid green"
+                                  : "",
+                              }}
+                            />
+                            {isNotCKYCVerified.error && (
+                              <span className="text-red-500 text-xs mt-2">
+                                {isNotCKYCVerified.message}
+                              </span>
+                            )}
+                          </div>
+                          {!isCKYCVerified ? (
+                            <div className="w-1/5 flex justify-end items-center">
+                              <button
+                                className="bg-white border border-gray-300 text-sm px-4 py-2"
+                                onClick={handleGetDataApi}
+                                style={{
+                                  height: "40px",
+                                  display: "flex",
+                                  alignItems: "center",
+                                }}
+                              >
+                                {ckycLoader ? (
+                                  <div className="loader">Loading...</div>
+                                ) : (
+                                  "Verify"
+                                )}
+                              </button>
+                            </div>
+                          ) : (
+                            <div className="w-1/3 flex justify-end items-center">
+                              <button
+                                className="border-2 border-green-500 text-green-500 flex items-center px-4 py-2"
+                                disabled
+                              >
+                                <FaCheck className="mr-2" /> Verified
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </>
               )}
             </div>
-            {!isPanVerified ? (
-              <div className="w-1/5 flex justify-end items-center">
-                <button
-                  className="bg-white border border-gray-300 text-sm px-4 py-2"
-                  onClick={handleGetDataApi}
-                  style={{
-                    height: "40px",
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
-                  {panLoader ? (
-                    <div className="loader">Loading...</div>
-                  ) : (
-                    "Verify"
-                  )}
-                </button>
-              </div>
-            ) : (
-              <div className="w-1/3 flex justify-end items-center">
-                <button
-                  className="border-2 border-green-500 text-green-500 flex items-center px-4 py-2"
-                  disabled
-                >
-                  <FaCheck className="mr-2" /> Verified
-                </button>
-              </div>
-            )}
           </div>
         </div>
-
-        {isIndividual && isPanVerified && (
-          <>
-            <hr className="my-3" />
-            <div className="mb-0">
-              <label className="block text-sm font-medium">Please Enter Aadhaar Number</label>
-              <div className="flex">
-                <div
-                  className={`w-full pr-5 flex ${
-                    isNotAadhaarVerified.error ? "flex-col items-start" : "items-center"
-                  }`}
-                >
-                  <input
-                    type="text"
-                    disabled={isAadhaarVerified}
-                    className="form-control w-full p-2"
-                    onChange={(event) =>
-                      setRegistrationProvider({
-                        ...registrationProvider,
-                        code: event.target.value,
-                        state: "AADHAAR",
-                      })
-                    }
-                    style={{
-                      border: isNotAadhaarVerified.error
-                        ? "2px solid red"
-                        : isAadhaarVerified
-                        ? "2px solid green"
-                        : "",
-                    }}
-                  />
-                  {isNotAadhaarVerified.error && (
-                    <span className="text-red-500 text-xs mt-2">
-                      {isNotAadhaarVerified.message}
-                    </span>
-                  )}
-                </div>
-                {!isAadhaarVerified ? (
-                  <div className="w-1/5 flex justify-end items-center">
-                    <button
-                      className="bg-white border border-gray-300 text-sm px-4 py-2"
-                      onClick={handleGetDataApi}
-                      style={{
-                        height: "40px",
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      {adharLoader ? (
-                        <div className="loader">Loading...</div>
-                      ) : (
-                        "Verify"
-                      )}
-                    </button>
-                  </div>
-                ) : (
-                  <div className="w-1/3 flex justify-end items-center">
-                    <button
-                      className="border-2 border-green-500 text-green-500 flex items-center px-4 py-2"
-                      disabled
-                    >
-                      <FaCheck className="mr-2" /> Verified
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
-          </>
-        )}
-
-        {isIndividual && isPanVerified && isAadhaarVerified && (
-          <>
-            <hr className="my-3" />
-            <div className="mb-0">
-              <label className="block text-sm font-medium">Please Enter Date Of Birth</label>
-              <div className="flex">
-                <div
-                  className={`w-full pr-5 flex ${
-                    isNotCKYCVerified.error ? "flex-col items-start" : "items-center"
-                  }`}
-                >
-                  <input
-                    type="date"
-                    disabled={isCKYCVerified}
-                    className="form-control w-full p-2"
-                    onChange={(event) =>
-                      setRegistrationProvider({
-                        ...registrationProvider,
-                        code: panData?.data?.result?.validated_data?.pan_number,
-                        state: "SIGN_DESK_CKYC",
-                        date: event.target.value,
-                      })
-                    }
-                    style={{
-                      border: isNotCKYCVerified.error
-                        ? "2px solid red"
-                        : isCKYCVerified
-                        ? "2px solid green"
-                        : "",
-                    }}
-                  />
-                  {isNotCKYCVerified.error && (
-                    <span className="text-red-500 text-xs mt-2">
-                      {isNotCKYCVerified.message}
-                    </span>
-                  )}
-                </div>
-                {!isCKYCVerified ? (
-                  <div className="w-1/5 flex justify-end items-center">
-                    <button
-                      className="bg-white border border-gray-300 text-sm px-4 py-2"
-                      onClick={handleGetDataApi}
-                      style={{
-                        height: "40px",
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      {ckycLoader ? (
-                        <div className="loader">Loading...</div>
-                      ) : (
-                        "Verify"
-                      )}
-                    </button>
-                  </div>
-                ) : (
-                  <div className="w-1/3 flex justify-end items-center">
-                    <button
-                      className="border-2 border-green-500 text-green-500 flex items-center px-4 py-2"
-                      disabled
-                    >
-                      <FaCheck className="mr-2" /> Verified
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
-          </>
-        )}
-
-        {!isIndividual && isPanVerified && (
-          <>
-            <hr className="my-3" />
-            <div className="mb-0">
-              <label className="block text-sm font-medium">Please Enter Date Of Incorporation</label>
-              <div className="flex">
-                <div
-                  className={`w-full pr-5 flex ${
-                    isNotCKYCVerified.error ? "flex-col items-start" : "items-center"
-                  }`}
-                >
-                  <input
-                    type="date"
-                    disabled={isCKYCVerified}
-                    className="form-control w-full p-2"
-                    onChange={(event) =>
-                      setRegistrationProvider({
-                        ...registrationProvider,
-                        code: panData?.data?.result?.validated_data?.pan_number,
-                        state: "SIGN_DESK_CKYC",
-                        date: event.target.value,
-                      })
-                    }
-                    style={{
-                      border: isNotCKYCVerified.error
-                        ? "2px solid red"
-                        : isCKYCVerified
-                        ? "2px solid green"
-                        : "",
-                    }}
-                  />
-                  {isNotCKYCVerified.error && (
-                    <span className="text-red-500 text-xs mt-2">
-                      {isNotCKYCVerified.message}
-                    </span>
-                  )}
-                </div>
-                {!isCKYCVerified ? (
-                  <div className="w-1/5 flex justify-end items-center">
-                    <button
-                      className="bg-white border border-gray-300 text-sm px-4 py-2"
-                      onClick={handleGetDataApi}
-                      style={{
-                        height: "40px",
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      {ckycLoader ? (
-                        <div className="loader">Loading...</div>
-                      ) : (
-                        "Verify"
-                      )}
-                    </button>
-                  </div>
-                ) : (
-                  <div className="w-1/3 flex justify-end items-center">
-                    <button
-                      className="border-2 border-green-500 text-green-500 flex items-center px-4 py-2"
-                      disabled
-                    >
-                      <FaCheck className="mr-2" /> Verified
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
-          </>
-        )}
-      </>
-    )}
-  </div>
-</div>
-
-
-
-</div>      
-</div>
+      </div>
 
       <hr className="my-5" />
     </div>

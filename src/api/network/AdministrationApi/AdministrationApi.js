@@ -1,6 +1,5 @@
 import { processRequest } from "./../CustomerNetwork";
-import axios, { CancelTokenSource } from "axios";
-import userUtils from "./../../../helpers/utils";
+import axios from "axios";
 let baseURLType = window.BaseUrl;
 if (localStorage.getItem("x-auth-token")) axios.defaults.headers = { "x-auth-token": localStorage.getItem("x-auth-token") };
 
