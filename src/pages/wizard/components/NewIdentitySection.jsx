@@ -192,8 +192,8 @@ export default function NewIdentitySection(props) {
     <div className={`w-full px-8`}>
       
       {console.log(isNotCKYCVerified, "isNotCKYCVerified")}
-      <div className="flex justify-center ">
-      <div className="w-1/2 ">
+      <div className="md:flex md:flex-row flex flex-col gap-10 justify-center ">
+      <div className="md:w-1/2 w-full">
           <h3>Are you applying as an Individual or Corporate?</h3>
           <div className="mt-4">
             <button

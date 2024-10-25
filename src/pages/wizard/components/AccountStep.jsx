@@ -354,7 +354,7 @@ export default function AccountStep(props) {
                 <div className="relative w-full mt-10 mb-10">
                   <input
                     placeholder="Enter The Account Code"
-                    className={`bg-color-textfield-dropdown-${theme} text-color-text-${theme} w-[93%] p-2 xs:pl-6 pl-4 rounded-l-full border border-color-dropdown-${theme} shadow-${theme} focus:outline-none xs:text-lg text-xs placeholder:text-base`}
+                    className={`bg-color-textfield-dropdown-${theme} text-color-text-${theme} w-[93%] xl:w-[96.8%] p-2 xs:pl-6 pl-4 rounded-l-full border border-color-dropdown-${theme} shadow-${theme} focus:outline-none xs:text-lg text-xs placeholder:text-base`}
                     type="text"
                     value={fundCode}
                     onChange={(event) => setFundCode(event.target.value)}
@@ -374,11 +374,11 @@ export default function AccountStep(props) {
               {fundData && (
                 <>
                   <div
-                    className={`flex flex-col sm:flex-row bg-color-card-header-${theme} shadow-${theme} justify-between rounded-lg border border-color-${theme}  h-auto sm:h-[10%] w-[90%] sm:w-[95%] mt-8 items-start px-4 py-2`}
+                    className={`flex flex-col gap-4 md:flex-row bg-color-card-header-${theme} shadow-${theme} justify-between rounded-lg border border-color-${theme}  h-auto sm:h-[10%] w-[90%] sm:w-[95%] mt-8 items-start px-4 py-2`}
                   >
                     {fundData?.fund_setting?.display?.fund_info === true ||
                     fundData?.fund_setting?.display?.fund_info == "true" ? (
-                      <div className="flex items-center w-1/3">
+                      <div className="flex items-center md:w-1/3 w-full">
                         <img
                           className="w-18 h-16 mr-2 "
                           src={
@@ -394,7 +394,7 @@ export default function AccountStep(props) {
                         </span>
                       </div>
                     ) : (
-                      <div className="flex items-center w-1/3">
+                      <div className="flex items-center md:w-1/3 w-full">
                         <img
                           className="w-18 h-16 mr-2 "
                           src={
@@ -415,9 +415,9 @@ export default function AccountStep(props) {
                       <>
                         <>
                           <div
-                            className={`text-color-${theme}  text-lg font-light mb-4 sm:mb-0 w-1/3`}
+                            className={`text-color-${theme}  lg:text-lg md:text-base text-xl font-light mb-4 sm:mb-0 md:w-1/3 w-full`}
                           >
-                            <small className="flex items-center">
+                            <small className="flex items-center gap-1">
                               <span>
                                 <FeatherIcon
                                   className={`text-color-button1-${theme}`}
@@ -432,8 +432,8 @@ export default function AccountStep(props) {
                                 : fundData?.meta?.config?.kyb?.status}
                             </small>
 
-                            <small className="text-slate-500 text-sm flex items-center">
-                              <span>
+                            <small className="text-slate-500 lg:text-base md:text-sm text-lg flex items-center">
+                              <span className="flex items-center gap-1">
                                 <FeatherIcon
                                   className={`text-color-button1-${theme}`}
                                   icon="check-circle"
@@ -451,9 +451,9 @@ export default function AccountStep(props) {
 
                         <>
                           <div
-                            className={`text-color-${theme} text-lg font-light w-1/3`}
+                            className={`text-color-${theme} lg:text-lg md:text-base text-xl font-light md:w-1/3 w-full`}
                           >
-                            <small className="flex items-center">
+                            <small className="flex items-center gap-1">
                               <FeatherIcon
                                 className={`text-color-button1-${theme}`}
                                 icon="clock"
@@ -468,8 +468,8 @@ export default function AccountStep(props) {
 
                             {fundData?.fund_setting?.account?.applicant?.asset
                               ?.digital?.status && (
-                              <small className="text-slate-500 text-sm flex items-center">
-                                <span>
+                              <small className="text-slate-500 lg:text-base md:text-sm text-lg flex items-center">
+                                <span className="flex items-center gap-1">
                                   <FeatherIcon
                                     className={`text-color-button1-${theme}`}
                                     icon="check-circle"
@@ -522,7 +522,7 @@ export default function AccountStep(props) {
                       </div>
                     )}
                   {fundData?.reference_document?.documents?.length > 0 && (
-                    <div  className={` bg-color-card-${theme} rounded-lg shadow-${theme} border border-color-${theme} h-[10%] sm:h-[10%] sm:w-[95%] mt-4`}>
+                    <div  className={` bg-color-card-${theme} rounded-lg shadow-${theme} border border-color-${theme} h-[10%] sm:h-[10%] w-[90%] sm:w-[95%] mt-4`}>
                       <div
                          className={`flex justify-between items-center px-4 py-2`}  >
                         <h4
