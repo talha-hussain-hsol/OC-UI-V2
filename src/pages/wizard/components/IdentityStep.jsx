@@ -36,7 +36,7 @@ import {
   import { useParams, useLocation, useNavigate } from 'react-router-dom';
   import IdentityCrpAndOrganizationChart from './IdentityCrpAndOrganizationChart'
   import formatDateRegionWise from '../../../helpers/formatDateRegionWise';
-  import Flatpickr from '../../../components/vendor/Flatpickr';
+  import Flatpickr from 'react-flatpickr';
   import { format } from 'date-fns';
   import { getCountryData } from 'country-list';
   import { useTheme } from '../../../contexts/themeContext';
@@ -4093,7 +4093,7 @@ import {
   
                       {/* {((identity_id && particularEditMetaData.length > 0) || !identity_id) && */}
   
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4 px-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 px-6">
                         {showLabel && (
                           <div className="w-full md:w-full">
                             <div className="w-full">
@@ -4104,7 +4104,7 @@ import {
                                     Identity Label{' '}
                                   </label>
                                 </span>
-                                <span className="ms-2">
+                                <span className="">
                                  
                                    
                                       <Tooltip 
@@ -4120,8 +4120,8 @@ import {
   
                               <input
                                 type="text"
-                                className={`bg-color-textfield-dropdown-${theme} mt-2 w-full py-2 px-4 border-color-${theme} rounded-lg shadow-${theme} focus:outline-none focus:ring-1 focus:ring-[#2d7ce2] focus:border-[#2d7ce2] placeholder:text-sm placeholder:text-[#8ca4c2]  ${
-                                  label ? `w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500` : 'form-control'}`
+                                className={`bg-color-textfield-dropdown-${theme} mt-2 w-full py-[10px] px-4 border-color-${theme} rounded-lg shadow-${theme} focus:outline-none focus:ring-1 focus:ring-[#2d7ce2] focus:border-[#2d7ce2] placeholder:text-sm placeholder:text-[#8ca4c2]  ${
+                                  label ? `w-full px-4 py-[10px] border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500` : 'form-control'}`
                                 }
                                 name={'Identity Label'}
                                 value={label}
@@ -4197,7 +4197,7 @@ import {
                           props?.dataOfAccountSetup?.isIndividual && (
                             <div className="w-full md:w-full">
                               <div className="w-full">
-                                <label className="font-thin">Full Name</label>
+                                <label className="font-light">Full Name</label>
                                 <input
                                   type="text"
                                   className={`bg-color-textfield-dropdown-${theme} mt-2 w-full py-2 px-4 border-color-${theme} rounded-lg shadow-${theme} focus:outline-none focus:ring-1 focus:ring-[#2d7ce2] focus:border-[#2d7ce2] placeholder:text-sm placeholder:text-[#8ca4c2] `}
@@ -4319,17 +4319,17 @@ import {
                                                     `` ||
                                                     getUpdatedData(formKeyVal) ==
                                                       null)
-                                                    ? `bg-color-textfield-dropdown-${theme} mt-2 w-full py-2 px-4 border-color-${theme} rounded-lg shadow-${theme} focus:outline-none focus:ring-1 focus:ring-[#2d7ce2] focus:border-[#2d7ce2] placeholder:text-sm placeholder:text-[#8ca4c2] `
-                                                    : '' 
+                                                    ? `bg-color-textfield-dropdown-${theme} mt-2 w-full py-1 px-4 border-[0.5px] border-[#e19800] rounded-lg shadow-${theme} focus:outline-none focus:ring-1 focus:ring-[#2d7ce2] focus:border-[#2d7ce2] placeholder:text-sm placeholder:text-[#8ca4c2] text-sm font-thin `
+                                                    : 'text-sm' 
                                                 }
                                               >
-                                                <div
+                                                <div className='w-full'
                                                   style={{
                                                     display: 'flex',
                                                     alignItems: 'center',
                                                   }}
                                                 >
-                                                  <PhoneInput
+                                                  <PhoneInput  
                                                     value={getUpdatedData(
                                                       formKeyVal,
                                                     )}
@@ -4370,7 +4370,7 @@ import {
                                                   />
                                                   {checkIfDataFromCKYCAndOutDatedTrue() ===
                                                     true && (
-                                                    <span className="ms-2">
+                                                    <span className="">
                                                       {checkDataMatchedWithKYCData(
                                                         formKeyVal,
                                                       )?.updated === true ? (
@@ -4471,8 +4471,8 @@ import {
                                                       getUpdatedData(
                                                         formKeyVal,
                                                       ) == null)
-                                                      ? `w-full border-[0.5px] border-[#e19800] mt-2 bg-color-textfield-dropdown-${theme} p-2 border-color-${theme} rounded-lg shadow-${theme}`
-                                                      : `w-full mt-2 bg-color-textfield-dropdown-${theme} p-2 border-color-${theme} rounded-lg shadow-${theme}`
+                                                      ? `w-full border-[0.5px] border-[#e19800] mt-2 bg-color-textfield-dropdown-${theme} py-[10px] px-4 placeholder:text-sm  rounded-lg shadow-${theme}`
+                                                      : `w-full mt-2 bg-color-textfield-dropdown-${theme} py-[10px] px-4   rounded-lg placeholder:text-sm shadow-${theme} `
                                                   }
                                                   defaultValue={
                                                     editableField == false
@@ -4580,9 +4580,9 @@ import {
                                     }
                                     if (fieldType == 'date') {
                                       return (
-                                        <div className="w-full md:w-full">
+                                        <div className="w-full">
                                           <div className="w-full">
-                                            <label className="font-thin">
+                                            <label className="font-light">
                                               {label}
                                               {requiredField && (
                                                 <span className="text-red-500">
@@ -4595,18 +4595,13 @@ import {
                                             >
                                               <Flatpickr
                                                 placeholder={label}
-                                                className={
+                                                className={`w-full mt-2 p-2 rounded-lg ${
                                                   requiredField &&
-                                                  !identityDataFields?.[
-                                                    formKeyVal
-                                                  ] &&
-                                                  (getUpdatedData(formKeyVal) ==
-                                                    '' ||
-                                                    getUpdatedData(formKeyVal) ==
-                                                      null)
-                                                    ? `w-full border-[0.5px] border-[#e19800] mt-2 bg-color-textfield-dropdown-${theme} p-2 border-color-${theme} rounded-lg shadow-${theme}`
-                                                    : `w-full mt-2 bg-color-textfield-dropdown-${theme} p-2 border-color-${theme} rounded-lg shadow-${theme}`
-                                                    }
+                                                  !identityDataFields?.[formKeyVal] &&
+                                                  (!getUpdatedData(formKeyVal) || getUpdatedData(formKeyVal) === null)
+                                                    ? `w-full border-[0.5px] border-[#e19800] bg-color-textfield-dropdown-${theme} placeholder:text-sm px-4 py-[10px] shadow-${theme}`
+                                                    : `w-full bg-color-textfield-dropdown-${theme} placeholder:text-sm px-4 py-[10px] shadow-${theme}`
+                                                }`}
                                                 disabled={
                                                   !editableField ||
                                                   particularAddedData[key[0]]
@@ -4772,9 +4767,9 @@ import {
                                         sourceType == 'custom'
                                       ) {
                                         return (
-                                          <div className="w-1/2 md:w-full">
+                                          <div className="w-full md:w-full">
                                             <div className="w-full">
-                                              <label className="w-full font-thin">
+                                              <label className="w-full font-light">
                                                 {label}
                                                 {requiredField && (
                                                   <span className="text-red-500">
@@ -4799,9 +4794,9 @@ import {
                                                       getUpdatedData(
                                                         formKeyVal,
                                                       ) == null)
-                                                      ? `w-full border-[0.5px] border-[#e19800] mt-2 bg-color-textfield-dropdown-${theme} p-2 border-color-${theme} rounded-lg shadow-${theme}`
+                                                      ? `w-full appearance-none border-[0.5px] border-[#e19800] mt-2 bg-color-textfield-dropdown-${theme} px-4 py-[12px] rounded-lg shadow-${theme} outline-none text-sm font-light`
                                                    
-                                                      : `w-full mt-2 bg-color-textfield-dropdown-${theme} p-2 border-color-${theme} rounded-lg shadow-${theme}`
+                                                      : `w-full mt-2 bg-color-textfield-dropdown-${theme} appearance-none outline-none px-4 py-[12px] rounded-lg shadow-${theme} text-sm font-light`
                                                    
                                                   }
                                                   defaultValue={
@@ -4935,9 +4930,9 @@ import {
                                       }
                                       if (sourceType == 'enum') {
                                         return (
-                                          <div className="w-1/2 md:w-full">
+                                          <div className="w-full md:w-full">
                                             <div className="w-full">
-                                              <label className="font-thin">
+                                              <label className="font-light">
                                                 {label}
                                                 {requiredField && (
                                                   <span className="text-red-500">
@@ -4962,9 +4957,9 @@ import {
                                                       getUpdatedData(
                                                         formKeyVal,
                                                       ) == null)
-                                                      ? `w-full border-[0.5px] border-[#e19800] mt-2 bg-color-textfield-dropdown-${theme} p-2 border-color-${theme} rounded-lg shadow-${theme}`
+                                                      ? `w-full placeholder:text-thin border-[0.5px] border-[#e19800] mt-2 bg-color-textfield-dropdown-${theme} py-[12px] px-4 appearance-none outline-none rounded-lg text-sm font-light shadow-${theme}`
                                                    
-                                                      : `w-full mt-2 bg-color-textfield-dropdown-${theme} p-2 border-color-${theme} rounded-lg shadow-${theme}`
+                                                      : `w-full mt-2 bg-color-textfield-dropdown-${theme} py-[12px] px-4 appearance-none outline-none rounded-lg shadow-${theme} text-sm font-light`
                                                    
                                                   }
                                                   defaultValue={
@@ -5222,155 +5217,89 @@ import {
                                             marginBottom: '25px',
                                           }}
                                         >
-                                          <Form.Group className="mb-3">
-                                            <Form.Label>{label}</Form.Label>
-                                            <div className="d-flex align-items-center">
-                                              <Form.Check
-                                                className="radio-field me-3"
-                                                inline
-                                                type="radio"
-                                                id={`${formKeyVal}-yes`}
-                                                name={formKeyVal}
-                                                label="Yes"
-                                                defaultChecked={
-                                                  getUpdatedData(
-                                                    formKeyVal,
-                                                    true,
-                                                  ) === 'Yes'
-                                                }
-                                                // defaultChecked={editableField === false ? valueField === "Yes" : getUpdatedData(formKeyVal) === "Yes"}
-                                                disabled={
-                                                  (editableField === false ||
-                                                    isAccepted) &&
-                                                  checkOutDatedForCKYC()
-                                                }
-                                                onChange={(e) =>
-                                                  handleChangeCheckBox(e, 'Yes')
-                                                }
-                                              />
-                                              <Form.Check
-                                                className="radio-field"
-                                                inline
-                                                type="radio"
-                                                id={`${formKeyVal}-no`}
-                                                name={formKeyVal}
-                                                label="No"
-                                                defaultChecked={
-                                                  getUpdatedData(
-                                                    formKeyVal,
-                                                    true,
-                                                  ) === 'No'
-                                                }
-                                                // defaultChecked={
-                                                //   editableField === false ? valueField !== "Yes" && key === "individual.compliance.is_investing_own_behalf.Label" && particularFields[key]?.value !== "Not Applicable" : (getUpdatedData(formKeyVal) !== "Yes" && getUpdatedData(formKeyVal,true) !== "Not Applicable")
-                                                // }
-                                                disabled={
-                                                  (editableField === false ||
-                                                    isAccepted) &&
-                                                  checkOutDatedForCKYC()
-                                                }
-                                                onChange={(e) =>
-                                                  handleChangeCheckBox(e, 'No')
-                                                }
-                                              />
-                                              <Form.Check
-                                                className="radio-field"
-                                                inline
-                                                type="radio"
-                                                id={`${formKeyVal}-no`}
-                                                name={formKeyVal}
-                                                label="Not Applicable"
-                                                defaultChecked={
-                                                  getUpdatedData(
-                                                    formKeyVal,
-                                                    true,
-                                                  ) === 'Not Applicable'
-                                                }
-                                                // defaultChecked={
-                                                //   editableField === false ? valueField !== "Yes" && key === "individual.compliance.is_investing_own_behalf.Label" && particularFields[key]?.value !== "No" : (getUpdatedData(formKeyVal) !== "Yes" && getUpdatedData(formKeyVal,true) !== "No")
-                                                // }
-                                                disabled={
-                                                  (editableField === false ||
-                                                    isAccepted) &&
-                                                  checkOutDatedForCKYC()
-                                                }
-                                                onChange={(e) =>
-                                                  handleChangeCheckBox(
-                                                    e,
-                                                    'Not Applicable',
-                                                  )
-                                                }
-                                              />
-                                            </div>
-                                            {checkIfDataFromCKYCAndOutDatedTrue() && (
-                                              <span className="ms-2">
-                                                {checkDataMatchedWithKYCData(
-                                                  formKeyVal,
-                                                )?.updated === true ? (
-                                                  <OverlayTrigger
-                                                    placement="top"
-                                                    overlay={
-                                                      <Tooltip>
-                                                        No Change Found
-                                                      </Tooltip>
-                                                    }
-                                                  >
-                                                    <FontAwesomeIcon
-                                                      icon={faCheck}
-                                                      color="green"
-                                                    />
-                                                  </OverlayTrigger>
-                                                ) : (
-                                                  <OverlayTrigger
-                                                    placement="top"
-                                                    overlay={
-                                                      <Tooltip>
-                                                        <ul
-                                                          style={{
-                                                            marginLeft: '0px',
-                                                          }}
-                                                        >
-                                                          <li
-                                                            style={{
-                                                              fontSize: '10px',
-                                                              marginLeft: '0px',
-                                                            }}
-                                                          >
-                                                            CKYC Data for {label}{' '}
-                                                            is:{' '}
-                                                            {
-                                                              checkDataMatchedWithKYCData(
-                                                                formKeyVal,
-                                                              )?.ckycData
-                                                            }
-                                                          </li>
-                                                          <li
-                                                            style={{
-                                                              fontSize: '10px',
-                                                              marginLeft: '0px',
-                                                            }}
-                                                          >
-                                                            Updated Data for{' '}
-                                                            {label} is:{' '}
-                                                            {
-                                                              checkDataMatchedWithKYCData(
-                                                                formKeyVal,
-                                                              )?.currentData
-                                                            }
-                                                          </li>
-                                                        </ul>{' '}
-                                                      </Tooltip>
-                                                    }
-                                                  >
-                                                    <FontAwesomeIcon
-                                                      icon={faCircleExclamation}
-                                                      color="orange"
-                                                    />
-                                                  </OverlayTrigger>
-                                                )}
-                                              </span>
-                                            )}
-                                          </Form.Group>
+                                          <div className="">
+  <label className="font-medium text-white">{label}</label>
+  <div className="flex items-center mt-2">
+    
+    {/* Yes Option */}
+    <label className="inline-flex items-center mr-3">
+      <input
+        type="radio"
+        id={`${formKeyVal}-yes`}
+        name={formKeyVal}
+        value="Yes"
+        checked={getUpdatedData(formKeyVal, true) === 'Yes'}
+        onChange={(e) => handleChangeCheckBox(e, 'Yes')}
+        disabled={
+          (editableField === false || isAccepted) &&
+          checkOutDatedForCKYC()
+        }
+        className=" text-blue-500 focus:ring-0"
+      />
+      <span className="ml-2 text-white">Yes</span>
+    </label>
+    
+    {/* No Option */}
+    <label className="inline-flex items-center mr-3">
+      <input
+        type="radio"
+        id={`${formKeyVal}-no`}
+        name={formKeyVal}
+        value="No"
+        checked={getUpdatedData(formKeyVal, true) === 'No'}
+        onChange={(e) => handleChangeCheckBox(e, 'No')}
+        disabled={
+          (editableField === false || isAccepted) &&
+          checkOutDatedForCKYC()
+        }
+        className="form-radio text-blue-500 focus:ring-0"
+      />
+      <span className="ml-2 text-white">No</span>
+    </label>
+
+    {/* Not Applicable Option */}
+    <label className="inline-flex items-center">
+      <input
+        type="radio"
+        id={`${formKeyVal}-not-applicable`}
+        name={formKeyVal}
+        value="Not Applicable"
+        checked={getUpdatedData(formKeyVal, true) === 'Not Applicable'}
+        onChange={(e) => handleChangeCheckBox(e, 'Not Applicable')}
+        disabled={
+          (editableField === false || isAccepted) &&
+          checkOutDatedForCKYC()
+        }
+        className="form-radio text-blue-500 focus:ring-0"
+      />
+      <span className="ml-2 text-white">Not Applicable</span>
+    </label>
+  </div>
+
+  {/* CKYC Status */}
+  {checkIfDataFromCKYCAndOutDatedTrue() && (
+    <span className="mt-2 flex items-center">
+      {checkDataMatchedWithKYCData(formKeyVal)?.updated ? (
+        <div className="text-green-500 flex items-center">
+          <FontAwesomeIcon icon={faCheck} />
+          <span className="ml-1">No Change Found</span>
+        </div>
+      ) : (
+        <div className="text-orange-500 flex items-center">
+          <FontAwesomeIcon icon={faCircleExclamation} />
+          <div className="ml-1">
+            <span className="text-xs">CKYC Data for {label}:</span>
+            <ul className="ml-4 list-disc text-xs">
+              <li>CKYC Data: {checkDataMatchedWithKYCData(formKeyVal)?.ckycData}</li>
+              <li>Updated Data: {checkDataMatchedWithKYCData(formKeyVal)?.currentData}</li>
+            </ul>
+          </div>
+        </div>
+      )}
+    </span>
+  )}
+</div>
+
                                         </div>
                                       );
                                     }
