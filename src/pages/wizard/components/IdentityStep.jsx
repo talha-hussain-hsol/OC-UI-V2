@@ -4320,8 +4320,8 @@ import {
                                                     `` ||
                                                     getUpdatedData(formKeyVal) ==
                                                       null)
-                                                    ? `bg-color-textfield-dropdown-${theme} mt-2 w-full py-1 px-4 border-[0.5px] border-[#e19800] rounded-lg shadow-${theme} focus:outline-none focus:ring-1 focus:ring-[#2d7ce2] focus:border-[#2d7ce2] placeholder:text-sm placeholder:text-[#8ca4c2] text-sm font-thin `
-                                                    : `text-sm outline-none bg-color-textfield-dropdown-${theme}`  
+                                                    ? `bg-color-textfield-dropdown-${theme} mt-2 w-full py-1 px-4 border-[0.5px] border-[#e19800] rounded-lg shadow-${theme} focus:outline-none focus:ring-1 focus:ring-[#2d7ce2] focus:border-[#2d7ce2] placeholder:text-sm placeholder:text-[#8ca4c2] text-sm font-light `
+                                                    : `text-sm font-light outline-none bg-color-textfield-dropdown-${theme}`  
                                                 }
                                               >
                                                 <div className={`w-full bg-color-textfield-dropdown-${theme}`}
@@ -4469,8 +4469,8 @@ import {
                                                       getUpdatedData(
                                                         formKeyVal,
                                                       ) == null)
-                                                      ? `w-full border-[0.5px] border-[#e19800] mt-2 bg-color-textfield-dropdown-${theme} py-[10px] px-4 placeholder:text-sm outline-none rounded-lg shadow-${theme}`
-                                                      : `w-full mt-2 bg-color-textfield-dropdown-${theme} py-[10px] px-4   rounded-lg placeholder:text-sm outline-none shadow-${theme} `
+                                                      ? `w-full border-[0.5px] border-[#e19800] mt-2 bg-color-textfield-dropdown-${theme} py-[10px] px-4 placeholder:text-sm text-sm font-light outline-none rounded-lg shadow-${theme}`
+                                                      : `w-full mt-2 bg-color-textfield-dropdown-${theme} py-[10px] px-4 text-sm font-light  rounded-lg placeholder:text-sm outline-none shadow-${theme} `
                                                   }
                                                   defaultValue={
                                                     editableField == false
@@ -4597,8 +4597,8 @@ import {
                                                   requiredField &&
                                                   !identityDataFields?.[formKeyVal] &&
                                                   (!getUpdatedData(formKeyVal) || getUpdatedData(formKeyVal) === null)
-                                                    ? `w-full border-[0.5px] border-[#e19800] bg-color-textfield-dropdown-${theme} placeholder:text-sm px-4 py-[10px] shadow-${theme} flatpickr-input`
-                                                    : `w-full bg-color-textfield-dropdown-${theme} placeholder:text-sm px-4 py-[10px] shadow-${theme}`
+                                                    ? `w-full border-[0.5px] border-[#e19800] bg-color-textfield-dropdown-${theme} placeholder:text-sm text-sm font-light px-4 py-[10px] shadow-${theme} flatpickr-input`
+                                                    : `w-full bg-color-textfield-dropdown-${theme} placeholder:text-sm px-4 py-[10px] text-sm font-light shadow-${theme}`
                                                 }`}
                                                 disabled={
                                                   !editableField ||
@@ -4955,7 +4955,7 @@ import {
                                                       getUpdatedData(
                                                         formKeyVal,
                                                       ) == null)
-                                                      ? `w-full placeholder:text-thin border-[0.5px] border-[#e19800] mt-2 bg-color-textfield-dropdown-${theme} py-[12px] px-4 appearance-none outline-none rounded-lg text-sm font-light shadow-${theme}`
+                                                      ? `w-full placeholder:font-light border-[0.5px] border-[#e19800] mt-2 bg-color-textfield-dropdown-${theme} py-[12px] px-4 appearance-none outline-none rounded-lg text-sm font-light shadow-${theme}`
                                                    
                                                       : `w-full mt-2 bg-color-textfield-dropdown-${theme} py-[12px] px-4 appearance-none outline-none rounded-lg shadow-${theme} text-sm font-light`
                                                    
