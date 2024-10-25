@@ -1,7 +1,7 @@
 import React from "react";
 import { useTheme } from "../../contexts/themeContext";
 
-const Tooltip = ({ content, children, position = "right" }) => {
+const Tooltip = ({ content,className, children, position = "right" }) => {
   const { theme } = useTheme();
   const positionClasses = {
     upper: "bottom-full mb-3 left-[-2px] transform -translate-x-1/2",
@@ -14,7 +14,7 @@ const Tooltip = ({ content, children, position = "right" }) => {
     <div className="relative cursor-pointer group flex items-center z-10">
       <div>{children}</div>
       <div
-        className={`absolute opacity-0 left-full ml-7 group-hover:opacity-100 transition-opacity duration-200 bg-color-sidebar-${theme} text-color-text-${theme} text-xs rounded-md py-2 px-3 whitespace-nowrap z-10 pointer-events-none ${positionClasses[position]}`}
+        className={`absolute opacity-0 left-full ml-7 group-hover:opacity-100 transition-opacity duration-200 bg-color-sidebar-${theme} text-color-text-${theme} text-xs rounded-md py-2 px-3  z-10 pointer-events-none ${positionClasses[position]} ${className}`}
       >
         {content}
         <div

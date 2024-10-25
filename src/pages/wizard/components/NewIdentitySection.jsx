@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { Spinner } from "react-bootstrap";
+import { useParams, useNavigate } from "react-router-dom";
 import { postRegistrationProviderGetData } from "../../../api/network/CustomerApi";
 import axios from "axios";
 import { FaCheck } from "react-icons/fa";
-
-// var theme = localStorage.getItem("portal_theme");
-// const themeDark = localStorage.getItem("portal_theme");
+import { useTheme } from "../../../contexts/themeContext";
 
 export default function NewIdentitySection(props) {
+  const {theme} = useTheme()
   const cancelTokenSource = axios.CancelToken.source();
   const [isLoader, setIsLoader] = useState(false);
   const [panLoader, setPanLoader] = useState(false);
@@ -63,17 +63,7 @@ export default function NewIdentitySection(props) {
       cKYCData: cKYCData,
     };
     props.checkIfDataSelected(dataToStore);
-  }, [
-    isStandAlone,
-    isIndividual,
-    selectedProvider,
-    isPanVerified,
-    isAadhaarVerified,
-    isCKYCVerified,
-    panData,
-    adhaarData,
-    cKYCData,
-  ]);
+  }, [isStandAlone, isIndividual, selectedProvider, isPanVerified, isAadhaarVerified, isCKYCVerified, panData, adhaarData, cKYCData]);
   const handleGetDataApi = async () => {
     setIsLoader(true);
     console.log(registrationProvider, "registrationProvider");
@@ -87,10 +77,7 @@ export default function NewIdentitySection(props) {
     if (registrationProvider.state === "SIGN_DESK_CKYC") {
       setCkycLoader(true);
     }
-    const response = await postRegistrationProviderGetData(
-      registrationProvider,
-      cancelTokenSource.token
-    );
+    const response = await postRegistrationProviderGetData(registrationProvider, cancelTokenSource.token);
     if (response.success) {
       setIsLoader(false);
       if (registrationProvider.state === "PAN") {
@@ -107,8 +94,7 @@ export default function NewIdentitySection(props) {
         if (!response?.data?.result?.valid_aadhaar) {
           setIsNotAadhaarVerified({
             error: true,
-            message:
-              "Verification failed. Please check the Aadhaar number and try again.",
+            message: "Verification failed. Please check the Aadhaar number and try again.",
           });
         } else {
           setIsNotAadhaarVerified({ error: false, message: "" });
@@ -127,9 +113,7 @@ export default function NewIdentitySection(props) {
         setPanData(data);
         setIsNotPanVerified({ error: false, message: "" });
       } else if (registrationProvider.state === "SIGN_DESK_CKYC") {
-        setIsCKYCVerified(
-          response.data.download.status == "success" ? true : false
-        );
+        setIsCKYCVerified(response.data.download.status == "success" ? true : false);
         let data = {
           data: response?.data,
           dateTime: new Date(),
@@ -141,15 +125,14 @@ export default function NewIdentitySection(props) {
         if (response.data.download.status != "success") {
           setIsNotCKYCVerified({
             error: true,
-            message:
-              response?.data?.message ||
-              "Verification failed. Please check the Date and try again.",
+            message: response?.data?.message || "Verification failed. Please check the Date and try again.",
           });
-        } else {
+        }else{
           setIsNotCKYCVerified({
             error: false,
             message: "",
           });
+
         }
       }
     } else {
@@ -159,25 +142,20 @@ export default function NewIdentitySection(props) {
         setAdharLoader(false);
         setIsNotAadhaarVerified({
           error: true,
-          message:
-            response?.data?.message ||
-            "Verification failed. Please check the Aadhaar number and try again.",
+          message: response?.data?.message || "Verification failed. Please check the Aadhaar number and try again.",
         });
       } else if (registrationProvider.state === "PAN") {
         setIsPanVerified(false);
         setIsNotPanVerified({
           error: true,
-          message:
-            "Verification failed. Please check the PAN number and try again.",
+          message: "Verification failed. Please check the PAN number and try again.",
         });
         setPanLoader(false);
       } else if (registrationProvider.state === "SIGN_DESK_CKYC") {
         setIsCKYCVerified(false);
         setIsNotCKYCVerified({
           error: true,
-          message:
-            response?.data?.message ||
-            "Verification failed. Please check the Date and try again.",
+          message: response?.data?.message || "Verification failed. Please check the Date and try again.",
         });
       }
     }
@@ -200,144 +178,55 @@ export default function NewIdentitySection(props) {
       // Handle additional logic for Corporate
     }
     if (lastSelected == type) {
-      setTickShow(false);
+      setTickShow(false)
     } else {
-      setTickShow(true);
+      setTickShow(true)
+
     }
+
   };
 
+
+
   return (
-    <div>
-      {/* <hr className="my-5" /> */}
-      {/* <Row className="justify-content-center">
-        <Col xs={12} md={6} lg={6} xl={6}>
-          <h3>Account Type</h3>
-          <div className="account_type_btn_container">
-            <button className={isStandAlone ? "btn btn-primary btn-account-type-standalone selected" : "btn btn-primary btn-account-type-standalone not_selected"} onClick={(e) => setIsStandAlone(true)}>
-              StandAlone
-            </button>
-            <button disabled className={!isStandAlone ? "btn btn-primary btn-account-type-joint selected" : "btn btn-primary btn-account-type-joint not_selected"} onClick={(e) => setIsStandAlone(false)}>
-              Joint
-            </button>
-          </div>
-        </Col>
-        <Col xs={12} md={6} lg={6} xl={6} style={{ display: "flex", justifyContent: "flex-end" }}>
-          <Card style={{ width: "60%", marginBottom: "0px" }}>
-            <Card.Body>
-              <h4 className="mb-2">
-                <span className="text-warning" style={{ marginRight: "5px" }}>
-                  <FeatherIcon className={`text-warning`} icon="alert-triangle" size="15" />
-                </span>
-                Instructions
-              </h4>
-              <p className="small text-muted mb-0">Your Joint Account is Disabled</p>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row> */}
-      {/* <hr className="my-5" /> */}
+    <div className={`w-full px-8`}>
+      
       {console.log(isNotCKYCVerified, "isNotCKYCVerified")}
-      <div className="flex justify-center">
-        {/* <Col xs={12} md={6} lg={6} xl={6}>
+      <div className="flex justify-center ">
+      <div className="w-1/2 ">
           <h3>Are you applying as an Individual or Corporate?</h3>
-          <div className="account_type_btn_container">
+          <div className="mt-4">
             <button
               disabled={!props?.fundData?.fund_setting?.account?.applicant?.identity?.indivisual?.enabled}
-              className={isIndividualClick ? "btn btn-primary btn-account-type-standalone selected" : "btn btn-primary btn-account-type-standalone not_selected"}
-              onClick={() => handleButtonClick(true, "individual")}
+              className={` py-3 w-5/12 rounded-l-full text-white  ${
+                isIndividualClick ? "bg-[#5db160] font-semibold" : "bg-[#083a61]"
+              } hover:bg-[#5db160] focus:outline-none`} onClick={() => handleButtonClick(true, "individual")}
             >
               Individual
             </button>
             <button
               disabled={!props?.fundData?.fund_setting?.account?.applicant?.identity?.corporate?.enabled}
-              className={!isIndividualClick ? "btn btn-primary btn-account-type-joint selected" : "btn btn-primary btn-account-type-joint not_selected"}
-              onClick={() => handleButtonClick(false, "corporate")}
-            >
-              Corporate
-            </button>
-          </div>
-        </Col> */}
-        <div className="w-full md:w-1/2">
-          <h3 className="text-lg font-semibold mb-4">
-            Are you applying as an Individual or Corporate?
-          </h3>
-          <div className="flex space-x-4">
-            <button
-              disabled={
-                !props?.fundData?.fund_setting?.account?.applicant?.identity
-                  ?.indivisual?.enabled
-              }
-              className={`px-4 py-2 rounded-lg font-medium 
-        ${
-          isIndividualClick
-            ? "bg-blue-500 text-white"
-            : "bg-gray-200 text-gray-700"
-        } 
-        ${
-          !props?.fundData?.fund_setting?.account?.applicant?.identity
-            ?.indivisual?.enabled
-            ? "opacity-50 cursor-not-allowed"
-            : ""
-        }
-      `}
-              onClick={() => handleButtonClick(true, "individual")}
-            >
-              Individual
-            </button>
-            <button
-              disabled={
-                !props?.fundData?.fund_setting?.account?.applicant?.identity
-                  ?.corporate?.enabled
-              }
-              className={`px-4 py-2 rounded-lg font-medium 
-        ${
-          !isIndividualClick
-            ? "bg-blue-500 text-white"
-            : "bg-gray-200 text-gray-700"
-        } 
-        ${
-          !props?.fundData?.fund_setting?.account?.applicant?.identity
-            ?.corporate?.enabled
-            ? "opacity-50 cursor-not-allowed"
-            : ""
-        }
-      `}
-              onClick={() => handleButtonClick(false, "corporate")}
+              className={` py-3 w-5/12 rounded-r-full text-white ${
+                !isIndividualClick ? "bg-[#5db160] font-semibold" : "bg-[#083a61]"
+              } hover:bg-[#5db160] focus:outline-none`}
+               onClick={() => handleButtonClick(false, "corporate")}
             >
               Corporate
             </button>
           </div>
         </div>
 
-        {/* <Col
-          xs={12}
-          md={6}
-          lg={6}
-          xl={6}
-          style={{ display: "flex", flexDirection: "column" }}
-        >
-          <div
-            style={{ justifyContent: "space-between", alignItems: "center" }}
-            className="provider-selection-container"
-          >
+        <div className="w-full md:w-1/2 lg:w-1/2 xl:w-1/2 flex flex-col">
+          <div className="w-full flex flex-col justify-between items-start">
             <h3>How would you like to create your identity?</h3>
             <div
-              className={
-                selectedProvider === null
-                  ? "provider-selection before"
-                  : "provider-selection  "
-              }
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                width: "65%",
-                marginTop: "2em",
-              }}
+  className={`flex justify-between gap-8 mt-[2em] relative ${
+    selectedProvider === null ? "" : ""
+  }`}
             >
               {isIndividual && (
                 <>
-                  {props?.fundData?.fund_setting?.account?.applicant?.identity
-                    ?.indivisual?.provider?.verify?.singpass?.enabled && (
+                  {props?.fundData?.fund_setting?.account?.applicant?.identity?.indivisual?.provider?.verify?.singpass?.enabled && (
                     <>
                       <input
                         type="radio"
@@ -346,25 +235,24 @@ export default function NewIdentitySection(props) {
                         value="singpass"
                         defaultChecked={selectedProvider == "singpass"}
                         onClick={(e) => setSelectedProvider("singpass")}
+                        className="hidden"
                       />
                       <label
                         for="singpass"
-                        className={
-                          selectedProvider == "singpass"
-                            ? "selected"
-                            : "hide-content"
-                        }
+                        className={selectedProvider == "singpass" ? "shadow-[0px_0px_8px_1px_rgba(34,197,94,0.5)] opacity-100" : "opacity-40"}
                       >
                         <img
                           style={{ width: "150px", height: "auto" }}
                           src="/img/providers/signpass.png"
                           alt="Singpass"
                         />
+                         {selectedProvider === "singpass" && (
+                <span className="absolute top-[-28px] left-[20%] transform translate-x-[-50%] text-white" style={{ color: 'rgba(34, 197, 94, 1) !important' }}>✔</span>
+              )}
                       </label>
                     </>
                   )}
-                  {props?.fundData?.fund_setting?.account?.applicant?.identity
-                    ?.indivisual?.provider?.verify?.adhaar?.enabled && (
+                  {props?.fundData?.fund_setting?.account?.applicant?.identity?.indivisual?.provider?.verify?.adhaar?.enabled && (
                     <>
                       <input
                         type="radio"
@@ -372,23 +260,24 @@ export default function NewIdentitySection(props) {
                         name="selectedProvider"
                         value="adhar"
                         onClick={(e) => setSelectedProvider("adhar")}
+                        className="hidden"
                       />
                       <label
                         for="adhar"
-                        className={
-                          selectedProvider == "adhar" ? "selected" : ""
-                        }
+                        className={selectedProvider == "adhar" ? "shadow-[0px_0px_8px_1px_rgba(34,197,94,0.5)] opacity-100" : "opacity-40"}
                       >
                         <img
                           style={{ height: "30px" }}
                           src="/img/providers/adhhar.png"
                           alt="Adhar"
                         />
+                        {selectedProvider === "adhar" && (
+                <span className="absolute top-[-28px] left-[54%] transform translate-x-[-50%] text-white" style={{ color: 'rgba(34, 197, 94, 1) !important' }}>✔</span>
+              )}
                       </label>
-                    </>
+                </>
                   )}
-                  {props?.fundData?.fund_setting?.account?.applicant?.identity
-                    ?.indivisual?.provider?.verify?.manual?.enabled && (
+                  {props?.fundData?.fund_setting?.account?.applicant?.identity?.indivisual?.provider?.verify?.manual?.enabled && (
                     <>
                       <input
                         type="radio"
@@ -397,50 +286,33 @@ export default function NewIdentitySection(props) {
                         value="manual"
                         defaultChecked={selectedProvider == "manual"}
                         onClick={(e) => setSelectedProvider("manual")}
+                        className="hidden"
                       />
                       <label
                         for="manual"
-                        className={
-                          selectedProvider == "manual"
-                            ? "selected"
-                            : "hide-content"
-                        }
+                        className={selectedProvider == "manual" ? "shadow-[0px_0px_8px_1px_rgba(34,197,94,0.5)] opacity-100" : "opacity-40 "}
                       >
                         <img
                           style={{ height: "30px" }}
                           src="/img/providers/manualwhite.png"
                           alt="Manual"
                         />
+                        {selectedProvider === "manual" && (
+                <span className="absolute top-[-28px] left-[84%] transform translate-x-[-50%] text-green-500 font-bold leading-[1.2]">✔</span> // Changed color to green
+              )}
                       </label>
                     </>
                   )}
-                  {/* {props?.fundData?.fund_setting?.account?.applicant?.identity?.indivisual?.provider?.verify?.adhaar?.enabled && (
-    <>
-                  <input
-                    type="radio"
-                    id="adhar"
-                    name="selectedProvider"
-                    value="adhar"
-                    onClick={(e) => setSelectedProvider("adhar")}
-                  />
-                  <label
-                    for="adhar"
-                    className={selectedProvider == "adhar" ? "selected" : ""}
-                  >
-                    <img
-                      style={{ height: "30px" }}
-                      src="/img/providers/adhhar.png"
-                      alt="Adhar"
-                    />
-                  </label> 
-                  </>
-                  )} }
+ 
+          
+
                 </>
+
               )}
+              <div className="flex gap-2">
               {!isIndividual && (
                 <>
-                  {props?.fundData?.fund_setting?.account?.applicant?.identity
-                    ?.corporate?.provider?.verify?.corpass?.enabled && (
+                  {props?.fundData?.fund_setting?.account?.applicant?.identity?.corporate?.provider?.verify?.corpass?.enabled && (
                     <>
                       <input
                         type="radio"
@@ -448,25 +320,24 @@ export default function NewIdentitySection(props) {
                         name="selectedProvider"
                         value="corppass"
                         onClick={(e) => setSelectedProvider("corppass")}
+                        className="hidden"
                       />
                       <label
                         for="corppass"
-                        className={
-                          selectedProvider == "corppass"
-                            ? "selected"
-                            : "hide-content"
-                        }
+                        className={selectedProvider == "corppass" ? "shadow-[0px_0px_8px_1px_rgba(34,197,94,0.5)] opacity-100" : "opacity-40"}
                       >
                         <img
                           style={{ width: "200px", height: "auto" }}
                           src="/img/corppassLogo.svg"
                           alt="Corppass"
                         />
+                        {selectedProvider === "corppass" && (
+                <span className="absolute top-[-28px] left-[20%] transform translate-x-[-50%] text-green-500 font-bold leading-[1.2]">✔</span> // Changed color to green
+              )}
                       </label>
                     </>
                   )}
-                  {props?.fundData?.fund_setting?.account?.applicant?.identity
-                    ?.corporate?.provider?.verify?.pan?.enabled && (
+                  {props?.fundData?.fund_setting?.account?.applicant?.identity?.corporate?.provider?.verify?.pan?.enabled && (
                     <>
                       <input
                         type="radio"
@@ -474,23 +345,24 @@ export default function NewIdentitySection(props) {
                         name="selectedProvider"
                         value="adhar"
                         onClick={(e) => setSelectedProvider("adhar")}
+                        className="hidden"
                       />
                       <label
                         for="adhar"
-                        className={
-                          selectedProvider == "adhar" ? "selected" : ""
-                        }
+                        className={selectedProvider == "adhar" ? "shadow-[0px_0px_8px_1px_rgba(34,197,94,0.5)] opacity-100" : "opacity-40"}
                       >
                         <img
                           style={{ height: "30px" }}
                           src="/img/providers/pan.png"
                           alt="Pan"
                         />
+                        {selectedProvider === "adhar" && (
+                <span className="absolute top-[-28px] left-[54%] transform translate-x-[-50%] text-green-500 font-bold leading-[1.2]">✔</span> // Changed color to green
+              )}
                       </label>
                     </>
                   )}
-                  {props?.fundData?.fund_setting?.account?.applicant?.identity
-                    ?.corporate?.provider?.verify?.manual?.enabled && (
+                  {props?.fundData?.fund_setting?.account?.applicant?.identity?.corporate?.provider?.verify?.manual?.enabled && (
                     <>
                       <input
                         type="radio"
@@ -498,250 +370,49 @@ export default function NewIdentitySection(props) {
                         name="selectedProvider"
                         value="manual"
                         onClick={(e) => setSelectedProvider("manual")}
+                        className="hidden"
                       />
                       <label
                         for="manual"
-                        className={
-                          selectedProvider == "manual"
-                            ? "selected"
-                            : "hide-content"
-                        }
+                        className={selectedProvider == "manual" ? "shadow-[0px_0px_8px_1px_rgba(34,197,94,0.5)] opacity-100" : "opacity-40"}
                       >
                         <img
                           style={{ height: "30px" }}
                           src="/img/providers/manualwhite.png"
                           alt="Manual"
                         />
+                         {selectedProvider === "manual" && (
+                <span className="absolute top-[-28px] left-[84%] transform translate-x-[-50%] text-green-500 font-bold leading-[1.2]">✔</span> // Changed color to green
+              )}
                       </label>
                     </>
                   )}
 
-                  {/* <input
-                    type="radio"
-                    id="adhar"
-                    name="selectedProvider"
-                    value="adhar"
-                    onClick={(e) => setSelectedProvider("adhar")}
-                  />
-                  <label
-                    for="adhar"
-                    className={selectedProvider == "adhar" ? "selected" : ""}
-                  >
-                    <img
-                      style={{ height: "30px" }}
-                      src="/img/providers/pan.png"
-                      alt="Pan"
-                    />
-                  </label> }
                 </>
               )}
-            </div>
-          </div> */}
-
-        <div className="w-full md:w-1/2 flex flex-col">
-          <div className="provider-selection-container flex justify-between items-center">
-            <h3 className="text-lg font-semibold">
-              How would you like to create your identity?
-            </h3>
-            <div
-              className={`provider-selection ${
-                selectedProvider === null ? "before" : ""
-              } flex justify-between w-2/3 mt-8`}
-            >
-              {isIndividual && (
-                <>
-                  {props?.fundData?.fund_setting?.account?.applicant?.identity
-                    ?.indivisual?.provider?.verify?.singpass?.enabled && (
-                    <>
-                      <input
-                        type="radio"
-                        id="singpass"
-                        name="selectedProvider"
-                        value="singpass"
-                        defaultChecked={selectedProvider == "singpass"}
-                        onClick={() => setSelectedProvider("singpass")}
-                      />
-                      <label
-                        htmlFor="singpass"
-                        className={`${
-                          selectedProvider == "singpass"
-                            ? "selected"
-                            : "hide-content"
-                        }`}
-                      >
-                        <img
-                          className="w-[150px] h-auto"
-                          src="/img/providers/signpass.png"
-                          alt="Singpass"
-                        />
-                      </label>
-                    </>
-                  )}
-                  {props?.fundData?.fund_setting?.account?.applicant?.identity
-                    ?.indivisual?.provider?.verify?.adhaar?.enabled && (
-                    <>
-                      <input
-                        type="radio"
-                        id="adhar"
-                        name="selectedProvider"
-                        value="adhar"
-                        onClick={() => setSelectedProvider("adhar")}
-                      />
-                      <label
-                        htmlFor="adhar"
-                        className={`${
-                          selectedProvider == "adhar" ? "selected" : ""
-                        }`}
-                      >
-                        <img
-                          className="h-[30px]"
-                          src="/img/providers/adhhar.png"
-                          alt="Adhar"
-                        />
-                      </label>
-                    </>
-                  )}
-                  {props?.fundData?.fund_setting?.account?.applicant?.identity
-                    ?.indivisual?.provider?.verify?.manual?.enabled && (
-                    <>
-                      <input
-                        type="radio"
-                        id="manual"
-                        name="selectedProvider"
-                        value="manual"
-                        defaultChecked={selectedProvider == "manual"}
-                        onClick={() => setSelectedProvider("manual")}
-                      />
-                      <label
-                        htmlFor="manual"
-                        className={`${
-                          selectedProvider == "manual"
-                            ? "selected"
-                            : "hide-content"
-                        }`}
-                      >
-                        <img
-                          className="h-[30px]"
-                          src="/img/providers/manualwhite.png"
-                          alt="Manual"
-                        />
-                      </label>
-                    </>
-                  )}
-                </>
-              )}
-              {!isIndividual && (
-                <>
-                  {props?.fundData?.fund_setting?.account?.applicant?.identity
-                    ?.corporate?.provider?.verify?.corpass?.enabled && (
-                    <>
-                      <input
-                        type="radio"
-                        id="corppass"
-                        name="selectedProvider"
-                        value="corppass"
-                        onClick={() => setSelectedProvider("corppass")}
-                      />
-                      <label
-                        htmlFor="corppass"
-                        className={`${
-                          selectedProvider == "corppass"
-                            ? "selected"
-                            : "hide-content"
-                        }`}
-                      >
-                        <img
-                          className="w-[200px] h-auto"
-                          src="/img/corppassLogo.svg"
-                          alt="Corppass"
-                        />
-                      </label>
-                    </>
-                  )}
-                  {props?.fundData?.fund_setting?.account?.applicant?.identity
-                    ?.corporate?.provider?.verify?.pan?.enabled && (
-                    <>
-                      <input
-                        type="radio"
-                        id="adhar"
-                        name="selectedProvider"
-                        value="adhar"
-                        onClick={() => setSelectedProvider("adhar")}
-                      />
-                      <label
-                        htmlFor="adhar"
-                        className={`${
-                          selectedProvider == "adhar" ? "selected" : ""
-                        }`}
-                      >
-                        <img
-                          className="h-[30px]"
-                          src="/img/providers/pan.png"
-                          alt="Pan"
-                        />
-                      </label>
-                    </>
-                  )}
-                  {props?.fundData?.fund_setting?.account?.applicant?.identity
-                    ?.corporate?.provider?.verify?.manual?.enabled && (
-                    <>
-                      <input
-                        type="radio"
-                        id="manual"
-                        name="selectedProvider"
-                        value="manual"
-                        onClick={() => setSelectedProvider("manual")}
-                      />
-                      <label
-                        htmlFor="manual"
-                        className={`${
-                          selectedProvider == "manual"
-                            ? "selected"
-                            : "hide-content"
-                        }`}
-                      >
-                        <img
-                          className="h-[30px]"
-                          src="/img/providers/manualwhite.png"
-                          alt="Manual"
-                        />
-                      </label>
-                    </>
-                  )}
-                </>
-              )}
+              </div>
             </div>
           </div>
 
-          {/* <Row>
-            <Col xs={12} md={3} lg={3} xl={3}></Col>
-            <Col xs={12} md={9} lg={9} xl={9}>
+          <div className="flex">
+          <div className="w-full md:w-1/4 lg:w-1/4 xl:w-1/4"></div>
+
+          <div className="w-full md:w-9/12 lg:w-9/12 xl:w-9/12">
+
               {selectedProvider == "adhar" && (
                 <>
-                  <hr className="my-3" />
-                  <div className="form-group mb-0">
-                    <label className="form-label">
-                      Please Enter Pan Number
-                    </label>
-                    <div style={{ display: "flex" }}>
+                  <hr className="my-3 border-t-[1px] border-t-[#6e84a3] opacity-30" />
+                  <div className="w-full mb-0">
+                    <label className=''>Please Enter Pan Number</label>
+                    <div style={{ display: "flex" }} className="items-center">
                       <div
-                        className="form-group mb-0"
-                        style={{
-                          width: "100%",
-                          paddingRight: "5%",
-                          display: "flex",
-                          flexDirection: isNotPanVerified.error
-                            ? "Column"
-                            : "Row",
-                          alignItems: !isNotPanVerified.error
-                            ? "center"
-                            : "start",
-                        }}
+                        className={`w-full mt-3 mb-0 pr-[5%] flex ${isNotPanVerified.error ? "flex-col items-start" :'flex-row items-center'}`}
+                        
                       >
                         <input
                           type="text"
                           disabled={isPanVerified}
-                          className="form-control"
+                          className={`bg-color-textfield-dropdown-${theme} border border-color-${theme} rounded-md shadow-${theme}`}
                           onChange={(event) =>
                             setRegistrationProvider({
                               ...registrationProvider,
@@ -750,11 +421,7 @@ export default function NewIdentitySection(props) {
                             })
                           }
                           style={{
-                            border: isNotPanVerified.error
-                              ? "2px solid red"
-                              : isPanVerified
-                              ? "2px solid green"
-                              : null,
+                            border: isNotPanVerified.error ? "2px solid red" : isPanVerified ? "2px solid green" : null,
                             padding: "5px",
                             width: isPanVerified ? "100%" : "90%",
                           }}
@@ -778,37 +445,20 @@ export default function NewIdentitySection(props) {
                             width: "15%",
                             display: "flex",
                             justifyContent: "end",
-                            alignItems: isNotPanVerified.error
-                              ? "start"
-                              : "center",
+                            alignItems: isNotPanVerified.error ? "start" : "center",
                           }}
                         >
-                          <Button
-                            variant="white"
-                            size="sm"
-                            onClick={handleGetDataApi}
-                            style={{
-                              height: "40px",
-                              display: "flex",
-                              alignItems: "center",
-                            }}
-                          >
+                          <button onClick={handleGetDataApi}  className="h-[40px] flex items-center border px-6 rounded-md bg-">
                             {panLoader ? (
                               <div>
-                                <Spinner
-                                  animation="border"
-                                  role="status"
-                                  style={{ height: "20px", width: "20px" }}
-                                >
-                                  <span className="visually-hidden">
-                                    Loading...
-                                  </span>
+                                <Spinner animation="border" role="status" style={{ height: "20px", width: "20px" }}>
+                                  <span className="visually-hidden">Loading...</span>
                                 </Spinner>
                               </div>
                             ) : (
                               "Verify"
                             )}
-                          </Button>
+                          </button>
                         </div>
                       ) : (
                         <div
@@ -817,27 +467,12 @@ export default function NewIdentitySection(props) {
                             width: "30%",
                             display: "flex",
                             justifyContent: "end",
-                            alignItems: !isNotPanVerified.error
-                              ? "center"
-                              : "start",
+                            alignItems: !isNotPanVerified.error ? "center" : "start",
                           }}
                         >
-                          <Button
-                            variant="white"
-                            size="sm"
-                            style={{
-                              border: "2px solid green",
-                              height: "40px",
-                              display: "flex",
-                              alignItems: "center",
-                            }}
-                            disabled
-                          >
-                            <FaCheck
-                              style={{ marginRight: "5px", color: "green" }}
-                            />{" "}
-                            Verified
-                          </Button>
+                          <button style={{ border: "2px solid green", height: "40px", display: "flex", alignItems: "center" }} disabled>
+                            <FaCheck style={{ marginRight: "5px", color: "green" }} /> Verified
+                          </button>
                         </div>
                       )}
                     </div>
@@ -846,9 +481,7 @@ export default function NewIdentitySection(props) {
                     <>
                       <hr className="my-3" />
                       <div className="form-group mb-0">
-                        <label className="form-label">
-                          Please Enter Aadhaar Number
-                        </label>
+                        <label className="form-label">Please Enter Aadhaar Number</label>
                         <div style={{ display: "flex" }}>
                           <div
                             className="form-group mb-0"
@@ -856,12 +489,8 @@ export default function NewIdentitySection(props) {
                               width: "100%",
                               paddingRight: "5%",
                               display: "flex",
-                              flexDirection: isNotAadhaarVerified.error
-                                ? "column"
-                                : "row",
-                              alignItems: !isNotAadhaarVerified.error
-                                ? "center"
-                                : "start",
+                              flexDirection: isNotAadhaarVerified.error ? "column" : "row",
+                              alignItems: !isNotAadhaarVerified.error ? "center" : "start",
                             }}
                           >
                             <input
@@ -876,17 +505,12 @@ export default function NewIdentitySection(props) {
                                 })
                               }
                               style={{
-                                border: isNotAadhaarVerified.error
-                                  ? "2px solid red"
-                                  : isAadhaarVerified
-                                  ? "2px solid green"
-                                  : null,
+                                border: isNotAadhaarVerified.error ? "2px solid red" : isAadhaarVerified ? "2px solid green" : null,
                                 padding: "5px",
                                 width: isAadhaarVerified ? "100%" : "90%",
                               }}
                             />
-                            {(!isAadhaarVerified ||
-                              isNotAadhaarVerified.error) && (
+                            {(!isAadhaarVerified || isNotAadhaarVerified.error) && (
                               <span
                                 style={{
                                   color: "red",
@@ -905,37 +529,20 @@ export default function NewIdentitySection(props) {
                                 width: "15%",
                                 display: "flex",
                                 justifyContent: "end",
-                                alignItems: isNotAadhaarVerified.error
-                                  ? "start"
-                                  : "center",
+                                alignItems: isNotAadhaarVerified.error ? "start" : "center",
                               }}
                             >
-                              <Button
-                                variant="white"
-                                size="sm"
-                                onClick={handleGetDataApi}
-                                style={{
-                                  height: "40px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                }}
-                              >
+                              <button  onClick={handleGetDataApi} style={{ height: "40px", display: "flex", alignItems: "center" }}>
                                 {adharLoader ? (
                                   <div>
-                                    <Spinner
-                                      animation="border"
-                                      role="status"
-                                      style={{ height: "20px", width: "20px" }}
-                                    >
-                                      <span className="visually-hidden">
-                                        Loading...
-                                      </span>
+                                    <Spinner animation="border" role="status" style={{ height: "20px", width: "20px" }}>
+                                      <span className="visually-hidden">Loading...</span>
                                     </Spinner>
                                   </div>
                                 ) : (
                                   "Verify"
                                 )}
-                              </Button>
+                              </button>
                             </div>
                           ) : (
                             <div
@@ -944,27 +551,12 @@ export default function NewIdentitySection(props) {
                                 width: "30%",
                                 display: "flex",
                                 justifyContent: "end",
-                                alignItems: !isNotAadhaarVerified.error
-                                  ? "center"
-                                  : "start",
+                                alignItems: !isNotAadhaarVerified.error ? "center" : "start",
                               }}
                             >
-                              <Button
-                                variant="white"
-                                size="sm"
-                                style={{
-                                  border: "2px solid green",
-                                  height: "40px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                }}
-                                disabled
-                              >
-                                <FaCheck
-                                  style={{ marginRight: "5px", color: "green" }}
-                                />{" "}
-                                Verified
-                              </Button>
+                              <button style={{ border: "2px solid green", height: "40px", display: "flex", alignItems: "center" }} disabled>
+                                <FaCheck style={{ marginRight: "5px", color: "green" }} /> Verified
+                              </button>
                             </div>
                           )}
                         </div>
@@ -975,9 +567,7 @@ export default function NewIdentitySection(props) {
                     <>
                       <hr className="my-3" />
                       <div className="form-group mb-0">
-                        <label className="form-label">
-                          Please Enter Date Of Birth
-                        </label>
+                        <label className="form-label">Please Enter Date Of Birth</label>
                         <div style={{ display: "flex" }}>
                           <div
                             className="form-group mb-0"
@@ -985,12 +575,8 @@ export default function NewIdentitySection(props) {
                               width: "100%",
                               paddingRight: "5%",
                               display: "flex",
-                              flexDirection: isNotCKYCVerified.error
-                                ? "column"
-                                : "row",
-                              alignItems: !isNotCKYCVerified?.error
-                                ? "center"
-                                : "start",
+                              flexDirection: isNotCKYCVerified.error ? "column" : "row",
+                              alignItems: !isNotCKYCVerified?.error ? "center" : "start",
                             }}
                           >
                             <input
@@ -1000,18 +586,13 @@ export default function NewIdentitySection(props) {
                               onChange={(event) =>
                                 setRegistrationProvider({
                                   ...registrationProvider,
-                                  code: panData?.data?.result?.validated_data
-                                    ?.pan_number,
+                                  code: panData?.data?.result?.validated_data?.pan_number,
                                   state: "SIGN_DESK_CKYC",
                                   date: event.target.value,
                                 })
                               }
                               style={{
-                                border: isNotCKYCVerified.error
-                                  ? "2px solid red"
-                                  : isCKYCVerified
-                                  ? "2px solid green"
-                                  : null,
+                                border: isNotCKYCVerified.error ? "2px solid red" : isCKYCVerified ? "2px solid green" : null,
                                 padding: "5px",
                                 width: isCKYCVerified ? "100%" : "90%",
                               }}
@@ -1035,37 +616,20 @@ export default function NewIdentitySection(props) {
                                 width: "15%",
                                 display: "flex",
                                 justifyContent: "end",
-                                alignItems: isNotCKYCVerified.error
-                                  ? "start"
-                                  : "center",
+                                alignItems: isNotCKYCVerified.error ? "start" : "center",
                               }}
                             >
-                              <Button
-                                variant="white"
-                                size="sm"
-                                onClick={handleGetDataApi}
-                                style={{
-                                  height: "40px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                }}
-                              >
+                              <button  onClick={handleGetDataApi} style={{ height: "40px", display: "flex", alignItems: "center" }}>
                                 {ckycLoader ? (
                                   <div>
-                                    <Spinner
-                                      animation="border"
-                                      role="status"
-                                      style={{ height: "20px", width: "20px" }}
-                                    >
-                                      <span className="visually-hidden">
-                                        Loading...
-                                      </span>
+                                    <Spinner animation="border" role="status" style={{ height: "20px", width: "20px" }}>
+                                      <span className="visually-hidden">Loading...</span>
                                     </Spinner>
                                   </div>
                                 ) : (
                                   "Verify"
                                 )}
-                              </Button>
+                              </button>
                             </div>
                           ) : (
                             <div
@@ -1074,27 +638,12 @@ export default function NewIdentitySection(props) {
                                 width: "30%",
                                 display: "flex",
                                 justifyContent: "end",
-                                alignItems: !isNotCKYCVerified.error
-                                  ? "center"
-                                  : "start",
+                                alignItems: !isNotCKYCVerified.error ? "center" : "start",
                               }}
                             >
-                              <Button
-                                variant="white"
-                                size="sm"
-                                style={{
-                                  border: "2px solid green",
-                                  height: "40px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                }}
-                                disabled
-                              >
-                                <FaCheck
-                                  style={{ marginRight: "5px", color: "green" }}
-                                />{" "}
-                                Verified
-                              </Button>
+                              <button style={{ border: "2px solid green", height: "40px", display: "flex", alignItems: "center" }} disabled>
+                                <FaCheck style={{ marginRight: "5px", color: "green" }} /> Verified
+                              </button>
                             </div>
                           )}
                         </div>
@@ -1105,9 +654,7 @@ export default function NewIdentitySection(props) {
                     <>
                       <hr className="my-3" />
                       <div className="form-group mb-0">
-                        <label className="form-label">
-                          Please Enter Date Of Incorporation
-                        </label>
+                        <label className="form-label">Please Enter Date Of Incorporation</label>
                         <div style={{ display: "flex" }}>
                           <div
                             className="form-group mb-0"
@@ -1115,12 +662,8 @@ export default function NewIdentitySection(props) {
                               width: "100%",
                               paddingRight: "5%",
                               display: "flex",
-                              flexDirection: isNotCKYCVerified.error
-                                ? "column"
-                                : "row",
-                              alignItems: !isNotCKYCVerified.error
-                                ? "center"
-                                : "start",
+                              flexDirection: isNotCKYCVerified.error ? "column" : "row",
+                              alignItems: !isNotCKYCVerified.error ? "center" : "start",
                             }}
                           >
                             <input
@@ -1130,18 +673,13 @@ export default function NewIdentitySection(props) {
                               onChange={(event) =>
                                 setRegistrationProvider({
                                   ...registrationProvider,
-                                  code: panData?.data?.result?.validated_data
-                                    ?.pan_number,
+                                  code: panData?.data?.result?.validated_data?.pan_number,
                                   state: "SIGN_DESK_CKYC",
                                   date: event.target.value,
                                 })
                               }
                               style={{
-                                border: isCKYCVerified.error
-                                  ? "2px solid red"
-                                  : isCKYCVerified
-                                  ? "2px solid green"
-                                  : null,
+                                border: isCKYCVerified.error ? "2px solid red" : isCKYCVerified ? "2px solid green" : null,
                                 padding: "5px",
                                 width: isCKYCVerified ? "100%" : "90%",
                               }}
@@ -1165,37 +703,20 @@ export default function NewIdentitySection(props) {
                                 width: "15%",
                                 display: "flex",
                                 justifyContent: "end",
-                                alignItems: isNotCKYCVerified.error
-                                  ? "start"
-                                  : "center",
+                                alignItems: isNotCKYCVerified.error ? "start" : "center",
                               }}
                             >
-                              <Button
-                                variant="white"
-                                size="sm"
-                                onClick={handleGetDataApi}
-                                style={{
-                                  height: "40px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                }}
-                              >
+                              <button  onClick={handleGetDataApi} style={{ height: "40px", display: "flex", alignItems: "center" }}>
                                 {ckycLoader ? (
                                   <div>
-                                    <Spinner
-                                      animation="border"
-                                      role="status"
-                                      style={{ height: "20px", width: "20px" }}
-                                    >
-                                      <span className="visually-hidden">
-                                        Loading...
-                                      </span>
+                                    <Spinner animation="border" role="status" style={{ height: "20px", width: "20px" }}>
+                                      <span className="visually-hidden">Loading...</span>
                                     </Spinner>
                                   </div>
                                 ) : (
                                   "Verify"
                                 )}
-                              </Button>
+                              </button>
                             </div>
                           ) : (
                             <div
@@ -1204,327 +725,11 @@ export default function NewIdentitySection(props) {
                                 width: "30%",
                                 display: "flex",
                                 justifyContent: "end",
-                                alignItems: !isNotCKYCVerified.error
-                                  ? "center"
-                                  : "start",
+                                alignItems: !isNotCKYCVerified.error ? "center" : "start",
                               }}
                             >
-                              <Button
-                                variant="white"
-                                size="sm"
-                                style={{
-                                  border: "2px solid green",
-                                  height: "40px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                }}
-                                disabled
-                              >
-                                <FaCheck
-                                  style={{ marginRight: "5px", color: "green" }}
-                                />{" "}
-                                Verified
-                              </Button>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </>
-                  )}
-                </>
-              )}
-            </Col>
-          </Row> */}
-
-          <div className="flex flex-wrap">
-            <div className="w-full md:w-3/12 lg:w-3/12 xl:w-3/12"></div>
-            <div className="w-full md:w-9/12 lg:w-9/12 xl:w-9/12">
-              {selectedProvider === "adhar" && (
-                <>
-                  <hr className="my-3" />
-                  <div className="mb-0">
-                    <label className="block text-sm font-medium">
-                      Please Enter Pan Number
-                    </label>
-                    <div className="flex">
-                      <div
-                        className={`w-full pr-5 flex ${
-                          isNotPanVerified.error
-                            ? "flex-col items-start"
-                            : "items-center"
-                        }`}
-                      >
-                        <input
-                          type="text"
-                          disabled={isPanVerified}
-                          className="form-control w-full p-2"
-                          onChange={(event) =>
-                            setRegistrationProvider({
-                              ...registrationProvider,
-                              code: event.target.value,
-                              state: "PAN",
-                            })
-                          }
-                          style={{
-                            border: isNotPanVerified.error
-                              ? "2px solid red"
-                              : isPanVerified
-                              ? "2px solid green"
-                              : "",
-                          }}
-                        />
-                        {isNotPanVerified.error && (
-                          <span className="text-red-500 text-xs mt-2">
-                            {isNotPanVerified.message}
-                          </span>
-                        )}
-                      </div>
-                      {!isPanVerified ? (
-                        <div className="w-1/5 flex justify-end items-center">
-                          <button
-                            className="bg-white border border-gray-300 text-sm px-4 py-2"
-                            onClick={handleGetDataApi}
-                            style={{
-                              height: "40px",
-                              display: "flex",
-                              alignItems: "center",
-                            }}
-                          >
-                            {panLoader ? (
-                              <div className="loader">Loading...</div>
-                            ) : (
-                              "Verify"
-                            )}
-                          </button>
-                        </div>
-                      ) : (
-                        <div className="w-1/3 flex justify-end items-center">
-                          <button
-                            className="border-2 border-green-500 text-green-500 flex items-center px-4 py-2"
-                            disabled
-                          >
-                            <FaCheck className="mr-2" /> Verified
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {isIndividual && isPanVerified && (
-                    <>
-                      <hr className="my-3" />
-                      <div className="mb-0">
-                        <label className="block text-sm font-medium">
-                          Please Enter Aadhaar Number
-                        </label>
-                        <div className="flex">
-                          <div
-                            className={`w-full pr-5 flex ${
-                              isNotAadhaarVerified.error
-                                ? "flex-col items-start"
-                                : "items-center"
-                            }`}
-                          >
-                            <input
-                              type="text"
-                              disabled={isAadhaarVerified}
-                              className="form-control w-full p-2"
-                              onChange={(event) =>
-                                setRegistrationProvider({
-                                  ...registrationProvider,
-                                  code: event.target.value,
-                                  state: "AADHAAR",
-                                })
-                              }
-                              style={{
-                                border: isNotAadhaarVerified.error
-                                  ? "2px solid red"
-                                  : isAadhaarVerified
-                                  ? "2px solid green"
-                                  : "",
-                              }}
-                            />
-                            {isNotAadhaarVerified.error && (
-                              <span className="text-red-500 text-xs mt-2">
-                                {isNotAadhaarVerified.message}
-                              </span>
-                            )}
-                          </div>
-                          {!isAadhaarVerified ? (
-                            <div className="w-1/5 flex justify-end items-center">
-                              <button
-                                className="bg-white border border-gray-300 text-sm px-4 py-2"
-                                onClick={handleGetDataApi}
-                                style={{
-                                  height: "40px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                }}
-                              >
-                                {adharLoader ? (
-                                  <div className="loader">Loading...</div>
-                                ) : (
-                                  "Verify"
-                                )}
-                              </button>
-                            </div>
-                          ) : (
-                            <div className="w-1/3 flex justify-end items-center">
-                              <button
-                                className="border-2 border-green-500 text-green-500 flex items-center px-4 py-2"
-                                disabled
-                              >
-                                <FaCheck className="mr-2" /> Verified
-                              </button>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </>
-                  )}
-
-                  {isIndividual && isPanVerified && isAadhaarVerified && (
-                    <>
-                      <hr className="my-3" />
-                      <div className="mb-0">
-                        <label className="block text-sm font-medium">
-                          Please Enter Date Of Birth
-                        </label>
-                        <div className="flex">
-                          <div
-                            className={`w-full pr-5 flex ${
-                              isNotCKYCVerified.error
-                                ? "flex-col items-start"
-                                : "items-center"
-                            }`}
-                          >
-                            <input
-                              type="date"
-                              disabled={isCKYCVerified}
-                              className="form-control w-full p-2"
-                              onChange={(event) =>
-                                setRegistrationProvider({
-                                  ...registrationProvider,
-                                  code: panData?.data?.result?.validated_data
-                                    ?.pan_number,
-                                  state: "SIGN_DESK_CKYC",
-                                  date: event.target.value,
-                                })
-                              }
-                              style={{
-                                border: isNotCKYCVerified.error
-                                  ? "2px solid red"
-                                  : isCKYCVerified
-                                  ? "2px solid green"
-                                  : "",
-                              }}
-                            />
-                            {isNotCKYCVerified.error && (
-                              <span className="text-red-500 text-xs mt-2">
-                                {isNotCKYCVerified.message}
-                              </span>
-                            )}
-                          </div>
-                          {!isCKYCVerified ? (
-                            <div className="w-1/5 flex justify-end items-center">
-                              <button
-                                className="bg-white border border-gray-300 text-sm px-4 py-2"
-                                onClick={handleGetDataApi}
-                                style={{
-                                  height: "40px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                }}
-                              >
-                                {ckycLoader ? (
-                                  <div className="loader">Loading...</div>
-                                ) : (
-                                  "Verify"
-                                )}
-                              </button>
-                            </div>
-                          ) : (
-                            <div className="w-1/3 flex justify-end items-center">
-                              <button
-                                className="border-2 border-green-500 text-green-500 flex items-center px-4 py-2"
-                                disabled
-                              >
-                                <FaCheck className="mr-2" /> Verified
-                              </button>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </>
-                  )}
-
-                  {!isIndividual && isPanVerified && (
-                    <>
-                      <hr className="my-3" />
-                      <div className="mb-0">
-                        <label className="block text-sm font-medium">
-                          Please Enter Date Of Incorporation
-                        </label>
-                        <div className="flex">
-                          <div
-                            className={`w-full pr-5 flex ${
-                              isNotCKYCVerified.error
-                                ? "flex-col items-start"
-                                : "items-center"
-                            }`}
-                          >
-                            <input
-                              type="date"
-                              disabled={isCKYCVerified}
-                              className="form-control w-full p-2"
-                              onChange={(event) =>
-                                setRegistrationProvider({
-                                  ...registrationProvider,
-                                  code: panData?.data?.result?.validated_data
-                                    ?.pan_number,
-                                  state: "SIGN_DESK_CKYC",
-                                  date: event.target.value,
-                                })
-                              }
-                              style={{
-                                border: isNotCKYCVerified.error
-                                  ? "2px solid red"
-                                  : isCKYCVerified
-                                  ? "2px solid green"
-                                  : "",
-                              }}
-                            />
-                            {isNotCKYCVerified.error && (
-                              <span className="text-red-500 text-xs mt-2">
-                                {isNotCKYCVerified.message}
-                              </span>
-                            )}
-                          </div>
-                          {!isCKYCVerified ? (
-                            <div className="w-1/5 flex justify-end items-center">
-                              <button
-                                className="bg-white border border-gray-300 text-sm px-4 py-2"
-                                onClick={handleGetDataApi}
-                                style={{
-                                  height: "40px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                }}
-                              >
-                                {ckycLoader ? (
-                                  <div className="loader">Loading...</div>
-                                ) : (
-                                  "Verify"
-                                )}
-                              </button>
-                            </div>
-                          ) : (
-                            <div className="w-1/3 flex justify-end items-center">
-                              <button
-                                className="border-2 border-green-500 text-green-500 flex items-center px-4 py-2"
-                                disabled
-                              >
-                                <FaCheck className="mr-2" /> Verified
+                              <button  style={{ border: "2px solid green", height: "40px", display: "flex", alignItems: "center" }} disabled>
+                                <FaCheck style={{ marginRight: "5px", color: "green" }} /> Verified
                               </button>
                             </div>
                           )}
@@ -1538,8 +743,7 @@ export default function NewIdentitySection(props) {
           </div>
         </div>
       </div>
-
-      <hr className="my-5" />
+      {/* <hr className="my-5" /> */}
     </div>
   );
 }

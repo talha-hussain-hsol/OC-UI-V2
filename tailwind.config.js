@@ -39,6 +39,7 @@ module.exports = {
         "color-Ascent": "linear-gradient(to right, #0c2138 0%, #113c4d 100%)",
         "color-modal-SC":
           "linear-gradient(to bottom, #243279 0%, #0055BB 100%)",
+           "color-card-header-Ascent": "linear-gradient(to bottom, #0e335b 0%, #161f3d 100%)",
       },
       backgroundColor: {
         "theme-SC": "#edf2f4", // Color for Theme 1 (SC)
@@ -48,8 +49,8 @@ module.exports = {
         "color-lightTheme": "#efefd0",
         "color-card-SC": "#FFFFFF",
         "color-card-lightTheme": "#dde5b6",
-        // "color-card-Ascent": "#b5e2fa",
-        "color-card-header-SC": "#edf2f4",
+       
+        "color-card-header-SC": "#ffffff",
         "color-SC-hover": "#ef233c",
         "color-lightTheme-hover": "#004e89",
         "color-Ascent-hover": "#e27396",
@@ -100,6 +101,7 @@ module.exports = {
         "color-modal-lightTheme": "",
         "color-iconButton-SC": "#f2f0f0",
         "color-iconButton-Ascent": "#12273f",
+        "color-button2-Ascent": '#152e4d'
       },
 
       borderColor: {
@@ -148,6 +150,8 @@ module.exports = {
         "color-icon-Ascent": "#ed9b0a",
         "color-modal-SC": "#000000",
         "color-modal-Ascent": "#FFFFFF",
+        "color-description-SC": '#b7b9bd',
+        "color-description-Ascent": '#536b8c',
       },
       fontFamily: {
         SC: ['"Roboto"', "sans-serif"], // Theme 1
@@ -268,6 +272,9 @@ module.exports = {
       pattern: /text-color-sidebar-icon-(SC|lightTheme|Ascent)/,
     },
     {
+      pattern: /text-color-description-(SC|lightTheme|Ascent)/,
+    },
+    {
       pattern: /text-color-profile-icon-(SC|lightTheme|Ascent)/,
     },
     {
@@ -276,6 +283,9 @@ module.exports = {
     },
     {
       pattern: /bg-color-(SC|lightTheme|Ascent)/,
+    },
+    {
+      pattern: /bg-color-button2-(SC|lightTheme|Ascent)/,
     },
     {
       pattern: /bg-color-card-header-(SC|lightTheme|Ascent)/,

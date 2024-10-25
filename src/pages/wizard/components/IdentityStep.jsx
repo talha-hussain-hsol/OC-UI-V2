@@ -9,8 +9,9 @@ import {
     Image,
     Alert,
     OverlayTrigger,
-    Tooltip,
+    
   } from 'react-bootstrap';
+  import Tooltip from '../../../components/tooltip/Tooltip'
   import React, { useState, useEffect } from 'react';
   import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
   import {
@@ -38,9 +39,11 @@ import {
   import Flatpickr from '../../../components/vendor/Flatpickr';
   import { format } from 'date-fns';
   import { getCountryData } from 'country-list';
-  
+  import { useTheme } from '../../../contexts/themeContext';
   const query = new URLSearchParams(location.search);
+
   export default function Particular(props) {
+    const {theme} = useTheme();
     const registered_user_email = localStorage?.getItem('user_email') || '';
     console.log(props, 'props particular particular particular');
     const params = useParams();
@@ -82,14 +85,12 @@ import {
     });
     const [registrationProviderData, setRegistrationProviderData] = useState({});
     const navigate = useNavigate();
-    const theme = localStorage.getItem('portal_theme');
+    
     const identity_id = props?.dataOfAccountSetup?.identity_id;
     const fund_id = props?.dataOfAccountSetup?.fund_id;
     const account_id = props?.dataOfAccountSetup?.account_id;
     var allRequiredField = [];
-    if (theme === 'dark theme') {
-      setDarkMode(true);
-    }
+    
   
     useEffect(() => {
       getParticularFields();
@@ -4028,8 +4029,8 @@ import {
           particularAddedData,
           'particularAddedDataparticularAddedDataparticularAddedDataparticularAddedData}',
         )}
-        <Container fluid>
-          <Row className="justify-content-center">
+        <div>
+          <div className="flex justify-center">
             {isCrp && (
               <IdentityCrpAndOrganizationChart
                 dataOfAccountSetup={props?.dataOfAccountSetup}
@@ -4038,7 +4039,7 @@ import {
               />
             )}
             {!isCrp && (
-              <Col xs={12} lg={12} xl={12}>
+             <div className="w-full lg:w-full xl:w-full">
                 {message && (
                   <div>
                     <Alert
@@ -4085,44 +4086,42 @@ import {
                 ) : (
                   <>
                     {handleImage()}
-                    <Form className="identity-form">
+                    <form className={`w-full`}>
                       {submitLoader && (
                         <Loader/>
                       )}
   
                       {/* {((identity_id && particularEditMetaData.length > 0) || !identity_id) && */}
   
-                      <div className="row">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4 px-6">
                         {showLabel && (
-                          <div className="col-12 col-md-12">
-                            <div className="form-group">
-                              <div className="d-flex flex-row justify-content-start align-items-baseline">
+                          <div className="w-full md:w-full">
+                            <div className="w-full">
+                              <div className="flex w-full justify-start items-baseline">
                                 <span>
-                                  <label className="form-label">
+                                  <label className="font-light">
                                     {' '}
                                     Identity Label{' '}
                                   </label>
                                 </span>
                                 <span className="ms-2">
-                                  <OverlayTrigger
-                                    placement="top"
-                                    overlay={
-                                      <Tooltip>
-                                        You can name this identity profile for
-                                        easier reference in future
+                                 
+                                   
+                                      <Tooltip 
+                                        content="You can name this identity profile for
+                                        easier reference in future" position="upper" className={`whitespace-wrap `}>
+                                           <FontAwesomeIcon icon={faEye} />
                                       </Tooltip>
-                                    }
-                                  >
-                                    {/* <FaEye /> */}
-                                    <FontAwesomeIcon icon={faEye} />
-                                  </OverlayTrigger>
+                                  
+                                   
+                                
                                 </span>
                               </div>
   
                               <input
                                 type="text"
-                                className={
-                                  label ? 'form-control' : 'form-control'
+                                className={`bg-color-textfield-dropdown-${theme} mt-2 w-full py-2 px-4 border-color-${theme} rounded-lg shadow-${theme} focus:outline-none focus:ring-1 focus:ring-[#2d7ce2] focus:border-[#2d7ce2] placeholder:text-sm placeholder:text-[#8ca4c2]  ${
+                                  label ? `w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500` : 'form-control'}`
                                 }
                                 name={'Identity Label'}
                                 value={label}
@@ -4141,9 +4140,9 @@ import {
                           </div>
                         )}
                         {!props?.dataOfAccountSetup?.isIndividual && (
-                          <div className="col-12 col-md-12">
-                            <div className="form-group">
-                              <label className="form-label">
+                          <div className="w-full md:w-full">
+                            <div className="w-full">
+                              <label className="w-full">
                                 {' '}
                                 Entity Type{' '}
                                 {!entityType && (
@@ -4152,10 +4151,8 @@ import {
                               </label>
                               <select
                                 type="text"
-                                className={
-                                  entityType
-                                    ? 'form-control'
-                                    : 'form-control field_warning'
+                                className={`bg-color-textfield-dropdown-${theme} mt-2 w-full py-2 px-4 border-color-${theme} rounded-lg shadow-${theme} focus:outline-none focus:ring-1 focus:ring-[#2d7ce2] focus:border-[#2d7ce2] placeholder:text-sm placeholder:text-[#8ca4c2]  ${
+                                  entityType ? `w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500` : 'form-control'}`
                                 }
                                 value={entityType}
                                 onChange={(e) => {
@@ -4189,7 +4186,7 @@ import {
                                   )}
                               </select>
                               {entityError && (
-                                <span className="error-fields">
+                                <span className="">
                                   Select Entity Type To Continue
                                 </span>
                               )}
@@ -4198,12 +4195,12 @@ import {
                         )}
                         {!isEmptyObject(registrationProviderData) &&
                           props?.dataOfAccountSetup?.isIndividual && (
-                            <div className="col-12 col-md-12">
-                              <div className="form-group">
-                                <label className="form-label">Full Name</label>
+                            <div className="w-full md:w-full">
+                              <div className="w-full">
+                                <label className="font-thin">Full Name</label>
                                 <input
                                   type="text"
-                                  className={'form-control'}
+                                  className={`bg-color-textfield-dropdown-${theme} mt-2 w-full py-2 px-4 border-color-${theme} rounded-lg shadow-${theme} focus:outline-none focus:ring-1 focus:ring-[#2d7ce2] focus:border-[#2d7ce2] placeholder:text-sm placeholder:text-[#8ca4c2] `}
                                   name={'Full Name'}
                                   value={registrationProviderData?.name?.value}
                                   placeholder="Full Name"
@@ -4301,12 +4298,13 @@ import {
                                     if (fieldType == 'text') {
                                       if (fieldName == 'phone') {
                                         return (
-                                          <div className="col-6 col-md-6">
-                                            <div className="form-group">
-                                              <label className="form-label">
+                                          
+                                          <div className="w-1/2 md:w-full">
+                                            <div className="w-full">
+                                              <label className="font-light">
                                                 {label}
                                                 {requiredField && (
-                                                  <span className="text-danger">
+                                                  <span className="text-red-500">
                                                     *
                                                   </span>
                                                 )}
@@ -4318,13 +4316,11 @@ import {
                                                     formKeyVal
                                                   ] &&
                                                   (getUpdatedData(formKeyVal) ==
-                                                    '' ||
+                                                    `` ||
                                                     getUpdatedData(formKeyVal) ==
                                                       null)
-                                                    ? 'form-control field_warning'
-                                                    : 'form-control' && darkMode
-                                                    ? 'darkMode'
-                                                    : ''
+                                                    ? `bg-color-textfield-dropdown-${theme} mt-2 w-full py-2 px-4 border-color-${theme} rounded-lg shadow-${theme} focus:outline-none focus:ring-1 focus:ring-[#2d7ce2] focus:border-[#2d7ce2] placeholder:text-sm placeholder:text-[#8ca4c2] `
+                                                    : '' 
                                                 }
                                               >
                                                 <div
@@ -4378,23 +4374,19 @@ import {
                                                       {checkDataMatchedWithKYCData(
                                                         formKeyVal,
                                                       )?.updated === true ? (
-                                                        <OverlayTrigger
-                                                          placement="top"
-                                                          overlay={
-                                                            <Tooltip>
-                                                              No Change Found
-                                                            </Tooltip>
-                                                          }
-                                                        >
-                                                          <FontAwesomeIcon
+                                                       <>
+                                                        <Tooltip content=' No Change Found'>
+                                                        <FontAwesomeIcon
                                                             icon={faCheck}
                                                             color="green"
                                                           />
-                                                        </OverlayTrigger>
+                                                            </Tooltip>
+                                                          
+                                                         </>
+                                                           
+                                                       
                                                       ) : (
-                                                        <OverlayTrigger
-                                                          placement="top"
-                                                          overlay={
+                                                        
                                                             <Tooltip>
                                                               <ul
                                                                 style={{
@@ -4435,16 +4427,15 @@ import {
                                                                   }
                                                                 </li>
                                                               </ul>{' '}
-                                                            </Tooltip>
-                                                          }
-                                                        >
-                                                          <FontAwesomeIcon
+                                                              <FontAwesomeIcon
                                                             icon={
                                                               faCircleExclamation
                                                             }
                                                             color="orange"
                                                           />
-                                                        </OverlayTrigger>
+                                                            </Tooltip>
+                                                          
+                                                     
                                                       )}
                                                     </span>
                                                   )}
@@ -4455,21 +4446,18 @@ import {
                                         );
                                       } else {
                                         return (
-                                          <div className="col-6 col-md-6">
-                                            <div className="form-group">
-                                              <label className="form-label">
+                                          <div className="w-1/2 md:w-full">
+                                            <div className="w-full">
+                                              <label className="font-light">
                                                 {label}
                                                 {requiredField && (
-                                                  <span className="text-danger">
+                                                  <span className="text-red-500">
                                                     *
                                                   </span>
                                                 )}
                                               </label>
-                                              <div
-                                                style={{
-                                                  display: 'flex',
-                                                  alignItems: 'center',
-                                                }}
+                                              <div className='w-full flex items-center'
+                                               
                                               >
                                                 <input
                                                   type={fieldType}
@@ -4483,8 +4471,8 @@ import {
                                                       getUpdatedData(
                                                         formKeyVal,
                                                       ) == null)
-                                                      ? 'form-control field_warning'
-                                                      : 'form-control'
+                                                      ? `w-full border-[0.5px] border-[#e19800] mt-2 bg-color-textfield-dropdown-${theme} p-2 border-color-${theme} rounded-lg shadow-${theme}`
+                                                      : `w-full mt-2 bg-color-textfield-dropdown-${theme} p-2 border-color-${theme} rounded-lg shadow-${theme}`
                                                   }
                                                   defaultValue={
                                                     editableField == false
@@ -4516,27 +4504,22 @@ import {
                                                 />
                                                 {checkIfDataFromCKYCAndOutDatedTrue() ===
                                                   true && (
-                                                  <span className="ms-2">
+                                                  <span className="">
                                                     {checkDataMatchedWithKYCData(
                                                       formKeyVal,
                                                     )?.updated === true ? (
-                                                      <OverlayTrigger
-                                                        placement="top"
-                                                        overlay={
+                                                     <>
                                                           <Tooltip>
                                                             No Change Found
                                                           </Tooltip>
-                                                        }
-                                                      >
+                                                       
                                                         <FontAwesomeIcon
                                                           icon={faCheck}
                                                           color="green"
                                                         />
-                                                      </OverlayTrigger>
+                                                      </>
                                                     ) : (
-                                                      <OverlayTrigger
-                                                        placement="top"
-                                                        overlay={
+                                                      <>
                                                           <Tooltip>
                                                             <ul
                                                               style={{
@@ -4577,15 +4560,15 @@ import {
                                                               </li>
                                                             </ul>{' '}
                                                           </Tooltip>
-                                                        }
-                                                      >
+                                                        
+                                                      
                                                         <FontAwesomeIcon
                                                           icon={
                                                             faCircleExclamation
                                                           }
                                                           color="orange"
                                                         />
-                                                      </OverlayTrigger>
+                                                      </>
                                                     )}
                                                   </span>
                                                 )}
@@ -4597,34 +4580,18 @@ import {
                                     }
                                     if (fieldType == 'date') {
                                       return (
-                                        <div className="col-6 col-md-6">
-                                          <div className="form-group">
-                                            <label className="form-label">
+                                        <div className="w-full md:w-full">
+                                          <div className="w-full">
+                                            <label className="font-thin">
                                               {label}
                                               {requiredField && (
-                                                <span className="text-danger">
+                                                <span className="text-red-500">
                                                   *
                                                 </span>
                                               )}
                                             </label>
-                                            {/* <input
-                                            type={fieldType}
-                                            defaultValue={editableField == false ? valueField : getUpdatedData(formKeyVal)}
-                                            disabled={!editableField || particularAddedData[key[0]]?.isSingpass || particularAddedData[key[0]]?.isAdhar || handleProviderValueDisabled(particularAddedData, key)}
-                                            className={requiredField && !identityDataFields?.[formKeyVal] && (getUpdatedData(formKeyVal) == "" || getUpdatedData(formKeyVal) == null) ? "form-control" : "form-control"}
-                                            name={formKeyVal}
-                                            placeholder={label}
-                                            onChange={(e) => {
-                                              handleChange(e);
-                                            }}
-                                          /> */}
-                                            <div
-                                              style={{
-                                                display: 'flex',
-                                                flexDirection: 'column',
-                                                alignItems: 'start',
-                                              }}
-                                              className="flatpickr-wrapper-width"
+                                           
+                                            <div className={`flex flex-col items-start w-full`}
                                             >
                                               <Flatpickr
                                                 placeholder={label}
@@ -4637,9 +4604,9 @@ import {
                                                     '' ||
                                                     getUpdatedData(formKeyVal) ==
                                                       null)
-                                                    ? 'form-control field_warning'
-                                                    : 'form-control'
-                                                }
+                                                    ? `w-full border-[0.5px] border-[#e19800] mt-2 bg-color-textfield-dropdown-${theme} p-2 border-color-${theme} rounded-lg shadow-${theme}`
+                                                    : `w-full mt-2 bg-color-textfield-dropdown-${theme} p-2 border-color-${theme} rounded-lg shadow-${theme}`
+                                                    }
                                                 disabled={
                                                   !editableField ||
                                                   particularAddedData[key[0]]
@@ -4747,9 +4714,7 @@ import {
                                                       />
                                                     </OverlayTrigger>
                                                   ) : (
-                                                    <OverlayTrigger
-                                                      placement="top"
-                                                      overlay={
+                                                    <>
                                                         <Tooltip>
                                                           <ul
                                                             style={{
@@ -4786,13 +4751,12 @@ import {
                                                             </li>
                                                           </ul>{' '}
                                                         </Tooltip>
-                                                      }
-                                                    >
+                                                      
                                                       <FontAwesomeIcon
                                                         icon={faCircleExclamation}
                                                         color="orange"
                                                       />
-                                                    </OverlayTrigger>
+                                                    </>
                                                   )}
                                                 </span>
                                               )}
@@ -4808,12 +4772,12 @@ import {
                                         sourceType == 'custom'
                                       ) {
                                         return (
-                                          <div className="col-6 col-md-6">
-                                            <div className="form-group">
-                                              <label className="form-label">
+                                          <div className="w-1/2 md:w-full">
+                                            <div className="w-full">
+                                              <label className="w-full font-thin">
                                                 {label}
                                                 {requiredField && (
-                                                  <span className="text-danger">
+                                                  <span className="text-red-500">
                                                     *
                                                   </span>
                                                 )}
@@ -4835,8 +4799,10 @@ import {
                                                       getUpdatedData(
                                                         formKeyVal,
                                                       ) == null)
-                                                      ? 'form-control field_warning'
-                                                      : 'form-control'
+                                                      ? `w-full border-[0.5px] border-[#e19800] mt-2 bg-color-textfield-dropdown-${theme} p-2 border-color-${theme} rounded-lg shadow-${theme}`
+                                                   
+                                                      : `w-full mt-2 bg-color-textfield-dropdown-${theme} p-2 border-color-${theme} rounded-lg shadow-${theme}`
+                                                   
                                                   }
                                                   defaultValue={
                                                     editableField == false
@@ -4969,12 +4935,12 @@ import {
                                       }
                                       if (sourceType == 'enum') {
                                         return (
-                                          <div className="col-6 col-md-6">
-                                            <div className="form-group">
-                                              <label className="form-label">
+                                          <div className="w-1/2 md:w-full">
+                                            <div className="w-full">
+                                              <label className="font-thin">
                                                 {label}
                                                 {requiredField && (
-                                                  <span className="text-danger">
+                                                  <span className="text-red-500">
                                                     *
                                                   </span>
                                                 )}
@@ -4996,8 +4962,10 @@ import {
                                                       getUpdatedData(
                                                         formKeyVal,
                                                       ) == null)
-                                                      ? 'form-control field_warning'
-                                                      : 'form-control'
+                                                      ? `w-full border-[0.5px] border-[#e19800] mt-2 bg-color-textfield-dropdown-${theme} p-2 border-color-${theme} rounded-lg shadow-${theme}`
+                                                   
+                                                      : `w-full mt-2 bg-color-textfield-dropdown-${theme} p-2 border-color-${theme} rounded-lg shadow-${theme}`
+                                                   
                                                   }
                                                   defaultValue={
                                                     editableField == false
@@ -5247,7 +5215,7 @@ import {
   
                                       return (
                                         <div
-                                          className="col-6 col-md-6"
+                                          className="w-1/2 md:w-full"
                                           style={{
                                             display: 'flex',
                                             alignItems: 'center',
@@ -5634,15 +5602,15 @@ import {
                           })}
                       </div>
                       {/* } */}
-                    </Form>
+                    </form>
                   </>
                 )}
                 <br />
                 <br />
-              </Col>
+              </div>
             )}
-          </Row>
-        </Container>
+          </div>
+        </div>
       </div>
     );
   }

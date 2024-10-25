@@ -1389,8 +1389,9 @@ export default function Wizard() {
   return (
     <>
       <SideBar portalType="Customer" />
+      
       <div
-        className={`bg-color-${theme} w-full px-4 py-4 sm:px-6 md:px-16 lg:px-24 md:py-5 lg:py-6 min-h-screen`}
+        className={`bg-color-${theme} w-full px-4 py-4 sm:px-6 md:px-16 lg:pl-24 md:py-5 lg:py-6 min-h-screen`}
       >
         {alertProps.show && (
           <CustomAlert
@@ -1415,7 +1416,8 @@ export default function Wizard() {
           circleFontColor={"black"}
         />
 
-        <div className="">
+        <div  className={`bg-gradient-stepper-card-${theme} w-full shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] mx-auto py-4  md:mt-12 rounded-lg text-white flex flex-col justify-center`}
+        >
           {isLoader ? (
             <div className="flex justify-center items-center h-[20rem]">
               <Loader />
@@ -1424,7 +1426,8 @@ export default function Wizard() {
             <>{_getSelectedSection(currentSection)}</>
           )}
 
-          <div className="flex lg:justify-between md:justify-center sm:justify-center w-full px-28 py-8">
+<hr className="w-full border-t-[1px] border-t-[#6e84a3] opacity-30 my-4" />
+          <div className="xs:flex-row flex flex-col space-y-2 xs:space-y-0 xs:justify-between  w-full px-8">
             <button
               className={`bg-color-button-${theme} px-6 py-3 rounded-lg text-white outline-none`}
               onClick={(e) => handleBackCancel(e)}
@@ -1468,7 +1471,7 @@ export default function Wizard() {
               : null}
 
             <button
-              className={`bg-color-button-${theme} px-6 py-3 rounded-lg text-white outline-none`}
+              className={`bg-color-button-${theme} px-8 py-3 rounded-lg text-white outline-none`}
               disabled={checkIfNextButtonDisabled()}
               onClick={(e) => handleNextButton(e)}
             >

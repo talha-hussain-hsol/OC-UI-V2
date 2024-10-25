@@ -3,11 +3,7 @@ import Select from "react-select";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import Tooltip from "../../../components/tooltip/Tooltip";
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Alert,
-  Modal,
-} from "react-bootstrap";
+
 import { useNavigate } from "react-router-dom";
 import {
   getFundForJoin,
@@ -20,6 +16,7 @@ import { HiSearch } from "react-icons/hi";
 import Loader from "../../../components/ui/loader";
 import NewIdentitySection from "./NewIdentitySection";
 import { useTheme } from "../../../contexts/themeContext";
+import TermsCondition from "../../../components/modal/TermsCondition";
 
 export default function AccountStep(props) {
   console.log(props, "props props props props AccountStep");
@@ -334,17 +331,16 @@ export default function AccountStep(props) {
   };
   return (
     <div
-      className={`bg-gradient-stepper-card-${theme} w-full shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] mx-auto p-10 md:ml-4 md:mt-12 rounded-lg text-white flex flex-col justify-center`}
-    >
+       >
       <div
-        className={`ml-20 mr-20 flex flex-col items-center bg-transparent font-${theme} text-${theme}`}
+        className={`ml-10 mr-10 flex flex-col items-center bg-transparent `}
       >
         <h3
           className={`text-color-h3-${theme} text-2xl sm:text-xl md:text-2xl font-light mt-6`}
         >
           Let's start with the basics.
         </h3>
-        <p className="text-slate-500 text-xs sm:text-sm font-light mt-2 text-center sm:text-left">
+        <p className={`text-color-description-${theme} text-xs sm:text-sm font-light mt-2 text-center sm:text-left`}>
           {descriptionText}
         </p>
         <>
@@ -355,10 +351,10 @@ export default function AccountStep(props) {
           ) : (
             <>
               {!fundData && (
-                <div className="relative w-full mt-4 mb-10">
+                <div className="relative w-full mt-10 mb-10">
                   <input
                     placeholder="Enter The Account Code"
-                    className={`bg-color-textfield-dropdown-${theme} text-color-text-${theme} w-full p-3 xs:pl-8 pl-4 rounded-full border border-color-dropdown-${theme} shadow-${theme} focus:outline-none xs:text-lg text-xs`}
+                    className={`bg-color-textfield-dropdown-${theme} text-color-text-${theme} w-[93%] p-2 xs:pl-6 pl-4 rounded-l-full border border-color-dropdown-${theme} shadow-${theme} focus:outline-none xs:text-lg text-xs placeholder:text-base`}
                     type="text"
                     value={fundCode}
                     onChange={(event) => setFundCode(event.target.value)}
@@ -367,24 +363,24 @@ export default function AccountStep(props) {
                   <button
                     disabled={fundCode?.length > 1 ? false : true}
                     onClick={() => getFundForJoinApi()}
-                    className={`absolute right-[1px] top-[1px] xs:py-[18px] py-[12px] sm:px-8 xs:px-6 px-4 rounded-r-full  ${
+                    className={`absolute right-[1px] xs:py-[13px] py-[12px] sm:px-8 xs:px-6 px-4 rounded-r-full  ${
                       fundCode ? "bg-[#2bb02a]" : "bg-[#0f9969]"
                     } text-white`}
                   >
-                    <HiSearch size="20px" />
+                    <HiSearch size="20px" className={`${fundCode ? 'text-white':'text-[#adb5c0]'}`}/>
                   </button>
                 </div>
               )}
               {fundData && (
                 <>
                   <div
-                    className={`flex flex-col sm:flex-row bg-color-card-${theme} rounded-lg shadow-lg h-auto sm:h-[10%] w-[90%] sm:w-[80%] mt-8 items-center p-4`}
+                    className={`flex flex-col sm:flex-row bg-color-card-header-${theme} shadow-${theme} justify-between rounded-lg border border-color-${theme}  h-auto sm:h-[10%] w-[90%] sm:w-[95%] mt-8 items-start px-4 py-2`}
                   >
                     {fundData?.fund_setting?.display?.fund_info === true ||
                     fundData?.fund_setting?.display?.fund_info == "true" ? (
-                      <div className="flex items-center">
+                      <div className="flex items-center w-1/3">
                         <img
-                          className="w-15 h-12 mr-2 rounded-[3px]"
+                          className="w-18 h-16 mr-2 "
                           src={
                             fundData?.logoBucketKey
                               ? fundData?.logoBucketKey
@@ -392,15 +388,15 @@ export default function AccountStep(props) {
                           }
                         />
                         <span
-                          className={`text-color-${theme} text-sm font-normal`}
+                          className={`text-color-${theme} text-lg font-normal`}
                         >
                           {fundData?.name}
                         </span>
                       </div>
                     ) : (
-                      <div className="flex items-center">
+                      <div className="flex items-center w-1/3">
                         <img
-                          className="w-15 h-12 mr-2 rounded-[3px]"
+                          className="w-18 h-16 mr-2 "
                           src={
                             fundData?.logoBucketKey
                               ? fundData?.logoBucketKey
@@ -408,7 +404,7 @@ export default function AccountStep(props) {
                           }
                         />
                         <span
-                          className={`text-color-${theme} text-sm font-normal`}
+                          className={`text-color-${theme} text-lg font-normal`}
                         >
                           {fundData?.name}
                         </span>
@@ -419,7 +415,7 @@ export default function AccountStep(props) {
                       <>
                         <>
                           <div
-                            className={`text-color-${theme} sm:ml-[10%] lg:ml-[20%] text-xs font-light mb-4 sm:mb-0`}
+                            className={`text-color-${theme}  text-lg font-light mb-4 sm:mb-0 w-1/3`}
                           >
                             <small className="flex items-center">
                               <span>
@@ -436,7 +432,7 @@ export default function AccountStep(props) {
                                 : fundData?.meta?.config?.kyb?.status}
                             </small>
 
-                            <small className="text-slate-500 flex items-center">
+                            <small className="text-slate-500 text-sm flex items-center">
                               <span>
                                 <FeatherIcon
                                   className={`text-color-button1-${theme}`}
@@ -455,7 +451,7 @@ export default function AccountStep(props) {
 
                         <>
                           <div
-                            className={`text-color-${theme} sm:ml-[10%] lg:ml-[20%] text-xs font-light`}
+                            className={`text-color-${theme} text-lg font-light w-1/3`}
                           >
                             <small className="flex items-center">
                               <FeatherIcon
@@ -472,7 +468,7 @@ export default function AccountStep(props) {
 
                             {fundData?.fund_setting?.account?.applicant?.asset
                               ?.digital?.status && (
-                              <small className="text-slate-500 flex items-center">
+                              <small className="text-slate-500 text-sm flex items-center">
                                 <span>
                                   <FeatherIcon
                                     className={`text-color-button1-${theme}`}
@@ -504,13 +500,13 @@ export default function AccountStep(props) {
                     typeof fundData?.description === "string" &&
                     fundData?.description.trim()?.length > 0 && (
                       <div
-                        className={`bg-color-card-${theme} rounded-lg shadow-lg h-auto sm:h-[20%] w-[90%] sm:w-[80%] mt-8 p-4`}
+                        className={`bg-color-card-${theme} shadow-${theme} rounded-lg border border-color-${theme}  h-auto sm:h-[20%] w-[90%] sm:w-[95%] mt-8`}
                       >
                         <div
-                          className={`flex bg-color-card-${theme} rounded-lg shadow-lg h-[50%] w-[100%]`}
+                          className={`flex bg-color-card-${theme} shadow-${theme} rounded-t-lg w-full py-2 px-4 border-b border-color-${theme}`}
                         >
                           <h4
-                            className={`text-color-${theme} text-xs font-extrabold m-3`}
+                            className={`text-color-${theme} text-sm font-light m-3`}
                           >
                             Account Description
                           </h4>
@@ -518,7 +514,7 @@ export default function AccountStep(props) {
 
                         {fundData?.description && (
                           <p
-                            className={`text-color-${theme} text-xs sm:text-sm font-light p-3`}
+                            className={`text-color-${theme} text-xs sm:text-sm font-light py-3 px-4 mb-4`}
                           >
                             {fundData?.description}
                           </p>
@@ -526,31 +522,30 @@ export default function AccountStep(props) {
                       </div>
                     )}
                   {fundData?.reference_document?.documents?.length > 0 && (
-                    <div>
+                    <div  className={` bg-color-card-${theme} rounded-lg shadow-${theme} border border-color-${theme} h-[10%] sm:h-[10%] sm:w-[95%] mt-4`}>
                       <div
-                        className={`flex bg-color-card-${theme} rounded-lg shadow-lg h-[10%] sm:h-[10%] sm:w-[80%] mt-4 w-[80%] justify-between items-center`}
-                      >
+                         className={`flex justify-between items-center px-4 py-2`}  >
                         <h4
-                          className={`text-color-${theme} text-xs sm:text-sm font-extrabold m-3`}
+                          className={`text-color-${theme} text-xs sm:text-sm font-light m-3`}
                         >
                           Reference Documents
                         </h4>
-                        <Button
+                        <button
                           onClick={toggleCollapse}
-                          variant="link"
+                          
                           className="text-slate-500 hover:text-slate-700"
                         >
                           {isCollapsed ? <FaChevronDown /> : <FaChevronUp />}
-                        </Button>
+                        </button>
                       </div>
                       {!isCollapsed && (
-                        <div className="w-[80%] mt-4">
+                        <div className="w-[95%] mt-4">
                           {fundData?.reference_document?.documents &&
                             fundData?.reference_document?.documents.map(
                               (item, index) => (
                                 <div
                                   key={index}
-                                  className={`flex justify-between items-center bg-color-card-${theme} rounded-lg shadow-lg p-3 mb-2`}
+                                  className={`flex justify-between items-center bg-color-card-${theme} rounded-lg shadow-${theme} p-3 mb-2`}
                                 >
                                   <div>
                                     <div
@@ -573,7 +568,7 @@ export default function AccountStep(props) {
                                         </p>
                                       </div>
                                       <div>
-                                        <Button
+                                        <button
                                           onClick={(e) =>
                                             handleClickReferenceDocument(
                                               item?.url
@@ -592,7 +587,7 @@ export default function AccountStep(props) {
                                           }}
                                         >
                                           <FeatherIcon icon="eye" size="1em" />
-                                        </Button>
+                                        </button>
                                       </div>
                                     </div>
                                   </div>
@@ -604,7 +599,7 @@ export default function AccountStep(props) {
                     </div>
                   )}
 
-                  <hr className="w-[80%] border-t-[1px] border-t-[#6e84a3] opacity-30 my-6 mx-8" />
+                  <hr className="w-[95%] border-t-[1px] border-t-[#6e84a3] opacity-30 my-10 mx-8" />
                   {props?.isAcceptedTermsAndCondition ? (
                     !isNewIdentity && (
                       <div className="flex justify-center">
@@ -627,42 +622,7 @@ export default function AccountStep(props) {
                                 }}
                               >
                                 <div style={{ width: "90%" }}>
-                                  {/* <Select
-                                    placeholder="Select Identity"
-                                    isSearchable={true}
-                                    styles={customStyles}
-                                    filterOption={customFilter}
-                                    options={
-                                      options[0] != undefined &&
-                                      options[0] != "undefined"
-                                        ? options
-                                        : {
-                                            value: "",
-                                            label: (
-                                              <div
-                                                style={{
-                                                  display: "flex",
-                                                  alignItems: "center",
-                                                }}
-                                              >
-                                                There is no Identity available
-                                                to attached this fund
-                                              </div>
-                                            ),
-                                          }
-                                    }
-                                    value={
-                                      selectedIdentity.value == ""
-                                        ? {
-                                            value: "",
-                                            label: "Please select an identity", // Change this to your desired prompt
-                                          }
-                                        : selectedIdentity
-                                    }
-                                    onChange={(selectedOption) =>
-                                      setSelectedIdentity(selectedOption)
-                                    }
-                                  /> */}
+                                  
                                   <Select
                                     placeholder="Select Identity"
                                     isSearchable={true}
@@ -730,7 +690,7 @@ export default function AccountStep(props) {
                                     }}
                                   />
                                 </div>
-                                <Tooltip content="Create New Identity">
+                                <Tooltip content="Create New Identity" position="upper">
                                   <div
                                     style={{
                                       marginLeft: "10px",
@@ -751,18 +711,13 @@ export default function AccountStep(props) {
                             )}
                           </div>
                           {!shouldShowSelect && (
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "center",
-                                flexDirection: "column",
-                                alignItems: "center",
-                              }}
+                            <div className={`flex justify-center flex-col items-center`}
+                              
                             >
-                              <p style={{ color: "gray" }}>
+                              <p style={{ color: "gray" }} >
                                 No options available. Please create a new one.
                               </p>
-                              <Tooltip content="Create New Identity">
+                              <Tooltip content="Create New Identity" position="upper">
                                 <div
                                   style={{
                                     marginLeft: "10px",
@@ -809,7 +764,7 @@ export default function AccountStep(props) {
                                       </p>
                                     </div>
                                     <div>
-                                      <Button
+                                      <button
                                         onClick={(e) =>
                                           handleClickReferenceDocument(
                                             item?.url
@@ -828,7 +783,7 @@ export default function AccountStep(props) {
                                         }}
                                       >
                                         <FeatherIcon icon="eye" size="1em" />
-                                      </Button>
+                                      </button>
                                     </div>
                                   </div>
                                 </div>
@@ -838,12 +793,12 @@ export default function AccountStep(props) {
                         <div
                           style={{ display: "flex", justifyContent: "center" }}
                         >
-                          <Button
+                          <button
                             onClick={props.handleChangeTermsCondition}
-                            variant="success"
+                         
                           >
                             Accept All
-                          </Button>
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -861,125 +816,36 @@ export default function AccountStep(props) {
           )}
 
           {alertJoinFund ? (
-            <Alert
-              closeLabel
-              style={{ marginTop: "30px" }}
-              dismissible={true}
-              onClose={() => setAlertJoinFund(false)}
-              key="danger"
-              variant="danger"
+            <div
+            className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-8"
+            role="alert"
+          >
+            <strong className="font-bold">Error: </strong>
+            <span className="block sm:inline">Account Not Found</span>
+            <button
+              className="absolute top-0 bottom-0 right-0 px-4 py-3"
+              onClick={() => setAlertJoinFund(false)}
+              aria-label="Close"
             >
-              Account Not Found
-            </Alert>
+              <svg
+                className="fill-current h-6 w-6 text-red-500"
+                role="button"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+              >
+                <title>Close</title>
+                <path d="M14.348 5.652a.5.5 0 01.707 0l.707.707a.5.5 0 010 .707L11.414 10l4.348 4.348a.5.5 0 010 .707l-.707.707a.5.5 0 01-.707 0L10 11.414l-4.348 4.348a.5.5 0 01-.707 0l-.707-.707a.5.5 0 010-.707L8.586 10 4.239 5.652a.5.5 0 010-.707l.707-.707a.5.5 0 01.707 0L10 8.586l4.348-4.348z" />
+              </svg>
+            </button>
+          </div>
           ) : null}
         </>
-        <Modal
-          size="md"
-          show={customizeModal}
-          onHide={handleClickCustomizeTC}
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-          backdrop="static"
-          keyboard={false}
-        >
-          <Modal.Header>
-            {/* <Modal.Header closeButton> */}
-            <Modal.Title>
-              <div>
-                <h1>Disclaimer Notice</h1>
-              </div>
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <p>
-              Please review the following Disclaimer and click "I Accept" to
-              continue.
-            </p>
-            <p>
-              First Degree Global Asset Management Pte Ltd (
-              <strong>First Degree</strong>) is regulated as a Capital Markets
-              Services License-holder for Fund Management (LFMC) by the Monetary
-              Authority of Singapore ("MAS). The material on this website is
-              provided for your general information only and does not constitute
-              the giving of investment advice or an offer to sell or the
-              solicitation of an offer to buy any investment(s) managed or
-              advised on by First Degree.
-            </p>
-            <p>
-              By clicking "I accept", this means you accept the following terms
-              and conditions of use of this website:
-            </p>
-            <ol>
-              <li>
-                You agree that you <strong>are an</strong>{" "}
-                <a
-                  target="_blank"
-                  href="https://storage.googleapis.com/one-constellation-bucket-public/first_degree/terms_and_conditions.pdf"
-                >
-                  Accredited Investor or Institutional Investor as defined under
-                  section 4A of the Securities and Futures Act (Cap. 289) of
-                  Singapore
-                </a>
-                , and that you are aware of the reduced protections being
-                accorded to you by being treated as an Accredited or
-                Institutional Investor
-              </li>
-              <li>
-                No person receiving a copy of the offering documents including
-                any application forms and subscription agreements used herein to
-                subscribe for Participating Shares (the "Subscription Form") in
-                any jurisdiction may treat the same as constituting an
-                invitation to him or her, unless in the relevant jurisdiction
-                such an invitation could lawfully be made to him without
-                compliance with any registration or other legal requirements or
-                where such requirements have been complied with.
-              </li>
-              <li>
-                First Degree makes no representations or warranties whatsoever
-                about any of the content of this website or about content of any
-                other website which you may access by hypertext link through
-                this website. When you access any other website by means of a
-                link from this website, you should understand that your access
-                to that other website is independent of First Degree and First
-                Degree has no control over the content of the website, nor does
-                First Degree in any way endorse or approve the content of that
-                website.
-              </li>
-              <li>
-                You agree with our{" "}
-                <a
-                  target="_blank"
-                  href="https://storage.googleapis.com/one-constellation-bucket-public/first_degree/privacy_policy.pdf"
-                >
-                  data protection policy.
-                </a>
-              </li>
-            </ol>
-            <p>
-              If you are in any doubt about the information contained on this
-              website please contact us or consult your professional{" "}
-              <strong>financial adviser, lawyer or accountant</strong>.
-            </p>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Button
-                variant="danger"
-                onClick={(e) => {
-                  handleClickADeclinedCustomize();
-                }}
-              >
-                I Decline
-              </Button>
-              <Button
-                variant="primary"
-                onClick={(e) => {
-                  handleClickAgreeCustomize();
-                }}
-              >
-                I Accept
-              </Button>
-            </div>
-          </Modal.Body>
-        </Modal>
+        <TermsCondition
+        show={customizeModal}
+        onHide={handleClickCustomizeTC}
+        handleClickADeclinedCustomize={handleClickADeclinedCustomize}
+        handleClickAgreeCustomize={handleClickAgreeCustomize}
+      />
       </div>
     </div>
   );
