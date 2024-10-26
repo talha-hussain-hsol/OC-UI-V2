@@ -1,7 +1,6 @@
-import { Button, Col, Container, Spinner, Card, ListGroup, Row, Modal } from "react-bootstrap";
-import React, { useCallback, useEffect, useState } from "react";
-import Accordion from "react-bootstrap/Accordion";
 
+import React, { useCallback, useEffect, useState } from "react";
+import { useTheme } from "../../../contexts/themeContext";
 // import { AiFillEye } from 'react-icons/ai';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
@@ -27,6 +26,7 @@ import formatDateRegionWise  from "../../../helpers/formatDateRegionWise";
 // var theme = localStorage.getItem("portal_theme");
 let crpIdValueSelected = "";
 export default function Documents(props) {
+  const {theme} = useTheme();
   const [alertSucessDocumentAdd, setAlertSucessDocumentAdd] = useState(false);
   const [alertFailedDocumentAdd, setAlertFailedDocumentAdd] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -544,13 +544,10 @@ export default function Documents(props) {
   };
   const renderRequiredDocuments = (entityValueData) => (
     <div
-      className="row"
-      style={{ alignItems: 'space-between', marginTop: '20px' }}
+      className="flex w-full mt-[20px]"
     >
-      <div
-        className="col-sm-5 col-md-5 col-lg-5"
-        style={{ maxHeight: '28em', minHeight: '28em', overflow: 'scroll' }}
-      >
+      <div className="sm:w-5/12 md:w-5/12 lg:w-5/12 px-6 max-h-[28em] min-h-[28em] overflow-y-scroll">
+ 
         {requiredDocList
           .filter((document) => {
             return (
@@ -559,6 +556,12 @@ export default function Documents(props) {
             );
           })
           .sort((a, b) => {
+            if (a.isRequired && !b.isRequired) {
+              return -1;
+            }
+            if (!a.isRequired && b.isRequired) {
+              return 1;
+            }
             if (a.key === 'OTHER' && b.key !== 'OTHER') {
               return 1; // "OTHER" comes after other keys
             }
@@ -573,13 +576,13 @@ export default function Documents(props) {
               <div
                 className={
                   requiredDocumentSelected?.id == item.id && isItemSelected
-                    ? 'card'
+                    ? ``
                     : handleWarningMessage(item)
-                    ? 'card field_warnings '
+                    ? `border border-[#ff0000] shadow-${theme} mb-4 mt-2 px-[15px] py-[17px] rounded-lg bg-gradient-stepper-card-${theme}`
                     : getUploadedDocumentChildName(item) ||
                       getUploadedDocumentIfChildrenNotFound(item.id)
-                    ? 'card field_successs'
-                    : 'card'
+                    ? ``
+                    : `border-color-${theme} shadow-${theme} mb-4 mt-2 px-[15px] py-[17px] rounded-lg bg-gradient-stepper-card-${theme}`
                 }
               >
                 <div
@@ -591,31 +594,20 @@ export default function Documents(props) {
                       : null
                   }
                 >
-                  <div className="card-body">
+                  <div className={``}>
                     <div
-                      className="row"
-                      style={{
-                        flexDirection: 'column',
-                        alignItems: 'start',
-                        padding: '10px 0px',
-                        justifyContent: 'start',
-                      }}
+                      className="flex flex-col justify-start"
                     >
-                      <div
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          marginBottom: '5px',
-                          alignItems: 'center',
-                        }}
+                      <div className={`flex justify-between mb-[5px] items-center`}
+                       
                       >
-                        <h4 className="font-weight-base mb-0">{item?.name?.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')}</h4>
+                        <h4 className="font-light mb-0">{item?.name?.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')}</h4>
                         <BsFillArrowRightCircleFill
                           color={
                             getUploadedDocumentChildName(item) ||
                             getUploadedDocumentIfChildrenNotFound(item.id)
                               ? '#30D158'
-                              : 'red'
+                              : '#ff0000'
                           }
                           fontSize={'20px'}
                         />
@@ -780,7 +772,7 @@ export default function Documents(props) {
             // }
           })}
       </div>
-      <div className="col-sm-1 col-md-1 col-lg-1"></div>
+      
       {isItemSelected ? (
         <div className="col-sm-6 col-md-6 col-lg-6">
           {/* <div style={{ border: '2px solid #037bff', borderRadius: '15px' }}>
@@ -983,8 +975,8 @@ export default function Documents(props) {
           )}
         </div>
       ) : (
-        <div className="col-sm-6 col-md-6 col-lg-6">
-          <div className="card-body">
+        <div className="sm:w-1/2 md:w-1/2 lg:w-7/12 ">
+          <div className="">
             <div
               className="row"
               style={{ alignItems: 'center', marginTop: '20px' }}
@@ -1590,7 +1582,7 @@ export default function Documents(props) {
                     </ListGroup>
                   </Card.Body>
                 </Card> */}
-                <div className="bg-white shadow rounded-lg overflow-hidden">
+                <div className={`bg-gradient-stepper-card-${theme} shadow-${theme} rounded-lg overflow-hidden`}>
                     <div className="px-4 py-3 bg-gray-100">
                         <h4 className="text-lg font-semibold">Documents</h4>
                     </div>
@@ -2022,7 +2014,7 @@ export default function Documents(props) {
     <>
       {isLoaderCorporate && (
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "20rem" }}>
-          <LoadingSpinner animation="grow" custom={true} height="70vh" />
+          <LoadingSpinner theme={theme} />
         </div>
       )}
       {modalShow && (
@@ -2042,160 +2034,8 @@ export default function Documents(props) {
         />
       )}
 
-      <div className="main-content">
-        {/* <Container fluid>
-          {alertFailedDocumentAdd ? (
-            <CustomAlert
-              message={errorMessage}
-              variant="danger"
-              show={alertFailedDocumentAdd}
-              hideAuto={alertProps.hideAuto}
-              onClose={() => setAlertProps({ ...alertProps, show: false })}
-              className="position-fixed bottom-0 start-50 translate-middle-x"
-              handleCloseAlert={handleCloseAlert}
-            >
-              {alertProps.message}
-            </CustomAlert>
-          ) : null}
-          {alertSucessDocumentAdd ? (
-            <CustomAlert
-              message="Document Added Successfully"
-              variant="success"
-              show={alertSucessDocumentAdd}
-              hideAuto={alertProps.hideAuto}
-              onClose={() => setAlertProps({ ...alertProps, show: false })}
-              className="position-fixed bottom-0 start-50 translate-middle-x"
-              handleCloseAlert={handleCloseAlert}
-            >
-              {alertProps.message}
-            </CustomAlert>
-          ) : null}
-          {isDocumentDeleted ? (
-            <CustomAlert
-              message="Document Deleted Successfully"
-              variant="success"
-              show={isDocumentDeleted}
-              hideAuto={alertProps.hideAuto}
-              onClose={() => setAlertProps({ ...alertProps, show: false })}
-              className="position-fixed bottom-0 start-50 translate-middle-x"
-              handleCloseAlert={handleCloseAlert}
-            />
-          ) : null}
-          {!isEntityValueExist ? (
-            <Row className="justify-content-center">
-              <Col xs={12} lg={10} xl={10}>
-                <div>
-                  <h3>Select Entity Type from particulars screen to upload documents</h3>
-                </div>
-              </Col>
-            </Row>
-          ) : (
-            <Row className="justify-content-center">
-              {customerType_from_props == "corporate" && (
-                <Col xs={12} lg={5} xl={5}>
-                  <Card>
-                    <Card.Header>
-                      <h3 className="mb-0">Ultimate Beneficial Owner (UBO)</h3>
-                    </Card.Header>
-                    <Card.Body style={{ height: "70vh", overflow: "auto" }}>
-                      {isLoaderCrp && (
-                        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "20rem" }}>
-                          <Spinner animation="grow" />
-                        </div>
-                      )}
-                      <div style={{ height: "100vh" }}>{treeData?.length > 0 && <SortableTree key={randomKey} treeData={treeData} nodeContentRenderer={nodeContentRenderer} onChange={(treeDatas) => setTreeData(treeDatas)} />}</div>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              )} */}
-              
-              {/* <Col xs={customerType_from_props == "corporate" ? 12 : 12} lg={customerType_from_props == "corporate" ? 7 : 10} xl={customerType_from_props == "corporate" ? 7 : 10}>
-                <Card>
-                  {customerType_from_props == "corporate" && (
-                    <Card.Header>
-                      <div className="d-flex" style={{ justifyContent: "space-between", alignItems: "center", textTransform: "capitalize" }}>
-                        <h3 className="mb-0" style={{ textTransform: "capitalize" }}>
-                          {type}
-                        </h3>
-                        {type && (
-                          <>
-                            {type == "individual" ? (
-                              <img src="/img/investor/default-avatar.png" alt="..." class="" style={{ height: "35px", marginRight: "8px" }} />
-                            ) : (
-                              <EntityIcon
-                                className={"nodeIcon"}
-                                fontSize={"large"}
-                                color={"action"}
-                                style={{
-                                  fill: theme == "dark" || theme == undefined ? "white" : "black",
-                                }}
-                              />
-                            )}
-                          </>
-                        )}
-                      </div>
-                    </Card.Header>
-                  )} */}
-
-                  {/* <Card.Body style={{ height: "70vh", overflow: "auto" }}>
-                    {isLoader ? (
-                      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "20rem" }}>
-                        <LoadingSpinner animation="grow" custom={true} height="70vh" />
-                      </div>
-                    ) : !(identity_id == undefined) ? (
-                      <>
-                        <div style={{ display: "flex" }}>
-                          {/* <h4>Certified true copy (CTC) is required for all the provided KYC documents and it should not be older than 3 months from the date of issue</h4> 
-                          <Tooltip>Please ensure that documents uploaded are Certified True Copies (CTC). Please speak to your account representative if you are unsure of what to do.
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                            {/* <h4>Eye</h4> */}
-                            
-                            {/* </Tooltip>
-                        </div>
-                        {isrequiredDocListExist ? (
-                          requiredDocList?.length > 0 ? (
-                            <>
-                              {renderRequiredDocuments(entityValue)}
-
-                              <hr />
-                            </>
-                          ) : null
-                        ) : (
-                          renderUploadedDocuments()
-                        )}
-                      </>
-                    ) : ( */}
-                      {/* <>
-                        <div className="card ">
-                          <div className="card-body">
-                            <div className="row" style={{ alignItems: "center", marginTop: "20px" }}>
-                              <h4 style={{ textAlign: "center" }}>Please Attach Fund To Identity To Add Documents</h4>
-                            </div>
-                          </div>
-                        </div>
-                        <hr />
-                      </>
-                    )} */}
-                    {/* {identityUploadDocList && Object.keys(identityUploadDocList)?.length > 0 && props?.dataOfAccountSetup?.fund_data?.fund_setting?.region.toLowerCase().includes("india") && (
-                      <div>
-                        <Accordion alwaysOpen={false}>
-                          <Accordion.Item eventKey="0">
-                            <Accordion.Header>
-                              <h4>Identity CKYC Documents</h4>
-                            </Accordion.Header>
-                            <Accordion.Body>{renderIdentityDocuments()}</Accordion.Body>
-                          </Accordion.Item>
-                        </Accordion>
-                      </div>
-                    )}
-                  </Card.Body>
-                </Card>
-              </Col>
-            </Row>
-          )}
-        </Container> */}
-
-        <div className="container mx-auto px-4">
+      <div className={`bg-gradient-stepper-card-${theme} `}>
+        <div className="">
       {alertFailedDocumentAdd && (
         <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 bg-red-500 text-white p-4 rounded-lg shadow-lg">
           {errorMessage}
@@ -2225,11 +2065,11 @@ export default function Documents(props) {
         <div className="flex justify-center my-4">
           {customerType_from_props === "corporate" && (
             <div className="w-full lg:w-1/2 xl:w-1/2 p-2">
-              <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+              <div className={`bg-gradient-stepper-card-${theme} shadow-${theme} rounded-lg overflow-hidden`}>
                 <div className="bg-gray-100 p-4">
                   <h3 className="mb-0">Ultimate Beneficial Owner (UBO)</h3>
                 </div>
-                <div className="h-[70vh] overflow-auto p-4">
+                <div className="h-[70vh] overflow-auto ">
                   {isLoaderCrp && (
                     <div className="flex justify-center items-center h-80">
                       <div className="loader"></div>
@@ -2249,8 +2089,8 @@ export default function Documents(props) {
               </div>
             </div>
           )}
-          <div className={`w-full ${customerType_from_props === "corporate" ? 'lg:w-1/2 xl:w-1/2' : 'lg:w-3/4 xl:w-3/4'} p-2`}>
-            <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+          <div className={`w-full ${customerType_from_props === "corporate" ? 'lg:w-1/2 xl:w-1/2' : 'lg:w-3/4 xl:w-10/12'} `}>
+            <div className={`bg-gradient-stepper-card-${theme} shadow-${theme} rounded-lg overflow-hidden`}>
               {customerType_from_props === "corporate" && (
                 <div className="bg-gray-100 p-4 flex justify-between items-center">
                   <h3 className="mb-0 capitalize">{type}</h3>
@@ -2265,16 +2105,16 @@ export default function Documents(props) {
                   )}
                 </div>
               )}
-              <div className="h-[70vh] overflow-auto p-4">
+              <div className="h-[70vh] overflow-auto ">
                 {isLoader ? (
                   <div className="flex justify-center items-center h-80">
                     <LoadingSpinner animation="grow" custom={true} height="70vh" />
                   </div>
                 ) : identity_id !== undefined ? (
                   <>
-                    <div className="flex items-center mb-4">
-                      <Tooltip>
-                        Please ensure that documents uploaded are Certified True Copies (CTC). Please speak to your account representative if you are unsure of what to do.
+                    <div className="flex items-center mb-2 mt-2 ml-2">
+                      <Tooltip content=
+                        "Please ensure that documents uploaded are Certified True Copies (CTC). Please speak to your account representative if you are unsure of what to do.">
                         <FontAwesomeIcon icon={faInfoCircle} />
                       </Tooltip>
                     </div>
@@ -2323,7 +2163,7 @@ export default function Documents(props) {
         )} */}
         {viewModalShow && (
             <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-                <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl">
+                <div className={`bg-gradient-stepper-card-${theme} rounded-lg shadow-${theme} w-full max-w-4xl`}>
                 <div className="flex justify-end p-4">
                     <button onClick={() => setViewModalShow(false)} className="text-gray-600 hover:text-gray-900">
                     &times;

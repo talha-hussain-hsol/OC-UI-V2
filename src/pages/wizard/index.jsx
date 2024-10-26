@@ -23,7 +23,7 @@ import DocumentsStep from "./components/DocumentsStep";
 import FaceVerification from "./components/FaceVerification";
 // import IdentityStep from "../wizardcopy/account-wizard/UserForm";
 import SummaryStep from "../wizardcopy/account-wizard/Summary";
-import Vcip from "../wizardcopy/account-wizard/VCIP";
+import Vcip from "./components/VCIP";
 import getMissingDataOfIdentity from "../../helpers/getMissingDataOfIdentity";
 import CustomAlert from "../../widgets/components/Alerts";
 import Loader from "../../components/ui/loader";

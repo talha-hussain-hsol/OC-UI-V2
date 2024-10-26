@@ -7,13 +7,14 @@ import { postIdentityDocument, postVerifyUploadDocument, updateIdentityDocument 
 import axios from "axios";
 import mergeImages from "merge-images";
 import "flatpickr/dist/themes/dark.css"; // You can choose a different theme if needed
-
+import { useTheme } from "../../contexts/themeContext";
 import { FaCamera, FaCloudUploadAlt } from "react-icons/fa";
 import formatDateRegionWise from "../../helpers/formatDateRegionWise";
 import { Flatpickr } from "../../components/vendor";
 import { parse, format } from "date-fns";
 
 export default function DocumentModal(props) {
+  const {theme} = useTheme();
   let expiryDateEnteredManually = false;
   let issueDateEnteredManually = true;
 
@@ -955,14 +956,13 @@ export default function DocumentModal(props) {
   return (
     <>
       <img style={{ display: "none" }} src="" id="img1"></img>
-      <Modal size="xl" {...props} aria-labelledby="contained-modal-title-vcenter" centered>
-        <Modal.Header closeButton className="custom-close-button">
-          <Modal.Title>
-            <div>
-              <h3>Upload New Document</h3>
+      <div {...props} aria-labelledby="contained-modal-title-vcenter" className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 overflow-y-scroll scrollbar-thin max-h-[100%] `}>
+       <div className={`relative bg-color-modal-${theme} mt-20 rounded-lg shadow-lg w-full max-w-6xl mx-4 md:mx-6 lg:mx-8`}>
+       <div className={`bg-color-modal-${theme} flex items-center justify-between py-5 px-8 border-b border-color-modal-${theme} rounded-t-lg`}
+      >
+        <div>
+              <h3 className="text-lg font-light text-white ">Upload New Document</h3>
             </div>
-          </Modal.Title>
-        </Modal.Header>
         {isLoader ? (
           <div
             style={{
@@ -1632,7 +1632,9 @@ export default function DocumentModal(props) {
             </Modal.Footer> */}
           </>
         )}
-      </Modal>
+        </div>
+        </div>
+      </div>
       {console.log(issueDate, "issueDate issueDate issueDate")}
       {console.log(expiryDate, "expiryDate expiryDate expiryDate")}
       {/* <Modal size="md" show={showDescriptionModal} onHide={handleCloseDescriptionModal} aria-labelledby="contained-modal-title-vcenter" centered>
