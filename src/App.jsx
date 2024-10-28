@@ -177,6 +177,14 @@ const CustomerRoutesWrapper = () => {
           }
         />
         <Route
+          path="/subscription-list"
+          element={
+            <ThemeProvider>
+              <Accounts />
+            </ThemeProvider>
+          }
+        />
+        <Route
           path="/profile/detail/:identity_id/:account_id"
           element={
             <ThemeProvider>
