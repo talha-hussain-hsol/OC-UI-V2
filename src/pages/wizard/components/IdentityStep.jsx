@@ -1783,7 +1783,7 @@ import {
             }
           } else {
             if (key.includes("crypto_currency")) {
-              debugger
+              // debugger
               if (
                 props?.dataOfAccountSetup?.fund_data?.fund_setting?.account
                   ?.applicant?.asset?.digital?.status
