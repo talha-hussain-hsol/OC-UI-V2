@@ -578,11 +578,11 @@ export default function Documents(props) {
                   requiredDocumentSelected?.id == item.id && isItemSelected
                     ? ``
                     : handleWarningMessage(item)
-                    ? `border-2 border-[#ff0000] shadow-${theme} mb-4 mt-2 px-[15px] py-[17px] rounded-lg bg-gradient-stepper-card-${theme}`
+                    ? `border-2 border-[#ff0000] shadow-${theme} mb-4 mt-2 px-[15px] py-[20px] rounded-lg bg-gradient-stepper-card-${theme}`
                     : getUploadedDocumentChildName(item) ||
                       getUploadedDocumentIfChildrenNotFound(item.id)
                     ? `border-2 border-[#30d158] shadow-${theme} mb-4 mt-2 px-[15px] py-[17px] rounded-lg bg-gradient-stepper-card-${theme}`
-                    : `border-color-${theme} shadow-${theme} mb-4 mt-2 px-[15px] py-[17px] rounded-lg bg-gradient-stepper-card-${theme}`
+                    : `border-color-${theme} shadow-${theme} mb-4 mt-2 px-[15px] py-[20px] rounded-lg bg-gradient-stepper-card-${theme}`
                 }
               >
                 <div
@@ -673,13 +673,13 @@ export default function Documents(props) {
                             }}
                           >
                             <small
-                              className="text-muted mr-1"
+                              className="text-[#6e84a3] mr-1"
                               style={{ marginRight: '0.5em' }}
                             >
                               Issue Date:{' '}
                             </small>
 
-                            <small className="text-muted">
+                            <small className="text-[#6e84a3]">
                               {getUploadedIdentityDocData(item?.id)
                                 ?.issuedDate != null
                                 ? getUploadedIdentityDocData(item?.id)
@@ -700,12 +700,12 @@ export default function Documents(props) {
                             }}
                           >
                             <small
-                              className="text-muted mr-1"
+                              className="text-[#6e84a3] mr-1"
                               style={{ marginRight: '0.5em' }}
                             >
                               Expiry Date:{' '}
                             </small>
-                            <small className="text-muted">
+                            <small className="text-[#6e84a3]">
                               {getUploadedIdentityDocData(item?.id)
                                 ?.expiryDate != null
                                 ? getUploadedIdentityDocData(item?.id)

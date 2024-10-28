@@ -100,6 +100,21 @@ export default function Wizard() {
     hideAuto: false,
   });
 
+
+  useEffect(() => {
+    document.body.style.backgroundColor =
+      theme === "SC"
+        ? "#ffffff"
+        : theme === "Ascent"
+        ? "rgba(18, 38, 63)"
+        : theme === "lightTheme"
+        ? "#000000"
+        : "";
+
+    return () => {
+      document.body.style.backgroundColor = "";
+    };
+  }, [theme]);
   const handleAlert = ({ variant, message, hideAuto }) => {
     setAlertProps({ variant, message, show: true, hideAuto });
   };

@@ -12,6 +12,7 @@ import { FaCamera, FaCloudUploadAlt } from "react-icons/fa";
 import formatDateRegionWise from "../../helpers/formatDateRegionWise";
 import { Flatpickr } from "../../components/vendor";
 import { parse, format } from "date-fns";
+import Loader from "../ui/loader";
 
 export default function DocumentModal(props) {
   const {theme} = useTheme();
@@ -955,29 +956,47 @@ export default function DocumentModal(props) {
 
   return (
     <>
-      <img style={{ display: "none" }} src="" id="img1"></img>
+      <img className="hidden" src="" id="img1"></img>
       <div {...props} aria-labelledby="contained-modal-title-vcenter" className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 overflow-y-scroll scrollbar-thin max-h-[100%] `}>
+      
        <div className={`relative bg-color-modal-${theme} mt-20 rounded-lg shadow-lg w-full max-w-6xl mx-4 md:mx-6 lg:mx-8`}>
-       <div className={`bg-color-modal-${theme} flex items-center justify-between py-5 px-8 border-b border-color-modal-${theme} rounded-t-lg`}
-      >
-        <div>
+       <div className={`pt-4 pb-6 px-8 border-b border-b-[#2d435f] flex items-center justify-between`}>
               <h3 className="text-lg font-light text-white ">Upload New Document</h3>
-            </div>
-        {isLoader ? (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              height: "20rem",
-            }}
+              <button
+            type="button"
+            className="text-gray-400 hover:text-white transition-all ease-in-out bg-transparent rounded-lg text-sm w-8 h-8 flex items-center justify-center"
+            onClick={onClose()}
           >
-            <Spinner animation="grow" variant="primary" />
+            <svg
+              className="w-4 h-4"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+            <span className="sr-only">Close modal</span>
+          </button>
+            </div>
+       <div className={`bg-color-modal-${theme} flex items-center justify-between  px-8 border-b border-color-modal-${theme} rounded-t-lg`}
+      >
+       
+        {isLoader ? (
+          <div className="flex justify-center items-center h-[20rem]"
+           
+          >
+            <Loader theme={theme} />
           </div>
         ) : (
           <>
-            {" "}
-            <Modal.Body className="show-grid" style={{ height: "65vh", overflow: "auto" }}>
+            <div className="flex" style={{ height: "65vh", overflow: "auto" }}>
               <Container>
                 <Row>
                   <Col xs={12} md={6}>
@@ -1626,7 +1645,7 @@ export default function DocumentModal(props) {
                   </Col>
                 </Row>
               </Container>
-            </Modal.Body>
+            </div>
             {/* <Modal.Footer>
               <Button onClick={props.onHide}>Close</Button>
             </Modal.Footer> */}
