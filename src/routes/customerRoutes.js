@@ -22,6 +22,7 @@ const CustomerRoutesWrapper = () => {
           <Route path="/documents" element={<ThemeProvider><MainDocuments /></ThemeProvider>} />
           <Route path="/fund-code" element={<ThemeProvider><FundCode /></ThemeProvider>} />
           <Route path="/stepper" element={<ThemeProvider><Stepper /></ThemeProvider>} />
+          <Route path="/subscription/list" element={<ThemeProvider><Accounts /></ThemeProvider>} />
         </Routes>
     </div>
   );
