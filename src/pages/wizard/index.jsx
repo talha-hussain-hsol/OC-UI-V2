@@ -17,12 +17,12 @@ import {
 } from "../../api/network/CustomerApi";
 import AccountStep from "./components/AccountStep";
 import IdentityStep from "./components/IdentityStep";
-import ApplicationStep from "../wizardcopy/account-wizard/Application";
-import BankWalletsStep from "../wizardcopy/account-wizard/BankWallets";
+import ApplicationStep from "./components/ApplicationStep";
+import BankWalletsStep from "./components/BankWalletStep";
 import DocumentsStep from "./components/DocumentsStep";
 import FaceVerification from "./components/FaceVerification";
 // import IdentityStep from "../wizardcopy/account-wizard/UserForm";
-import SummaryStep from "../wizardcopy/account-wizard/Summary";
+import SummaryStep from "./components/SummaryStep";
 import Vcip from "./components/VCIP";
 import getMissingDataOfIdentity from "../../helpers/getMissingDataOfIdentity";
 import CustomAlert from "../../widgets/components/Alerts";
