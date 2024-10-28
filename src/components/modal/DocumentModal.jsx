@@ -957,95 +957,58 @@ export default function DocumentModal(props) {
   return (
     <>
       <img className="hidden" src="" id="img1"></img>
-      <div {...props} aria-labelledby="contained-modal-title-vcenter" className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 overflow-y-scroll scrollbar-thin max-h-[100%] `}>
+      <div {...props} aria-labelledby="contained-modal-title-vcenter" className={`rounded-lg fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 overflow-y-scroll scrollbar-thin max-h-[100%] `}>
       
        <div className={`relative bg-color-modal-${theme} mt-20 rounded-lg shadow-lg w-full max-w-6xl mx-4 md:mx-6 lg:mx-8`}>
-       <div className={`pt-4 pb-6 px-8 border-b border-b-[#2d435f] flex items-center justify-between`}>
+       <div className={`pt-4 pb-6 px-8 border-b border-b-[#2d435f]  flex items-center justify-between`}>
               <h3 className="text-lg font-light text-white ">Upload New Document</h3>
-              <button
-            type="button"
-            className="text-gray-400 hover:text-white transition-all ease-in-out bg-transparent rounded-lg text-sm w-8 h-8 flex items-center justify-center"
-            onClick={onClose()}
-          >
-            <svg
-              className="w-4 h-4"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 14 14"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-              />
-            </svg>
-            <span className="sr-only">Close modal</span>
-          </button>
+              
             </div>
-       <div className={`bg-color-modal-${theme} flex items-center justify-between  px-8 border-b border-color-modal-${theme} rounded-t-lg`}
+       <div className={`bg-color-modal-${theme}  w-full flex items-center justify-between px-8 border-b border-color-modal-${theme} rounded-lg`}
       >
        
         {isLoader ? (
-          <div className="flex justify-center items-center h-[20rem]"
+          <div className="flex justify-center items-center h-[20rem] w-full"
            
           >
             <Loader theme={theme} />
           </div>
         ) : (
           <>
-            <div className="flex" style={{ height: "65vh", overflow: "auto" }}>
-              <Container>
-                <Row>
-                  <Col xs={12} md={6}>
-                    <div className="leftPanelForImage">
+            <div className={` flex w-full h-[65vh] overflow-y-auto`} >
+           
+                <div className={`flex gap-8 items-center justify-between w-full mt-10 mb-10`}>
+                  <div className={`w-full `} >
+                    <div className="border-[4px] border-[#063c5e] rounded-[30px] py-10">
                       {!(documentTypeSelectedName == "national id") ? (
-                        <div
-                          style={{
-                            display: "flex",
-                            height: "100%",
-                            width: "100%",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                          className="imageUpload"
+                        <div className={`flex h-[100%] w-[100%] items-center justify-center `}
+                         
                         >
-                          <div
-                            style={{
-                              display: "flex",
-                              height: "100%",
-                              width: "100%",
-                              alignItems: "center",
-                              justifyContent: "center",
-                            }}
+                          <div className={`flex h-[100%] w-[100%] items-center justify-center `}
+                            
                           >
                             {isCameraMode ? (
-                              <div
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                }}
+                              <div className="flex flex-col"
+                               
                               >
                                 {!imageData ? (
                                   <>
-                                    <video ref={videoRef} autoPlay style={{ width: "100%", height: "auto" }} />
+                                    <video ref={videoRef} autoPlay className="w-[100%] h-auto" />
                                     <canvas ref={canvasRef} style={{ display: "none" }} />
                                   </>
                                 ) : (
                                   <img width="350px" height="auto" alt="" src={imageData} />
                                 )}
-                                <div style={{ padding: "10px" }} className="d-flex justify-content-between">
-                                  <Button onClick={handleBackFromCamera}>Back</Button>
+                                <div style={{ padding: "10px" }} className="flex justify-between">
+                                  <button onClick={handleBackFromCamera}>Back</button>
                                   {!imageData ? (
-                                    <Button className="btn btn-success" onClick={captureImage}>
+                                    <button  onClick={captureImage}>
                                       Capture
-                                    </Button>
+                                    </button>
                                   ) : (
-                                    <Button className="btn btn-danger" onClick={retakeImage}>
+                                    <button onClick={retakeImage}>
                                       Retake
-                                    </Button>
+                                    </button>
                                   )}
                                 </div>
                               </div>
@@ -1061,7 +1024,7 @@ export default function DocumentModal(props) {
                                     flexDirection: "column",
                                   }}
                                 >
-                                  <img id="imagePreview" className={"imageUploadPreview"} src="" alt="Upload" style={{ display: "none" }}></img>
+                                  <img id="imagePreview" className={`h-full max-w-[304px] max-h-[44vh]`} src="" alt="Upload" style={{ display: "none" }}></img>
                                   {contentTypeData?.search("pdf") != -1 ? <PdfIcon style={{ fill: "black" }} fontSize={"medium"} color={"action"}></PdfIcon> : null}
 
                                   {contentTypeData != "" ? (
@@ -1080,27 +1043,18 @@ export default function DocumentModal(props) {
                                   <FaCloudUploadAlt id="imageUploadIcon" color="#63c6d2" fontSize="50px" />
                                   <div
                                     id="imageUploadText1"
-                                    className={"text1"}
-                                    style={{
-                                      display: "flex",
-                                      flexDirection: "column",
-                                      alignItems: "center",
-                                      fontSize: "20px",
-                                    }}
+                                    className={`flex flex-col items-center text-[20px]`}
+                                   
                                   >
                                     Please click on 'Browse File' to upload.
                                   </div>
                                   <div
                                     id="imageUploadText2"
-                                    className={"text2"}
-                                    style={{
-                                      display: "flex",
-                                      flexDirection: "column",
-                                      alignItems: "center",
-                                    }}
+                                    className={`flex flex-col items-center`}
+                                    
                                   >
-                                    <Button
-                                      variant="outlined"
+                                    <button
+                                     
                                       onClick={handleImageClick}
                                       style={{
                                         border: documentTypeSelected !== "" ? "2px solid rgb(107 137 81)" : "2px solid #fff",
@@ -1114,8 +1068,8 @@ export default function DocumentModal(props) {
                                     >
                                       <FaCloudUploadAlt style={{ marginRight: "10px" }} />
                                       <span>Browse Files</span>
-                                    </Button>
-                                    <Button
+                                    </button>
+                                    <button
                                       variant="outlined"
                                       onClick={handleOpenCamera}
                                       style={{
@@ -1130,46 +1084,9 @@ export default function DocumentModal(props) {
                                     >
                                       <FaCamera style={{ marginRight: "10px" }} />
                                       <span>Capture Image</span>
-                                    </Button>
+                                    </button>
                                   </div>
-                                  {/* <div
-                                    id="imageUploadText2"
-                                    className={"text2"}
-                                    style={{
-                                      display: "flex",
-                                      flexDirection: "column",
-                                      alignItems: "center",
-                                    }}
-                                  >
-                                    <Button
-                                      variant="outlined"
-                                      onClick={handleImageClick}
-                                    >
-                                      <h3
-                                        style={{
-                                          border: "2px solid #043f63",
-                                          borderRadius: "100px",
-                                          padding: "10px 30px",
-                                        }}
-                                      >
-                                        Browse Files
-                                      </h3>
-                                    </Button>
-                                    <Button
-                                      variant="outlined"
-                                      onClick={handleOpenCamera}
-                                    >
-                                      <h3
-                                        style={{
-                                          border: "2px solid #043f63",
-                                          borderRadius: "100px",
-                                          padding: "10px 30px",
-                                        }}
-                                      >
-                                        Capture Image
-                                      </h3>
-                                    </Button>
-                                  </div> */}
+                                  
                                   <div
                                     id="imageUploadText4"
                                     style={{
@@ -1191,10 +1108,10 @@ export default function DocumentModal(props) {
                                       marginTop: "30px",
                                     }}
                                   >
-                                    <h5>
+                                    <h5 className="text-[0.8125rem] tracking-[-0.02em] font-light">
                                       Max file size: <strong>5MB</strong>
                                     </h5>
-                                    <h5>
+                                    <h5 className="text-[0.8125rem] tracking-[-0.02em] font-light">
                                       Supported files types: <strong>PNG,JPG,PDF,DOCS</strong>
                                     </h5>
                                   </div>
@@ -1288,19 +1205,17 @@ export default function DocumentModal(props) {
                         </div>
                       )}
                     </div>
-                  </Col>
-                  <Col xs={12} md={6}>
-                    <div className="row" style={{ flexDirection: "column" }}>
-                      <div className="col-sm-10">
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                          }}
+                  </div>
+                  <div className={`w-full`}>
+                    <div className="flex flex-col">
+                    <div className="w-full sm:w-10/12">
+                        <div className={`flex justify-between`}
+                         
                         >
-                          <div className="form-group" style={{ width: "100%" }}>
-                            <Form.Label>Document Type </Form.Label> <span className="text-danger">*</span>
-                            <Form.Select
+                          <div className="w-full" >
+                            <label className={`font-light text-[15px]`}>Document Type </label> <span className="text-red-500">*</span>
+                            <select
+                            className={`bg-color-textfield-dropdown-${theme} mt-[8px] mb-[18px] pl-[12px] pr-[28px] py-[8px] w-full outline-none shadow-${theme} rounded-lg placeholder:font-light font-light text-[15px]`}
                               aria-label="Default select example"
                               style={{
                                 border: documentTypeSelected !== "" ? "none" : "2px solid orange",
@@ -1319,7 +1234,7 @@ export default function DocumentModal(props) {
                                     </option>
                                   );
                                 })}
-                            </Form.Select>
+                            </select>
                             <div>
                               <span style={{ color: "red" }}>{documentErrMessage}</span>
                             </div>
@@ -1327,36 +1242,33 @@ export default function DocumentModal(props) {
                         </div>
                       </div>
                       {showDescriptionModal && selectedDocumentData?.bucket_key?.doc_note && selectedDocumentData?.bucket_key?.doc_note != "" && (
-                        <div className="col-sm-10">
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                            }}
+                        <div className="w-full">
+                          <div className="flex justify-between"
+                           
                           >
-                            <div className="form-group" style={{ width: "100%" }}>
-                              <Form.Label>Document Description</Form.Label>
-                              <Form.Control as="textarea" rows={3} value={selectedDocumentData?.bucket_key?.doc_note} readOnly />
+                            <div className="w-full" style={{ width: "100%" }}>
+                            <label className={`font-light text-[15px]`}>Document Description</label>
+                              {/* <Form.Control as="textarea" rows={3} value={selectedDocumentData?.bucket_key?.doc_note} readOnly /> */}
+                              <textarea rows={3} value={selectedDocumentData?.bucket_key?.doc_note} readOnly/>
                             </div>
                           </div>
                         </div>
                       )}
-                      <div className="col-sm-10">
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                          }}
+                      <div className="w-full sm:w-10/12">
+                        <div className="flex justify-between"
+                          
                         >
                           {documentTypeSelected === "10" ? (
-                            <div className="form-group" style={{ width: "100%" }}>
-                              <Form.Label>Document Number (Optional)</Form.Label>
-                              <Form.Control placeholder="Enter Document Number" type="text" value={documentNumber} onChange={(event) => setDocumentNumber(event.target.value)} />
+                            <div className="w-full" >
+                              <label className={`font-light text-[15px]`}>Document Number (Optional)</label>
+                              <input  className={`bg-color-textfield-dropdown-${theme} mt-[8px] mb-[18px] pl-[12px] pr-[28px] py-[8px] w-full outline-none shadow-${theme} rounded-lg placeholder:font-light font-light text-[15px]`}
+                             placeholder="Enter Document Number" type="text" value={documentNumber} onChange={(event) => setDocumentNumber(event.target.value)} />
                             </div>
                           ) : (
-                            <div className="form-group" style={{ width: "100%" }}>
-                              <Form.Label>Document Number</Form.Label>
-                              <Form.Control placeholder="Enter Document Number" type="text" value={documentNumber} onChange={(event) => setDocumentNumber(event.target.value)} />
+                            <div className="w-full">
+                              <label className={`font-light text-[15px]`}>Document Number</label>
+                              <input  className={`bg-color-textfield-dropdown-${theme} mt-[8px] mb-[18px] pl-[12px] pr-[28px] py-[8px] w-full outline-none shadow-${theme} rounded-lg placeholder:font-light font-light text-[15px]`}
+                             placeholder="Enter Document Number" type="text" value={documentNumber} onChange={(event) => setDocumentNumber(event.target.value)} />
                             </div>
                           )}
                         </div>
@@ -1369,8 +1281,8 @@ export default function DocumentModal(props) {
                               justifyContent: "space-between",
                             }}
                           >
-                            <div className="form-group" style={{ width: "100%" }}>
-                              <Form.Label>Document Date (Optional)</Form.Label>
+                            <div className="sm:w-10/12 w-full" style={{ width: "100%" }}>
+                            <label className={`font-light text-[15px]`}>Document Date (Optional)</label>
                               <div
                                 className="flatpickr-container"
                                 style={{
@@ -1381,7 +1293,8 @@ export default function DocumentModal(props) {
                               >
                                 <Flatpickr
                                   placeholder={placeHolderForDate}
-                                  className="flatpickr-custom"
+                                  className={`flatpickr-custom bg-color-textfield-dropdown-${theme} mt-[8px] mb-[18px] pl-[12px] pr-[28px] py-[8px] w-full outline-none shadow-${theme} rounded-lg placeholder:font-light font-light text-[15px]`}
+                             
                                   options={{
                                     dateFormat: formatDateRegionWise(null, null, true),
                                     allowInput: true, // Enable manual input
@@ -1439,29 +1352,26 @@ export default function DocumentModal(props) {
                         </div>
                       ) : (
                         <>
-                          <div className="col-sm-10">
+                          <div className="w-full">
                             <div
                               style={{
                                 display: "flex",
                                 justifyContent: "space-between",
                               }}
                             >
-                              <div className="form-group" style={{ width: "100%" }}>
-                                <Form.Label>
+                              <div className="w-full sm:w-10/12">
+                              <label className={`font-light text-[15px]`}>
                                   Issue Date
                                   {documentTypeSelected == "" ? null : documentTypes.filter((item) => item?.id == documentTypeSelected)[0]?.has_issued_date ? "(Required)" : "(Optional)"}
-                                </Form.Label>
+                                </label>
                                 <div
-                                  className="flatpickr-container"
-                                  style={{
-                                    with: "100%",
-                                    height: "40px",
-                                    color: "white",
-                                  }}
+                                  className="flatpickr-container w-full  text-white"
+                                 
                                 >
                                   <Flatpickr
                                     placeholder={placeHolderForDate}
-                                    className="flatpickr-custom"
+                                    className={`flatpickr-custom w-full bg-color-textfield-dropdown-${theme} mt-[8px] mb-[18px] pl-[12px] pr-[28px] py-[8px] w-full outline-none shadow-${theme} rounded-lg placeholder:font-light font-light text-[15px]`}
+                             
                                     options={{
                                       dateFormat: formatDateRegionWise(null, null, true),
                                       allowInput: true, // Enable manual input
@@ -1506,18 +1416,18 @@ export default function DocumentModal(props) {
                               </div>
                             </div>
                           </div>
-                          <div className="col-sm-10">
+                          <div className="w-full">
                             <div
                               style={{
                                 display: "flex",
                                 justifyContent: "space-between",
                               }}
                             >
-                              <div className="form-group" style={{ width: "100%" }}>
-                                <Form.Label>
+                              <div className="w-full sm:w-10/12" >
+                              <label className={`font-light text-[15px]`}>
                                   Expiry Date
                                   {documentTypeSelected == "" ? null : documentTypes.filter((item) => item?.id == documentTypeSelected)[0]?.has_expiry_date ? "(Required)" : "(Optional)"}
-                                </Form.Label>
+                                </label>
 
                                 {/* <Form.Control
                                   type="date"
@@ -1544,16 +1454,13 @@ export default function DocumentModal(props) {
                                   }}
                                 /> */}
                                 <div
-                                  className="flatpickr-container"
-                                  style={{
-                                    with: "100%",
-                                    height: "40px",
-                                    color: "white",
-                                  }}
+                                  className="flatpickr-container w-full text-white"
+                                  
                                 >
                                   <Flatpickr
                                     placeholder={placeHolderForDate}
-                                    className="flatpickr-custom"
+                                    className={`flatpickr-custom w-full bg-color-textfield-dropdown-${theme} mt-[8px] mb-[30px] pl-[12px] pr-[28px] py-[8px] w-full outline-none shadow-${theme} rounded-lg placeholder:font-light font-light text-[15px]`}
+                             
                                     value={expiryDate}
                                     style={{ border: (imageData !== "" || contentTypeData !== "") && documentTypes.filter((item) => item?.id == documentTypeSelected)[0]?.has_expiry_date ? "2px solid orange" : "none" }}
                                     onChange={(date, dateStr, instance) => {
@@ -1636,15 +1543,14 @@ export default function DocumentModal(props) {
                       {console.log("ABC")}
                       <div className="col-sm-6">
                         <div className="form-group">
-                          <Button onClick={() => handleClickUploadDocument()} variant="primary" size="lg" disabled={isFormValid()}>
+                          <button onClick={() => handleClickUploadDocument()} className={`bg-color-button3-${theme} text-[15px] font-light py-[10px] px-[30px] rounded-lg hover:bg-color-button3-hover-${theme} transition-all duration-300 ease-in-out`} size="lg" disabled={isFormValid()}>
                             Upload Document
-                          </Button>
+                          </button>
                         </div>
                       </div>
                     </div>
-                  </Col>
-                </Row>
-              </Container>
+                  </div>
+                </div>
             </div>
             {/* <Modal.Footer>
               <Button onClick={props.onHide}>Close</Button>

@@ -17,12 +17,11 @@ import {
   } from '../../../api/network/CustomerApi';
   import CameraCapture from './captureImage';
   import LoadingSpinner from '../../../components/ui/loader';
-  import SpinnerWithBackDrop from "../../../components/ui/loader";
-  import Stepper from 'react-stepper-horizontal';
   import FeatherIcon from 'feather-icons-react/build/FeatherIcon';
-  import CustomAlert from '../../../widgets/components/Alerts';
+  import { useTheme } from '../../../contexts/themeContext';
 
   export default function FaceVerification(props) {
+    const {theme} = useTheme()
     console.log(props, 'props');
     console.log(props?.dataOfAccountSetup, 'props?.dataOfAccountSetup');
     const identity_id = props?.dataOfAccountSetup?.identity_id;
@@ -239,23 +238,6 @@ import {
         }
       }
     };
-  
-    // useEffect(() => {
-    //   console.log(props?.dataOfAccountSetup, 'props?.dataOfAccountSetup')
-    //   if (props?.dataOfAccountSetup?.accountData?.attach_identities?.length > 0) {
-    //     if (props?.dataOfAccountSetup?.accountData?.attach_identities[0]) {
-    //       if (props?.dataOfAccountSetup?.accountData?.attach_identities[0]?.meta?.identities) {
-    //         if (props?.dataOfAccountSetup?.accountData?.attach_identities[0]?.meta?.identities[props?.dataOfAccountSetup?.identity_id]) {
-    //           if (props?.dataOfAccountSetup?.accountData?.attach_identities[0]?.meta?.identities[props?.dataOfAccountSetup?.identity_id]?.faceVerification) {
-    //             if (props?.dataOfAccountSetup?.accountData?.attach_identities[0]?.meta?.identities[props?.dataOfAccountSetup?.identity_id]?.faceVerification?.images) {
-    //               setApiResponse(props?.dataOfAccountSetup?.accountData?.attach_identities[0]?.meta?.identities[props?.dataOfAccountSetup?.identity_id]?.faceVerification)
-    //             }
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-    // }, [props?.dataOfAccountSetup])
   
     console.log(
       props?.dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant
@@ -896,16 +878,16 @@ import {
  * @returns {JSX.Element} - The JSX element representing the Face Verification component.
  */
 return (
-    <div className="main-content">
+    <div className="w-full">
       {console.log(face, 'face face face face')}
       <div
-        className="flex justify-between mb-6 border-b-4 border-blue-900 px-5 py-2"
+        className="flex justify-between mb-6 border-b-4 border-[#1e3c5c] ml-10 mr-10 "
       >
         <div>
-          <h1>Liveliness Test</h1>
-          <div>
+          <h1 className={`text-[1.625rem] py-3`}>Liveliness Test</h1>
+          <div className='font-light text-[15px]'>
             {faceSnapDataConfiguration?.instructions.includes('</') ? (
-              <div
+              <div className=''
                 dangerouslySetInnerHTML={{
                   __html: faceSnapDataConfiguration?.instructions.replace(
                     /(<? *script)/gi,
@@ -998,11 +980,11 @@ return (
                       opacity: faceKey === item.key || imageCapturedData[item.key] || face ? 1 : 0.5,
                     }}
                   >
-                    <div className="bg-white shadow-lg rounded-lg" style={{ height: '560px' }}>
+                    <div className={`bg-color-stepper-card-${theme} shadow-${theme} rounded-lg`} style={{ height: '560px' }}>
                       <div className="p-4">
-                        <div className="bg-gray-100 p-2 rounded-t-lg">
-                          <div className="flex justify-center">
-                            <h3 className="text-xl font-semibold">{item?.title}</h3>
+                        <div className={`bg-gradient-stepper-card-${theme} border-b-2 border-color-${theme} p-2 rounded-t-lg`}>
+                          <div className="flex justify-center items-start">
+                            <h3 className="text-[17px] font-light mb-4">{item?.title}</h3>
                           </div>
                         </div>
                         {props?.dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant?.identity?.indivisual?.provider?.verify?.face?.isBlured && (
@@ -1050,7 +1032,7 @@ return (
                             </div>
                             <button
                               disabled={faceKey !== item.key}
-                              className="bg-red-500 text-white mt-4 px-6 py-2 rounded-lg disabled:opacity-50"
+                              className="bg-[#e63757] text-[15px] font-light text-white mt-4 px-[30px] py-[10px] rounded-lg disabled:opacity-50"
                               onClick={() => handleProceedClick(item.key)}
                             >
                               Proceed
@@ -1078,40 +1060,110 @@ return (
                     </div>
                   </div>
                 ))}
-                {face && faceSnapDataConfiguration?.integration?.enabled && isAssistance && (
-                  <div className="flex justify-center w-10/12 mt-4">
-                    <div className="bg-white shadow-lg rounded-lg w-full">
-                      <div className="p-4">
-                        <div className="flex">
-                          <div className="w-1/2 lg:w-1/3 flex items-center">
-                            <span className="text-lg font-semibold mr-2">
-                              Upload Image With Assistance
-                            </span>
-                          </div>
-                          <div className="w-1/2 lg:w-1/3 flex items-center justify-center">
-                            <img src={face} className="h-56 rounded-lg shadow-lg" alt="uploaded" />
-                          </div>
-                          <div className="w-1/2 lg:w-1/3 flex items-center justify-end">
-                            <input
-                              type="file"
-                              accept="image/*"
-                              onChange={handleChangeLocation}
-                              className="border border-gray-300 text-sm leading-4 rounded-md text-gray-700 py-2 px-3"
-                            />
+                {console.log('vvvface 1', face)}
+                    {face &&
+                      faceSnapDataConfiguration?.integration?.enabled &&
+                      isAssistance && (
+                        <div className={`w-[82%] flex justify-center`}
+                          
+                        >
+                          <div>
+                            <div>
+                              <div className='flex'>
+                              <div className="w-1/2 lg:w-1/3 xl:w-1/3 flex">
+                                  <div
+                                    className="flex items-center"
+                                  >
+                                    {/* Increase font size for 'Assistance' */}
+                                    <span
+                                      className="text-[1.0625rem]"
+                                    >
+                                      Result
+                                    </span>
+                                  </div>
+                                </div>
+                                <div className="w-1/2 lg:w-1/3 xl:w-1/3 flex">
+                                  <>
+                                    <div>
+                                      {/* Increase font size for 'Status' */}
+                                      <small
+                                        className="fund_info_small"
+                                        style={{
+                                          fontSize: '1.0625rem;',
+                                          color: 'white',
+                                        }}
+                                      >
+                                        <span
+                                          className={
+                                            assistanceData?.assistance?.match
+                                              ? 'text-success'
+                                              : 'text-danger'
+                                          }
+                                        >
+                                          <FeatherIcon
+                                            className={
+                                              assistanceData?.assistance?.match
+                                                ? 'text-success'
+                                                : 'text-danger'
+                                            }
+                                            icon="check-circle"
+                                            color={
+                                              assistanceData?.assistance?.match
+                                                ? 'green'
+                                                : 'red'
+                                            }
+                                            size="20"
+                                          />
+                                        </span>{' '}
+                                        Status: {/* Added space after colon */}
+                                        <span
+                                          style={{
+                                            color: assistanceData?.assistance
+                                              ?.match
+                                              ? 'green'
+                                              : 'red',
+                                          }}
+                                        >
+                                          {assistanceData?.assistance?.match
+                                            ? 'Matched'
+                                            : 'Not Matched'}
+                                        </span>
+                                      </small>
+                                    </div>
+                                  </>
+                                </div>
+                                {/*
+                              {assistanceData?.assistance?.match ? (
+                                <Col xs={6} lg={4} xl={4}>
+                                  <>
+                                    <div>
+
+                                      <small className="fund_info_small" style={{ fontSize: "1.0625rem;", color: "white" }}>
+                                        <FeatherIcon className={assistanceData?.assistance?.match ? "text-success" : "text-danger"} icon="clock" color={assistanceData?.assistance?.match ? "green" : "red"} size="20" /> Score:{" "}
+                                        <span style={{ color: assistanceData?.assistance?.match ? "green" : "red" }}>{Math.floor(assistanceData?.assistance?.score * 100)}%</span>
+                                      </small>
+                                    </div>
+                                  </>
+                                </Col>
+                              ) : (
+                                <Col xs={6} lg={4} xl={4}>
+                                  <>
+                                    <div>
+
+                                      <small className="fund_info_small" style={{ fontSize: "20px", color: "white" }}>
+                                        <FeatherIcon className={assistanceData?.assistance?.match ? "text-success" : "text-danger"} icon="clock" color={assistanceData?.assistance?.match ? "green" : "red"} size="20" /> Score:{" "}
+                                        <span style={{ color: assistanceData?.assistance?.match ? "green" : "red" }}>0</span>
+                                      </small>
+                                    </div>
+                                  </>
+                                </Col>
+                              )}
+                              */}
+                              </div>
+                            </div>
                           </div>
                         </div>
-                        <div className="flex justify-end">
-                          <button
-                            onClick={() => uploadAndProceed(face)}
-                            className="bg-green-500 text-white px-6 py-2 rounded-lg mt-4"
-                          >
-                            Upload & Proceed
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
+                      )}
               </div>
             )}
           </div>

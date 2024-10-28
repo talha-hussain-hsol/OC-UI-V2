@@ -101,7 +101,11 @@ module.exports = {
         "color-modal-lightTheme": "",
         "color-iconButton-SC": "#f2f0f0",
         "color-iconButton-Ascent": "#12273f",
-        "color-button2-Ascent": '#152e4d'
+        "color-button2-Ascent": '#152e4d',
+        "color-button3-Ascent": '#2c7be5',
+        "color-button3-SC": '#3DA500',
+         "color-button3-hover-Ascent": '#2569c3',
+        "color-button3-hover-SC": '#348a01',
       },
 
       borderColor: {
@@ -121,6 +125,7 @@ module.exports = {
         "color-iconButton-hover-SC": "#d9d9d9",
         "color-iconButton-Ascent": "#ffffff",
         "color-iconButton-SC": "#e0e0e0",
+       
       },
       textColor: {
         "color-SC": "#3DA500",
@@ -307,6 +312,9 @@ module.exports = {
       pattern: /bg-color-(SC|lightTheme|Ascent)/,
     },
     {
+      pattern: /bg-color-button3-(SC|lightTheme|Ascent)/,
+    },
+    {
       pattern: /bg-gradient-card-(SC|lightTheme|Ascent)/,
     },
     {
@@ -323,6 +331,10 @@ module.exports = {
     },
     {
       pattern: /bg-color-(SC|lightTheme|Ascent)/,
+      variants: ["hover"],
+    },
+    {
+      pattern: /bg-color-button3-hover-(SC|lightTheme|Ascent)/,
       variants: ["hover"],
     },
     {

@@ -159,9 +159,9 @@ function CameraCapture({ handleChangeLocation, onImageCapture, faceSnapkey, inde
           </div>
           <canvas ref={canvasRef} style={{ display: "none" }} />
           <div style={{ display: "flex", justifyContent: "center", marginTop: "15px" }}>
-            <Button
-              variant="primary"
-              className="btn btn-success btn-success-custom"
+            <button
+              
+              className="bg-[#2aaf2a] py-[10px] px-[30px] rounded-full"
               onClick={async () => {
                 const imageData = await captureImage();
                 const base64Data = await convertToBase64(imageData);
@@ -170,7 +170,7 @@ function CameraCapture({ handleChangeLocation, onImageCapture, faceSnapkey, inde
               }}
             >
               Capture Image
-            </Button>
+            </button>
           </div>
         </>
       )}
@@ -179,9 +179,9 @@ function CameraCapture({ handleChangeLocation, onImageCapture, faceSnapkey, inde
       {imageData && (
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
           <img src={imageData} alt="Captured" style={{ height: "340px", filter: dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant?.identity?.indivisual?.provider?.verify?.face?.isBlured ? "blur(8px)" : "" }} />
-          <Button variant="secondary" className="mt-5 btn btn-danger" onClick={retakeImage}>
+          <button variant="secondary" className="mt-5 bg-[#e63757] text-[15px] font-light px-[30px] py-[10px] rounded-lg" onClick={retakeImage}>
             Retake
-          </Button>
+          </button>
         </div>
       )}
     </div>
