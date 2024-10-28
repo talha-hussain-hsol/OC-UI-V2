@@ -49,8 +49,7 @@ export default function FaceVerification(props) {
   let shareholder_id = props?.dataOfAccountSetup?.accountData?.attach_identities
     ? props?.dataOfAccountSetup?.accountData?.attach_identities[0]?.id
     : null;
-    const params = useParams();
-  console.log("sdasjkdhljahsd", params);
+  // console.log("sdasjkdhljahsd", params);
   console.log("sdasjkdhljahsd windowWidth", windowWidth);
   const [locationData, setLocationData] = useState({
     latitude: null,

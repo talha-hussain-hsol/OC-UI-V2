@@ -69,7 +69,7 @@ export const getCustomerAccounts = async (offset, limit, cancelToken) => {
     return;
   }
 
-  const url = `/${entityId}/${baseURL}/Account/list?offset=${offset}&limit=${limit}`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Account/list?offset=${offset}&limit=${limit}`;
   const request = { type: "GET", urlString: url };
 
   try {
@@ -94,8 +94,8 @@ export const getCustomerAccounts = async (offset, limit, cancelToken) => {
 export const getIdentityList = async (cancelToken, fundId) => {
   let url;
   fundId
-    ? (url = `/${entityId}/${baseURL}/Identity/list?fundId=${fundId}`)
-    : (url = `/${entityId}/${baseURL}/Identity/list`);
+    ? (url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Identity/list?fundId=${fundId}`)
+    : (url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Identity/list`);
 
   const request = { type: "GET", urlString: url };
 
@@ -107,7 +107,7 @@ export const getIdentityList = async (cancelToken, fundId) => {
   }
 };
 export const getRequiredDocument = async (accountId, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/Account/requiredDocuments/${accountId}`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Account/requiredDocuments/${accountId}`;
   const request = { type: "GET", urlString: url };
 
   try {
@@ -142,7 +142,7 @@ export const getFundForJoin = async (fundCode, cancelToken) => {
   }
 };
 export const getIdentityDocument = async (identityId, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/Identity/${identityId}/documents`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Identity/${identityId}/documents`;
   const request = { type: "GET", urlString: url };
 
   try {
@@ -157,7 +157,7 @@ export const postIdentityAttatchWithFund = async (
   data,
   cancelToken
 ) => {
-  const url = `/${entityId}/${baseURL}/Identity/${identityId}/attach`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Identity/${identityId}/attach`;
   const request = { type: "POST", urlString: url, params: data };
 
   try {
@@ -178,9 +178,9 @@ export const getParticularFieldsApi = async (
   account_id = null,
   cancelToken
 ) => {
-  var url = `/${entityId}/${baseURL}/Identity/fields`;
+  var url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Identity/fields`;
   if (account_id) {
-    url = `/${entityId}/${baseURL}/Identity/fields?accountId=${account_id}`;
+    url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Identity/fields?accountId=${account_id}`;
   }
   const request = { type: "GET", urlString: url };
   try {
@@ -194,7 +194,7 @@ export const getParticularFieldsFromFundIdApi = async (
   fund_id = null,
   cancelToken
 ) => {
-  var url = `/${entityId}/${baseURL}/Identity/fields?fundId=${fund_id}`;
+  var url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Identity/fields?fundId=${fund_id}`;
   const request = { type: "GET", urlString: url };
   try {
     const response = await processRequest(request, cancelToken);
@@ -204,7 +204,7 @@ export const getParticularFieldsFromFundIdApi = async (
   }
 };
 export const getSingleDocument = async (documentId, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/document`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/document`;
   const request = {
     type: "POST",
     urlString: url,
@@ -218,7 +218,7 @@ export const getSingleDocument = async (documentId, cancelToken) => {
   }
 };
 export const postIdentityAPI = async (data, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/Identity/create`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Identity/create`;
   const request = { type: "POST", urlString: url, params: data };
   try {
     const response = await processRequest(request, cancelToken);
@@ -231,7 +231,7 @@ export const getParticularsDetailByIdentityIdAPI = async (
   identity_id,
   cancelToken
 ) => {
-  const url = `/${entityId}/${baseURL}/Identity/${identity_id}/get`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Identity/${identity_id}/get`;
   const request = { type: "GET", urlString: url };
   try {
     const response = await processRequest(request, cancelToken);
@@ -241,7 +241,7 @@ export const getParticularsDetailByIdentityIdAPI = async (
   }
 };
 export const getSingleAccountDetailByIdAPI = async (accountId, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/Account/detail/${accountId}`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Account/detail/${accountId}`;
   const request = { type: "GET", urlString: url };
   try {
     const response = await processRequest(request, cancelToken);
@@ -251,7 +251,7 @@ export const getSingleAccountDetailByIdAPI = async (accountId, cancelToken) => {
   }
 };
 export const getCRPsByIdentityIdAPI = async (identityId, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/Identity/${identityId}/Crp/list`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Identity/${identityId}/Crp/list`;
   const request = { type: "GET", urlString: url };
   try {
     const response = await processRequest(request, cancelToken);
@@ -261,7 +261,7 @@ export const getCRPsByIdentityIdAPI = async (identityId, cancelToken) => {
   }
 };
 export const postIdentityDocument = async (data, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/IdentityDocument/add`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/IdentityDocument/add`;
   const request = { type: "POST", urlString: url, params: data };
   try {
     const response = await processRequest(request, cancelToken);
@@ -271,7 +271,7 @@ export const postIdentityDocument = async (data, cancelToken) => {
   }
 };
 export const updateIdentityDocument = async (data, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/IdentityDocument/update`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/IdentityDocument/update`;
   const request = { type: "PUT", urlString: url, params: data };
   try {
     const response = await processRequest(request, cancelToken);
@@ -281,7 +281,7 @@ export const updateIdentityDocument = async (data, cancelToken) => {
   }
 };
 export const postVerifyUploadDocument = async (identityId, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/IdentityDocument/${identityId}/verifyUpload`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/IdentityDocument/${identityId}/verifyUpload`;
   const request = { type: "POST", urlString: url };
   try {
     const response = await processRequest(request, cancelToken);
@@ -362,7 +362,7 @@ export const getFlatCPRListAPI = async (
   cancelToken
 ) => {
   //http://localhost:8386/8eadea60-a665-41ea-9428-4e46802c5faa/CAPI/Identity/9fd19b44-1e16-4606-9012-7e760e94f426/account/737cbfcf-ae57-46ed-b815-c8f792b8ff7e/Crp/flatlist?extended=true
-  const url = `/${entityId}/${baseURL}/Identity/${identity_id}/account/${account_id}/Crp/flatlist?extended=true`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Identity/${identity_id}/account/${account_id}/Crp/flatlist?extended=true`;
   const request = { type: "GET", urlString: url };
   try {
     const response = await processRequest(request, cancelToken);
@@ -373,7 +373,7 @@ export const getFlatCPRListAPI = async (
 };
 
 export const getRequiredDocumentAPI = async (accountId, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/Account/requiredDocuments/${accountId}`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Account/requiredDocuments/${accountId}`;
   const request = { type: "GET", urlString: url };
 
   try {
@@ -384,7 +384,7 @@ export const getRequiredDocumentAPI = async (accountId, cancelToken) => {
   }
 };
 export const getSignedURLAPI = async (data, id, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/identity-document/${id}/sign`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/identity-document/${id}/sign`;
   const request = { type: "POST", urlString: url, params: data };
 
   try {
@@ -395,7 +395,7 @@ export const getSignedURLAPI = async (data, id, cancelToken) => {
   }
 };
 export const getInitialInvestmentSignAPI = async (account_id, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/Account/transactions/${account_id}`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Account/transactions/${account_id}`;
   const request = { type: "GET", urlString: url };
 
   try {
@@ -410,7 +410,7 @@ export const handleSubmitScreeningApi = async (
   accountId,
   cancelToken
 ) => {
-  const url = `/${entityId}/${baseURL}/${identityId}/${accountId}/application/submit`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/${identityId}/${accountId}/application/submit`;
   const request = { type: "POST", urlString: url };
 
   try {
@@ -421,7 +421,7 @@ export const handleSubmitScreeningApi = async (
   }
 };
 export const getWalletAddressListAPI = async (identityId, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/${identityId}/getIdentityWalletAddress`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/${identityId}/getIdentityWalletAddress`;
   const request = { type: "GET", urlString: url };
 
   try {
@@ -432,7 +432,7 @@ export const getWalletAddressListAPI = async (identityId, cancelToken) => {
   }
 };
 export const addWalletAddressAPI = async (data, identityId, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/${identityId}/addWalletAddress`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/${identityId}/addWalletAddress`;
   const request = { type: "POST", urlString: url, params: data };
 
   try {
@@ -448,9 +448,9 @@ export const getCryptoCurrencyChainListAPI = async (
 ) => {
   let url = "";
   if (account_id) {
-    url = `/${entityId}/${baseURL}/upsala/getSuppotedNetworks?account_id=${account_id}`;
+    url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/upsala/getSuppotedNetworks?account_id=${account_id}`;
   } else {
-    url = `/${entityId}/${baseURL}/upsala/getSuppotedNetworks`;
+    url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/upsala/getSuppotedNetworks`;
   }
   const request = { type: "GET", urlString: url };
 
@@ -466,7 +466,7 @@ export const updateIdentityStatusAPI = async (
   identityId,
   cancelToken
 ) => {
-  const url = `/${entityId}/${baseURL}/Identity/${identityId}/updateStatus`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Identity/${identityId}/updateStatus`;
   const request = { type: "PUT", urlString: url, params: data };
 
   try {
@@ -485,7 +485,7 @@ export const getDownloadSigningDocument = async (
   accountId,
   cancelToken
 ) => {
-  const url = `/${entityId}/${baseURL}/${documentTypeId}/download-signing-document/${accountId}?choice=${nameDocument}`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/${documentTypeId}/download-signing-document/${accountId}?choice=${nameDocument}`;
   const request = { type: "GET", urlString: url };
 
   try {
@@ -499,7 +499,7 @@ export const getDownloadSigningDocument = async (
 //subscription doc add api
 //http://localhost:8384/173dad6c-b543-4d24-812e-3a306f7e4f14/CAPI/transaction-document
 export const transactionDocAddApi = async (data, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/transaction-document`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/transaction-document`;
   const request = { type: "POST", urlString: url, params: data };
 
   try {
@@ -515,7 +515,7 @@ export const transactionDocVerifyUpload = async (
   cancelToken
 ) => {
   //http://localhost:8384/173dad6c-b543-4d24-812e-3a306f7e4f14/CAPI/account-document/fdb8dac7-ca05-4437-b119-7b9b84e59dae/verifyUpload
-  const url = `/${entityId}/${baseURL}/account-document/${accountId}/verifyUpload`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/account-document/${accountId}/verifyUpload`;
   const request = { type: "POST", urlString: url, params: data };
 
   try {
@@ -530,7 +530,7 @@ export const getDocuSignURLForFinishSigningAPI = async (
   id,
   cancelToken
 ) => {
-  const url = `/${entityId}/${baseURL}/identity-document/${id}/docusign-draft-sign`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/identity-document/${id}/docusign-draft-sign`;
   const request = { type: "PUT", urlString: url, params: data };
 
   try {
@@ -545,7 +545,7 @@ export const getDownloadDocuSignAPI = async (
   dataToSend,
   cancelToken
 ) => {
-  const url = `/${entityId}/${baseURL}/transaction/${transactionID}/download-sign-document`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/transaction/${transactionID}/download-sign-document`;
   const request = { type: "POST", urlString: url, params: dataToSend };
 
   try {
@@ -560,7 +560,7 @@ export const getRequiredDocumentCRP = async (
   identityId,
   cancelToken
 ) => {
-  const url = `/${entityId}/${baseURL}/Account/requiredDocuments/${accountId}?identityId=${identityId}`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Account/requiredDocuments/${accountId}?identityId=${identityId}`;
   const request = { type: "GET", urlString: url };
 
   try {
@@ -575,7 +575,7 @@ export const getRegistrationProviderForSingpass = async (
   singpassValue,
   cancelToken
 ) => {
-  const url = `/${entityId}/${baseURL}/registrationProvider/configurations?provider=${singpassValue}`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/registrationProvider/configurations?provider=${singpassValue}`;
   const request = { type: "GET", urlString: url };
 
   try {
@@ -587,7 +587,7 @@ export const getRegistrationProviderForSingpass = async (
 };
 
 export const getEntityTypeAPI = async (cancelToken) => {
-  const url = `/${entityId}/${baseURL}/entity-types-list`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/entity-types-list`;
   const request = { type: "GET", urlString: url };
 
   try {
@@ -598,7 +598,7 @@ export const getEntityTypeAPI = async (cancelToken) => {
   }
 };
 export const postRegistrationProviderGetData = async (data, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/registrationProvider/get-data`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/registrationProvider/get-data`;
   const request = { type: "POST", urlString: url, params: data };
   try {
     const response = await processRequest(request, cancelToken);
@@ -609,7 +609,7 @@ export const postRegistrationProviderGetData = async (data, cancelToken) => {
 };
 
 export const getTransactionHistoryAPI = async (account_id, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/getAccountSubscriptionDocs?accountId=${account_id}`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/getAccountSubscriptionDocs?accountId=${account_id}`;
   const request = { type: "GET", urlString: url };
 
   try {
@@ -621,7 +621,7 @@ export const getTransactionHistoryAPI = async (account_id, cancelToken) => {
 };
 
 export const deleteDocument = async (documentId, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/document/${documentId}/delete`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/document/${documentId}/delete`;
   const request = {
     type: "DELETE",
     urlString: url,
@@ -642,7 +642,7 @@ export const FaceVerificationApi = async (
   accountShareHolderId
 ) => {
   // http://localhost:8384/:entityId/CAPI/Identity/:identityId/AccountShareHolder/:accountShareHolderId/FaceVerification
-  const url = `/${entityId}/${baseURL}/Identity/${identityId}/AccountShareHolder/${accountShareHolderId}/FaceVerification`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Identity/${identityId}/AccountShareHolder/${accountShareHolderId}/FaceVerification`;
   const request = { type: "POST", urlString: url, params: data };
   try {
     const response = await processRequest(request, cancelToken);
@@ -658,7 +658,7 @@ export const getVcipSignedUrl = async (
   accountShareHolderId,
   cancelToken
 ) => {
-  const url = `/${entityId}/${baseURL}/Identity/${identityId}/AccountShareHolder/${accountShareHolderId}/Vcip`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Identity/${identityId}/AccountShareHolder/${accountShareHolderId}/Vcip`;
   const request = { type: "POST", urlString: url, params: { location: data } };
   try {
     const response = await processRequest(request, cancelToken);
@@ -669,7 +669,7 @@ export const getVcipSignedUrl = async (
 };
 
 export const validateByPennyDropAPI = async (data, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/registrationProvider/get-data`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/registrationProvider/get-data`;
   const request = { type: "POST", urlString: url, params: data };
 
   try {
@@ -687,7 +687,7 @@ export const postVerifyUploadVideo = async (
   cancelToken
 ) => {
   //VERIFY UPLOAD | PUT http://localhost:8384/:entityId/CAPI/Identity/:identityId/AccountShareHolder/:accountShareHolderId/Vcip/verifyUpload
-  const url = `/${entityId}/${baseURL}/Identity/${identityId}/AccountShareHolder/${accountShareHolderId}/Vcip/verifyUpload`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Identity/${identityId}/AccountShareHolder/${accountShareHolderId}/Vcip/verifyUpload`;
   const request = { type: "PUT", urlString: url, params: data };
   try {
     const response = await processRequest(request, cancelToken);
@@ -698,7 +698,7 @@ export const postVerifyUploadVideo = async (
 };
 
 export const getDataSignedUrl = async (data, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/getDataSignedUrl`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/getDataSignedUrl`;
   const request = { type: "POST", urlString: url, params: data };
   try {
     const response = await processRequest(request, cancelToken);
@@ -709,7 +709,7 @@ export const getDataSignedUrl = async (data, cancelToken) => {
 };
 
 export const submitBankIdentityAPI = async (identityId, data, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/${identityId}/addBankAddress`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/${identityId}/addBankAddress`;
   const request = { type: "POST", urlString: url, params: data };
 
   try {
@@ -721,7 +721,7 @@ export const submitBankIdentityAPI = async (identityId, data, cancelToken) => {
 };
 export const postDownloadStampDpcApi = async (data, cancelToken) => {
   //http://localhost:8384/:entityId/CAPI/getDataSignedUrl
-  const url = `/${entityId}/${baseURL}/getDataSignedUrl`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/getDataSignedUrl`;
   const request = { type: "POST", urlString: url, params: data };
 
   try {
@@ -740,7 +740,7 @@ export const postStampingApi = async (
   cancelToken
 ) => {
   //http://localhost:8384/:entityId/CAPI/Identity/:identityId/AccountShareHolder/:accountShareHolderId/DocumentDigitalStamping
-  const url = `/${entityId}/${baseURL}/Identity/${identityId}/AccountShareHolder/${accountShareHolderId}/DocumentDigitalStamping`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Identity/${identityId}/AccountShareHolder/${accountShareHolderId}/DocumentDigitalStamping`;
   const request = { type: "POST", urlString: url, params: data };
 
   try {
@@ -751,7 +751,7 @@ export const postStampingApi = async (
   }
 };
 export const getBankIdentitiesAPI = async (identityId, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/${identityId}/getIdentityBankList`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/${identityId}/getIdentityBankList`;
   const request = { type: "GET", urlString: url };
 
   try {
@@ -762,7 +762,7 @@ export const getBankIdentitiesAPI = async (identityId, cancelToken) => {
   }
 };
 export const deleteBankWalletAPI = async (identityId, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/BankWalletIdentityDelete/${identityId}`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/BankWalletIdentityDelete/${identityId}`;
   const request = { type: "DELETE", urlString: url };
 
   try {
@@ -778,7 +778,7 @@ export const doStampingAPI = async (
   data,
   cancelToken
 ) => {
-  const url = `/${entityId}/${baseURL}/Identity/${identityId}/AccountShareHolder/${accountShareHolderId}/DocumentDigitalStamping`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Identity/${identityId}/AccountShareHolder/${accountShareHolderId}/DocumentDigitalStamping`;
   const request = { type: "POST", urlString: url, params: data };
 
   try {
@@ -789,7 +789,7 @@ export const doStampingAPI = async (
   }
 };
 export const handleDownloadStampDocumentAPI = async (data, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/getDataSignedUrl`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/getDataSignedUrl`;
   const request = { type: "POST", urlString: url, params: data };
 
   try {
@@ -806,7 +806,7 @@ export const doESignAPI = async (
   data,
   cancelToken
 ) => {
-  const url = `/${entityId}/${baseURL}/Identity/${identityId}/AccountShareHolder/${accountShareHolderId}/DocumentAadhaarSigning`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Identity/${identityId}/AccountShareHolder/${accountShareHolderId}/DocumentAadhaarSigning`;
   const request = { type: "POST", urlString: url, params: data };
 
   try {
@@ -829,7 +829,7 @@ export const getUserEntitiesAPI = async (cancelToken) => {
 };
 
 export const getEntityPermissionAPI = async (entityId, cancelToken) => {
-  const url = `/user/entity/${entityId}/permissions`;
+  const url = `/user/entity/a24ee21c-f747-4006-bfd3-8b87343c5119/permissions`;
   const request = { type: "GET", urlString: url };
 
   try {
@@ -858,7 +858,7 @@ export const getIdentityCount = async (
 ) => {
   //http://localhost:8384/:entityId/CAPI/identityCount
 
-  const url = `/${entity_Id}/${baseURL}/identityCount`;
+  const url = `/${entity_Id}/CAPI/identityCount`;
   const request = { type: "GET", urlString: url };
 
   try {
@@ -869,7 +869,7 @@ export const getIdentityCount = async (
   }
 };
 export const deleteAccountAPI = async (account_id, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/account/${account_id}/delete`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/account/${account_id}/delete`;
   const request = { type: "DELETE", urlString: url };
 
   try {
@@ -884,7 +884,7 @@ export const submitCustomTransactionDataAPI = async (
   data,
   cancelToken
 ) => {
-  const url = `/${entityId}/${baseURL}/${accountId}/addAccountTransaction`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/${accountId}/addAccountTransaction`;
   const request = { type: "POST", urlString: url, params: data };
 
   try {
@@ -895,7 +895,7 @@ export const submitCustomTransactionDataAPI = async (
   }
 };
 export const getCustomTransactionAPI = async (accountId, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/Account/transactions/${accountId}`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Account/transactions/${accountId}`;
   const request = { type: "GET", urlString: url };
 
   try {
@@ -908,7 +908,7 @@ export const getCustomTransactionAPI = async (accountId, cancelToken) => {
 
 export const deleteTransaction = async (accountId, id, cancelToken) => {
   //http://localhost:8384/7175c8f1-f37b-41b0-8abf-b524bf7e81fc/AAPI/46e9572d-8ef2-4fd6-80d2-c6fd325f024d/deleteAccountTransaction?id=4f9bcf5b-455e-4189-8302-08352963fd7e
-  const url = `/${entityId}/${baseURL}/${accountId}/deleteAccountTransaction?id=${id}`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/${accountId}/deleteAccountTransaction?id=${id}`;
   const request = { type: "DELETE", urlString: url, params: data };
   try {
     const response = await processRequest(request, cancelToken);
@@ -922,7 +922,7 @@ export const validateByPennyDropVerifyAPI = async (
   data,
   cancelToken
 ) => {
-  const url = `/${entityId}/${baseURL}/registrationProvider/get-data?identity_id=${identityId}`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/registrationProvider/get-data?identity_id=${identityId}`;
   const request = { type: "POST", urlString: url, params: data };
 
   try {
@@ -936,7 +936,7 @@ export const verifyFundExist = async (data, cancelToken) => {
   //post url:CAPI/Account/list/verify
 
   //
-  const url = `/${entityId}/${baseURL}/Account/list/verify`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/Account/list/verify`;
   const request = { type: "POST", urlString: url, params: data };
 
   try {
@@ -950,7 +950,7 @@ export const verifyFundExist = async (data, cancelToken) => {
 //delete manual subscription document
 export const deleteManualSubscriptionDoc = async (docId, data, cancelToken) => {
   //http://localhost:8384/0e1cf9bf-f513-44fc-991b-9d0f0694703c/CAPI/d4399401-f8c7-4d7f-83bb-ae56c0a37e8d/document-delete
-  const url = `/${entityId}/${baseURL}/${docId}/document-delete`;
+  const url = `/a24ee21c-f747-4006-bfd3-8b87343c5119/CAPI/${docId}/document-delete`;
   const request = { type: "POST", urlString: url, params: data };
   try {
     const response = await processRequest(request, cancelToken);
