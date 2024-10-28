@@ -49,6 +49,7 @@ API.interceptors.response.use(
 
       console.log("error", error);
       if (error?.response?.data?.system_message === "This entity is IP restricted, You are not allowed access this entity outside the designated IP address ") {
+     
         handleSplashScreenForIp();
         return Promise.reject(error);
       } else {
@@ -217,6 +218,7 @@ async function handleSaveDataAudit(data) {
   });
   return response.json();
 }
+
 function handleSplashScreenForIp(e) {
   localStorage.setItem("base_url", null);
   let port = "";

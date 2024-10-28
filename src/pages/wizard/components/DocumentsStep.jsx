@@ -578,10 +578,10 @@ export default function Documents(props) {
                   requiredDocumentSelected?.id == item.id && isItemSelected
                     ? ``
                     : handleWarningMessage(item)
-                    ? `border border-[#ff0000] shadow-${theme} mb-4 mt-2 px-[15px] py-[17px] rounded-lg bg-gradient-stepper-card-${theme}`
+                    ? `border-2 border-[#ff0000] shadow-${theme} mb-4 mt-2 px-[15px] py-[17px] rounded-lg bg-gradient-stepper-card-${theme}`
                     : getUploadedDocumentChildName(item) ||
                       getUploadedDocumentIfChildrenNotFound(item.id)
-                    ? ``
+                    ? `border-2 border-[#30d158] shadow-${theme} mb-4 mt-2 px-[15px] py-[17px] rounded-lg bg-gradient-stepper-card-${theme}`
                     : `border-color-${theme} shadow-${theme} mb-4 mt-2 px-[15px] py-[17px] rounded-lg bg-gradient-stepper-card-${theme}`
                 }
               >
