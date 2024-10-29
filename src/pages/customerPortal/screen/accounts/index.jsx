@@ -1,89 +1,982 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { useTheme } from "../../../../contexts/themeContext";
-import useAccountsHook from "../../../../hooks/useAccountsHook";
-import useEntityStore from "../../../../store/useEntityStore";
-import Loader from "../../../../components/ui/loader";
-import SideBar from "../../../../components/sidebar/Sidebar";
+// import React, { useEffect, useState, useRef } from "react";
+// import { useNavigate } from "react-router-dom";
+// import { useTheme } from "../../../../contexts/themeContext";
+// import useAccountsHook from "../../../../hooks/useAccountsHook";
+// import useEntityStore from "../../../../store/useEntityStore";
+// import Loader from "../../../../components/ui/loader";
+// import SideBar from "../../../../components/sidebar/Sidebar";
+// import Header from "../../../../components/header/Header";
+// import AccountCard from "../../../../components/cardComponent/AccountCard";
+// import IconButton from "../../../../components/ui/button/IconButton";
+
+// const Accounts = () => {
+//   const { accounts, isLoader, fetchMoreAccounts } = useAccountsHook();
+//   const { entityId } = useEntityStore.getState();
+//   const { theme } = useTheme();
+//   const observerRef = useRef();
+//   const [isFetchingMore, setIsFetchingMore] = useState(false);
+
+//   const navigate = useNavigate();
+//   function handleClick() {
+//     navigate("/subscription/request");
+//   }
+//   useEffect(() => {
+//     document.body.style.backgroundColor =
+//       theme === "SC"
+//         ? "#ffffff"
+//         : theme === "Ascent"
+//         ? "rgba(18, 38, 63)"
+//         : theme === "lightTheme"
+//         ? "#000000"
+//         : "";
+
+//     return () => {
+//       document.body.style.backgroundColor = "";
+//     };
+//   }, [theme]);
+//   useEffect(() => {
+//     const observer = new IntersectionObserver(
+//       (entries) => {
+//         if (entries[0].isIntersecting && !isFetchingMore && !isLoader) {
+//           setIsFetchingMore(true);
+//           fetchMoreAccounts().finally(() => {
+//             setIsFetchingMore(false);
+//           });
+//         }
+//       },
+//       { threshold: 1 }
+//     );
+
+//     if (observerRef.current) {
+//       observer.observe(observerRef.current);
+//     }
+
+//     return () => {
+//       if (observerRef.current) {
+//         observer.unobserve(observerRef.current);
+//       }
+//     };
+//   }, [isFetchingMore, isLoader]);
+
+//   return (
+//     <div className={`bg-color-${theme} flex flex-col md:flex-row`}>
+//       <SideBar portalType="Customer" />
+//       <div className="flex-1 py-6 lg:ml-9 lg:px-10 px-2">
+//         <Header
+//           heading="My Accounts"
+//           subheading="Overview"
+//           showButton={true}
+//           onButtonClick={handleClick}
+//           theme={theme}
+//         />
+//         <hr className=" border-t-[1px] border-t-[#6e84a3] opacity-20 mb-6 mt-4 lg:ml-0 ml-6 sm:mr-6 lg:mr-0 mr-6" />
+//         {isLoader}
+//         {accounts.length > 0 && (
+//           <>
+//             {accounts.map((account) => (
+//               <AccountCard key={account.id} accountData={account} />
+//             ))}
+//           </>
+//         )}
+//         <div ref={observerRef}>
+//           {isFetchingMore && <Loader theme={theme} />}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Accounts;
+
+
+import React, { useEffect, useState } from "react";
+import { Modal, Container } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Tooltip from "../../../../components/tooltip/Tooltip"
+
 import Header from "../../../../components/header/Header";
-import AccountCard from "../../../../components/cardComponent/AccountCard";
-import IconButton from "../../../../components/ui/button/IconButton";
+import { useLocation, Link, useNavigate } from "react-router-dom";
+import { getCustomerAccounts, deleteAccountAPI } from "../../../../api/network/CustomerApi";
+import axios from "axios";
+import FeatherIcon from "feather-icons-react";
+import { faTrash, faEye } from "@fortawesome/free-solid-svg-icons";
+import LoadingSpinner from "../../../../components/ui/loader/Spinner";
+import EntityIcon from "../../../../icons/entity-icon-small.svg";
+import {checkSubscriptionAllow} from "../../../../helpers/getFundConfiguration";
+import Countries from "../../../../helpers/countries";
+import { setCustomerAccounts } from "../../../../store/slices/customerAccountSlice"; 
+import { useSelector, useDispatch } from "react-redux";
+import CustomAlert from "../../../../components/ui/loader/index";
+import SideBar from "../../../../components/sidebar/Sidebar";
+var theme = localStorage.getItem("theme");
+export default function InvestorSubscriptionList({ ...props }) {
+  const [accountsData, setAccountsData] = useState([]);
+  const [isLoader, setIsLoader] = useState(false);
+  const [isLoaderAccount, setIsLoaderAccount] = useState(false);
+  const [deleteAccountModal, setDeleteAccountModal] = useState(false);
+  const [deleteAccountId, setDeleteAccountId] = useState(null);
+  const [switchTransferModal, setSwitchTransferModal] = useState(false);
 
-const Accounts = () => {
-  const { accounts, isLoader, fetchMoreAccounts } = useAccountsHook();
-  const { entityId } = useEntityStore.getState();
-  const { theme } = useTheme();
-  const observerRef = useRef();
-  const [isFetchingMore, setIsFetchingMore] = useState(false);
 
+  const cancelTokenSource = axios.CancelToken.source();
+  const history = useLocation();
   const navigate = useNavigate();
+  const [offset, setOffset] = useState(0);
+  const [limit] = useState(10);
+
+  const dispatch = useDispatch();
   function handleClick() {
     navigate("/subscription/request");
   }
+
+  const customerAccounts = useSelector((state) => state?.customerAccount);
+  const [activeItem, setActiveItem] = useState(null);
+  const handleItemClick = (item) => {
+    setActiveItem(item);
+  };
+
+  const headerButtonCallBack = (e) => {
+    e.preventDefault();
+    navigate("/subscription/request");
+  };
+
   useEffect(() => {
-    document.body.style.backgroundColor =
-      theme === "SC"
-        ? "#ffffff"
-        : theme === "Ascent"
-        ? "rgba(18, 38, 63)"
-        : theme === "lightTheme"
-        ? "#000000"
-        : "";
+    console.log("isLoaderAccount", isLoaderAccount)
+  }, [isLoaderAccount]);
+  useEffect(() => {
+    console.log("accountsData", accountsData);
+  }, [accountsData]);
+  useEffect(() => {
+    console.log("customerAccountscustomerAccountscustomerAccountscustomerAccountscustomerAccounts", customerAccounts);
+  }, [customerAccounts]);
+
+  useEffect(() => {
+    const abortController = new AbortController();
+
+    loadMoreAccounts(abortController);
 
     return () => {
-      document.body.style.backgroundColor = "";
+      abortController.abort(); // Cancel the request on component unmount or route change
     };
-  }, [theme]);
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !isFetchingMore && !isLoader) {
-          setIsFetchingMore(true);
-          fetchMoreAccounts().finally(() => {
-            setIsFetchingMore(false);
-          });
+  }, []);
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
+  //       loadMoreAccounts();
+  //     }
+  //   };
+
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, [offset, limit]);
+
+  const loadMoreAccounts = async (abortController) => {
+    setIsLoader(true);  // Main loader to indicate the entire loading process
+    let currentOffset = offset;
+    let keepLoading = true;
+  
+    while (keepLoading && !abortController.signal.aborted) {
+      try {
+        // Show the loader before each API call
+        setIsLoaderAccount(true);  
+  
+        const response = await getCustomerAccounts(currentOffset, limit, cancelTokenSource.token);
+        const newAccounts = response.data?.customer_accounts || [];
+  
+        if (response?.success && newAccounts.length > 0) {
+          setAccountsData((prevAccounts) => [...prevAccounts, ...newAccounts]);
+          currentOffset += limit;
+          setOffset(currentOffset);
+        } else {
+          keepLoading = false; // Stop loading if no more accounts are returned
         }
-      },
-      { threshold: 1 }
-    );
-
-    if (observerRef.current) {
-      observer.observe(observerRef.current);
-    }
-
-    return () => {
-      if (observerRef.current) {
-        observer.unobserve(observerRef.current);
+      } catch (error) {
+        if (abortController.signal.aborted) {
+          console.log("Fetch aborted");
+        } else {
+          console.error("Error fetching accounts", error);
+        }
+        keepLoading = false; // Stop loading on error
+      } finally {
+        // Hide the loader after each API call
+        setIsLoaderAccount(false);
       }
-    };
-  }, [isFetchingMore, isLoader]);
+    }
+  
+    // Main loader off after the entire process
+    setIsLoader(false);
+  };
+  
 
+
+  const handleGetCustomersAccounts = async () => {
+    console.log(`checking`);
+    setIsLoaderAccount(true);
+
+    const response = await getCustomerAccounts(0, 10, cancelTokenSource.token);
+    if (response.success == true) {
+      setIsLoaderAccount(false);
+      setAccountsData(response?.data?.customer_accounts);
+      dispatch(setCustomerAccounts(response?.data?.customer_accounts));
+    } else {
+      setIsLoaderAccount(false);
+    }
+  };
+
+  const hanleDeleteAccount = (e, accountId) => {
+    setDeleteAccountId(accountId);
+    setDeleteAccountModal(true);
+  };
+  const handleDeleteAccountConfirm = async (e) => {
+    setIsLoaderAccount(true);
+    setDeleteAccountModal(false);
+    const response = await deleteAccountAPI(deleteAccountId, cancelTokenSource.token);
+    if (response.success == true) {
+      setIsLoaderAccount(false);
+      handleGetCustomersAccounts();
+      props?.handleAlert({
+        variant: "success",
+        message: "Account Deleted Successfully",
+        show: true,
+        hideAuto: true,
+      });
+    } else {
+      setIsLoaderAccount(false);
+    }
+  };
+  const closeModal = () => {
+    setDeleteAccountModal(false);
+  };
+  const closeModalSwitchModal = () => {
+    setSwitchTransferModal(false);
+  };
+  const handleClickSwicthTransfer = (e) => {
+    setSwitchTransferModal(true);
+  };
+  const getCountryNameFromEnums = (countryCode) => {
+    let countryName = "";
+    if (Countries.length > 0) {
+      for (let a of Countries) {
+        if (a.code == countryCode) {
+          countryName = a.key;
+        }
+      }
+    }
+    if (countryName == "") {
+      return countryCode;
+    } else {
+      return countryName;
+    }
+  };
   return (
+    <>
     <div className={`bg-color-${theme} flex flex-col md:flex-row`}>
-      <SideBar portalType="Customer" />
-      <div className="flex-1 py-6 lg:ml-9 lg:px-10 px-2">
-        <Header
+     <SideBar portalType="Customer" />
+      <div className="main-content">
+      <Header
           heading="My Accounts"
           subheading="Overview"
           showButton={true}
           onButtonClick={handleClick}
           theme={theme}
         />
-        <hr className=" border-t-[1px] border-t-[#6e84a3] opacity-20 mb-6 mt-4 lg:ml-0 ml-6 sm:mr-6 lg:mr-0 mr-6" />
-        {isLoader}
-        {accounts.length > 0 && (
-          <>
-            {accounts.map((account) => (
-              <AccountCard key={account.id} accountData={account} />
-            ))}
-          </>
-        )}
-        <div ref={observerRef}>
-          {isFetchingMore && <Loader theme={theme} />}
-        </div>
-      </div>
-    </div>
-  );
-};
+   
+        <div className="justify-content-center">
+          {accountsData.length > 0
+            ? accountsData.map((item, index) => {
+                return (
+                  <div className="card" key={index}>
+                    <div className="card-header">
+                      <h4 className="card-header-title custom-responsive-header">
+                        <img
+                          src={item?.account?.fund?.logoBucketKey}
+                          style={{
+                            maxHeight: '30px',
+                            textAlign: 'left',
+                            marginRight: '5px',
+                          }}
+                          alt=""
+                          className="rounded "
+                        />
+                        {item?.account?.fund?.name}
+                      </h4>
 
-export default Accounts;
+                      {/* {item?.account?.status == 'accepted' && ( */}
+                      {/* http://customer.oc.sg:8002/profile/detail/098d9e73-f3e5-47c3-b8eb-92d45f5d3306/252cd9e4-17c3-4e78-90ea-62a7e88ffe29 */}
+                      {(item?.account?.fundId === 215 ||
+                        item?.account?.fundId === '215') && (
+                        <button
+                          onClick={() =>
+                            navigate(
+                              `/profile/detail/${item?.identityId}/${item?.accountId}?event=complete`,
+                              {
+                                state: { isTransaction: true },
+                              },
+                            )
+                          }
+                          className="btn btn-sm btn-white  custom-responsive-btn"
+                          style={{ marginRight: '10px', padding: '4px 8px' }}
+                        >
+                         <Tooltip>New Transaction Request
+                            <span>
+                              <img
+                                style={{ height: '35px', width: '35px' }}
+                                className={'subscription_list_icons'}
+                                src={
+                                  '/img/transaction-icons/add_new_transactions.png'
+                                }
+                              />
+                            </span>
+                            </Tooltip>
+                        </button>
+                      )}
+
+                      {/* )} */}
+                      <>
+                        {item?.account?.meta.hasOwnProperty(
+                          'subscriptionDocuments',
+                        ) ? (
+                          <>
+                            {checkSubscriptionAllow(item?.account?.fund) &&
+                              item?.account?.status == 'accepted' && (
+                                <>
+                                  <button
+                                    onClick={() =>
+                                      navigate(
+                                        `/profile/detail/${item?.identityId}/${item?.accountId}?event="additional"`,
+                                        {
+                                          state: { isSignAgreement: false },
+                                        },
+                                      )
+                                    }
+                                    className="btn btn-sm btn-white  custom-responsive-btn"
+                                    style={{
+                                      marginRight: '10px',
+                                      padding: '10px 15px',
+                                    }}
+                                  >
+                                    
+                                        <Tooltip>Additional Investment
+                                      <span>
+                                        <img
+                                          className={'subscription_list_icons'}
+                                          src={
+                                            '/img/transaction-icons/subscription.svg'
+                                          }
+                                        />
+                                      </span>
+                                      </Tooltip>
+                                      
+                                    
+                                  </button>
+                                  <button
+                                    onClick={() =>
+                                      navigate(
+                                        `/profile/detail/${item?.identityId}/${item?.accountId}?event="redemption"`,
+                                        {
+                                          state: { isSignAgreement: false },
+                                        },
+                                      )
+                                    }
+                                    className="btn btn-sm btn-white  custom-responsive-btn"
+                                    style={{
+                                      marginRight: '10px',
+                                      padding: '10px 15px',
+                                    }}
+                                  >
+                                   <Tooltip>Redemption Request
+                                      <span>
+                                        <img
+                                          className={'subscription_list_icons'}
+                                          src={
+                                            '/img/transaction-icons/Redemption.svg'
+                                          }
+                                        />
+                                      </span>
+                                      </Tooltip>
+                                      
+                                    
+                                  </button>
+                                </>
+                              )}
+                          </>
+                        ) : checkSubscriptionAllow(item?.account?.fund) ? (
+                          <Link
+                            to={`/profile/detail/${item?.identityId}/${item?.accountId}?event=application`}
+                            className="btn btn-sm btn-white  custom-responsive-btn"
+                            style={{
+                              marginRight: '10px',
+                              padding: '10px 15px',
+                            }}
+                          >
+                            <Tooltip>Sign Agreement
+                              <span>
+                                <img
+                                  className={'subscription_list_icons'}
+                                  src={
+                                    '/img/transaction-icons/sign_agreement.png'
+                                  }
+                                />
+                              </span>
+                              </Tooltip>
+                            
+                          </Link>
+                        ) : null}
+                      </>
+                      <Link
+                        to={`/profile/detail/${item?.identityId}/${item?.accountId}`}
+                        className="btn btn-sm btn-white  custom-responsive-btn"
+                        style={{ marginRight: '10px', padding: '10px 15px' }}
+                      >
+                        <Tooltip>Account Detail
+                          <span>
+                            {/* <img className={"subscription_list_icons"} src={"/img/transaction-icons/sign_agreement.png"} /> */}
+                            <FontAwesomeIcon
+                              color="#2C7BE5"
+                              icon={faEye}
+                              style={{ fontSize: '16' }}
+                            />
+                          </span>
+                          </Tooltip>
+                        
+                      </Link>
+
+                      {item?.account?.fund?.meta?.config?.settings?.account
+                        ?.transfer?.enabled && (
+                        <div
+                          style={{ marginRight: '10px', padding: '10px 15px' }}
+                          onClick={(e) => {
+                            handleClickSwicthTransfer(e);
+                          }}
+                          className="btn btn-sm btn-white  custom-responsive-btn"
+                        >
+                         <Tooltip>Transfer
+                            <span>
+                              <img
+                                className={'subscription_list_icons'}
+                                src={'/img/transaction-icons/icons.svg'}
+                              />
+                            </span>
+                            </Tooltip>
+                          
+                        </div>
+                      )}
+                      {item?.account?.fund?.meta?.config?.settings?.account
+                        ?.switch?.enabled && (
+                        <div
+                          style={{ marginRight: '10px', padding: '10px 15px' }}
+                          onClick={(e) => {
+                            handleClickSwicthTransfer(e);
+                          }}
+                          className="btn btn-sm btn-white  custom-responsive-btn"
+                        >
+                        <Tooltip>Switch
+                            <span>
+                              <img
+                                className={'subscription_list_icons'}
+                                src={'/img/transaction-icons/switch.png'}
+                              />
+                            </span>
+                            </Tooltip>
+                          
+                        </div>
+                      )}
+                      {(item?.account?.status == 'draft' ||
+                        item?.account?.status == 'pending') && (
+                        <div
+                          style={{ marginRight: '10px', padding: '10px 15px' }}
+                          onClick={(e) => {
+                            hanleDeleteAccount(e, item.accountId);
+                          }}
+                          className="btn btn-sm btn-white  custom-responsive-btn"
+                        >
+                         <Tooltip>Delete
+                            <span>
+                              <FontAwesomeIcon
+                                color="red"
+                                icon={faTrash}
+                                style={{ fontSize: '16' }}
+                              />
+                            </span>
+                            </Tooltip>
+                          
+                        </div>
+                      )}
+                    </div>
+                    <div className="card-body mt-2">
+                      <div className="row">
+                        <div className="col-12 col-md-6">
+                          <div className="card mb-2">
+                            <div className="card-body">
+                              <div className="row align-items-center">
+                                <div className="col-auto">
+                                  <a href="#!" className="avatar avatar-lg">
+                                    {
+                                      item?.identity?.type == 'INDIVIDUAL' ? (
+                                        <img
+                                          src="/img/investor/default-avatar.png"
+                                          alt="..."
+                                          className="avatar-img rounded-circle"
+                                        />
+                                      ) : (
+                                        <EntityIcon
+                                          className={'nodeIcon'}
+                                          fontSize={'large'}
+                                          color={'action'}
+                                          style={{
+                                            fill:
+                                              theme == 'dark' ||
+                                              theme == undefined
+                                                ? 'white'
+                                                : 'black',
+                                          }}
+                                        />
+                                      )
+                                      // <img src="/img/office-building-icon-32.png" alt="..." className="avatar-img rounded-circle" />
+                                    }
+                                  </a>
+                                </div>
+                                <div className="col ms-n2">
+                                  <h4 className="mb-1">
+                                    <p
+                                      style={{ marginBottom: '0px' }}
+                                    >{`${item?.identity?.label}`}</p>
+                                  </h4>
+
+                                  <p className="small text-muted mb-1">
+                                    {/* {item?.identity?.type.toLowerCase() ==
+                                      "corporate"
+                                      ? "Country of Incorporation: "
+                                      : "Citizenship: "} */}
+                                    {item?.identity?.type.toLowerCase() ===
+                                      'corporate' && (
+                                      <>
+                                        Country of Incorporation:{' '}
+                                        {item?.identity?.meta?.data[
+                                          item?.identity?.type.toLowerCase() +
+                                            '.basic.country_of_residence_code'
+                                        ]?.value ||
+                                          item?.identity?.meta?.data[
+                                            item?.identity?.type.toLowerCase() +
+                                              '.basic.incorporate_country_code'
+                                          ]?.value}{' '}
+                                        <span className="text-success">
+                                          <FeatherIcon
+                                            className={`text-success`}
+                                            icon="check-circle"
+                                            color="green"
+                                            size="15"
+                                          />
+                                          <br />
+                                        </span>
+                                      </>
+                                    )}
+                                    {item?.identity?.type.toLowerCase() !==
+                                      'corporate' && (
+                                      <>
+                                        <p className="small mb-0">
+                                          Nationality:{' '}
+                                          {getCountryNameFromEnums(
+                                            item?.identity?.meta?.data[
+                                              item?.identity?.type.toLowerCase() +
+                                                '.basic.country_of_residence_code'
+                                            ]?.value
+                                              ? item?.identity?.meta?.data[
+                                                  item?.identity?.type.toLowerCase() +
+                                                    '.basic.nationality_code'
+                                                ]?.value
+                                              : item?.identity?.meta?.data[
+                                                  item?.identity?.type.toLowerCase() +
+                                                    '.basic.nationality_code'
+                                                ]?.value,
+                                          )}{' '}
+                                          <span className="text-success">
+                                            <FeatherIcon
+                                              className={`text-success`}
+                                              icon="check-circle"
+                                              color="green"
+                                              size="15"
+                                            />
+                                          </span>
+                                        </p>
+
+                                        <p className="small mb-0">
+                                          Country Of Residence:{' '}
+                                          <span
+                                            style={{
+                                              textTransform: 'capitalize',
+                                            }}
+                                          >
+                                            {getCountryNameFromEnums(
+                                              item?.identity?.meta?.data[
+                                                item?.identity?.type.toLowerCase() +
+                                                  '.basic.country_of_residence_code'
+                                              ]?.value ||
+                                                item?.identity?.meta?.data[
+                                                  item?.identity?.type.toLowerCase() +
+                                                    '.basic.incorporate_country_code'
+                                                ]?.value,
+                                            )}
+                                          </span>{' '}
+                                          <span className="text-success">
+                                            <FeatherIcon
+                                              className={`text-success`}
+                                              icon="check-circle"
+                                              color="green"
+                                              size="15"
+                                            />
+                                          </span>
+                                        </p>
+                                      </>
+                                    )}
+                                    {/* <br /> */}
+                                    Customer Type:
+                                    <>
+                                      <span
+                                        style={{
+                                          textTransform: 'capitalize',
+                                        }}
+                                      >
+                                        {item?.identity?.type.toLowerCase()}
+                                      </span>{' '}
+                                      <span className="text-success">
+                                        <FeatherIcon
+                                          className={`text-success`}
+                                          icon="check-circle"
+                                          color="green"
+                                          size="15"
+                                        />
+                                      </span>
+                                    </>
+                                  </p>
+
+                                  <p className="small mb-0">
+                                    <span className="text-success"> </span>{' '}
+                                    Subscription Type:{' '}
+                                    {item?.account?.scount == 1
+                                      ? 'Standalone'
+                                      : 'Joint Account'}
+                                  </p>
+                                  <p className="small mb-0">
+                                    <span
+                                      className={
+                                        item?.account?.status == 'pending' ||
+                                        item?.account?.status == 'draft'
+                                          ? 'text-warning'
+                                          : 'text-success'
+                                      }
+                                    >
+                                      {' '}
+                                    </span>{' '}
+                                    Status:{' '}
+                                    {item?.account?.status?.replace(
+                                      /^\w/,
+                                      (c) => c.toUpperCase(),
+                                    )}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        {(item?.account?.fund?.meta?.config?.settings?.display
+                          ?.fund_info === true ||
+                          item?.account?.fund?.meta?.config?.settings?.display
+                            ?.fund_info == 'true') && (
+                          <>
+                            {item?.account?.fundId == 3 ||
+                            item?.account?.fundId == 351 ||
+                            item?.account?.fundId == 1 ||
+                            item?.account?.fundId == 215 ? (
+                              <div className="col-12 col-md-6">
+                                <div className="card mb-2">
+                                  <div className="card-body">
+                                    <div className="row align-items-cente mb-3 mt-3">
+                                      <div className="col-sm-6">
+                                        <div className="row align-items-center">
+                                          <small className="text-muted">
+                                            <span className="text-success">
+                                              <FeatherIcon
+                                                className={`text-success`}
+                                                icon="clock"
+                                                color="green"
+                                                size="15"
+                                              />
+                                            </span>{' '}
+                                            {/* Dealing Every Month */}
+                                            {/* Dealing Cycle: Open  */}
+                                            Launch Date: 5 May 2021
+                                            {/* {item?.account?.fund?.meta?.config?.settings?.dealing?.period ? item?.account?.fund?.meta?.config?.settings?.dealing?.period : item?.account?.fund?.meta?.config?.settings?.dealing?.period} */}
+                                          </small>
+                                        </div>
+
+                                        <div className="row align-items-center">
+                                          <small className="text-muted">
+                                            <span className="text-success">
+                                              <FeatherIcon
+                                                className={`text-success`}
+                                                icon="check-circle"
+                                                color="green"
+                                                size="15"
+                                              />
+                                            </span>{' '}
+                                            Launch Price: SGD: 10:00
+                                          </small>
+                                        </div>
+                                        <div className="row align-items-center">
+                                          <small className="text-muted">
+                                            <span className="text-success">
+                                              <FeatherIcon
+                                                className={`text-success`}
+                                                icon="check-circle"
+                                                color="green"
+                                                size="15"
+                                              />
+                                            </span>{' '}
+                                            Last Dividend: 1.50
+                                          </small>
+                                        </div>
+                                        <div className="row align-items-center">
+                                          <small className="text-muted">
+                                            <span className="text-success">
+                                              <FeatherIcon
+                                                className={`text-success`}
+                                                icon="check-circle"
+                                                color="green"
+                                                size="15"
+                                              />
+                                            </span>{' '}
+                                            Dividend Frequency: Monthly
+                                          </small>
+                                        </div>
+                                        <div className="row align-items-center">
+                                          <small className="text-muted">
+                                            <span className="text-success">
+                                              <FeatherIcon
+                                                className={`text-success`}
+                                                icon="check-circle"
+                                                color="green"
+                                                size="15"
+                                              />
+                                            </span>{' '}
+                                            Min Initial Amount: SGD 1,000:00
+                                          </small>
+                                        </div>
+                                      </div>
+                                      <div className="col-sm-6">
+                                        <div className="row align-items-center">
+                                          <small className="text-muted">
+                                            <span className="text-success">
+                                              <FeatherIcon
+                                                className={`text-success`}
+                                                icon="check-circle"
+                                                color="green"
+                                                size="15"
+                                              />
+                                            </span>{' '}
+                                            Latest Nav Price: SGD 6.1595
+                                          </small>
+                                        </div>
+                                        <div className="row align-items-center">
+                                          <small className="text-muted">
+                                            <span className="text-success">
+                                              <FeatherIcon
+                                                className={`text-success`}
+                                                icon="check-circle"
+                                                color="green"
+                                                size="15"
+                                              />
+                                            </span>{' '}
+                                            Past 1 Month: 0.26%
+                                          </small>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="col-12 col-md-6">
+                                <div className="card mb-2">
+                                  <div className="card-body">
+                                    <div className="row align-items-cente mb-3 mt-3">
+                                      <div className="col ms-n2">
+                                        <div className="row align-items-center">
+                                          <small className="text-muted">
+                                            <span className="text-success">
+                                              <FeatherIcon
+                                                className={`text-success`}
+                                                icon="clock"
+                                                color="green"
+                                                size="15"
+                                              />
+                                            </span>{' '}
+                                            {/* Dealing Every Month */}
+                                            {/* Dealing Cycle: Open  */}
+                                            Dealing Cycle:{' '}
+                                            {item?.account?.fund?.meta?.config
+                                              ?.settings?.dealing?.type?.end
+                                              ? item?.account?.fund?.meta
+                                                  ?.config?.settings?.dealing
+                                                  ?.type?.end
+                                              : item?.account?.fund?.meta
+                                                  ?.config?.settings?.dealing
+                                                  ?.type?.end}
+                                            {/* {item?.account?.fund?.meta?.config?.settings?.dealing?.period ? item?.account?.fund?.meta?.config?.settings?.dealing?.period : item?.account?.fund?.meta?.config?.settings?.dealing?.period} */}
+                                          </small>
+                                        </div>
+
+                                        <div className="row align-items-center">
+                                          <small className="text-muted">
+                                            <span className="text-success">
+                                              <FeatherIcon
+                                                className={`text-success`}
+                                                icon="check-circle"
+                                                color="green"
+                                                size="15"
+                                              />
+                                            </span>{' '}
+                                            Fund's KYC:
+                                            {
+                                              item?.account?.fund?.meta?.config
+                                                ?.kyb?.status
+                                            }
+                                          </small>
+                                        </div>
+                                        <div className="row align-items-center">
+                                          <small className="text-muted">
+                                            <span className="text-success">
+                                              <FeatherIcon
+                                                className={`text-success`}
+                                                icon="check-circle"
+                                                color="green"
+                                                size="15"
+                                              />
+                                            </span>{' '}
+                                            Digital Fund:
+                                            {item?.account?.fund?.meta?.config
+                                              ?.settings?.account?.applicant
+                                              ?.asset?.digital?.status
+                                              ? 'Active'
+                                              : 'Not Active'}
+                                          </small>
+                                        </div>
+                                        <div className="row align-items-center">
+                                          <small className="text-muted">
+                                            <span className="text-success">
+                                              <FeatherIcon
+                                                className={`text-success`}
+                                                icon="check-circle"
+                                                color="green"
+                                                size="15"
+                                              />
+                                            </span>{' '}
+                                            Fund Domicile:
+                                            {
+                                              item?.account?.fund?.meta?.config
+                                                ?.settings?.region
+                                            }
+                                          </small>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            : null}
+           
+        </div>
+        {isLoaderAccount && (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '20rem',
+            }}
+          >
+            <LoadingSpinner animation="grow" custom={true} height="36vh" />
+          </div>
+        )}
+        {/* {
+          isLoader && (
+            <LoadingSpinner animation="grow" custom={true} height="20vh" />
+          )
+        } */}
+      </div>
+      </div>
+      <Modal
+        size="md"
+        show={deleteAccountModal}
+        onHide={closeModal}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            <div>
+              <h3>Confirmation Message</h3>
+            </div>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="show-grid">
+          <Container>
+            <div>
+              <h4>Are you sure, you would like to delete this application?</h4>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <button
+                  className="btn btn-sm btn-danger  custom-responsive-btn"
+                  onClick={(e) => {
+                    handleDeleteAccountConfirm(e);
+                  }}
+                >
+                  Confirm
+                </button>
+              </div>
+            </div>
+          </Container>
+        </Modal.Body>
+      </Modal>
+      <Modal
+        size="md"
+        show={switchTransferModal}
+        onHide={closeModalSwitchModal}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            <div>
+              <h3>Coming Soon!</h3>
+            </div>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="show-grid">
+          <Container>
+            <div>
+              <h4>This Feature is in progress!</h4>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <button
+                  className="btn btn-sm btn-danger  custom-responsive-btn"
+                  onClick={(e) => {
+                    setSwitchTransferModal(false);
+                  }}
+                >
+                  OK
+                </button>
+              </div>
+            </div>
+          </Container>
+        </Modal.Body>
+      </Modal>
+    </>
+  );
+}

@@ -34,7 +34,8 @@ import Wiard from "./pages/wizard";
 
 function App() {
   return (
-    <div className="flex ">
+    
+      <div className="flex ">
       <BrowserRouter>
         {/* Conditionally render based on the URL */}
         {window.location.href.includes("compliance") ? (
@@ -50,6 +51,8 @@ function App() {
 
       <ToastContainer position="bottom-right" />
     </div>
+  
+
   );
 }
 const AppWrapper = () => {
