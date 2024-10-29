@@ -965,7 +965,7 @@ export default function DocumentModal(props) {
               <button
             type="button"
             className="text-gray-400 hover:text-white transition-all ease-in-out bg-transparent rounded-lg text-sm w-8 h-8 flex items-center justify-center"
-            onClick={onClose()}
+            // onClick={onClose()}
           >
             <svg
               className="w-4 h-4"
