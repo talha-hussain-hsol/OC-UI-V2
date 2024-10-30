@@ -201,7 +201,7 @@ function generateResponseForLoggin(data, status) {
     if (entityId) {
       dataToSave.actor.entity = { id: entityId };
     }
-    handleSaveDataAudit(dataToSave);
+    // handleSaveDataAudit(dataToSave);
   } catch (e) {}
 }
 async function handleSaveDataAudit(data) {
