@@ -1221,52 +1221,53 @@ export default function wallets(props) {
                             }
                             if (fieldType === 'text') {
                               console.log('the label is :', label);
-                              if (fieldName === 'phone') {
-                                return (
-                                  <div className="col-6 col-md-6">
-                                    <div className="form-group">
-                                      <label className="form-label">
-                                        {label}
-                                        {requiredField && (
-                                          <span className="text-danger">*</span>
-                                        )}
-                                      </label>
-                                      <div
-                                        className={
-                                          requiredField &&
-                                            !identityDataFields?.[formKeyVal] &&
-                                            (getUpdatedData(formKeyVal) == '' ||
-                                              getUpdatedData(formKeyVal) == null)
-                                            ? 'form-control field_warning'
-                                            : 'form-control' && darkMode
-                                              ? 'darkMode'
-                                              : ''
-                                        }
-                                      >
-                                        <div
-                                          style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                          }}
-                                        >
-                                          <PhoneInput
-                                            value={getUpdatedData(formKeyVal)}
-                                            country={'sg'}
-                                            name={fieldName}
-                                            onChange={(e) => {
-                                              handlePhoneNumber(e, formKeyVal);
-                                            }}
-                                            inputProps={{
-                                              name: 'phone',
-                                              required: true,
-                                            }}
-                                          />
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                );
-                              } else if (label === 'Bank/Branch Address') {
+                              // if (fieldName === 'phone') {
+                              //   return (
+                              //     <div className="col-6 col-md-6">
+                              //       <div className="form-group">
+                              //         <label className="form-label">
+                              //           {label}
+                              //           {requiredField && (
+                              //             <span className="text-danger">*</span>
+                              //           )}
+                              //         </label>
+                              //         <div
+                              //           className={
+                              //             requiredField &&
+                              //               !identityDataFields?.[formKeyVal] &&
+                              //               (getUpdatedData(formKeyVal) == '' ||
+                              //                 getUpdatedData(formKeyVal) == null)
+                              //               ? 'form-control field_warning'
+                              //               : 'form-control' && darkMode
+                              //                 ? 'darkMode'
+                              //                 : ''
+                              //           }
+                              //         >
+                              //           <div
+                              //             style={{
+                              //               display: 'flex',
+                              //               alignItems: 'center',
+                              //             }}
+                              //           >
+                              //             <PhoneInput
+                              //               value={getUpdatedData(formKeyVal)}
+                              //               country={'sg'}
+                              //               name={fieldName}
+                              //               onChange={(e) => {
+                              //                 handlePhoneNumber(e, formKeyVal);
+                              //               }}
+                              //               inputProps={{
+                              //                 name: 'phone',
+                              //                 required: true,
+                              //               }}
+                              //             />
+                              //           </div>
+                              //         </div>
+                              //       </div>
+                              //     </div>
+                              //   );
+                              // } 
+                               if (label === 'Bank/Branch Address') {
                                 return (
                                   <div className="col-12 col-md-12">
                                     <div className="form-group">
@@ -1308,49 +1309,50 @@ export default function wallets(props) {
                                     </div>
                                   </div>
                                 );
-                              } else {
-                                return (
-                                  <div className="col-6 col-md-6">
-                                    <div className="form-group">
-                                      <label className="form-label">
-                                        {label}
-                                        {requiredField && (
-                                          <span className="text-danger">*</span>
-                                        )}
-                                      </label>
-                                      <div
-                                        style={{
-                                          display: 'flex',
-                                          alignItems: 'center',
-                                        }}
-                                      >
-                                        <input
-                                          type={fieldType}
-                                          className={
-                                            requiredField &&
-                                              !identityDataFields?.[formKeyVal] &&
-                                              (getUpdatedData(formKeyVal) == '' ||
-                                                getUpdatedData(formKeyVal) ==
-                                                null)
-                                              ? 'form-control field_warning'
-                                              : 'form-control'
-                                          }
-                                          defaultValue={
-                                            editableField == false
-                                              ? valueField
-                                              : getUpdatedData(formKeyVal)
-                                          }
-                                          name={formKeyVal}
-                                          placeholder={label}
-                                          onChange={(e) => {
-                                            handleChange(e);
-                                          }}
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                );
-                              }
+                              } 
+                              // else {
+                              //   return (
+                              //     <div className="col-6 col-md-6">
+                              //       <div className="form-group">
+                              //         <label className="form-label">
+                              //           {label}
+                              //           {requiredField && (
+                              //             <span className="text-danger">*</span>
+                              //           )}
+                              //         </label>
+                              //         <div
+                              //           style={{
+                              //             display: 'flex',
+                              //             alignItems: 'center',
+                              //           }}
+                              //         >
+                              //           <input
+                              //             type={fieldType}
+                              //             className={
+                              //               requiredField &&
+                              //                 !identityDataFields?.[formKeyVal] &&
+                              //                 (getUpdatedData(formKeyVal) == '' ||
+                              //                   getUpdatedData(formKeyVal) ==
+                              //                   null)
+                              //                 ? 'form-control field_warning'
+                              //                 : 'form-control'
+                              //             }
+                              //             defaultValue={
+                              //               editableField == false
+                              //                 ? valueField
+                              //                 : getUpdatedData(formKeyVal)
+                              //             }
+                              //             name={formKeyVal}
+                              //             placeholder={label}
+                              //             onChange={(e) => {
+                              //               handleChange(e);
+                              //             }}
+                              //           />
+                              //         </div>
+                              //       </div>
+                              //     </div>
+                              //   );
+                              // }
                             }
                             if (fieldType == 'date') {
                               return (
@@ -1635,7 +1637,7 @@ export default function wallets(props) {
               <div className="col-sm-2">
                 <button
                   className="btn btn-primary"
-                  disabled={submitButtonDisable}
+                  // disabled={submitButtonDisable}
                   onClick={(e) => {
                     handleSubmitBank(e);
                   }}
