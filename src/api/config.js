@@ -52,22 +52,22 @@ export function processError(error) {
   }
 }
 
-export async function setAxiosHeader(header) {
+export async function setAxiosHeader(header, noToken) {
+  if (noToken) return
   axiosAPI.defaults.headers.common = (await header) || {
     "x-auth-token": localStorage.getItem("x-auth-token"),
   };
 }
-export async function processRequest(request, token) {
-  
-  const authToken = localStorage.getItem("x-auth-token");
-  if (authToken) {
+export async function processRequest(request, token, noToken) {
+  const authToken = !noToken ?localStorage.getItem("x-auth-token") : ''
+  if (authToken && !noToken) {
     setAxiosHeader({
       "x-auth-token": authToken,
     });
   }
   const headers = {
     ...axios.defaults.headers,
-    common: authToken
+    common: authToken && !noToken
       ? {
           ...axios.defaults.headers.common,
           "x-auth-token": authToken,

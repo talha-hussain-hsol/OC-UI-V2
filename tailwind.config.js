@@ -58,7 +58,6 @@ module.exports = {
         "color-lightTheme": "#efefd0",
         "color-card-SC": "#FFFFFF",
         "color-card-lightTheme": "#dde5b6",
-       
         "color-card-header-SC": "#ffffff",
         "color-SC-hover": "#ef233c",
         "color-lightTheme-hover": "#004e89",
@@ -100,7 +99,7 @@ module.exports = {
         "color-search-SC": "#FAFAFB",
         "color-tab-buttons-inactive-SC": "#F5F5F5",
         "color-tab-buttons-inactive-Ascent": "#0d3e80",
-        "color-sidebar-nav-SC": "#243279",
+        "color-sidebar-nav-SC": "#FFFFFF",
         "color-sidebar-nav-Ascent": "#152e4d",
         "color-sidebar-nav-lightTheme": "",
         // "color-modal-SC": "#FFFFFF",

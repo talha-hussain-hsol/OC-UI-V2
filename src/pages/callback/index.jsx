@@ -83,7 +83,9 @@ const Callback = () => {
                 setLocalStorage("profile_pic", entityData?.meta?.user_image);
                 setSingleAccount(responsedData?.data?.data);
                 removeParams();
-                navigate("/splash", { replace: true });
+                // setTimeout(() => {
+                  navigate("/splash", { replace: true });
+                // }, 2000)
               }
             }
           } catch (error) {

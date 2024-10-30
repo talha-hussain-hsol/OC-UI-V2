@@ -3,6 +3,7 @@ import ResponseModel, {
   processError,
   processRequest,
   RequestType,
+  setAxiosHeader,
 } from "./config";
 import useEntityStore from "../store/useEntityStore";
 // import {getErrorResponse }from "../api/network/CommonAPI";
@@ -55,8 +56,7 @@ export const getToken = async (code, code_verifier, cancelToken) => {
     urlString: url,
   };
   try {
-    // setAxiosHeader({});
-    const response = await processRequest(request, cancelToken);
+    const response = await processRequest(request, cancelToken, true);
     customResponse.response = response;
   } catch (error) {
     customResponse.error = processError(error);

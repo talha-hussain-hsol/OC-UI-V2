@@ -39,7 +39,7 @@ const useSpashHook = () => {
       if (savedEntity) {
         setSelectedEntity(savedEntity);
         setEntityId(savedEntity.entityId);
-      } else if (entityRows.length > 0) {
+      } else if (entityRows.length === 1) {
         setSelectedEntity(entityRows[0]);
         setEntityId(entityRows[0]?.entityId || "");
       }
@@ -74,6 +74,7 @@ const useSpashHook = () => {
       } else {
         setLocalStorage("entity_permissions", permissionList?.data);
         setLocalStorage("selected_entity", data);
+        setEntityId(data?.entityId || "");
         if (data?.type === "compliance") {
           navigate("/compliance", { replace: true });
         } else if (data?.type === "customer") {

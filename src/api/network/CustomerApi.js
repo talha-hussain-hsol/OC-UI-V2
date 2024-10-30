@@ -1,4 +1,6 @@
 import { processRequest } from "./CustomerNetwork";
+import useEntityStore from "../../store/useEntityStore";
+
 import axios from "axios";
 let baseURLType = window.BaseUrl;
 if (localStorage.getItem("x-auth-token"))
@@ -6,9 +8,9 @@ if (localStorage.getItem("x-auth-token"))
     "x-auth-token": localStorage.getItem("x-auth-token"),
   };
 
+
 let baseURL = localStorage.getItem("base_url");
-let entityId = localStorage.getItem("entityId");
-console.log("entityIdentityIdentityId",entityId);
+let entityId = localStorage.getItem("entityId") ;
 if (
   baseURL === null &&
   isSubDomain() === true &&
@@ -68,11 +70,10 @@ export const loginCustomer = async (email, password, cancelToken) => {
 export const getCustomerAccounts = async (offset, limit, cancelToken) => {
   if (!limit) {
     return;
-  }
-
+  }  
+  const entityId = localStorage.getItem("entityId")
   const url = `/${entityId}/CAPI/Account/list?offset=${offset}&limit=${limit}`;
   const request = { type: "GET", urlString: url };
-
   try {
     const response = await processRequest(request, cancelToken);
     return response.data;
@@ -93,6 +94,8 @@ export const getCustomerAccounts = async (offset, limit, cancelToken) => {
 //   }
 // };
 export const getIdentityList = async (cancelToken, fundId) => {
+  const entityId = localStorage.getItem("entityId")
+
   let url;
   fundId
     ? (url = `/${entityId}/CAPI/Identity/list?fundId=${fundId}`)
@@ -108,6 +111,8 @@ export const getIdentityList = async (cancelToken, fundId) => {
   }
 };
 export const getRequiredDocument = async (accountId, cancelToken) => {
+  const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/Account/requiredDocuments/${accountId}`;
   const request = { type: "GET", urlString: url };
 
@@ -143,6 +148,8 @@ export const getFundForJoin = async (fundCode, cancelToken) => {
   }
 };
 export const getIdentityDocument = async (identityId, cancelToken) => {
+  const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/Identity/${identityId}/documents`;
   const request = { type: "GET", urlString: url };
 
@@ -158,6 +165,8 @@ export const postIdentityAttatchWithFund = async (
   data,
   cancelToken
 ) => {
+  const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/Identity/${identityId}/attach`;
   const request = { type: "POST", urlString: url, params: data };
 
@@ -179,6 +188,8 @@ export const getParticularFieldsApi = async (
   account_id = null,
   cancelToken
 ) => {
+  const entityId = localStorage.getItem("entityId")
+
   var url = `/${entityId}/CAPI/Identity/fields`;
   if (account_id) {
     url = `/${entityId}/CAPI/Identity/fields?accountId=${account_id}`;
@@ -195,6 +206,8 @@ export const getParticularFieldsFromFundIdApi = async (
   fund_id = null,
   cancelToken
 ) => {
+  const entityId = localStorage.getItem("entityId")
+
   var url = `/${entityId}/CAPI/Identity/fields?fundId=${fund_id}`;
   const request = { type: "GET", urlString: url };
   try {
@@ -205,6 +218,8 @@ export const getParticularFieldsFromFundIdApi = async (
   }
 };
 export const getSingleDocument = async (documentId, cancelToken) => {
+  const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/document`;
   const request = {
     type: "POST",
@@ -219,6 +234,8 @@ export const getSingleDocument = async (documentId, cancelToken) => {
   }
 };
 export const postIdentityAPI = async (data, cancelToken) => {
+  const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/Identity/create`;
   const request = { type: "POST", urlString: url, params: data };
   try {
@@ -232,6 +249,8 @@ export const getParticularsDetailByIdentityIdAPI = async (
   identity_id,
   cancelToken
 ) => {
+  const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/Identity/${identity_id}/get`;
   const request = { type: "GET", urlString: url };
   try {
@@ -252,6 +271,8 @@ export const getSingleAccountDetailByIdAPI = async (accountId, cancelToken) => {
   }
 };
 export const getCRPsByIdentityIdAPI = async (identityId, cancelToken) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/Identity/${identityId}/Crp/list`;
   const request = { type: "GET", urlString: url };
   try {
@@ -262,6 +283,8 @@ export const getCRPsByIdentityIdAPI = async (identityId, cancelToken) => {
   }
 };
 export const postIdentityDocument = async (data, cancelToken) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/IdentityDocument/add`;
   const request = { type: "POST", urlString: url, params: data };
   try {
@@ -272,6 +295,8 @@ export const postIdentityDocument = async (data, cancelToken) => {
   }
 };
 export const updateIdentityDocument = async (data, cancelToken) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/IdentityDocument/update`;
   const request = { type: "PUT", urlString: url, params: data };
   try {
@@ -282,6 +307,8 @@ export const updateIdentityDocument = async (data, cancelToken) => {
   }
 };
 export const postVerifyUploadDocument = async (identityId, cancelToken) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/IdentityDocument/${identityId}/verifyUpload`;
   const request = { type: "POST", urlString: url };
   try {
@@ -293,6 +320,7 @@ export const postVerifyUploadDocument = async (identityId, cancelToken) => {
 };
 
 export const getCrpRoleMetaAPI = async (cancelToken) => {
+
   const url = `/crp-roles-meta`;
   const request = { type: "GET", urlString: url };
   try {
@@ -304,6 +332,7 @@ export const getCrpRoleMetaAPI = async (cancelToken) => {
 };
 
 export const postVerifyLoginAuth = async (state, cancelToken) => {
+
   const url = `/oauth/authorize?client_id=6&redirect_uri=http://oms.demo/callback&scope=*${state}&response_type=code`;
   const request = { type: "POST", urlString: url };
   try {
@@ -315,6 +344,7 @@ export const postVerifyLoginAuth = async (state, cancelToken) => {
 };
 
 export const postgetToken = async (code, code_challenge, cancelToken) => {
+
   const url = `/auth/getToken?code=${code}&client_id=${process.env.INVESTOR_CLIENT_ID}&code_verifier=${code_challenge}`;
   const request = { type: "POST", urlString: url };
   try {
@@ -327,6 +357,7 @@ export const postgetToken = async (code, code_challenge, cancelToken) => {
 };
 
 export const getAuthUserDetail = async (cancelToken) => {
+
   const url = `/auth/userDetails`;
   const request = { type: "GET", urlString: url };
   try {
@@ -337,6 +368,7 @@ export const getAuthUserDetail = async (cancelToken) => {
   }
 };
 export const getAuthUserDetailNew = async (cancelToken) => {
+
   const url = `/auth/splash/entitiesForSplash`;
   const request = { type: "GET", urlString: url };
   try {
@@ -348,6 +380,7 @@ export const getAuthUserDetailNew = async (cancelToken) => {
 };
 
 export const logoutAPI = async (cancelToken) => {
+
   const url = `/auth/user/logout`;
   const request = { type: "POST", urlString: url };
   try {
@@ -362,6 +395,8 @@ export const getFlatCPRListAPI = async (
   account_id,
   cancelToken
 ) => {
+    const entityId = localStorage.getItem("entityId")
+
   //http://localhost:8386/8eadea60-a665-41ea-9428-4e46802c5faa/CAPI/Identity/9fd19b44-1e16-4606-9012-7e760e94f426/account/737cbfcf-ae57-46ed-b815-c8f792b8ff7e/Crp/flatlist?extended=true
   const url = `/${entityId}/CAPI/Identity/${identity_id}/account/${account_id}/Crp/flatlist?extended=true`;
   const request = { type: "GET", urlString: url };
@@ -374,6 +409,8 @@ export const getFlatCPRListAPI = async (
 };
 
 export const getRequiredDocumentAPI = async (accountId, cancelToken) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/Account/requiredDocuments/${accountId}`;
   const request = { type: "GET", urlString: url };
 
@@ -385,6 +422,8 @@ export const getRequiredDocumentAPI = async (accountId, cancelToken) => {
   }
 };
 export const getSignedURLAPI = async (data, id, cancelToken) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/identity-document/${id}/sign`;
   const request = { type: "POST", urlString: url, params: data };
 
@@ -396,6 +435,8 @@ export const getSignedURLAPI = async (data, id, cancelToken) => {
   }
 };
 export const getInitialInvestmentSignAPI = async (account_id, cancelToken) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/Account/transactions/${account_id}`;
   const request = { type: "GET", urlString: url };
 
@@ -411,6 +452,8 @@ export const handleSubmitScreeningApi = async (
   accountId,
   cancelToken
 ) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/${identityId}/${accountId}/application/submit`;
   const request = { type: "POST", urlString: url };
 
@@ -422,6 +465,8 @@ export const handleSubmitScreeningApi = async (
   }
 };
 export const getWalletAddressListAPI = async (identityId, cancelToken) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/${identityId}/getIdentityWalletAddress`;
   const request = { type: "GET", urlString: url };
 
@@ -433,6 +478,8 @@ export const getWalletAddressListAPI = async (identityId, cancelToken) => {
   }
 };
 export const addWalletAddressAPI = async (data, identityId, cancelToken) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/${identityId}/addWalletAddress`;
   const request = { type: "POST", urlString: url, params: data };
 
@@ -447,6 +494,8 @@ export const getCryptoCurrencyChainListAPI = async (
   account_id,
   cancelToken
 ) => {
+    const entityId = localStorage.getItem("entityId")
+
   let url = "";
   if (account_id) {
     url = `/${entityId}/CAPI/upsala/getSuppotedNetworks?account_id=${account_id}`;
@@ -467,6 +516,8 @@ export const updateIdentityStatusAPI = async (
   identityId,
   cancelToken
 ) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/Identity/${identityId}/updateStatus`;
   const request = { type: "PUT", urlString: url, params: data };
 
@@ -486,6 +537,8 @@ export const getDownloadSigningDocument = async (
   accountId,
   cancelToken
 ) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/${documentTypeId}/download-signing-document/${accountId}?choice=${nameDocument}`;
   const request = { type: "GET", urlString: url };
 
@@ -500,6 +553,8 @@ export const getDownloadSigningDocument = async (
 //subscription doc add api
 //http://localhost:8384/173dad6c-b543-4d24-812e-3a306f7e4f14/CAPI/transaction-document
 export const transactionDocAddApi = async (data, cancelToken) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/transaction-document`;
   const request = { type: "POST", urlString: url, params: data };
 
@@ -515,6 +570,8 @@ export const transactionDocVerifyUpload = async (
   accountId,
   cancelToken
 ) => {
+    const entityId = localStorage.getItem("entityId")
+
   //http://localhost:8384/173dad6c-b543-4d24-812e-3a306f7e4f14/CAPI/account-document/fdb8dac7-ca05-4437-b119-7b9b84e59dae/verifyUpload
   const url = `/${entityId}/CAPI/account-document/${accountId}/verifyUpload`;
   const request = { type: "POST", urlString: url, params: data };
@@ -531,6 +588,8 @@ export const getDocuSignURLForFinishSigningAPI = async (
   id,
   cancelToken
 ) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/identity-document/${id}/docusign-draft-sign`;
   const request = { type: "PUT", urlString: url, params: data };
 
@@ -546,6 +605,8 @@ export const getDownloadDocuSignAPI = async (
   dataToSend,
   cancelToken
 ) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/transaction/${transactionID}/download-sign-document`;
   const request = { type: "POST", urlString: url, params: dataToSend };
 
@@ -561,6 +622,8 @@ export const getRequiredDocumentCRP = async (
   identityId,
   cancelToken
 ) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/Account/requiredDocuments/${accountId}?identityId=${identityId}`;
   const request = { type: "GET", urlString: url };
 
@@ -576,6 +639,8 @@ export const getRegistrationProviderForSingpass = async (
   singpassValue,
   cancelToken
 ) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/registrationProvider/configurations?provider=${singpassValue}`;
   const request = { type: "GET", urlString: url };
 
@@ -588,6 +653,8 @@ export const getRegistrationProviderForSingpass = async (
 };
 
 export const getEntityTypeAPI = async (cancelToken) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/entity-types-list`;
   const request = { type: "GET", urlString: url };
 
@@ -599,6 +666,8 @@ export const getEntityTypeAPI = async (cancelToken) => {
   }
 };
 export const postRegistrationProviderGetData = async (data, cancelToken) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/registrationProvider/get-data`;
   const request = { type: "POST", urlString: url, params: data };
   try {
@@ -610,6 +679,8 @@ export const postRegistrationProviderGetData = async (data, cancelToken) => {
 };
 
 export const getTransactionHistoryAPI = async (account_id, cancelToken) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/getAccountSubscriptionDocs?accountId=${account_id}`;
   const request = { type: "GET", urlString: url };
 
@@ -622,6 +693,8 @@ export const getTransactionHistoryAPI = async (account_id, cancelToken) => {
 };
 
 export const deleteDocument = async (documentId, cancelToken) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/document/${documentId}/delete`;
   const request = {
     type: "DELETE",
@@ -642,6 +715,8 @@ export const FaceVerificationApi = async (
   identityId,
   accountShareHolderId
 ) => {
+    const entityId = localStorage.getItem("entityId")
+
   // http://localhost:8384/:entityId/CAPI/Identity/:identityId/AccountShareHolder/:accountShareHolderId/FaceVerification
   const url = `/${entityId}/CAPI/Identity/${identityId}/AccountShareHolder/${accountShareHolderId}/FaceVerification`;
   const request = { type: "POST", urlString: url, params: data };
@@ -659,6 +734,8 @@ export const getVcipSignedUrl = async (
   accountShareHolderId,
   cancelToken
 ) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/Identity/${identityId}/AccountShareHolder/${accountShareHolderId}/Vcip`;
   const request = { type: "POST", urlString: url, params: { location: data } };
   try {
@@ -670,6 +747,8 @@ export const getVcipSignedUrl = async (
 };
 
 export const validateByPennyDropAPI = async (data, cancelToken) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/registrationProvider/get-data`;
   const request = { type: "POST", urlString: url, params: data };
 
@@ -687,6 +766,8 @@ export const postVerifyUploadVideo = async (
   data,
   cancelToken
 ) => {
+    const entityId = localStorage.getItem("entityId")
+
   //VERIFY UPLOAD | PUT http://localhost:8384/:entityId/CAPI/Identity/:identityId/AccountShareHolder/:accountShareHolderId/Vcip/verifyUpload
   const url = `/${entityId}/CAPI/Identity/${identityId}/AccountShareHolder/${accountShareHolderId}/Vcip/verifyUpload`;
   const request = { type: "PUT", urlString: url, params: data };
@@ -699,6 +780,8 @@ export const postVerifyUploadVideo = async (
 };
 
 export const getDataSignedUrl = async (data, cancelToken) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/getDataSignedUrl`;
   const request = { type: "POST", urlString: url, params: data };
   try {
@@ -710,6 +793,8 @@ export const getDataSignedUrl = async (data, cancelToken) => {
 };
 
 export const submitBankIdentityAPI = async (identityId, data, cancelToken) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/${identityId}/addBankAddress`;
   const request = { type: "POST", urlString: url, params: data };
 
@@ -721,6 +806,8 @@ export const submitBankIdentityAPI = async (identityId, data, cancelToken) => {
   }
 };
 export const postDownloadStampDpcApi = async (data, cancelToken) => {
+    const entityId = localStorage.getItem("entityId")
+
   //http://localhost:8384/:entityId/CAPI/getDataSignedUrl
   const url = `/${entityId}/CAPI/getDataSignedUrl`;
   const request = { type: "POST", urlString: url, params: data };
@@ -740,6 +827,8 @@ export const postStampingApi = async (
   data,
   cancelToken
 ) => {
+    const entityId = localStorage.getItem("entityId")
+
   //http://localhost:8384/:entityId/CAPI/Identity/:identityId/AccountShareHolder/:accountShareHolderId/DocumentDigitalStamping
   const url = `/${entityId}/CAPI/Identity/${identityId}/AccountShareHolder/${accountShareHolderId}/DocumentDigitalStamping`;
   const request = { type: "POST", urlString: url, params: data };
@@ -752,6 +841,8 @@ export const postStampingApi = async (
   }
 };
 export const getBankIdentitiesAPI = async (identityId, cancelToken) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/${identityId}/getIdentityBankList`;
   const request = { type: "GET", urlString: url };
 
@@ -763,6 +854,8 @@ export const getBankIdentitiesAPI = async (identityId, cancelToken) => {
   }
 };
 export const deleteBankWalletAPI = async (identityId, cancelToken) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/BankWalletIdentityDelete/${identityId}`;
   const request = { type: "DELETE", urlString: url };
 
@@ -779,6 +872,8 @@ export const doStampingAPI = async (
   data,
   cancelToken
 ) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/Identity/${identityId}/AccountShareHolder/${accountShareHolderId}/DocumentDigitalStamping`;
   const request = { type: "POST", urlString: url, params: data };
 
@@ -790,6 +885,8 @@ export const doStampingAPI = async (
   }
 };
 export const handleDownloadStampDocumentAPI = async (data, cancelToken) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/getDataSignedUrl`;
   const request = { type: "POST", urlString: url, params: data };
 
@@ -807,6 +904,8 @@ export const doESignAPI = async (
   data,
   cancelToken
 ) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/Identity/${identityId}/AccountShareHolder/${accountShareHolderId}/DocumentAadhaarSigning`;
   const request = { type: "POST", urlString: url, params: data };
 
@@ -818,6 +917,8 @@ export const doESignAPI = async (
   }
 };
 export const getUserEntitiesAPI = async (cancelToken) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/user/entities`;
   const request = { type: "GET", urlString: url };
 
@@ -841,6 +942,7 @@ export const getEntityPermissionAPI = async (entityId, cancelToken) => {
   }
 };
 export const getSyncedUserEntitiesAPI = async (cancelToken) => {
+
   const url = `/user/entities?sync=true`;
   const request = { type: "GET", urlString: url };
 
@@ -857,6 +959,7 @@ export const getIdentityCount = async (
   baseURL = "CAPI",
   cancelToken
 ) => {
+
   //http://localhost:8384/:entityId/CAPI/identityCount
 
   const url = `/${entity_Id}/CAPI/identityCount`;
@@ -870,6 +973,8 @@ export const getIdentityCount = async (
   }
 };
 export const deleteAccountAPI = async (account_id, cancelToken) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/account/${account_id}/delete`;
   const request = { type: "DELETE", urlString: url };
 
@@ -885,6 +990,8 @@ export const submitCustomTransactionDataAPI = async (
   data,
   cancelToken
 ) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/${accountId}/addAccountTransaction`;
   const request = { type: "POST", urlString: url, params: data };
 
@@ -896,6 +1003,8 @@ export const submitCustomTransactionDataAPI = async (
   }
 };
 export const getCustomTransactionAPI = async (accountId, cancelToken) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/Account/transactions/${accountId}`;
   const request = { type: "GET", urlString: url };
 
@@ -908,6 +1017,8 @@ export const getCustomTransactionAPI = async (accountId, cancelToken) => {
 };
 
 export const deleteTransaction = async (accountId, id, cancelToken) => {
+    const entityId = localStorage.getItem("entityId")
+
   //http://localhost:8384/7175c8f1-f37b-41b0-8abf-b524bf7e81fc/AAPI/46e9572d-8ef2-4fd6-80d2-c6fd325f024d/deleteAccountTransaction?id=4f9bcf5b-455e-4189-8302-08352963fd7e
   const url = `/${entityId}/CAPI/${accountId}/deleteAccountTransaction?id=${id}`;
   const request = { type: "DELETE", urlString: url, params: data };
@@ -923,6 +1034,8 @@ export const validateByPennyDropVerifyAPI = async (
   data,
   cancelToken
 ) => {
+    const entityId = localStorage.getItem("entityId")
+
   const url = `/${entityId}/CAPI/registrationProvider/get-data?identity_id=${identityId}`;
   const request = { type: "POST", urlString: url, params: data };
 
@@ -934,6 +1047,8 @@ export const validateByPennyDropVerifyAPI = async (
   }
 };
 export const verifyFundExist = async (data, cancelToken) => {
+    const entityId = localStorage.getItem("entityId")
+
   //post url:CAPI/Account/list/verify
 
   //
@@ -950,6 +1065,8 @@ export const verifyFundExist = async (data, cancelToken) => {
 
 //delete manual subscription document
 export const deleteManualSubscriptionDoc = async (docId, data, cancelToken) => {
+    const entityId = localStorage.getItem("entityId")
+
   //http://localhost:8384/0e1cf9bf-f513-44fc-991b-9d0f0694703c/CAPI/d4399401-f8c7-4d7f-83bb-ae56c0a37e8d/document-delete
   const url = `/${entityId}/CAPI/${docId}/document-delete`;
   const request = { type: "POST", urlString: url, params: data };

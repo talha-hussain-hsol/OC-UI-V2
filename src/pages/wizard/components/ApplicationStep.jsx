@@ -40,16 +40,15 @@ import { Select } from "../../../components/vendor";
 import  formatDateRegionWise  from "../../../helpers/formatDateRegionWise";
 import DeleteTransactionModal from "./deleteModalCrp/DeleteAccountModal";
 import DeleteManualDocModal from "./applicationModal/deleteManualDocModal";
-
 export default function investment({ ...props }) {
-  const {theme} = useTheme()
+  const {theme} = useTheme();
   console.log(props, "props?.props?.props?.props?.");
   const manualTranssaction = props?.dataOfAccountSetup?.fund_data?.fund_setting?.sections?.manual_transaction;
   console.log("√manualTranssaction", manualTranssaction);
   const [deleteManualDocConfirmation, setDeleteManualConfirmation] = useState(false);
 
   const [selectedManualUploadedDoc, setSelectedManualUploadedDoc] = useState(null);
-  const [selectedManualRequiredDoc, setSelectedManualRequiredDoc] = useState(null);
+  const [selectedManualRequiredKey, setSelectedManualRequiredKey] = useState(null);
   const [requiredDocList, setRequiredDocList] = useState([]);
   const [requiredDocListAll, setRequiredDocListAll] = useState([]);
   const [additionalSubscription, setAdditionalSubscription] = useState([]);
@@ -58,6 +57,8 @@ export default function investment({ ...props }) {
   const [isLoaderAccount, setIsLoaderAccount] = useState(false);
   const [isLoaderESign, setIsLoaderESign] = useState(false);
   const [amount, setAmount] = useState("");
+  const [transactionId, setTransactionId] = useState("");
+  const [singleTransactionData, setSingleTransactionData] = useState("");
   const [envelopeID, setEnvelopeID] = useState("");
   const [errorAmount, setErrorAmount] = useState(false);
   const [errorCurrency, setErrorCurrency] = useState(false);
@@ -155,24 +156,45 @@ export default function investment({ ...props }) {
   }, [history]);
   useEffect(() => {
     console.log(transactionHistoryData, "transactionHistoryData transactionHistoryDatatransactionHistoryData");
-    if (transactionHistoryData && requiredDocListAll && accountData) {
-      if (transactionHistoryData.hasOwnProperty("SUBSCRIPTION_AGREEMENT")) {
-        for (let item of requiredDocListAll) {
-          console.log(item, "item");
-          console.log(isDocumentUploaded(item?.id), "isDocumentUploaded(item?.id)");
-          console.log(checkIfStampingEnable(), "checkIfStampingEnable()");
-          console.log(isDocumentUploaded(item?.id)?.STAMP_DOCUMENT, "isDocumentUploaded(item?.id)?.STAMP_DOCUMENT");
-          if (item?.category_key == "SUBSCRIPTION_DOCUMENT" && stampingDone == false) {
-            if (item?.key == "SUBSCRIPTION_AGREEMENT" && checkIfStampingEnable()) {
-              if (isDocumentUploaded(item?.id) && isDocumentUploaded(item?.id)?.docuSign?.status == "signing_complete" && isDocumentUploaded(item?.id)?.mode == "docusign") {
-                if (!isDocumentUploaded(item?.id)?.STAMP_DOCUMENT) {
-                  handleStamping(item.key, isDocumentUploaded(item?.id)?.randomString);
+    // if (transactionHistoryData && requiredDocListAll && accountData) {
+    //   if (transactionHistoryData.hasOwnProperty("SUBSCRIPTION_AGREEMENT")) {
+    //     for (let item of requiredDocListAll) {
+    //       console.log(item, "item");
+    //       console.log(isDocumentUploaded(item?.id), "isDocumentUploaded(item?.id)");
+    //       console.log(checkIfStampingEnable(), "checkIfStampingEnable()");
+    //       console.log(isDocumentUploaded(item?.id)?.STAMP_DOCUMENT, "isDocumentUploaded(item?.id)?.STAMP_DOCUMENT");
+    //       if (item?.category_key == "SUBSCRIPTION_DOCUMENT" && stampingDone == false) {
+    //         if (item?.key == "SUBSCRIPTION_AGREEMENT" && checkIfStampingEnable()) {
+    //           if (isDocumentUploaded(item?.id) && isDocumentUploaded(item?.id)?.docuSign?.status == "signing_complete" && isDocumentUploaded(item?.id)?.mode == "docusign") {
+    //             if (!isDocumentUploaded(item?.id)?.STAMP_DOCUMENT) {
+    //               handleStamping(item);
+    //             }
+    //           }
+    //         } else if (!checkIfStampingEnable() && checkIfESignEnable() && item?.key == "SUBSCRIPTION_AGREEMENT") {
+    //           if (isDocumentUploaded(item?.id) && isDocumentUploaded(item?.id)?.docuSign?.status == "signing_complete" && isDocumentUploaded(item?.id)?.mode == "docusign") {
+    //             if (!isDocumentUploaded(item?.id)?.AADHAAR_SIGN_DOCUMENT) {
+    //               handleESign(item);
+    //             }
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
+    if (transactionList?.length > 0 && accountData && checkIfESignEnable()) {
+      for (let a of transactionList) {
+        console.log(a, 'aaaaaaa transactionList')
+        if (a.type = "subscription") {
+          if (a?.meta?.subscription?.length > 0) {
+            if (a?.meta?.subscription?.[a?.meta?.subscription?.length - 1]) {
+              if (a?.meta?.subscription?.[a?.meta?.subscription?.length - 1]?.docuSign?.status == "signing_complete" && a?.meta?.subscription?.[a?.meta?.subscription?.length - 1]?.mode == "docusign") {
+                if (!a?.meta?.subscription?.[a?.meta?.subscription?.length - 1]?.STAMP_DOCUMENT) {
+                  handleStamping(a);
                 }
               }
-            } else if (!checkIfStampingEnable() && checkIfESignEnable() && item?.key == "SUBSCRIPTION_AGREEMENT") {
-              if (isDocumentUploaded(item?.id) && isDocumentUploaded(item?.id)?.docuSign?.status == "signing_complete" && isDocumentUploaded(item?.id)?.mode == "docusign") {
-                if (!isDocumentUploaded(item?.id)?.AADHAAR_SIGN_DOCUMENT) {
-                  handleESign(item.key, isDocumentUploaded(item?.id)?.randomString);
+              if (a?.meta?.subscription?.[a?.meta?.subscription?.length - 1]?.STAMP_DOCUMENT) {
+                if (!a?.meta?.subscription?.[a?.meta?.subscription?.length - 1]?.AADHAAR_SIGN_DOCUMENT) {
+                  handleESign('subscription', a?.meta?.subscription?.[a?.meta?.subscription?.length - 1]?.randomString, a?.id);
                 }
               }
             }
@@ -180,7 +202,7 @@ export default function investment({ ...props }) {
         }
       }
     }
-  }, [requiredDocListAll, transactionHistoryData, accountData]);
+  }, [accountData, transactionList]);
   useEffect(() => {
     console.log("contentTypeData", contentTypeData);
   }, [contentTypeData]);
@@ -337,7 +359,7 @@ export default function investment({ ...props }) {
         setStamp(false);
       }
       setTransactionHistoryData(response?.data);
-      if (response?.data.hasOwnProperty("SUBSCRIPTION_AGREEMENT") || response?.data.hasOwnProperty("SUBSCRIPTION_APPLICATION")) {
+      if (response?.data.hasOwnProperty("SUBSCRIPTION_AGREEMENT") || response?.data.hasOwnProperty("SUBSCRIPTION_APPLICATION")|| response?.data.hasOwnProperty("CONTRIBUTION_AGREEMENT")) {
         props.setApplicationStepData(true);
       } else {
         props.setApplicationStepData(false);
@@ -353,19 +375,16 @@ export default function investment({ ...props }) {
     setRequiredDocListAll([]);
     setIsLoader(true);
     if (account_id) {
-      const response = await getRequiredDocumentAPI(
-        account_id,
-        cancelTokenSource.token,
-      );
+      const response = await getRequiredApplicationDocumentAPI(account_id, cancelTokenSource.token);
 
       if (response.success == true) {
         setIsLoader(false);
-        console.log('checking required', response);
+        console.log("checking required", response);
         let data = [];
-        if (response?.data?.required_documents_types?.length > 0) {
-          for (let item of response?.data?.required_documents_types) {
-            if (item?.category_key == 'SUBSCRIPTION_DOCUMENT') {
-              console.log(item, 'item item item itemasdasd');
+        if (response?.data?.req_documents?.length > 0) {
+          for (let item of response?.data?.req_documents) {
+            if (item?.key == "SUBSCRIPTION_AGREEMENT") {
+              console.log(item, "item item item itemasdasd");
               data.push(item);
             }
 
@@ -377,14 +396,15 @@ export default function investment({ ...props }) {
             //     }
             // }
 
-            if (item?.category_key == 'ADDITIONAL_SUBSCRIPTION_DOCUMENT') {
+            if (item?.key == "ADDITIONAL_SUBSCRIPTION_AGREEMENT") {
               setAdditionalSubscription(item);
             }
-            if (item?.category_key == 'REDEMPTION_DOCUMENT') {
+            if (item?.key == "REDEMPTION_DOCUMENT") {
               setRedemptionSubscription(item);
             }
+
           }
-          console.log(data, 'data data data dataasdnajsdnakjhs');
+          console.log(data, "data data data dataasdnajsdnakjhs");
           setRequiredDocListAll(data);
           setSignSubmit(false);
         } else {
@@ -397,53 +417,26 @@ export default function investment({ ...props }) {
     }
   };
   const handleClickChoice = (key) => {
-    if (requiredDocList?.has_amount) {
-      if (amount == '') {
-        setErrorAmount(true);
-        return;
-      } else {
-        setErrorAmount(false);
-      }
-      if (!selectedCurrencyValues.value) {
-        setErrorCurrency(true);
-        return;
-      } else {
-        setErrorCurrency(false);
-      }
-    }
-    localStorage.setItem(
-      'accountWizardAllData',
-      JSON.stringify(props?.dataOfAccountSetup),
-    );
+    console.log(singleTransactionData, 'transactionDatatransactionDatatransactionDatatransactionData')
+    localStorage.setItem("accountWizardAllData", JSON.stringify(props?.dataOfAccountSetup));
     const dateToSend = {
-      redirect_url: window.location.href.split('?')[0],
+      redirect_url: window.location.href.split("?")[0],
       choice: key,
+      // choice: key,
       accountId: account_id,
-      amount: requiredDocList?.has_amount ? amount : null,
-      type: 'subscription',
-      currency: requiredDocList?.has_amount
-        ? selectedCurrencyValues.value
-          ? selectedCurrencyValues.value
-          : selectedCurrencyValues
-        : null,
+      // type: singleTransactionData?.type,
+      // currency: 'INR',
+      transactionId: singleTransactionData?.id
     };
-    console.log('redirect_url', dateToSend);
+    console.log("redirect_url", dateToSend);
     requestSignUrl(dateToSend);
   };
   const requestSignUrl = async (data) => {
     setIsLoader(true);
-    setLoaderDescription(
-      <span style={{ color: 'orange' }}>
-        Please wait a moment, you are being directed to DocuSign
-      </span>,
-    );
+    setLoaderDescription(<span style={{ color: "orange" }}>Please wait a moment, you are being directed to DocuSign</span>);
 
-    const response = await getSignedURLAPI(
-      data,
-      requiredDocList.id,
-      cancelTokenSource.token,
-    );
-    setLoaderDescription('');
+    const response = await getSignedURLAPI(data, requiredDocList.id, cancelTokenSource.token);
+    setLoaderDescription("");
     if (response.success == true) {
       window.location.href = response?.data?.signing_url;
     } else {
@@ -461,22 +454,39 @@ export default function investment({ ...props }) {
     // });
     // return formattedDate;
     const date = new Date(timestamp);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Note: Month is zero-based
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Note: Month is zero-based
     const year = String(date.getFullYear());
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
 
-    return `${day}/${month}/${year}${' '}${hours}:${minutes}:${seconds}`;
+    return `${day}/${month}/${year}${" "}${hours}:${minutes}:${seconds}`;
   };
+  const documentTypeMap = {
+    "subscription": "SUBSCRIPTION_AGREEMENT",
+    "redemption": "REDEMPTION_DOCUMENT",
+    "addition": "ADDITIONAL_SUBSCRIPTION_AGREEMENT",
+    "full-redemption": "REDEMPTION_DOCUMENT",
+    "partial-redemption": "REDEMPTION_DOCUMENT",
+  };
+  function getDocumentByType(type) {
+    const key = documentTypeMap[type]; // Get the key for the given type
+    if (!key) return null; // Return null if the type doesn't match any key
+
+    // Find the document with the matching key
+    return requiredDocListAll.find((doc) => doc.key === key);
+  }
   const handleSignAndSubmit = (e, status, data) => {
-    if (data?.has_amount) {
-      setIsAmount;
-    }
-    setRequiredDocList(data);
-    setIsAmount(data?.has_amount);
-    if (status == 're-sign') {
+    setSingleTransactionData(data)
+    setTransactionId(data?.transactionableId)
+    setAmount(data?.amount)
+    setCurrency(data?.currency)
+    let requiredDocument = getDocumentByType(data?.type)
+    console.log(requiredDocument, 'requiredDocumentrequiredDocumentrequiredDocumentrequiredDocumentrequiredDocumentrequiredDocument')
+    setRequiredDocList(requiredDocument);
+    setIsAmount(false);
+    if (status == "re-sign") {
       // setShowModal(true);
       handleProceed();
       // if (!signSubmit && showProceed) {
@@ -510,20 +520,16 @@ export default function investment({ ...props }) {
   };
   function getShortestTimeSpan(subscriptionDocuments, mineDocumentTypeID) {
     let shortestTimeSpan = Infinity;
-    let latestDocumentRandomString = '';
+    let latestDocumentRandomString = "";
 
     for (const documentType in subscriptionDocuments) {
       const documents = subscriptionDocuments[documentType];
 
       // Filter out documents with the same documentTypeId
-      const filteredDocuments = documents.filter(
-        (doc) => doc.documentTypeId === mineDocumentTypeID,
-      );
+      const filteredDocuments = documents.filter((doc) => doc.documentTypeId === mineDocumentTypeID);
 
       // Sort the filtered documents by docUploadDateTime in descending order
-      filteredDocuments.sort(
-        (a, b) => b.docUploadDateTime - a.docUploadDateTime,
-      );
+      filteredDocuments.sort((a, b) => b.docUploadDateTime - a.docUploadDateTime);
 
       // Get the time span from the current time to each document's upload time
       const currentTime = Date.now();
@@ -545,79 +551,52 @@ export default function investment({ ...props }) {
   // Usage example
 
   const handleUploadDocument = async (e) => {
-    if (requiredDocList?.has_amount) {
-      if (amount == '') {
-        setErrorAmount(true);
-        return;
-      } else {
-        setErrorAmount(false);
-      }
-      if (!selectedCurrencyValues.value) {
-        setErrorCurrency(true);
-        return;
-      } else {
-        setErrorCurrency(false);
-      }
-    }
+
     setIsLoader(true);
     const data = {
-      account_id,
-      currency: requiredDocList?.has_amount
-        ? selectedCurrencyValues.value
-        : null,
-      type: [
-        'SUBSCRIPTION_DOCUMENT',
-        'REDEMPTION_DOCUMENT',
-        'ADDITIONAL_SUBSCRIPTION_DOCUMENT',
-      ].includes(requiredDocList?.category_key)
-        ? 'subscription'
-        : null,
+
+      type: singleTransactionData?.type,
       content_type: contentTypeData,
-      amount: requiredDocList?.has_amount ? parseFloat(amount) : null,
       document_type_id: requiredDocList?.id,
+      transaction_id: singleTransactionData?.id,
+      share_holder_id: accountShareHolderId,
+      identity_id: identity_id,
     };
 
-    console.log('is it ', data);
+    console.log("is it ", data);
     const response = await transactionDocAddApi(data, cancelTokenSource.token);
     if (response.success) {
       setUploadDocument(false);
       setIsLoader(true);
       // setDocumentIdForVerifyUpload(requiredDocList?.id);
-      const randomString = getShortestTimeSpan(
-        response?.data?.account_info?.meta?.subscriptionDocuments,
-        requiredDocList?.id,
-      );
-      console.log('randomString', randomString); // Output: cDzAy9HoLm0M6id0ykbL
+      const randomString = getShortestTimeSpan(response?.data?.account_info?.meta?.subscriptionDocuments, requiredDocList?.id);
+      console.log("randomString", randomString); // Output: cDzAy9HoLm0M6id0ykbL
       const dataToUpload = {
-        docTypeId: requiredDocList?.id,
-        randomString: randomString,
+        req_id: response?.data?.doc_id,
+        transaction_id: singleTransactionData?.id
       };
       let url = response.data.signed_url;
       let file = docImage.current?.files?.item(0);
-      console.log(file, 'imageBlob file');
-      console.log(url, 'url url url url');
+      console.log(file, "imageBlob file");
+      console.log(url, "url url url url");
       //Removing and Adding Token
-      let token = axios.defaults.headers['x-auth-token'];
+      let token = axios.defaults.headers["x-auth-token"];
 
-      delete axios.defaults.headers['x-auth-token'];
+      delete axios.defaults.headers["x-auth-token"];
 
-      console.log(file, 'imageBlob file');
+      console.log(file, "imageBlob file");
       axios
         .put(url, file, {
           headers: {
-            'Content-Type': file?.type,
+            "Content-Type": file?.type,
           },
         })
         .then(async (response) => {
-          console.log('Image Upload Success ', response);
+          console.log("Image Upload Success ", response);
 
-          axios.defaults.headers['x-auth-token'] = token;
+          axios.defaults.headers["x-auth-token"] = token;
 
-          const res = await transactionDocVerifyUpload(
-            dataToUpload,
-            account_id,
-            cancelTokenSource.token,
-          );
+          const res = await transactionDocVerifyUpload(dataToUpload, account_id, cancelTokenSource.token);
           // const res = await transactionDocVerifyUpload(response?.data?.transaction_document_id, cancelTokenSource.token);
           if (res.success) {
             setIsLoader(false);
@@ -635,8 +614,8 @@ export default function investment({ ...props }) {
           }
         })
         .catch((err) => {
-          console.log('Image Upload Failed Response', err);
-          axios.defaults.headers['x-auth-token'] = token;
+          console.log("Image Upload Failed Response", err);
+          axios.defaults.headers["x-auth-token"] = token;
           // setErrorMessage(response.system_message);
           setIsLoader(false);
         });
@@ -647,8 +626,8 @@ export default function investment({ ...props }) {
       // }
 
       handleAlert({
-        variant: 'success',
-        message: 'Document Added Successfully',
+        variant: "success",
+        message: "Document Added successfully",
         show: true,
         hideAuto: true,
       });
@@ -659,7 +638,7 @@ export default function investment({ ...props }) {
       handleGetRequiredDocument();
     } else {
       handleAlert({
-        variant: 'danger',
+        variant: "danger",
         message: response?.user_message,
         show: true,
         hideAuto: true,
@@ -670,41 +649,41 @@ export default function investment({ ...props }) {
     // setUploadDocument(false)
   };
   const handleClickDocument = (e) => {
-    console.log('hello handleClickDocument');
-    let elem = document.getElementById('input_field_document');
+    console.log("hello handleClickDocument");
+    let elem = document.getElementById("input_field_document");
     if (elem) {
       elem.click();
     }
   };
 
   function handleImageClick(e) {
-    let elem = document.getElementById('inputImageElement');
+    let elem = document.getElementById("inputImageElement");
     elem?.click();
 
-    elem?.addEventListener('change', function () {
-      let image = document.getElementById('imagePreview');
+    elem?.addEventListener("change", function () {
+      let image = document.getElementById("imagePreview");
       if (image) {
-        image.style.display = 'block';
+        image.style.display = "block";
         let file = docImage.current?.files?.item(0);
-        console.log(file, 'file');
-        if (file.type != 'application/pdf') {
+        console.log(file, "file");
+        if (file.type != "application/pdf") {
           setPDFError(true);
           return;
         }
         setContentTypeData(file.type);
-        console.log(docImage, 'docImage handleImageClick');
+        console.log(docImage, "docImage handleImageClick");
         if (file) {
           let data = URL.createObjectURL(file);
           // image.src = data;
-          toggleAllImageTags('none');
+          toggleAllImageTags("none");
 
-          if (file.type.search('image') != -1) {
+          if (file.type.search("image") != -1) {
             image.src = data;
           } else {
             // toggleAllImageTags('none');
-            let image = document.getElementById('imagePreview');
+            let image = document.getElementById("imagePreview");
             if (image) {
-              image.style.display = 'none';
+              image.style.display = "none";
             }
           }
         }
@@ -714,12 +693,12 @@ export default function investment({ ...props }) {
   }
 
   function toggleAllImageTags(input) {
-    console.log(input, 'input');
-    let icon = document.getElementById('imageUploadIcon');
-    let text1 = document.getElementById('imageUploadText1');
-    let text2 = document.getElementById('imageUploadText2');
-    let text3 = document.getElementById('imageUploadText3');
-    let image = document.getElementById('imagePreview');
+    console.log(input, "input");
+    let icon = document.getElementById("imageUploadIcon");
+    let text1 = document.getElementById("imageUploadText1");
+    let text2 = document.getElementById("imageUploadText2");
+    let text3 = document.getElementById("imageUploadText3");
+    let image = document.getElementById("imagePreview");
 
     if (icon && text1 && text2 && text3) {
       icon.style.display = input;
@@ -728,71 +707,50 @@ export default function investment({ ...props }) {
       text3.style.display = input;
     }
 
-    if (input == 'block' && image) {
+    if (input == "block" && image) {
       image.style.display = input;
     }
   }
   const handleClickDownloadManual = async (item, id) => {
     setIsLoader(true);
-    console.log('ittttem', item);
-    const response = await getDownloadSigningDocument(
-      item,
-      id,
-      account_id,
-      cancelTokenSource.token,
-    );
-    console.log('response id', response);
+    console.log("ittttem", item);
+    const response = await getDownloadSigningDocument(item, id, account_id, cancelTokenSource.token);
+    console.log("response id", response);
     if (response.success == true) {
       setIsLoader(false);
-      window.open(`${response?.data?.signed_url?.url}`, '_blank');
+      window.open(`${response?.data?.signed_url?.url}`, "_blank");
     } else {
       setIsLoader(false);
     }
   };
-  const handleClickFinishSigning = async (
-    e,
-    envelop_id,
-    random_string,
-    documentType,
-  ) => {
-    localStorage.setItem(
-      'accountWizardAllData',
-      JSON.stringify(props?.dataOfAccountSetup),
-    );
+  const handleClickFinishSigning = async (e, envelop_id, random_string, documentType) => {
+    localStorage.setItem("accountWizardAllData", JSON.stringify(props?.dataOfAccountSetup));
     setIsLoader(true);
     const data = {
       redirect_url: window.location.href,
       envelop_id: envelop_id,
       randomKey: random_string,
       accountId: account_id,
-      type: 'subscription',
+      type: "subscription",
     };
-    const response = await getDocuSignURLForFinishSigningAPI(
-      data,
-      documentType,
-      cancelTokenSource.token,
-    );
-    console.log('response id', response);
+    const response = await getDocuSignURLForFinishSigningAPI(data, documentType, cancelTokenSource.token);
+    console.log("response id", response);
     if (response.success == true) {
       setIsLoader(false);
-      window.open(`${response?.data?.signing_url}`, '_blank');
+      window.open(`${response?.data?.signing_url}`, "_blank");
     } else {
       setIsLoader(false);
     }
   };
   const handleDownloadDocument = async (documentTypeId, randomString) => {
-    console.log('in loader');
+    console.log("in loader");
     setIsLoader(true);
     let dataToSend = {
       randomString: randomString,
       accountId: account_id,
     };
-    const response = await getDownloadDocuSignAPI(
-      documentTypeId,
-      dataToSend,
-      cancelTokenSource.token,
-    );
-    console.log('response id', response);
+    const response = await getDownloadDocuSignAPI(documentTypeId, dataToSend, cancelTokenSource.token);
+    console.log("response id", response);
     if (response.success == true) {
       setIsLoader(false);
 
@@ -800,7 +758,7 @@ export default function investment({ ...props }) {
         if (response?.data?.signed_url?.url?.length > 0) {
           for (let a = 0; a < response?.data?.signed_url?.url?.length; a++) {
             // console.log(response?.data?.signed_url?.url[a],'response?.data?.signed_url?.url[a]')
-            window.open(`${response?.data?.signed_url?.url[a]}`, '_blank');
+            window.open(`${response?.data?.signed_url?.url[a]}`, "_blank");
           }
         }
       }
@@ -812,51 +770,48 @@ export default function investment({ ...props }) {
   const handleChangeCurrency = (selectedOption) => {
     setSelectedCurrencyValues(selectedOption);
   };
- 
   const handleChangeAmount = (event) => {
-    const value = event.target.value === '' ? 0 : parseFloat(event.target.value); // Parse input to a float
-    
-    // Log the current input value
-    console.log("Current amount:", event.target.value); 
-  
-    setAmount(value);  // Update the state with the new value
-  
+    console.log("weaeawe", event.target.value);
+    console.log("weaeawe minSubscriptionAmount", minSubscriptionAmount);
+    console.log("weaeawe maxSubscriptionAmount", maxSubscriptionAmount);
+    console.log("requiredDocList requiredDocList", requiredDocList);
+    const value = event.target.value === "" ? 0 : parseFloat(event.target.value);
+
+    setAmount(value);
     let maxAmount = maxSubscriptionAmount;
     let minAmount = minSubscriptionAmount;
-  
-    // Adjust the maxAmount and minAmount based on the category_key
-    if (requiredDocList?.category_key === 'SUBSCRIPTION_DOCUMENT') {
+    if (requiredDocList?.category_key == "SUBSCRIPTION_DOCUMENT") {
       maxAmount = maxSubscriptionAmount;
       minAmount = minSubscriptionAmount;
-    } else if (requiredDocList?.category_key === 'ADDITIONAL_SUBSCRIPTION_DOCUMENT') {
+    } else if (requiredDocList?.category_key == "ADDITIONAL_SUBSCRIPTION_DOCUMENT") {
       maxAmount = getMaxAdditionalSubscriptionAmount(props?.dataOfAccountSetup?.fund_data?.fund_setting);
       minAmount = getMinAdditionalSubscriptionAmount(props?.dataOfAccountSetup?.fund_data?.fund_setting);
-    } else if (requiredDocList?.category_key === 'REDEMPTION_DOCUMENT') {
+    } else if (requiredDocList?.category_key == "REDEMPTION_DOCUMENT") {
       maxAmount = getMaxRedemptionSubscriptionAmount(props?.dataOfAccountSetup?.fund_data?.fund_setting);
       minAmount = getMinRedemptionSubscriptionAmount(props?.dataOfAccountSetup?.fund_data?.fund_setting);
     }
-  
-    // Validate the input value with the minAmount and maxAmount
     if (value >= minAmount && value <= maxAmount) {
-      // If the value is within range, you can perform any success actions here
-      // Example: clear the alert or provide positive feedback
+      //   handleAlert({
+      //     variant: "info",
+      //     message: `Amount should be between ${minSubscriptionAmount} and ${maxSubscriptionAmount}`,
+      //     show: true,
+      //     hideAuto: true,
+      //   });
     } else {
-      // If the value is out of range, show an alert with proper validation
       handleAlert({
-        variant: 'danger',
+        variant: "danger",
         message: `Amount should be between ${minAmount} and ${maxAmount}`,
         show: true,
         hideAuto: true,
       });
     }
   };
-  
-
   const handleSignSubmitClose = (e) => {
-    console.log('ksjlhdliashdlhsalidhaidhilashdlsahdkgas;d;gsld;g');
+    console.log("ksjlhdliashdlhsalidhaidhilashdlsahdkgas;d;gsld;g")
     setSignSubmit(false);
-    setAmount('');
-    setSelectedCurrencyValues([]);
+    setAmount("");
+    setSelectedCurrencyValues([])
+
   };
   const handleCloseAlert = () => {
     setAlertProps({ ...alertProps, show: false });
@@ -869,19 +824,15 @@ export default function investment({ ...props }) {
       if (Object.keys(accountData?.meta?.subscriptionDocuments)?.length > 0) {
         for (let a of Object.keys(accountData?.meta?.subscriptionDocuments)) {
           if (accountData?.meta?.subscriptionDocuments[a]) {
-            const filteredDocuments = accountData?.meta?.subscriptionDocuments[
-              a
-            ]?.sort((a, b) => b.docUploadDateTime - a.docUploadDateTime);
+            // Filter out documents with deleted.status === true
+            const filteredDocuments = accountData?.meta?.subscriptionDocuments[a]
+              ?.filter(item => !(item?.deleted?.status === true))
+              ?.sort((a, b) => b.docUploadDateTime - a.docUploadDateTime);
 
-            console.log(
-              filteredDocuments[0]?.documentTypeId,
-              'filteredDocuments filteredDocuments',
-            );
-            console.log(id, 'filteredDocuments filteredDocuments id');
-            console.log(
-              filteredDocuments[0],
-              'filteredDocuments filteredDocuments',
-            );
+            console.log(filteredDocuments[0]?.documentTypeId, "filteredDocuments filteredDocuments");
+            console.log(id, "filteredDocuments filteredDocuments id");
+            console.log(filteredDocuments[0], "filteredDocuments filteredDocuments");
+
             if (filteredDocuments[0]?.documentTypeId == id) {
               return filteredDocuments[0];
             }
@@ -889,31 +840,32 @@ export default function investment({ ...props }) {
         }
       }
     }
+
   };
 
   const getStatus = (item) => {
-    console.log('props itttt', item);
-    console.log('props accountData', props?.accountData);
+    console.log("props itttt", item);
+    console.log("props accountData", props?.accountData);
     const keyOfDocument = item?.key;
-    console.log('keyOfDocument', keyOfDocument);
+    console.log("keyOfDocument", keyOfDocument);
     var documents = [];
     if (accountData?.meta?.subscriptionDocuments) {
-      if (
-        accountData?.meta?.subscriptionDocuments.hasOwnProperty(keyOfDocument)
-      ) {
+      if (accountData?.meta?.subscriptionDocuments.hasOwnProperty(keyOfDocument)) {
         documents = accountData?.meta?.subscriptionDocuments[keyOfDocument];
       }
     }
-    console.log('documents', documents);
+    console.log("documents", documents);
 
     let shortestTimeSpan = Infinity;
 
-    let latestDocumentRandomStatus = '';
+    let latestDocumentRandomStatus = "";
 
     // Sort the filtered documents by docUploadDateTime in descending order
-    const filteredDocuments = documents?.sort(
-      (a, b) => b.docUploadDateTime - a.docUploadDateTime,
-    );
+    // const filteredDocuments = documents?.sort((a, b) => b.docUploadDateTime - a.docUploadDateTime);
+    const filteredDocuments = documents
+      ?.filter(doc => !(doc?.deleted?.status === true)) // Exclude deleted documents
+      ?.sort((a, b) => b.docUploadDateTime - a.docUploadDateTime); // S
+
 
     // Get the time span from the current time to each document's upload time
     const currentTime = Date.now();
@@ -926,30 +878,22 @@ export default function investment({ ...props }) {
         latestDocumentRandomStatus = filteredDocuments[i].status;
       }
     }
-    console.log('latestDocumentRandomStatus', latestDocumentRandomStatus);
+    console.log("latestDocumentRandomStatus", latestDocumentRandomStatus);
 
-    return latestDocumentRandomStatus == ''
-      ? 'Not Completed'
-      : latestDocumentRandomStatus == 'pending'
-      ? 'Signed'
-      : 'Draft';
+    return latestDocumentRandomStatus == "" ? "Not Completed" : latestDocumentRandomStatus == "pending" ? "Signed" : "Draft";
   };
   const checkIfShowAdditional = () => {
-    if (
-      props?.dataOfAccountSetup?.fund_data?.fund_setting?.account?.addition
-        ?.status ||
-      props?.dataOfAccountSetup?.fund_data?.fund_setting?.account?.redemption
-        ?.status
-    ) {
+    if (props?.dataOfAccountSetup?.fund_data?.fund_setting?.account?.addition?.status || props?.dataOfAccountSetup?.fund_data?.fund_setting?.account?.redemption?.status) {
       if (transactionHistoryData) {
-        if (
-          transactionHistoryData.hasOwnProperty('SUBSCRIPTION_AGREEMENT') ||
-          transactionHistoryData.hasOwnProperty('SUBSCRIPTION_APPLICATION')
-        ) {
-          if (props?.dataOfAccountSetup?.accountData?.status == 'accepted') {
+        if (transactionHistoryData.hasOwnProperty("SUBSCRIPTION_AGREEMENT") || transactionHistoryData.hasOwnProperty("SUBSCRIPTION_APPLICATION") || transactionHistoryData.hasOwnProperty('CONTRIBUTION_AGREEMENT')) {
+          if (props?.dataOfAccountSetup?.accountData?.status == "accepted") {
             return true;
+
+
           } else {
             return false;
+
+
           }
         } else {
           return false;
@@ -961,42 +905,35 @@ export default function investment({ ...props }) {
   };
   const checkIfShowManualTransaction = () => {
     // return true
-    return props?.dataOfAccountSetup?.fund_data?.fund_setting?.sections
-      ?.manual_transaction?.enabled;
+    return props?.dataOfAccountSetup?.fund_data?.fund_setting?.sections?.manual_transaction?.enabled;
   };
   const handleClickMissingParticulars = (e) => {
     props.handleMiissingParticulars(true);
     // navigate(`/profile/detail/${accountData?.attach_identities[0]?.identityId}/${account_id}?step=identity`);
   };
   const checkIfStampingEnable = () => {
-    return props?.dataOfAccountSetup?.fund_data?.fund_setting?.account?.stamping
-      ?.status;
+    return props?.dataOfAccountSetup?.fund_data?.fund_setting?.account?.stamping?.status;
   };
   const checkIfESignEnable = () => {
-    return props?.dataOfAccountSetup?.fund_data?.fund_setting?.account?.eSign
-      ?.status;
+    return props?.dataOfAccountSetup?.fund_data?.fund_setting?.account?.eSign?.status;
   };
 
-  const handleStamping = async (documentKey, randomString) => {
+  const handleStamping = async (data) => {
     handleCallStamping = false;
     setIsLoader(true);
-    setLoaderDescription('Please Wait! Stamping is in progress');
+    setLoaderDescription("Please Wait! Stamping is in progress");
     let dataToSend = {
-      id: randomString,
-      document_type_key: documentKey,
+      id: data?.meta[data.type][data?.meta[data.type]?.length - 1]?.randomString,
+      document_type_key: data?.type,
+      transaction_id: data?.id,
     };
-    const response = await doStampingAPI(
-      identity_id,
-      accountShareHolderId,
-      dataToSend,
-      cancelTokenSource.token,
-    );
-    console.log('response id', response);
-    setLoaderDescription('');
+    const response = await doStampingAPI(identity_id, accountShareHolderId, dataToSend, cancelTokenSource.token);
+    console.log("response id", response);
+    setLoaderDescription("");
     if (response.success == true) {
       if (response?.data?.error) {
         handleAlert({
-          variant: 'danger',
+          variant: "danger",
           message: response?.data?.errorObject?.message?.message,
           show: true,
           hideAuto: true,
@@ -1007,7 +944,7 @@ export default function investment({ ...props }) {
         setStampingDone(true);
         setStamp(true);
         if (checkIfESignEnable()) {
-          handleESign(documentKey, randomString);
+          handleESign(data?.type, data?.meta[data.type][data?.meta[data.type]?.length - 1]?.randomString, data?.id);
         } else {
           getTransactionHistory();
         }
@@ -1019,28 +956,23 @@ export default function investment({ ...props }) {
       setIsLoader(false);
     }
   };
-  const handleESign = async (documentKey, randomString) => {
+  const handleESign = async (documentKey, randomString, transactionId) => {
     setIsLoaderESign(true);
-    setLoaderDescription('Please Wait! E Sign is in progress');
+    setLoaderDescription("Please Wait! E Sign is in progress");
     let dataToSend = {
       id: randomString,
       document_type_key: documentKey,
-      return_url:
-        window.location.href.split('?')[0] + '?event=signing_complete',
+      return_url: window.location.href.split("?")[0] + "?event=signing_complete",
+      transaction_id: transactionId,
     };
-    const response = await doESignAPI(
-      identity_id,
-      accountShareHolderId,
-      dataToSend,
-      cancelTokenSource.token,
-    );
-    console.log('response id', response);
+    const response = await doESignAPI(identity_id, accountShareHolderId, dataToSend, cancelTokenSource.token);
+    console.log("response id", response);
     if (response.success == true) {
       // setIsLoader(false);
       // getTransactionHistory();
       if (response?.data?.error) {
         handleAlert({
-          variant: 'danger',
+          variant: "danger",
           message: response?.data?.errorObject?.message,
           show: true,
           hideAuto: true,
@@ -1058,15 +990,12 @@ export default function investment({ ...props }) {
     let dataToSend = {
       key: bucketKey,
     };
-    const response = await handleDownloadStampDocumentAPI(
-      dataToSend,
-      cancelTokenSource.token,
-    );
-    console.log('response id', response);
+    const response = await handleDownloadStampDocumentAPI(dataToSend, cancelTokenSource.token);
+    console.log("response id", response);
     if (response.success == true) {
       setIsLoader(false);
       // getTransactionHistory();
-      window.open(`${response?.data}`, '_blank');
+      window.open(`${response?.data}`, "_blank");
     } else {
       setIsLoader(false);
     }
@@ -1075,7 +1004,7 @@ export default function investment({ ...props }) {
     let percentage = 0;
     if (signer) {
       for (let s of signer) {
-        if (s?.sign == 'SIGNED') {
+        if (s?.sign == "SIGNED") {
           percentage += 33;
         }
       }
@@ -1088,15 +1017,15 @@ export default function investment({ ...props }) {
 
   const clearTransactionForm = () => {
     setAddTransaction(false);
-    setTransactionType('');
-    setStatus('');
-    setTransactionDate('');
+    setTransactionType("");
+    setStatus("");
+    setTransactionDate("");
     setTransactionAmount(null);
     setCurrency(null);
     setClassType(null);
     setNoOfShares(null);
-    setTransactionContentTypeData('');
-    setDealingCycle('');
+    setTransactionContentTypeData("");
+    setDealingCycle("");
 
     setTypeError(false);
     setStatusError(false);
@@ -1108,11 +1037,11 @@ export default function investment({ ...props }) {
     setNoOfSharesError(false);
   };
 
-  const handleDeleteClick = (uploadedData, requiredData) => {
-    console.log('sdljashdljkashjlda', uploadedData);
-    console.log('sdljashdljkashjlda requiredData', requiredData);
+  const handleDeleteClick = (uploadedData, key) => {
+    console.log("sdljashdljkashjlda", uploadedData)
+    console.log("sdljashdljkashjlda requiredData", key)
     setSelectedManualUploadedDoc(uploadedData);
-    setSelectedManualRequiredDoc(requiredData);
+    setSelectedManualRequiredKey(key)
     setDeleteManualConfirmation(true);
   };
 
@@ -1120,7 +1049,7 @@ export default function investment({ ...props }) {
     e.preventDefault();
     let isError = false;
 
-    if (TransactionType == '') {
+    if (TransactionType == "") {
       setTypeError(true);
       isError = true;
     } else {
@@ -1151,7 +1080,7 @@ export default function investment({ ...props }) {
     // } else {
     //     setClassTypeError(false)
     // }
-    if (transactionDate == '') {
+    if (transactionDate == "") {
       isError = true;
       setTransactionDateError(true);
     } else {
@@ -1162,7 +1091,7 @@ export default function investment({ ...props }) {
     }
 
     let dataToSend = {
-      status: 'pending',
+      status: "pending",
       type: TransactionType,
       transactionDate: transactionDate,
       amount: transactionAmount,
@@ -1175,18 +1104,14 @@ export default function investment({ ...props }) {
   };
   const submitTransactionData = async (data) => {
     setIsLoader(true);
-    const response = await submitCustomTransactionDataAPI(
-      account_id,
-      data,
-      cancelTokenSource.token,
-    );
+    const response = await submitCustomTransactionDataAPI(account_id, data, cancelTokenSource.token);
     if (response.success == true) {
       setIsLoader(false);
       getTransactionList();
       clearTransactionForm();
       setAddTransaction(!addTransaction);
       handleAlert({
-        variant: 'success',
+        variant: "success",
         message: `Transaction added Successfully!`,
         show: true,
         hideAuto: true,
@@ -1197,10 +1122,7 @@ export default function investment({ ...props }) {
   };
   const getTransactionList = async () => {
     setIsLoader(true);
-    const response = await getCustomTransactionAPI(
-      account_id,
-      cancelTokenSource.token,
-    );
+    const response = await getCustomTransactionAPI(account_id, cancelTokenSource.token);
     if (response.success == true) {
       setIsLoader(false);
       setTransactionList(response.data);
@@ -1209,74 +1131,62 @@ export default function investment({ ...props }) {
     }
   };
 
+
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="w-full">
       {alertProps.show && (
-        <CustomAlert
-          handleCloseAlert={handleCloseAlert}
-          message={alertProps.message}
-          variant={alertProps.variant}
-          show={alertProps.show}
-          hideAuto={alertProps.hideAuto}
-          onClose={() => setAlertProps({ ...alertProps, show: false })}
-        >
+        <CustomAlert handleCloseAlert={handleCloseAlert} message={alertProps.message} variant={alertProps.variant} show={alertProps.show} hideAuto={alertProps.hideAuto} onClose={() => setAlertProps({ ...alertProps, show: false })}>
           {alertProps.message}
         </CustomAlert>
       )}
       {refresh}
-      <div >
-        <div className="flex justify-center w-full  ">
-         <div className="w-full ">            {/* <SubscriptionDetailHeader forTabsCheck={history?.state} /> */}
-         <div
+      <div>
+        <div className="flex flex-col w-full justify-center">
+          <Col xs={12} lg={12} xl={12}>
+            {/* <SubscriptionDetailHeader forTabsCheck={history?.state} /> */}
+            <div
             className={`bg-color-card-${theme} rounded-md  shadow-${theme} mb-8 flex flex-col items-center justify-center h-full w-full`}
           >
-              {/* <div className="col-12 col-md-9"> */}
-              <div
-                className={
-                  checkIfShowAdditional()
-                    ? 'col-9 col-md-9'
-                    : 'col-12 col-md-12'
-                }
-              >
-                {isLoader || isLoaderESign || isLoaderAccount ? (
-                  <SpinnerWithBackDrop/>
-                ) : null}
+              {/* <div class="col-12 col-md-9"> */}
+              <div class={checkIfShowAdditional() ? "col-9 col-md-9" : "col-12 col-md-12"}>
+                {isLoader || isLoaderESign || isLoaderAccount ? <SpinnerWithBackDrop animation="grow" custom={true} height="100vh" loaderDescription={loaderDescription} /> : null}
                 {/* {transactionData.length == 0 ? ( */}
                 {isLoaderAccount ? (
-                  <SpinnerWithBackDrop
-                  
-                  />
+                  <SpinnerWithBackDrop animation="grow" custom={true} height="100vh" loaderDescription={loaderDescription} />
                 ) : (
-                  <div className="card">
-                    
+                  <div class="card">
+                    {/* <div class="card-header">
+                                        <h4 class="card-header-title">Review & Sign Documents</h4>
+                                    </div> */}
+
                     <div
-      className={`bg-color-card-${theme} rounded-t-md border-color-${theme} border-b-[1px] shadow-${theme}  py-2 px-8 flex justify-between h-full w-full`}
-    >
-                      <h4 className="card-header-title">
-                        Review & Sign Documents
-                      </h4>
-                      {/* {checkIfShowManualTransaction() && (
-                        <button
+                      className="card-header"
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <h4 className="card-header-title">Review & Sign Documents</h4>
+                      {checkIfShowManualTransaction() && (
+                        <Button
                           onClick={(e) => {
                             handleAddTransaction(e);
                           }}
                         >
                           New Transaction Request
-                        </button>
-                      )} */}
+                        </Button>
+                      )}
                     </div>
-                    <div className="card-body">
+                    <div class="card-body">
                       <div>
                         {addTransaction && (
-                         <div className="bg-white rounded-lg shadow-md p-4" {...props}>
-                         <div className="bg-gray-100 p-4 border-b border-gray-300 rounded-t-lg">
-                              <h4 className="card-header-title">
-                                Add Transaction Request
-                              </h4>
-                            </div>
-                            <div>
-                            <div className="flex justify-center mb-4">
-                                <div className="w-full lg:w-1/3 xl:w-1/3">
+                          <Card {...props}>
+                            <Card.Header>
+                              <h4 className="card-header-title">Add Transaction Request</h4>
+                            </Card.Header>
+                            <Card.Body>
+                              <Row className="justify-content-center mb-4">
+                                <Col xs={12} lg={4} xl={4}>
                                   <label className="form-label">Type</label>
                                   <select
                                     className="form-control"
@@ -1285,33 +1195,19 @@ export default function investment({ ...props }) {
                                     }}
                                   >
                                     <option value="">Select Type</option>
-                                    <option value="subscription">
-                                      Initial Subscription
-                                    </option>
-                                    <option value="addition">
-                                      Additional Subscription
-                                    </option>
-                                    <option value="redemption">
-                                      Redemption
-                                    </option>
-                                    <option value="full-redemption">
-                                      Full Redemption
-                                    </option>
-                                    <option value="partial-redemption">
-                                      Partial Redemption
-                                    </option>
+                                    <option value="subscription" disabled={transactionList?.length>=1}>Initial Subscription</option>
+                                    <option value="addition" disabled={transactionList?.length==0}>Additional Subscription</option>
+                                    <option value="redemption" disabled={transactionList?.length==0}>Redemption</option>
+                                    <option value="full-redemption" disabled={transactionList?.length==0}>Full Redemption</option>
+                                    <option value="partial-redemption" disabled={transactionList?.length==0}>Partial Redemption</option>
                                     {/* <option value="internal">Internal</option>
                                                             <option value="exchange">Exchange</option>
                                                             <option value="deposit">Deposit</option> */}
                                   </select>
-                                  {typeError && (
-                                    <p className="error-fields">
-                                      Select Type To Continue
-                                    </p>
-                                  )}
-                                </div>
+                                  {typeError && <p className="error-fields">Select Type To Continue</p>}
+                                </Col>
 
-                                <div className="w-full lg:w-1/3 xl:w-1/3">
+                                <Col xs={12} lg={4} xl={4}>
                                   <label className="form-label">Amount</label>
                                   <input
                                     type="number"
@@ -1321,13 +1217,9 @@ export default function investment({ ...props }) {
                                       setTransactionAmount(e.target.value);
                                     }}
                                   />
-                                  {amountError && (
-                                    <p className="error-fields">
-                                      Enter Amount To Continue
-                                    </p>
-                                  )}
-                                </div>
-                                <div className="w-full lg:w-1/3 xl:w-1/3">
+                                  {amountError && <p className="error-fields">Enter Amount To Continue</p>}
+                                </Col>
+                                <Col xs={12} lg={4} xl={4}>
                                   <label className="form-label">Currency</label>
                                   <select
                                     className="form-control"
@@ -1337,34 +1229,22 @@ export default function investment({ ...props }) {
                                   >
                                     <option value="">Select Currency</option>
 
-                                    {props?.dataOfAccountSetup?.fund_data
-                                      ?.fund_setting?.sections
-                                      ?.manual_transaction?.currency !== ''
-                                      ? props?.dataOfAccountSetup?.fund_data?.fund_setting?.sections?.manual_transaction?.currency?.map(
-                                          (item) => {
-                                            return (
-                                              <>
-                                                <option value={item}>
-                                                  {item}
-                                                </option>
-                                              </>
-                                            );
-                                          },
-                                        )
+                                    {props?.dataOfAccountSetup?.fund_data?.fund_setting?.sections?.manual_transaction?.currency !== ""
+                                      ? props?.dataOfAccountSetup?.fund_data?.fund_setting?.sections?.manual_transaction?.currency?.map((item) => {
+                                        return (
+                                          <>
+                                            <option value={item}>{item}</option>
+                                          </>
+                                        );
+                                      })
                                       : null}
                                   </select>
-                                  {currencyError && (
-                                    <p className="error-fields">
-                                      Enter Currency To Continue
-                                    </p>
-                                  )}
-                                </div>
-                              </div>
-                              <div className="flex justify-center mb-4">
-                                <div className="w-full lg:w-1/3 xl:w-1/3">
-                                  <label className="form-label">
-                                    No Of Shares
-                                  </label>
+                                  {currencyError && <p className="error-fields">Enter Currency To Continue</p>}
+                                </Col>
+                              </Row>
+                              <Row className="justify-content-center mb-4">
+                                <Col xs={12} lg={4} xl={4}>
+                                  <label className="form-label">No Of Shares</label>
                                   <input
                                     type="number"
                                     className="form-control"
@@ -1373,16 +1253,10 @@ export default function investment({ ...props }) {
                                       setNoOfShares(e.target.value);
                                     }}
                                   />
-                                  {noOfSharesError && (
-                                    <p className="error-fields">
-                                      Enter No. Of Shares To Continue
-                                    </p>
-                                  )}
-                                </div>
-                                <div className="w-full lg:w-1/3 xl:w-1/3">
-                                  <label className="form-label">
-                                    Class Type
-                                  </label>
+                                  {noOfSharesError && <p className="error-fields">Enter No. Of Shares To Continue</p>}
+                                </Col>
+                                <Col xs={12} lg={4} xl={4}>
+                                  <label className="form-label">Class Type</label>
                                   <select
                                     className="form-control"
                                     onChange={(e) => {
@@ -1391,33 +1265,21 @@ export default function investment({ ...props }) {
                                   >
                                     <option value="">Select type</option>
 
-                                    {props?.dataOfAccountSetup?.fund_data
-                                      ?.fund_setting?.sections
-                                      ?.manual_transaction?.class_type !== ''
-                                      ? props?.dataOfAccountSetup?.fund_data?.fund_setting?.sections?.manual_transaction?.class_type?.map(
-                                          (item) => {
-                                            return (
-                                              <>
-                                                <option value={item}>
-                                                  {item}
-                                                </option>
-                                              </>
-                                            );
-                                          },
-                                        )
+                                    {props?.dataOfAccountSetup?.fund_data?.fund_setting?.sections?.manual_transaction?.class_type !== ""
+                                      ? props?.dataOfAccountSetup?.fund_data?.fund_setting?.sections?.manual_transaction?.class_type?.map((item) => {
+                                        return (
+                                          <>
+                                            <option value={item}>{item}</option>
+                                          </>
+                                        );
+                                      })
                                       : null}
                                   </select>
 
-                                  {classTypeError && (
-                                    <p className="error-fields">
-                                      Enter Class Type To Continue
-                                    </p>
-                                  )}
-                                </div>
-                                <div className="w-full lg:w-1/3 xl:w-1/3">
-                                  <label className="form-label">
-                                    Transaction Date
-                                  </label>
+                                  {classTypeError && <p className="error-fields">Enter Class Type To Continue</p>}
+                                </Col>
+                                <Col xs={12} lg={4} xl={4}>
+                                  <label className="form-label">Transaction Date</label>
                                   <input
                                     type="date"
                                     className="form-control"
@@ -1426,43 +1288,19 @@ export default function investment({ ...props }) {
                                       setTransactionDate(e.target.value);
                                     }}
                                   />
-                                  {transactionDateError && (
-                                    <p className="error-fields">
-                                      Enter Transaction Date To Continue
-                                    </p>
-                                  )}
-                                </div>
-                              </div>
-                              <div className="mb-4">
-                                <div className="w-full lg:w-1/3 xl:w-1/3">
-                                  <label className="form-label">
-                                    Latest NAV Price
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Latest NAV Price"
-                                    defaultValue={
-                                      '1 share = 6.15 USD - From VITAL'
-                                    }
-                                    readOnly
-                                  />
-                                </div>
-                                <div className="w-full lg:w-1/3 xl:w-1/3">
-                                  <label className="form-label">
-                                    No Shares Owned
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="No Shares Owned"
-                                    defaultValue={
-                                      '(Investor Perspective) - From VITAL'
-                                    }
-                                    readOnly
-                                  />
-                                </div>
-                                {/*                        <div className="w-full lg:w-1/3 xl:w-1/3">
+                                  {transactionDateError && <p className="error-fields">Enter Transaction Date To Continue</p>}
+                                </Col>
+                              </Row>
+                              <Row className="mb-4">
+                                <Col xs={12} lg={4} xl={4}>
+                                  <label className="form-label">Latest NAV Price</label>
+                                  <input type="text" className="form-control" placeholder="Latest NAV Price" defaultValue={"1 share = 6.15 USD - From VITAL"} readOnly />
+                                </Col>
+                                <Col xs={12} lg={4} xl={4}>
+                                  <label className="form-label">No Shares Owned</label>
+                                  <input type="text" className="form-control" placeholder="No Shares Owned" defaultValue={"(Investor Perspective) - From VITAL"} readOnly />
+                                </Col>
+                                {/* <Col xs={12} lg={4} xl={4}>
                                                             <label className="form-label">
                                                                 Dealing Cycle
                                                             </label>
@@ -1472,13 +1310,13 @@ export default function investment({ ...props }) {
                                                                 <p className="error-fields">Enter Dealing Cycle To Continue</p>
                                                             )}
                                                         </Col> */}
-                              </div>
+                              </Row>
                               <div
                                 style={{
-                                  display: 'flex',
-                                  justifyContent: 'flex-end',
-                                  marginTop: '20px',
-                                  marginBottom: '20px',
+                                  display: "flex",
+                                  justifyContent: "flex-end",
+                                  marginTop: "20px",
+                                  marginBottom: "20px",
                                 }}
                               >
                                 <button
@@ -1527,7 +1365,7 @@ export default function investment({ ...props }) {
                                                                         <h3>Upload Document</h3>
                                                                     </div>
                                                                     <div id="imageUploadText2">
-                                                                        <p>Formats PDF Only</p>
+                                                                        <p>Formats PDF only</p>
                                                                     </div>
                                                                     <div id="imageUploadText3">
                                                                         <p>Max Size 75 MB</p>
@@ -1555,636 +1393,31 @@ export default function investment({ ...props }) {
                                                             </div>
                                                         </div>
                                                     </div> */}
-                            </div>
-                          </div>
+                            </Card.Body>
+                          </Card>
                         )}
                       </div>
-                      <div className="row">
-                        <div className="table-responsive">
-                          <table className="table table-sm table-nowrap card-table">
-                            <thead>
-                              <tr>
-                                <th>Type</th>
-                                <th>Date</th>
-                                <th>Status</th>
-                                <th>{checkIfStampingEnable() && 'Stamp'}</th>
-                                {props?.dataOfAccountSetup?.fundData?.region ===
-                                  'India' && (
-                                  <th>{checkIfESignEnable() && 'E Sign'}</th>
-                                )}
 
-                                <th>Action</th>
-                              </tr>
-                            </thead>
-
-                            <tbody className="list" key={keyRandom}>
-                              {requiredDocListAll?.length != 0 &&
-                                requiredDocListAll.map((item, index) => (
-                                  <tr key={index}>
-                                    <td>
-                                      {item?.name && (
-                                        <span>
-                                          {item?.name.charAt(0).toUpperCase() +
-                                            item?.name.slice(1).toLowerCase()}
-                                        </span>
-                                      )}
-                                    </td>
-                                    <td>
-                                      {isDocumentUploaded(item?.id)
-                                        ? formatDateRegionWise(
-                                            isDocumentUploaded(item?.id)
-                                              ?.docUploadDateTime,
-                                            true,
-                                          )
-                                        : ''}
-                                    </td>
-                                    {/* <td>{isDocumentUploaded(item?.id) ? isDocumentUploaded(item?.id)?.status == "pending" ? "Signed" : "Draft" : 'Not Completed'}</td> */}
-                                    <td>{getStatus(item)}</td>
-
-                                    <td>
-                                      {checkIfStampingEnable() &&
-                                        item.key ==
-                                          'SUBSCRIPTION_AGREEMENT' && (
-                                          <>
-                                            {isDocumentUploaded(item?.id) &&
-                                              (isDocumentUploaded(item?.id)
-                                                ?.docuSign?.status ==
-                                                'signing_complete' ||
-                                                isDocumentUploaded(item?.id)
-                                                  ?.mode == 'manual') && (
-                                                <>
-                                                  {isDocumentUploaded(item?.id)
-                                                    ?.STAMP_DOCUMENT ? (
-                                                    <>
-                                                      <FeatherIcon
-                                                        style={{
-                                                          cursor: 'pointer',
-                                                        }}
-                                                        icon="download"
-                                                        color="green"
-                                                        size="15"
-                                                        onClick={(e) => {
-                                                          handleDownloadStampDocument(
-                                                            isDocumentUploaded(
-                                                              item?.id,
-                                                            )?.STAMP_DOCUMENT
-                                                              ?.bucketKey,
-                                                          );
-                                                        }}
-                                                      ></FeatherIcon>
-                                                      {isDocumentUploaded(
-                                                        item?.id,
-                                                      )?.STAMP_DOCUMENT?.stamp_paper_no.join(
-                                                        ',',
-                                                      )}
-                                                    </>
-                                                  ) : (
-                                                    <button
-                                                      className="btn btn-primary"
-                                                      onClick={(e) => {
-                                                        handleStamping(
-                                                          item.key,
-                                                          isDocumentUploaded(
-                                                            item?.id,
-                                                          )?.randomString,
-                                                        );
-                                                      }}
-                                                    >
-                                                      Proceed
-                                                    </button>
-                                                  )}
-                                                </>
-                                              )}
-                                          </>
-                                        )}
-                                    </td>
-
-                                    {props?.dataOfAccountSetup?.fundData
-                                      ?.region === 'India' && (
-                                      <td>
-                                        {checkIfESignEnable() &&
-                                          item.key ==
-                                            'SUBSCRIPTION_AGREEMENT' && (
-                                            <>
-                                              {isDocumentUploaded(item?.id) &&
-                                                (isDocumentUploaded(item?.id)
-                                                  ?.docuSign?.status ==
-                                                  'signing_complete' ||
-                                                  isDocumentUploaded(item?.id)
-                                                    ?.mode == 'manual') && (
-                                                  <>
-                                                    {isDocumentUploaded(
-                                                      item?.id,
-                                                    )?.AADHAAR_SIGN_DOCUMENT &&
-                                                    isDocumentUploaded(item?.id)
-                                                      ?.AADHAAR_SIGN_DOCUMENT
-                                                      ?.status ==
-                                                      'completed' ? (
-                                                      <>
-                                                        <FeatherIcon
-                                                          style={{
-                                                            cursor: 'pointer',
-                                                          }}
-                                                          icon="download"
-                                                          color="green"
-                                                          size="15"
-                                                          onClick={(e) => {
-                                                            handleDownloadStampDocument(
-                                                              isDocumentUploaded(
-                                                                item?.id,
-                                                              )
-                                                                ?.AADHAAR_SIGN_DOCUMENT
-                                                                ?.bucketKey,
-                                                            );
-                                                          }}
-                                                        ></FeatherIcon>
-                                                      </>
-                                                    ) : (
-                                                      <>
-                                                        {isDocumentUploaded(
-                                                          item?.id,
-                                                        )
-                                                          ?.AADHAAR_SIGN_DOCUMENT && (
-                                                          <>
-                                                            {isDocumentUploaded(
-                                                              item?.id,
-                                                            )
-                                                              ?.AADHAAR_SIGN_DOCUMENT
-                                                              ?.signer_meta_info &&
-                                                              isDocumentUploaded(
-                                                                item?.id,
-                                                              )?.AADHAAR_SIGN_DOCUMENT?.signer_meta_info.map(
-                                                                (
-                                                                  itemSigner,
-                                                                  index,
-                                                                ) => (
-                                                                  <>
-                                                                    {itemSigner?.type ==
-                                                                      'CUSTOMER' &&
-                                                                    itemSigner?.sign !=
-                                                                      'SIGNED' ? (
-                                                                      <button
-                                                                        className="btn btn-primary"
-                                                                        onClick={(
-                                                                          e,
-                                                                        ) => {
-                                                                          handleESign(
-                                                                            item.key,
-                                                                            isDocumentUploaded(
-                                                                              item?.id,
-                                                                            )
-                                                                              ?.randomString,
-                                                                          );
-                                                                        }}
-                                                                      >
-                                                                        Proceed
-                                                                      </button>
-                                                                    ) : null}
-                                                                  </>
-                                                                ),
-                                                              )}
-                                                          </>
-                                                        )}
-                                                      </>
-                                                    )}
-                                                  </>
-                                                )}
-                                            </>
-                                          )}
-                                        {isDocumentUploaded(item?.id) &&
-                                          (isDocumentUploaded(item?.id)
-                                            ?.docuSign?.status ==
-                                            'signing_complete' ||
-                                            isDocumentUploaded(item?.id)
-                                              ?.mode == 'manual') && (
-                                            <OverlayTrigger
-                                              placement="top"
-                                              overlay={
-                                                <Tooltip
-                                                  className="mytooltip"
-                                                  style={{ padding: '20px' }}
-                                                >
-                                                  {isDocumentUploaded(item?.id)
-                                                    ?.AADHAAR_SIGN_DOCUMENT
-                                                    ?.signer_meta_info &&
-                                                    isDocumentUploaded(
-                                                      item?.id,
-                                                    )?.AADHAAR_SIGN_DOCUMENT?.signer_meta_info.map(
-                                                      (itemESign, index) => (
-                                                        <div className="row align-items-center mb-2">
-                                                          <div className="col-auto">
-                                                            <a
-                                                              href="#!"
-                                                              className="avatar avatar-lg"
-                                                            >
-                                                              <img
-                                                                src="/img/investor/default-avatar.png"
-                                                                alt="..."
-                                                                className="avatar-img rounded-circle"
-                                                              />
-                                                            </a>
-                                                          </div>
-                                                          <div className="col ms-n2">
-                                                            <h4 className="mb-1">
-                                                              <p
-                                                                style={{
-                                                                  marginBottom:
-                                                                    '0px',
-                                                                }}
-                                                              >
-                                                                {
-                                                                  itemESign?.signer_email
-                                                                }
-                                                              </p>
-                                                            </h4>
-                                                            <ProgressBar
-                                                              color={
-                                                                itemESign?.sign
-                                                                  ? 'success'
-                                                                  : 'warning'
-                                                              }
-                                                              now={
-                                                                itemESign?.sign ==
-                                                                'SIGNED'
-                                                                  ? 100
-                                                                  : 33
-                                                              }
-                                                            />
-                                                            <div
-                                                              style={{
-                                                                display: 'flex',
-                                                                justifyContent:
-                                                                  'space-between',
-                                                              }}
-                                                            >
-                                                              <p
-                                                                className={
-                                                                  itemESign?.sign ==
-                                                                  'SIGNED'
-                                                                    ? 'small text-success mb-1'
-                                                                    : 'small text-success mb-1'
-                                                                }
-                                                              >
-                                                                Pending
-                                                              </p>
-                                                              <p
-                                                                className={
-                                                                  itemESign?.sign ==
-                                                                  'SIGNED'
-                                                                    ? 'small text-success mb-1'
-                                                                    : 'small text-muted mb-1'
-                                                                }
-                                                              >
-                                                                Signed
-                                                              </p>
-                                                            </div>
-                                                          </div>
-                                                        </div>
-                                                      ),
-                                                    )}
-                                                </Tooltip>
-                                              }
-                                            >
-                                              <ProgressBar
-                                                now={getSignedPercentage(
-                                                  isDocumentUploaded(item?.id)
-                                                    ?.AADHAAR_SIGN_DOCUMENT
-                                                    ?.signer_meta_info,
-                                                )}
-                                              />
-                                            </OverlayTrigger>
-                                          )}
-                                      </td>
-                                    )}
-
-                                    <td>
-                                      <div
-                                        style={{
-                                          display: 'flex',
-                                          alignItems: 'center',
-                                        }}
-                                      >
-                                        <div style={{ marginRight: '1rem' }}>
-                                          {isDocumentUploaded(item?.id) &&
-                                          isEmailValid ? (
-                                            <>
-                                              <div
-                                                style={{
-                                                  display: 'flex',
-                                                  alignItems: 'center',
-                                                }}
-                                              >
-                                                {isDocumentUploaded(item?.id)
-                                                  ?.status != 'draft' &&
-                                                  isDocumentUploaded(item?.id)
-                                                    ?.status != 'canceled' && (
-                                                    <FeatherIcon
-                                                      style={{
-                                                        cursor: 'pointer',
-                                                      }}
-                                                      icon="download"
-                                                      color="green"
-                                                      size="15"
-                                                      onClick={(e) => {
-                                                        handleDownloadDocument(
-                                                          isDocumentUploaded(
-                                                            item?.id,
-                                                          )?.documentTypeId,
-                                                          isDocumentUploaded(
-                                                            item?.id,
-                                                          )?.randomString,
-                                                        );
-                                                      }}
-                                                    />
-                                                  )}
-                                                {isDocumentUploaded(item?.id)
-                                                  ?.status != 'draft' &&
-                                                  isDocumentUploaded(item?.id)
-                                                    ?.status != 'canceled' && (
-                                                    <div>
-                                                      <button
-                                                        style={{
-                                                          marginLeft: '15px',
-                                                        }}
-                                                        className="btn btn-primary"
-                                                        onClick={(e) => {
-                                                          handleSignAndSubmit(
-                                                            e,
-                                                            're-sign',
-                                                            item,
-                                                          );
-                                                          setAmount(
-                                                            isDocumentUploaded(
-                                                              item?.id,
-                                                            )?.amount,
-                                                          );
-                                                          setSelectedCurrencyValues(
-                                                            isDocumentUploaded(
-                                                              item?.id,
-                                                            )?.currency,
-                                                          );
-                                                          setIsAmount(
-                                                            item?.has_amount,
-                                                          );
-                                                        }}
-                                                      >
-                                                        Re Sign
-                                                      </button>
-
-                                                      <Modal
-                                                        show={showModal}
-                                                        onHide={
-                                                          handleModalClose
-                                                        }
-                                                      >
-                                                        <Modal.Header
-                                                          closeButton
-                                                        >
-                                                          <Modal.Title>
-                                                            Confirmation Message
-                                                          </Modal.Title>
-                                                        </Modal.Header>
-                                                        <Modal.Body>
-                                                          The data entered in
-                                                          the document
-                                                          previously will be
-                                                          cleared. Would you
-                                                          like to proceed?
-                                                        </Modal.Body>
-                                                        <Modal.Footer>
-                                                          <button
-                                                           
-                                                            onClick={
-                                                              handleModalClose
-                                                            }
-                                                          >
-                                                            Close
-                                                          </button>
-                                                          <button
-                                                           
-                                                            onClick={
-                                                              handleProceed
-                                                            }
-                                                          >
-                                                            Proceed
-                                                          </button>
-                                                        </Modal.Footer>
-                                                      </Modal>
-                                                    </div>
-                                                  )}
-
-                                                {isDocumentUploaded(item?.id)
-                                                  ?.status == 'draft' && (
-                                                  <>
-                                                    <button
-                                                      style={{
-                                                        marginLeft: '10px',
-                                                      }}
-                                                      className="btn btn-danger"
-                                                      onClick={(e) => {
-                                                        setIsAmount(
-                                                          item?.has_amount,
-                                                        ),
-                                                          handleClickFinishSigning(
-                                                            e,
-                                                            isDocumentUploaded(
-                                                              item?.id,
-                                                            )?.docuSign
-                                                              ?.envelope_id,
-                                                            isDocumentUploaded(
-                                                              item?.id,
-                                                            )?.randomString,
-                                                            isDocumentUploaded(
-                                                              item?.id,
-                                                            )?.documentTypeId,
-                                                          );
-                                                      }}
-                                                    >
-                                                      Finish Signing
-                                                    </button>
-                                                    <div>
-                                                      {!isDocumentUploaded(
-                                                        item?.id,
-                                                      )?.status == 'draft' && (
-                                                        <>
-                                                          <button
-                                                            style={{
-                                                              marginLeft:
-                                                                '10px',
-                                                            }}
-                                                            className="btn btn-primary"
-                                                            onClick={(e) => {
-                                                              handleSignAndSubmit(
-                                                                e,
-                                                                're-sign',
-                                                                item,
-                                                              );
-                                                              setAmount(
-                                                                isDocumentUploaded(
-                                                                  item?.id,
-                                                                )?.amount,
-                                                              );
-                                                              setSelectedCurrencyValues(
-                                                                isDocumentUploaded(
-                                                                  item?.id,
-                                                                )?.currency,
-                                                              );
-                                                              setIsAmount(
-                                                                item?.has_amount,
-                                                              );
-                                                            }}
-                                                          >
-                                                            Re Sign
-                                                          </button>
-                                                        </>
-                                                      )}
-
-                                                      <Modal
-                                                        show={showModal}
-                                                        onHide={
-                                                          handleModalClose
-                                                        }
-                                                      >
-                                                        <Modal.Header
-                                                          closeButton
-                                                        >
-                                                          <Modal.Title>
-                                                            Confirmation Message
-                                                          </Modal.Title>
-                                                        </Modal.Header>
-                                                        <Modal.Body>
-                                                          The data entered in
-                                                          the document
-                                                          previously will be
-                                                          cleared. Would you
-                                                          like to proceed?
-                                                        </Modal.Body>
-                                                        <Modal.Footer>
-                                                          <button
-                                                           
-                                                            onClick={
-                                                              handleModalClose
-                                                            }
-                                                          >
-                                                            Close
-                                                          </button>
-                                                          <button
-                                                           
-                                                            onClick={
-                                                              handleProceed
-                                                            }
-                                                          >
-                                                            Proceed
-                                                          </button>
-                                                        </Modal.Footer>
-                                                      </Modal>
-                                                    </div>
-                                                  </>
-                                                )}
-                                              </div>
-                                            </>
-                                          ) : (
-                                            isEmailValid && (
-                                              <button
-                                                className="btn btn-danger"
-                                                onClick={(e) => {
-                                                  handleSignAndSubmit(
-                                                    e,
-                                                    'new',
-                                                    item,
-                                                  );
-                                                }}
-                                              >
-                                                Sign & Submit
-                                              </button>
-                                            )
-                                          )}
-                                        </div>
-                                        {/* {isDocumentUploaded(item?.id)?.mode ===
-                                          'manual' && (
-                                          <div>
-                                            <button
-                                              onClick={() =>
-                                                handleDeleteClick(
-                                                  isDocumentUploaded(item?.id),
-                                                  item,
-                                                )
-                                              } //
-                                              className="lift"
-                                              style={{
-                                                height: '30px',
-                                                width: '30px',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                padding: '6px',
-                                                marginTop: '5px',
-                                                marginBottom: '5px',
-                                                backgroundColor: 'red', // Add the red background color
-                                              }}
-                                            >
-                                              <FeatherIcon
-                                                icon="trash"
-                                                size="1em"
-                                              />
-                                            </button>
-                                          </div>
-                                        )} */}
-                                      </div>
-                                    </td>
-                                  </tr>
-                                ))}
-                            </tbody>
-                          </table>
-                          {!isEmailValid && (
-                            <div className="card">
-                              <div className="card-body">
-                                <div className="missing_required_fields_documents">
-                                  <p className="text-muted">
-                                    <span>Warning! </span> Please add your valid
-                                    email address before proceeding.
-                                  </p>
-                                  <FeatherIcon
-                                    icon="arrow-right-circle"
-                                    onClick={(e) => {
-                                      handleClickMissingParticulars(e);
-                                    }}
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </div>
                     </div>
                   </div>
                 )}
                 {/* ) : null} */}
               </div>
               {transactionHistoryData !== null &&
-                (transactionHistoryData?.hasOwnProperty(
-                  'SUBSCRIPTION_AGREEMENT',
-                ) ||
-                  transactionHistoryData?.hasOwnProperty(
-                    'SUBSCRIPTION_APPLICATION',
-                  )) &&
-                props?.dataOfAccountSetup?.accountData?.status ==
-                  'accepted' && (
+                (transactionHistoryData?.hasOwnProperty("SUBSCRIPTION_AGREEMENT") || transactionHistoryData?.hasOwnProperty("SUBSCRIPTION_APPLICATION") || transactionHistoryData.hasOwnProperty('CONTRIBUTION_AGREEMENT')) &&
+                props?.dataOfAccountSetup?.accountData?.status == "accepted" && (
                   <>
                     {/* {transactionHistoryData.hasOwnProperty("SUBSCRIPTION_AGREEMENT") || transactionHistoryData.hasOwnProperty("SUBSCRIPTION_APPLICATION") ? ( */}
                     <>
-                      <div className="col-12 col-md-3">
-                        {props?.dataOfAccountSetup?.fundData?.meta?.config
-                          ?.settings?.account?.addition?.status && (
-                          <div className="card">
-                            <div className="card-header">
-                              <h4 className="card-header-title">
-                                Additional Investment
-                              </h4>
+                      <div class="col-12 col-md-3">
+                        {props?.dataOfAccountSetup?.fundData?.meta?.config?.settings?.account?.addition?.status && (
+                          <div class="card">
+                            <div class="card-header">
+                              <h4 class="card-header-title">Additional Investment</h4>
                             </div>
-                            <div className="card-body">
-                              {/* <div className="form-floating form-group">
-                                <input type="number" className="form-control" id="floatingInput" value={additionalAmount} onChange={(event) => handleAdditionalAmountChange(event)} placeholder="Enter Additional Amount" />
+                            <div class="card-body">
+                              {/* <div class="form-floating form-group">
+                                <input type="number" class="form-control" id="floatingInput" value={additionalAmount} onChange={(event) => handleAdditionalAmountChange(event)} placeholder="Enter Additional Amount" />
                                 <label for="floatingInput">Additional Amount</label>
                               </div> */}
                               {isEmailValid && (
@@ -2192,11 +1425,7 @@ export default function investment({ ...props }) {
                                   className="btn btn-primary"
                                   type="submit"
                                   onClick={(e) => {
-                                    handleSignAndSubmit(
-                                      e,
-                                      'new',
-                                      additionalSubscription,
-                                    );
+                                    handleSignAndSubmit(e, "new", additionalSubscription);
                                   }}
                                 >
                                   Sign & Submit
@@ -2205,17 +1434,14 @@ export default function investment({ ...props }) {
                             </div>
                           </div>
                         )}
-                        {props?.dataOfAccountSetup?.fundData?.meta?.config
-                          ?.settings?.account?.redemption?.status && (
-                          <div className="card">
-                            <div className="card-header">
-                              <h4 className="card-header-title">
-                                Request Redemption
-                              </h4>
+                        {props?.dataOfAccountSetup?.fundData?.meta?.config?.settings?.account?.redemption?.status && (
+                          <div class="card">
+                            <div class="card-header">
+                              <h4 class="card-header-title">Request Redemption</h4>
                             </div>
-                            <div className="card-body">
-                              {/* <div className="form-floating form-group">
-                                <input type="number" className="form-control" id="floatingInput" value={redemptionAmount} onChange={(event) => handleRedemptionAmountChange(event)} placeholder="Enter Redemption Amount" />
+                            <div class="card-body">
+                              {/* <div class="form-floating form-group">
+                                <input type="number" class="form-control" id="floatingInput" value={redemptionAmount} onChange={(event) => handleRedemptionAmountChange(event)} placeholder="Enter Redemption Amount" />
                                 <label for="floatingInput">Redemption Amount</label>
                               </div> */}
                               {isEmailValid && (
@@ -2223,11 +1449,7 @@ export default function investment({ ...props }) {
                                   className="btn btn-primary"
                                   type="submit"
                                   onClick={(e) => {
-                                    handleSignAndSubmit(
-                                      e,
-                                      'new',
-                                      redemptionSubscription,
-                                    );
+                                    handleSignAndSubmit(e, "new", redemptionSubscription);
                                   }}
                                 >
                                   Sign & Submit
@@ -2242,17 +1464,16 @@ export default function investment({ ...props }) {
                   </>
                 )}
             </div>
-            {transactionHistoryData &&
-            Object.keys(transactionHistoryData)?.length !== 0 ? (
-              <div className="card">
-                <div className="card-header">
-                  <h4 className="card-header-title">Document History</h4>
+            {transactionHistoryData && Object.keys(transactionHistoryData)?.length !== 0 ? (
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="card-header-title">Document History</h4>
                 </div>
-                <div className="card-body">
-                  <div className="row">
-                    <div className={'col-12 col-md-12'}>
-                      <div className="table-responsive">
-                        <table className="table table-sm table-nowrap card-table">
+                <div class="card-body">
+                  <div class="row">
+                    <div class={"col-12 col-md-12"}>
+                      <div class="table-responsive">
+                        <table class="table table-sm table-nowrap card-table">
                           <thead>
                             <tr>
                               <th>Type</th>
@@ -2261,88 +1482,64 @@ export default function investment({ ...props }) {
                               <th>Action</th>
                             </tr>
                           </thead>
-                          <tbody className="list">
+                          {console.log(transactionHistoryData, "transactionHistoryData")}
+                          <tbody class="list">
                             {transactionHistoryData &&
-                              Object.keys(transactionHistoryData).map(
-                                (item, index) => (
-                                  <>
-                                    {transactionHistoryData[item].map(
-                                      (itemData, index) => (
-                                        <tr>
-                                          <td>
-                                            {item
-                                              .replaceAll('_', ' ')
-                                              .split(' ')
-                                              .map(
-                                                (word) =>
-                                                  word.charAt(0).toUpperCase() +
-                                                  word.slice(1).toLowerCase(),
-                                              )
-                                              .join(' ')}
-                                          </td>
-                                          <td>
-                                            {formatDateRegionWise(
-                                              itemData?.docUploadDateTime,
-                                              true,
-                                            )}
-                                          </td>
-                                          <td>
-                                            {itemData?.status == 'pending'
-                                              ? 'Signed'
-                                              : 'Draft'}
-                                          </td>
-                                          <td style={{gap: '10px'}} className="d-flex align-items-center">
-                                            <div
+                              Object.keys(transactionHistoryData).map((item, index) => (
+                                <>
+                                  {transactionHistoryData[item].map((itemData, index) => (
+                                    <tr>
+                                      <td>{item.replaceAll("_", " ")}</td>
+                                      <td>{formatDateRegionWise(itemData?.docUploadDateTime, true)}</td>
+                                      <td>{itemData?.status == "pending" ? "Signed" : "Draft"}</td>
+                                      <td>
+                                        <div
+                                          style={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                          }}
+                                        >
+                                          {itemData?.status != "draft" && itemData?.status != "canceled" && (
+                                            <FeatherIcon
                                               style={{
-                                                display: 'flex',
-                                                alignItems: 'center',
+                                                cursor: "pointer",
                                               }}
-                                            >
-                                              {itemData?.status != 'draft' &&
-                                                itemData?.status !=
-                                                  'canceled' && (
-                                                  <FeatherIcon
-                                                    style={{
-                                                      cursor: 'pointer',
-                                                    }}
-                                                    icon="download"
-                                                    color="green"
-                                                    size="15"
-                                                    onClick={(e) => {
-                                                      handleDownloadDocument(
-                                                        itemData?.documentTypeId,
-                                                        itemData?.randomString,
-                                                      );
-                                                    }}
-                                                  />
-                                                )}
-                                            </div>
+                                              icon="download"
+                                              color="green"
+                                              size="15"
+                                              onClick={(e) => {
+                                                handleDownloadDocument(itemData?.documentTypeId, itemData?.randomString);
+                                              }}
+                                            />
+                                          )}
 
-                                            {itemData?.mode ===
-                                          'manual' && (
-                                          <div>
-                                              <FeatherIcon
-                                                onClick={() =>
-                                                  {
-                                                    handleDeleteClick(
-                                                      itemData,
-                                                      {key: item},
-                                                    )
-                                                  }
-                                                }
-                                                icon="trash"
-                                                size="1em"
-                                                color="red"
-                                              />
-                                          </div>
-                                        )}
-                                          </td>
-                                        </tr>
-                                      ),
-                                    )}
-                                  </>
-                                ),
-                              )}
+                                          {itemData?.mode === "manual" && (
+                                            <div style={{ marginLeft: "1rem" }}>
+                                              <Button
+                                                onClick={() => handleDeleteClick(itemData, item)} //
+                                                className="lift"
+                                                style={{
+                                                  height: "30px",
+                                                  width: "30px",
+                                                  display: "flex",
+                                                  alignItems: "center",
+                                                  justifyContent: "center",
+                                                  padding: "6px",
+                                                  marginTop: "5px",
+                                                  marginBottom: "5px",
+                                                  backgroundColor: "red", // Add the red background color
+                                                }}
+                                              >
+                                                <FeatherIcon icon="trash" size="1em" />
+                                              </Button>
+                                            </div>
+                                          )}
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  ))}
+                                </>
+                              ))}
                           </tbody>
                         </table>
                       </div>
@@ -2352,18 +1549,15 @@ export default function investment({ ...props }) {
               </div>
             ) : null}
 
-            {(props?.dataOfAccountSetup?.fund_data?.id === 215 ||
-              props?.dataOfAccountSetup?.fund_data?.id === 1 ||
-              props?.dataOfAccountSetup?.fund_data?.id === 3) && (
-              <div className="card">
-                <div className="card-header">
-                  <h4 className="card-header-title">Transaction History</h4>
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="card-header-title">Transaction History</h4>
                 </div>
-                <div className="card-body">
-                  <div className="row">
-                    <div className={'col-12 col-md-12'}>
-                      <div className="table-responsive">
-                        <table className="table table-sm table-nowrap card-table">
+                <div class="card-body">
+                  <div class="row">
+                    <div class={"col-12 col-md-12"}>
+                      <div class="table-responsive">
+                        <table class="table table-sm table-nowrap card-table">
                           <thead>
                             <tr>
                               <th>Subscription Type</th>
@@ -2372,60 +1566,171 @@ export default function investment({ ...props }) {
                               <th>Currency</th>
                               <th>Status</th>
                               <th>Date</th>
-                              <th>Last Nav Price</th>
-                              <th>No. Of Shares Owned</th>
+                              {checkIfStampingEnable() && (<th>Stamp</th>)}
+                              {props?.dataOfAccountSetup?.fundData?.region === "India" && checkIfESignEnable() && (<th>E Sign</th>)}
                               <th>Action</th>
                             </tr>
                           </thead>
-                          <tbody className="list">
+                          <tbody class="list">
                             {transactionList &&
                               transactionList.map((item, index) => (
                                 <tr>
                                   <td>{item?.type}</td>
-                                  <td>
-                                    {new Intl.NumberFormat().format(
-                                      item?.amount ?? 0,
-                                    ) || 0}
-                                  </td>
+                                  <td>{new Intl.NumberFormat().format(item?.amount ?? 0) || 0}</td>
                                   <td>{item?.meta?.moreInfo?.no_of_shares}</td>
-                                  <td>
-                                    {(item?.currency || '')?.toUpperCase()}
-                                  </td>
-                                  <td>
-                                    {item?.status == 'pending'
-                                      ? 'Pending For Review'
-                                      : item?.status}
-                                  </td>
+                                  <td>{(item?.currency || "")?.toUpperCase()}</td>
+                                  <td>{item?.status == "pending" ? "Pending For Review" : item?.status}</td>
                                   <td>{item?.transactionDate}</td>
-                                  <td>{'6.15 USD (SCB)'}</td>
-                                  <td>{'--'}</td>
-                                  <td>
-                                    {' '}
-                                    {userId ===
-                                      item?.meta?.moreInfo?.created_by && (
-                                      <div
-                                        onClick={() => {
-                                          setDeleteConfirmationModal(true);
-                                          setSelectedRow(item);
-                                        }}
-                                      >
+
+
+                                  {checkIfStampingEnable() && item.type == "subscription" && (
+                                    <td>
+                                      {(item?.meta?.[item.type]?.[item?.meta?.[item.type]?.length - 1]?.docuSign?.status == "signing_complete" || (item?.meta?.[item.type]?.[item?.meta?.[item.type]?.length - 1])?.docuSign?.mode == "manual") && (
+                                        <>
+                                          {item?.meta?.[item.type]?.[item?.meta?.[item.type]?.length - 1]?.STAMP_DOCUMENT ? (
+                                            <>
+                                              <FeatherIcon
+                                                style={{
+                                                  cursor: "pointer",
+                                                }}
+                                                icon="download"
+                                                color="green"
+                                                size="15"
+                                                onClick={(e) => {
+                                                  handleDownloadStampDocument(item?.meta?.[item.type]?.[item?.meta?.[item.type]?.length - 1]?.STAMP_DOCUMENT?.bucketKey);
+                                                }}
+                                              ></FeatherIcon>
+                                              {item?.meta?.[item.type]?.[item?.meta?.[item.type]?.length - 1]?.STAMP_DOCUMENT?.stamp_paper_no.join(",")}
+                                            </>
+                                          ) : (
+                                            <button
+                                              className="btn btn-primary"
+                                              onClick={(e) => {
+                                                handleStamping(item);
+                                              }}
+                                            >
+                                              Proceed
+                                            </button>
+                                          )}
+                                        </>
+                                      )}
+                                    </td>
+                                  )}
+
+                                  {(props?.dataOfAccountSetup?.fundData?.region === "India" && checkIfESignEnable() && item.type == "subscription") && (
+                                    <td>
+                                      {item?.meta?.[item.type]?.[item?.meta?.[item.type]?.length - 1] && (item?.meta?.[item.type]?.[item?.meta?.[item.type]?.length - 1]?.docuSign?.status == "signing_complete" || item?.meta?.[item.type]?.[item?.meta?.[item.type]?.length - 1]?.mode == "manual") && (
+                                        <>
+                                          {item?.meta?.[item.type]?.[item?.meta?.[item.type]?.length - 1]?.AADHAAR_SIGN_DOCUMENT && item?.meta?.[item.type]?.[item?.meta?.[item.type]?.length - 1]?.AADHAAR_SIGN_DOCUMENT?.status == "completed" ? (
+                                            <>
+                                              <FeatherIcon
+                                                style={{
+                                                  cursor: "pointer",
+                                                }}
+                                                icon="download"
+                                                color="green"
+                                                size="15"
+                                                onClick={(e) => {
+                                                  handleDownloadStampDocument(item?.meta?.[item.type]?.[item?.meta?.[item.type]?.length - 1]?.AADHAAR_SIGN_DOCUMENT?.bucketKey);
+                                                }}
+                                              ></FeatherIcon>
+                                            </>
+                                          ) : (
+                                            <>
+                                              {item?.meta?.[item.type]?.[item?.meta?.[item.type]?.length - 1]?.AADHAAR_SIGN_DOCUMENT && (
+                                                <>
+                                                  {item?.meta?.[item.type]?.[item?.meta?.[item.type]?.length - 1]?.AADHAAR_SIGN_DOCUMENT?.signer_meta_info &&
+                                                    item?.meta?.[item.type]?.[item?.meta?.[item.type]?.length - 1]?.AADHAAR_SIGN_DOCUMENT?.signer_meta_info.map((itemSigner, index) => (
+                                                      <>
+                                                        {itemSigner?.type == "CUSTOMER" && itemSigner?.sign != "SIGNED" ? (
+                                                          <button
+                                                            className="btn btn-primary"
+                                                            onClick={(e) => {
+                                                              handleESign(item.type, item?.meta?.[item.type]?.[item?.meta?.[item.type]?.length - 1]?.randomString, item?.id);
+                                                            }}
+                                                            
+                                                          >
+                                                            Proceed
+                                                          </button>
+                                                        ) : null}
+                                                      </>
+                                                    ))}
+                                                </>
+                                              )}
+                                            </>
+                                          )}
+                                        </>
+                                      )}
+                                      {item?.meta?.[item.type]?.[item?.meta?.[item.type]?.length - 1] && (item?.meta?.[item.type]?.[item?.meta?.[item.type]?.length - 1]?.docuSign?.status == "signing_complete" || item?.meta?.[item.type]?.[item?.meta?.[item.type]?.length - 1]?.mode == "manual") && (
                                         <OverlayTrigger
+                                          placement="top"
                                           overlay={
-                                            <Tooltip>
-                                              delete transaction
+                                            <Tooltip className="mytooltip" style={{ padding: "20px" }}>
+                                              {item?.meta?.[item.type]?.[item?.meta?.[item.type]?.length - 1]?.AADHAAR_SIGN_DOCUMENT?.signer_meta_info &&
+                                                item?.meta?.[item.type]?.[item?.meta?.[item.type]?.length - 1]?.AADHAAR_SIGN_DOCUMENT?.signer_meta_info.map((itemESign, index) => (
+                                                  <div className="row align-items-center mb-2">
+                                                    <div className="col-auto">
+                                                      <a href="#!" className="avatar avatar-lg">
+                                                        <img src="/img/investor/default-avatar.png" alt="..." className="avatar-img rounded-circle" />
+                                                      </a>
+                                                    </div>
+                                                    <div className="col ms-n2">
+                                                      <h4 className="mb-1">
+                                                        <p
+                                                          style={{
+                                                            marginBottom: "0px",
+                                                          }}
+                                                        >
+                                                          {itemESign?.signer_email}
+                                                        </p>
+                                                      </h4>
+                                                      <ProgressBar color={itemESign?.sign ? "success" : "warning"} now={itemESign?.sign == "SIGNED" ? 100 : 33} />
+                                                      <div
+                                                        style={{
+                                                          display: "flex",
+                                                          justifyContent: "space-between",
+                                                        }}
+                                                      >
+                                                        <p className={itemESign?.sign == "SIGNED" ? "small text-success mb-1" : "small text-success mb-1"}>Pending</p>
+                                                        <p className={itemESign?.sign == "SIGNED" ? "small text-success mb-1" : "small text-muted mb-1"}>Signed</p>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                ))}
                                             </Tooltip>
                                           }
                                         >
-                                          <span className="position-relative me-4">
-                                            <FeatherIcon
-                                              color="red"
-                                              icon="trash"
-                                              size="1em"
-                                            />
-                                          </span>
+                                          <ProgressBar now={getSignedPercentage(item?.meta?.[item.type]?.[item?.meta?.[item.type]?.length - 1]?.AADHAAR_SIGN_DOCUMENT?.signer_meta_info)} />
                                         </OverlayTrigger>
-                                      </div>
-                                    )}
+                                      )}
+                                    </td>
+                                  )}
+                                  <td>
+                                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                                      <button
+                                        className="btn btn-danger"
+                                        onClick={(e) => {
+                                          handleSignAndSubmit(e, "new", item);
+                                        }}
+                                      >
+                                        Sign & Submit
+                                      </button>
+                                      {userId === item?.meta?.moreInfo?.created_by?.id && (
+                                        <div
+                                          onClick={() => {
+                                            setDeleteConfirmationModal(true);
+                                            setSelectedRow(item);
+                                          }}
+                                        >
+                                          <OverlayTrigger overlay={<Tooltip>delete transaction</Tooltip>}>
+                                            <span className="position-relative me-4">
+                                              <FeatherIcon color="red" icon="trash" size="1.5em" />
+                                            </span>
+                                          </OverlayTrigger>
+                                        </div>
+                                      )}
+                                    </div>
+
                                   </td>
                                 </tr>
                               ))}
@@ -2436,53 +1741,32 @@ export default function investment({ ...props }) {
                   </div>
                 </div>
               </div>
-            )}
             <Modal show={signSubmit} onHide={handleSignSubmitClose}>
               <Modal.Header closeButton>
-                <Modal.Title>Please Select Document Signing Mode</Modal.Title>
+                <Modal.Title>Please select document signing mode</Modal.Title>
               </Modal.Header>
               <Modal.Body>
                 {isAmount && (
                   <div className="row mt-2">
                     <div className="col-sm-7">
                       {/* <label for="floatingInput">Initial Investment Amount</label> */}
-                      {/* <input
-                        className="form-control"
+                      <input
+                        class="form-control"
                         id="floatingInput"
                         value={amount}
                         onChange={handleChangeAmount}
                         placeholder={
-                          requiredDocList?.category_key ==
-                          'SUBSCRIPTION_DOCUMENT'
-                            ? 'Enter Investment/ Commitment Amount'
-                            : requiredDocList?.category_key ==
-                              'ADDITIONAL_SUBSCRIPTION_DOCUMENT'
-                            ? 'Enter Addition Investment Amount'
-                            : requiredDocList?.category_key ==
-                              'REDEMPTION_DOCUMENT'
-                            ? 'Enter Redemption Amount'
-                            : 'Enter Investment/ Commitment Amount'
+                          requiredDocList?.category_key == "SUBSCRIPTION_DOCUMENT"
+                            ? "Enter Investment/ Commitment Amount"
+                            : requiredDocList?.category_key == "ADDITIONAL_SUBSCRIPTION_DOCUMENT"
+                              ? "Enter Addition Investment Amount"
+                              : requiredDocList?.category_key == "REDEMPTION_DOCUMENT"
+                                ? "Enter Redemption Amount"
+                                : "Enter Investment/ Commitment Amount"
                         }
-                      /> */}
-                      <input
-  className="form-control"
-  id="floatingInput"
-  type="number"  // Use 'number' type to allow decimal input
-  step="0.01"    // Allow decimal input up to two decimal places
-  value={amount} // Bind the value from state
-  onChange={(e) => handleChangeAmount(e)} // Handle input changes
-  placeholder={
-    requiredDocList?.category_key === 'SUBSCRIPTION_DOCUMENT'
-      ? 'Enter Investment/ Commitment Amount'
-      : requiredDocList?.category_key === 'ADDITIONAL_SUBSCRIPTION_DOCUMENT'
-      ? 'Enter Additional Investment Amount'
-      : requiredDocList?.category_key === 'REDEMPTION_DOCUMENT'
-      ? 'Enter Redemption Amount'
-      : 'Enter Investment/ Commitment Amount'
-  }
-/>
+                      />
                       {errorAmount ? (
-                        <span style={{ color: 'red' }} className="danger">
+                        <span style={{ color: "red" }} className="danger">
                           Amount is required
                         </span>
                       ) : null}
@@ -2498,11 +1782,11 @@ export default function investment({ ...props }) {
                         styles={customStyles}
                         onChange={handleChangeCurrency}
                         placeholder={`Select Currency`}
-                        defaultValue={selectedCurrencyValues || 'Select'}
-                        // className={errors && errors[field] ? "is-invalid" : ""}
+                        defaultValue={selectedCurrencyValues || "Select"}
+                      // className={errors && errors[field] ? "is-invalid" : ""}
                       />
                       {errorCurrency ? (
-                        <span style={{ color: 'red' }} className="danger">
+                        <span style={{ color: "red" }} className="danger">
                           Currency is required
                         </span>
                       ) : null}
@@ -2513,26 +1797,16 @@ export default function investment({ ...props }) {
                 <div className="row mt-5">
                   <div className="col-sm-6">
                     <Dropdown align="end">
-                      <Dropdown.Toggle
-                        as="span"
-                        className="dropdown-ellipses"
-                        role="button"
-                      >
-                        <button className="lift">
-                          <FontAwesomeIcon
-                            icon={faFileSignature}
-                            style={{ marginRight: '0.5rem' }}
-                          />
+                      <Dropdown.Toggle as="span" className="dropdown-ellipses" role="button">
+                        <Button className="lift">
+                          <FontAwesomeIcon icon={faFileSignature} style={{ marginRight: "0.5rem" }} />
                           Manual Signature
-                        </button>
+                        </Button>
                       </Dropdown.Toggle>
                       {/* <Dropdown.Toggle as="span" className="dropdown-ellipses" role="button">
-                          <button className="lift">Manual Signature</button>
+                          <Button className="lift">Manual Signature</Button>
                         </Dropdown.Toggle> */}
-                      {console.log(
-                        requiredDocList,
-                        'requiredDocList requiredDocList requiredDocList requiredDocList',
-                      )}
+                      {console.log(requiredDocList, "requiredDocList requiredDocList requiredDocList requiredDocList")}
                       <Dropdown.Menu as="div" className="custom-dropdown-menu">
                         <Dropdown.Item
                           onClick={(e) => {
@@ -2542,61 +1816,35 @@ export default function investment({ ...props }) {
                           Upload Document
                         </Dropdown.Item>
                         <Dropdown align="right" alignRight>
-                          <Dropdown.Toggle
-                            as="span"
-                            className="dropdown-ellipses"
-                            role="button"
-                          >
-                            <button
+                          <Dropdown.Toggle as="span" className="dropdown-ellipses" role="button">
+                            <Button
                               style={{
-                                background: 'transparent',
-                                border: '0px',
-                                color: '#fff',
+                                background: "transparent",
+                                border: "0px",
+                                color: "#fff",
                               }}
                               className="lift-btn"
                             >
-                              <p style={{ color: 'white!important' }}>
-                                Download Document
-                              </p>
-                            </button>
+                              <p style={{ color: "white!important" }}>Download Document</p>
+                            </Button>
                           </Dropdown.Toggle>
                           {requiredDocList?.choices ? (
-                            <Dropdown.Menu
-                              as="div"
-                              className="custom-dropdown-menu"
-                            >
-                              {Object.keys(requiredDocList?.choices)?.map(
-                                (item, index) => (
-                                  <Dropdown.Item
-                                    onClick={(e) => {
-                                      handleClickDownloadManual(
-                                        item,
-                                        requiredDocList?.id,
-                                      );
-                                    }}
-                                    key={index}
-                                  >
-                                    {item
-                                      ?.split(' ')
-                                      .map(
-                                        (word) =>
-                                          word.charAt(0).toUpperCase() +
-                                          word.slice(1).toLowerCase(),
-                                      )
-                                      .join(' ')}
-                                  </Dropdown.Item>
-                                ),
-                              )}
+                            <Dropdown.Menu as="div" className="custom-dropdown-menu">
+                              {Object.keys(requiredDocList?.choices)?.map((item, index) => (
+                                <Dropdown.Item
+                                  onClick={(e) => {
+                                    handleClickDownloadManual(item, requiredDocList?.id);
+                                  }}
+                                  key={index}
+                                >
+                                  {item}
+                                </Dropdown.Item>
+                              ))}
                             </Dropdown.Menu>
                           ) : (
-                            <Dropdown.Menu
-                              as="div"
-                              className="custom-dropdown-menu"
-                            >
+                            <Dropdown.Menu as="div" className="custom-dropdown-menu">
                               <Dropdown.Item>
-                                <p style={{ color: 'white!important' }}>
-                                  No Data Found
-                                </p>
+                                <p style={{ color: "white!important" }}>No Data Found</p>
                               </Dropdown.Item>
                             </Dropdown.Menu>
                           )}
@@ -2604,26 +1852,16 @@ export default function investment({ ...props }) {
                       </Dropdown.Menu>
                     </Dropdown>
                   </div>
-                  <div
-                    className="col-sm-6"
-                    style={{ display: 'flex', justifyContent: 'flex-end' }}
-                  >
+                  <div className="col-sm-6" style={{ display: "flex", justifyContent: "flex-end" }}>
                     <Dropdown align="end">
-                      <Dropdown.Toggle
-                        as="span"
-                        className="dropdown-ellipses"
-                        role="button"
-                      >
-                        <button className="lift">
-                          <FontAwesomeIcon
-                            icon={faFileSignature}
-                            style={{ marginRight: '0.5rem' }}
-                          />
+                      <Dropdown.Toggle as="span" className="dropdown-ellipses" role="button">
+                        <Button className="lift">
+                          <FontAwesomeIcon icon={faFileSignature} style={{ marginRight: "0.5rem" }} />
                           Digital Signature
-                        </button>
+                        </Button>
                       </Dropdown.Toggle>
                       {/* <Dropdown.Toggle as="span" className="dropdown-ellipses" role="button">
-                          <button className="lift">Digital Signature</button>
+                          <Button className="lift">Digital Signature</Button>
                         </Dropdown.Toggle> */}
                       {requiredDocList?.choices ? (
                         <Dropdown.Menu
@@ -2631,7 +1869,7 @@ export default function investment({ ...props }) {
                           className="custom-dropdown-menu"
                         >
                           {Object.keys(requiredDocList?.choices)?.map(
-                            (item, index) => (
+                            (item, index) => item === 'deleted' ? null : (
                               <Dropdown.Item
                                 onClick={() => {
                                   handleClickChoice(item);
@@ -2656,14 +1894,9 @@ export default function investment({ ...props }) {
                           )}
                         </Dropdown.Menu>
                       ) : (
-                        <Dropdown.Menu
-                          as="div"
-                          className="custom-dropdown-menu"
-                        >
+                        <Dropdown.Menu as="div" className="custom-dropdown-menu">
                           <Dropdown.Item>
-                            <p style={{ color: 'white!important' }}>
-                              No Data Found
-                            </p>
+                            <p style={{ color: "white!important" }}>No Data Found</p>
                           </Dropdown.Item>
                         </Dropdown.Menu>
                       )}
@@ -2672,49 +1905,36 @@ export default function investment({ ...props }) {
                 </div>
                 <div
                   style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    marginTop: '20px',
+                    display: "flex",
+                    justifyContent: "center",
+                    marginTop: "20px",
                   }}
                 >
                   {uploadDocument && (
-                    <div
-                      className="card"
-                      style={{ width: '350px', padding: '10px' }}
-                    >
-                      {pDFError && (
-                        <p style={{ color: 'red' }}>
-                          Only Pdf file is allowed to upload
-                        </p>
-                      )}
+                    <div className="card" style={{ width: "350px", padding: "10px" }}>
+                      {pDFError && <p style={{ color: "red" }}>Only Pdf file is allowed to upload</p>}
                       <div
                         style={{
-                          border: 'dotted',
-                          height: '350px',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'center',
-                          justifyContent: 'center',
+                          border: "dotted",
+                          height: "350px",
+                          cursor: "pointer",
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          justifyContent: "center",
                         }}
                         onClick={(e) => {
                           handleImageClick(e);
                         }}
                       >
-                        <img
-                          id="imagePreview"
-                          src=""
-                          alt="Upload image"
-                          className="subscriptionUploadDocument"
-                          style={{ display: 'none' }}
-                        ></img>
-                        {contentTypeData.search('pdf') != -1 ? (
+                        <img id="imagePreview" src="" alt="Upload image" className="subscriptionUploadDocument" style={{ display: "none" }}></img>
+                        {contentTypeData.search("pdf") != -1 ? (
                           <FeatherIcon icon="file" />
                         ) : // <PdfIcon style={{ fill: "white" }} fontSize={"medium"} color={"action"}></PdfIcon>
-                        contentTypeData.search('word') != -1 ? (
-                          <FeatherIcon icon="file-text" />
-                        ) : null}
-                        {/* <canvas className="result"></canvas> */}
+                          contentTypeData.search("word") != -1 ? (
+                            <FeatherIcon icon="file-text" />
+                          ) : null}
+                        {/* <canvas class="result"></canvas> */}
                         <div id="imageUploadIcon">
                           <FeatherIcon icon="camera" />
                         </div>
@@ -2722,28 +1942,23 @@ export default function investment({ ...props }) {
                           <h3>Upload Document</h3>
                         </div>
                         <div id="imageUploadText2">
-                          <p>Formats PDF Only</p>
+                          <p>Formats PDF only</p>
                         </div>
                         <div id="imageUploadText3">
                           <p>Max Size 75 MB</p>
                         </div>
                       </div>
-                      <input
-                        type="file"
-                        id="inputImageElement"
-                        ref={docImage}
-                        style={{ display: 'none' }}
-                      />
+                      <input type="file" id="inputImageElement" ref={docImage} style={{ display: "none" }} />
                       <div
                         style={{
-                          display: 'flex',
-                          justifyContent: 'space-around',
-                          marginTop: '20px',
+                          display: "flex",
+                          justifyContent: "space-around",
+                          marginTop: "20px",
                         }}
                       >
                         <button
                           className="btn btn-primary"
-                          disabled={contentTypeData == '' ? true : false}
+                          disabled={contentTypeData == "" ? true : false}
                           onClick={(e) => {
                             handleUploadDocument(e);
                           }}
@@ -2764,19 +1979,19 @@ export default function investment({ ...props }) {
                 </div>
               </Modal.Body>
               <Modal.Footer>
-                <button variant="secondary" onClick={handleSignSubmitClose}>
+                <Button variant="secondary" onClick={handleSignSubmitClose}>
                   Close
-                </button>
+                </Button>
               </Modal.Footer>
             </Modal>
-          </div>
+          </Col>
         </div>
         {deleteManualDocConfirmation && (
           <DeleteManualDocModal
             openDeleteModal={deleteManualDocConfirmation}
             handleClose={handleCloseModalManual}
             selectedRow={selectedManualUploadedDoc}
-            selectedRequiredRow={selectedManualRequiredDoc}
+            selectedRequiredKey={selectedManualRequiredKey}
             handleAlert={handleAlert}
             getList={() => {
               handleGetRequiredDocument();

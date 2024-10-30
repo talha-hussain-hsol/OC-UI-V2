@@ -242,11 +242,24 @@ function _baseUrl() {
 }
 
 export async function processRequest(request, token) {
-  const headers = { ...axios.defaults.headers, ...request.headers };
+  const authToken = localStorage.getItem("x-auth-token")
+  const headers = {
+    ...axios.defaults.headers,
+    common: authToken
+      ? {
+          ...axios.defaults.headers.common,
+          "x-auth-token": authToken,
+        }
+      : {
+          ...axios.defaults.headers.common,
+        },
+    ...request.headers,
+  }
   switch (request.type) {
     case "GET":
       console.log("API ==>", request.urlString);
       const getResponse = await API.get(request.urlString, { cancelToken: token, headers: headers, timeout: TIMEOUT });
+      
       return getResponse;
     case "POST":
       const postResponse = await API.post(request.urlString, request.params, { cancelToken: token, headers: headers, timeout: TIMEOUT });
