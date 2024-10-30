@@ -22,6 +22,7 @@ import {
 import SpinnerWithBackDrop from "../../../components/ui/loader";
 import { BsFillRecordFill } from "react-icons/bs";
 import useWindowWidth from "./widthHook";
+import { useTheme } from "../../../contexts/themeContext";
 
 // import VideoRecorder from "./video-recorder/VideoRecorder";
 
@@ -41,6 +42,7 @@ const refrence_Document = [
 ];
 
 export default function FaceVerification(props) {
+  const {theme} = useTheme();
   const windowWidth = useWindowWidth();
   const identity_id = props?.dataOfAccountSetup?.identity_id;
   const fund_id = props?.dataOfAccountSetup?.fund_id;
@@ -506,42 +508,41 @@ export default function FaceVerification(props) {
   };
 
   return (
-    <div className="main-content">
+    <div className={``}>
       {isLoader ? (
         <SpinnerWithBackDrop animation="grow" custom={true} height="70vh" />
       ) : (
-        <div className="w-full px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-6 py-4 mb-10 ">
           <div
             style={{
               display: "flex",
               justifyContent: "space-between",
               marginBottom: "25px",
               borderBottom: "6px solid #1e3c5c",
-              justifyContent: "space-between",
               alignItems: "center",
             }}
           >
-            <h1 className="mb-0">
+            <h1 className={`text-[26px] font-light`}>
               VCIP - Video Based Customer Identification Process
             </h1>
           </div>
-          <div className="flex flex-wrap gap-4">
-            <div className="col-span-12 md:col-span-8">
-              <div className="flex flex-col justify-center">
-                <div className="col-span-12">
-                  <div className="bg-gray-800 text-white p-4 rounded-md">
-                    <div className="text-xl font-bold border-b pb-2">
+          <div className="flex  w-full gap-4">
+          <div className="grid grid-cols-1 gap-4 w-full">
+              <div className="flex flex-col justify-center w-full">
+              <div className="grid grid-cols-1">
+                  <div className={`bg-gradient-stepper-card-${theme} border border-color-${theme} shadow-${theme} text-white  rounded-lg`}>
+                    <div className={`font-bold border-b border-color-${theme} py-[20px] px-[24px] w-full rounded-t-lg text-[15px] font-light shadow-${theme} bg-gradient-stepper-card-${theme}`}>
                       Welcome To the VCIP Step.
                     </div>
-                    <div className="overflow-auto h-[430px] mt-4">
+                    <div className="overflow-auto w-full h-[430px] mt-4 px-4">
                     {props?.dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant?.identity[
                         props?.dataOfAccountSetup?.isIndividual
                           ? 'indivisual'
                           : 'corporate'
                       ]?.provider?.verify?.vcip?.instructions?.indexOf('</') !==
                       -1 ? (
-                        <div
-                          style={{ fontSize: '16px' }}
+                        <div className={`text-[16px] font-light list-decimal list-inside space-y-2`}
+                        
                           dangerouslySetInnerHTML={{
                             __html:
                               props?.dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant?.identity[
@@ -555,7 +556,7 @@ export default function FaceVerification(props) {
                           }}
                         ></div>
                       ) : (
-                        <div style={{ fontSize: '16px' }}>
+                        <div className="text-[16px] font-light list-decimal list-inside space-y-2">
                           {
                             props?.dataOfAccountSetup?.fund_data?.fund_setting
                               ?.account?.applicant?.identity[
@@ -574,26 +575,26 @@ export default function FaceVerification(props) {
 
             {/* Video Recording */}
 
-            <div className="col-span-12 md:col-span-4">
-              <div className="bg-gray-800 text-white p-4 rounded-md">
-                <div className="flex flex-col justify-between h-[490px]">
+            <div className="w-[50%] h-[490px]">
+              <div className={` text-white text-[15px] px-4 py-6 rounded-md bg-gradient-stepper-card-${theme} shadow-${theme} border border-color-${theme}`}>
+                <div className="flex flex-col justify-between ">
                   <div
                     style={{
                       display: "flex",
                       flexDirection: "column",
                     }}
                   >
-                      <div className="grid grid-cols-1">
+                      <div className="">
                         <div
-                          className="flex justify-start items-center mb-8"
-                          style={{ height: "30px" }}
+                          className="flex justify-start items-center "
+                          
                         >
-                          <h4 className="text-left mb-3">
+                          <h4 className="text-left text-[15px] font-light mb-3">
                             For Personal Privacy Purpose The Video Recorded Will
                             Be Blurred
                           </h4>
                         </div>
-                        <div>
+                        <div className="">
                           {showCamera && (
                             <div>
                               {videoUrl !== null ? (
@@ -622,9 +623,9 @@ export default function FaceVerification(props) {
                                   </video>
                                 </div>
                               ) : (
-                                <div className="flex flex-col items-center relative">
+                                <div className="flex flex-col items-center relative ">
                                   <div
-                                    className="relative"
+                                    className=" flex flex-col mt-4 items-center justify-center text-center "
                                     style={{ filter: "blur(5px)" }}
                                   >
                                     <video
@@ -651,34 +652,34 @@ export default function FaceVerification(props) {
                                       <div className="absolute">
                                         <img
                                           src="/img/face.png"
-                                          className="h-48 mt-2 mb-2 opacity-100"
+                                          className="h-48  opacity-100"
                                         />
                                       </div>
                                     )}
                                     {countdownStartVideo &&
                                       countdownStartVideo > 0 && (
-                                        <div className="countdown">
+                                        <div className="text-[100px] font-bold text-white absolute animate-zoom">
                                           {countdownStartVideo !== 4
                                             ? countdownStartVideo
                                             : "Start"}
                                         </div>
                                       )}
                                   </div>
-                                  <div className="flex flex-col items-center justify-center mt-2 relative">
+                                  <div className="flex flex-col items-center justify-center ">
                                     {!recording && (
-                                      <div className="flex flex-col justify-center items-center my-2 w-full">
+                                      <div className="flex flex-col justify-center items-center  w-full">
                                         <img
                                           src="/img/face.png"
-                                          className="h-48 mt-2 mb-2"
+                                          className="h-48 absolute"
                                         />
                                       </div>
                                     )}
                                     {recording ? (
-                                      <p>
+                                      <p className="text-lg font-light mt-4">
                                         Recording... {countdown} seconds left
                                       </p>
                                     ) : (
-                                      <p className="text-lg mt-2">
+                                      <p className="text-lg font-light mt-32">
                                         Position Your Face In The Designated
                                         Area
                                       </p>
@@ -693,7 +694,7 @@ export default function FaceVerification(props) {
 
                       {!showCamera && (
                         <div className="grid grid-cols-1">
-                          <div className="flex justify-center items-baseline">
+                          <div className="flex justify-center ">
                             <video
                               ref={videoRef}
                               src={recordedVideoUrl}
@@ -752,8 +753,7 @@ export default function FaceVerification(props) {
                             <>
                               {!submited && (
                                 <button
-                                  style={{ margin: "0px 10px" }}
-                                  variant="primary"
+                                 className="mt-14 bg-[#e63757] py-[10px] px-[30px] rounded-lg"
                                   onClick={() => {
                                     handleReRecord();
                                   }}
@@ -766,9 +766,8 @@ export default function FaceVerification(props) {
                             <>
                               {showStopButton && (
                                 <button
-                                  style={{ margin: "0px 10px" }}
-                                  variant="secondary"
-                                  className="mt-3"
+                                  
+                                  className="mt-6 bg-[#5e718b] py-[10px] px-[30px] rounded-lg"
                                   onClick={() => {
                                     stopRecording();
                                   }}
@@ -783,13 +782,9 @@ export default function FaceVerification(props) {
                                 // <p>Recording...</p>
                                 <>
                                   <button
-                                    variant="success"
-                                    className="btn btn-success btn-success-custom"
-                                    style={{
-                                      margin: "0px 10px",
-                                      display: "flex",
-                                      alignItems: "center",
-                                    }}
+                                    
+                                    className={`bg-color-button4-${theme} hover:bg-color-button4-hover-${theme} transition-all duration-300 ease-in-out py-[10px] px-[30px] mt-10 flex items-center rounded-full`}
+                                   
                                     onClick={() => {
                                       handleStartRecording();
                                     }}
@@ -812,9 +807,8 @@ export default function FaceVerification(props) {
                           <>
                             {showSubmited && (
                               <button
-                                style={{ margin: "0px 10px" }}
-                                variant="primary"
-                                className="btn btn-danger"
+                                
+                                 className="mt-[82px] bg-[#e63757] py-[10px] px-[30px] rounded-md font-light"
                                 onClick={() => {
                                   handleReRecord();
                                 }}
@@ -828,9 +822,8 @@ export default function FaceVerification(props) {
                       {videoUrl !== null && (
                         <>
                           <button
-                            style={{ margin: "0px 10px" }}
-                            variant="primary"
-                            className="btn btn-danger"
+                            
+                            className="mt-[82px] bg-[#e63757] py-[10px] px-[30px] rounded-lg font-light"
                             onClick={() => {
                               handleReRecord();
                             }}

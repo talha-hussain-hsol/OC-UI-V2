@@ -21,7 +21,7 @@ import {
   getCustomTransactionAPI,
   getAuthUserDetail,
 } from "../../../api/network/CustomerApi";
-
+import { useTheme } from "../../../contexts/themeContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileSignature } from "@fortawesome/free-solid-svg-icons";
 import CustomAlert from "../../../widgets/components/Alerts";
@@ -41,51 +41,8 @@ import  formatDateRegionWise  from "../../../helpers/formatDateRegionWise";
 import DeleteTransactionModal from "./deleteModalCrp/DeleteAccountModal";
 import DeleteManualDocModal from "./applicationModal/deleteManualDocModal";
 
-const themeDark = localStorage.getItem("portal_theme");
-const customStyles =
-  themeDark == "dark" || themeDark == undefined
-    ? {
-        option: (provided, state) => ({
-          ...provided,
-          color: "#93a6c6",
-          ":active": {
-            backgroundColor: "#3b82f6",
-            color: "#fff",
-          },
-        }),
-        control: (provided, state) => ({
-          ...provided,
-          minHeight: "40px",
-          backgroundColor: "#1e3a5c",
-          color: "#93a6c6",
-          borderColor: state.isFocused ? null : "#444",
-        }),
-        menu: (provided, state) => ({
-          ...provided,
-          backgroundColor: "#1e3a5c",
-          color: "#93a6c6",
-        }),
-        placeholder: (provided, state) => ({
-          ...provided,
-          color: "#93a6c6",
-        }),
-        singleValue: (provided) => ({
-          ...provided,
-          color: "#fff",
-        }),
-        dropdownIndicator: (provided) => ({
-          ...provided,
-          display: "none",
-        }),
-      }
-    : {
-        control: (provided, state) => ({
-          ...provided,
-          minHeight: "40px",
-        }),
-      };
-
 export default function investment({ ...props }) {
+  const {theme} = useTheme()
   console.log(props, "props?.props?.props?.props?.");
   const manualTranssaction = props?.dataOfAccountSetup?.fund_data?.fund_setting?.sections?.manual_transaction;
   console.log("√manualTranssaction", manualTranssaction);
@@ -1253,7 +1210,7 @@ export default function investment({ ...props }) {
   };
 
   return (
-    <div className="main-content">
+    <div className="flex flex-col justify-center items-center">
       {alertProps.show && (
         <CustomAlert
           handleCloseAlert={handleCloseAlert}
@@ -1267,10 +1224,12 @@ export default function investment({ ...props }) {
         </CustomAlert>
       )}
       {refresh}
-      <div className="container mx-auto px-4">
-        <div className="flex justify-center">
-         <div className="w-full lg:w-full xl:w-full">            {/* <SubscriptionDetailHeader forTabsCheck={history?.state} /> */}
-            <div className="row">
+      <div >
+        <div className="flex justify-center w-full  ">
+         <div className="w-full ">            {/* <SubscriptionDetailHeader forTabsCheck={history?.state} /> */}
+         <div
+            className={`bg-color-card-${theme} rounded-md  shadow-${theme} mb-8 flex flex-col items-center justify-center h-full w-full`}
+          >
               {/* <div className="col-12 col-md-9"> */}
               <div
                 className={
@@ -1291,12 +1250,8 @@ export default function investment({ ...props }) {
                   <div className="card">
                     
                     <div
-                      className="card-header"
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                      }}
-                    >
+      className={`bg-color-card-${theme} rounded-t-md border-color-${theme} border-b-[1px] shadow-${theme}  py-2 px-8 flex justify-between h-full w-full`}
+    >
                       <h4 className="card-header-title">
                         Review & Sign Documents
                       </h4>

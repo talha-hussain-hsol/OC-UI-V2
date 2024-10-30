@@ -24,7 +24,7 @@ function deleteAllCookies() {
 API.interceptors.response.use(
   function (response) {
     console.log(response, "responseresponseresponseresponseresponse");
-    generateResponseForLoggin(response, true)
+    // generateResponseForLoggin(response, true)
     if (response?.data?.success == false && response?.data?.status_code?.value == 401) {
       console.log(response, "response in response");
 
@@ -35,7 +35,7 @@ API.interceptors.response.use(
     return response;
   },
   function (error) {
-    generateResponseForLoggin(error, false)
+    // generateResponseForLoggin(error, false)
     console.log("responseresponseresponseresponseresponse error", error);
     console.log(error?.toJSON(), "response?.data?.status_code?.value");
     console.log(error?.response?.status, "error?.response?.status");
@@ -201,7 +201,7 @@ function generateResponseForLoggin(data, status) {
     if (entityId) {
       dataToSave.actor.entity = { id: entityId };
     }
-    handleSaveDataAudit(dataToSave);
+    // handleSaveDataAudit(dataToSave);
   } catch (e) {}
 }
 async function handleSaveDataAudit(data) {

@@ -179,7 +179,7 @@ function CameraCapture({ handleChangeLocation, onImageCapture, faceSnapkey, inde
       {imageData && (
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
           <img src={imageData} alt="Captured" style={{ height: "340px", filter: dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant?.identity?.indivisual?.provider?.verify?.face?.isBlured ? "blur(8px)" : "" }} />
-          <button variant="secondary" className="mt-5 bg-[#e63757] text-[15px] font-light px-[30px] py-[10px] rounded-lg" onClick={retakeImage}>
+          <button  className="mt-5 bg-[#e63757] hover:bg-[#c4304a] text-[15px] font-light px-[30px] py-[10px] rounded-lg" onClick={retakeImage}>
             Retake
           </button>
         </div>
