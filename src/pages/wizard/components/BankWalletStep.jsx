@@ -1,10 +1,10 @@
-import { Col, Container, Row, Nav, Spinner, Form, Button, Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Col, Container, Row, Nav, Spinner, Form, Button, Modal, OverlayTrigger } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
-import getMissingDataOfIdentity from "../../../helpers/getMissingDataOfIdentity";
 import axios from "axios";
 import { useLocation, useParams } from "react-router-dom";
 import { Link, useNavigate } from "react-router-dom";
 import FeatherIcon from "feather-icons-react";
+import Tooltip from "../../../components/tooltip/Tooltip";
 import {
   getWalletAddressListAPI,
   addWalletAddressAPI,
@@ -21,12 +21,13 @@ import LoadingSpinner from "../../../components/ui/loader";
 import CustomAlert from "../../../widgets/components/Alerts";
 import formatDateRegionWise  from "../../../helpers/formatDateRegionWise";
 import MyTable from "./remarks";
+import { useTheme } from "../../../contexts/themeContext";
 
 export default function wallets(props) {
 
   console.log("Hussain Props:", props);
   
-
+const {theme} = useTheme();
   const navigate = useNavigate()
   const params = useParams()
   let type = props?.dataOfAccountSetup?.isIndividual
@@ -567,6 +568,17 @@ export default function wallets(props) {
     setLabel("")
     setIdentityDataFields(null)
   }
+
+  useEffect(() => {
+    if (addBank) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+    return () => document.body.classList.remove("overflow-hidden");
+  }, [addBank]);
+
+
   return (
     <div className="main-content">
       {console.log(
@@ -586,56 +598,72 @@ export default function wallets(props) {
           {alertProps.message}
         </CustomAlert>
       )}
-      <Container fluid>
-        <Modal show={showModal} onHide={handleModalClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Confirmation Message</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            Are you sure you want to delete this Identity?
-          </Modal.Body>
-          <Modal.Footer>
-            <button variant="secondary" onClick={handleModalClose}>
-              Close
-            </button>
-            <button variant="secondary" onClick={handleProceed}>
-              Proceed
-            </button>
-          </Modal.Footer>
-        </Modal>
+      <div >
+      <div className={`fixed inset-0 z-50 flex items-center justify-center ${showModal ? '' : 'hidden'}`}>
 
-        <Row className="justify-content-center">
+  <div className="fixed inset-0 bg-[#12213c] opacity-50" onClick={handleModalClose}></div>
+
+  <div className={`relative bg-color-modal-${theme} rounded-lg shadow-lg mx-4 w-[40%]
+        animate-slideDown`}>
+
+<div className="flex justify-between items-center p-4 border-b border-b-[#1d385a]">
+      <h2 className={`text-[15px] font-light text-color-modal-${theme} mb-2 px-4`}>Confirmation Message</h2>
+      <button onClick={handleModalClose} className="text-gray-400 hover:text-gray-600 focus:outline-none">
+        &times;
+      </button>
+    </div>
+
+    <div className={`px-8 my-6 text-color-modal-${theme} font-light text-[15px]`}>
+      Are you sure you want to delete this Identity?
+    </div>
+
+
+    <div className="flex justify-end gap-2 py-6 px-6 border-t border-t-[#1d385a]">
+      <button onClick={handleModalClose}  className={`px-[30px] py-[10px] text-[15px] font-light text-white bg-color-modal-button-${theme} rounded-md hover:bg-[#5e718b] transition-all duration-300 ease-in-out focus:outline-none`}
+       >
+        Close
+      </button>
+      <button onClick={handleProceed} className={`px-[30px] py-[10px] text-[15px] font-light text-white bg-color-modal-button-${theme} rounded-md hover:bg-[#5e718b] transition-all duration-300 ease-in-out focus:outline-none`}
+         >
+        Proceed
+      </button>
+    </div>
+  </div>
+</div>
+
+
+        <div className="justify-center">
 
         {(props?.dataOfAccountSetup?.fund_data?.fund_setting?.account
             ?.applicant?.identity?.wallet?.enabled === true ||
             props?.dataOfAccountSetup?.fund_data?.fund_setting?.account
               ?.applicant?.identity?.wallet?.enabled == 'true') && (
-              <Col xs={12} lg={12} xl={12} style={{ padding: '0px 25px' }}>
+              <div className="px-8 py-6">
                 {isLoader ? (
                   <LoadingSpinner animation="grow" custom={true} height="70vh" />
                 ) : (
-                  <div className="row">
-                    <div className="card">
-                      <div className="card-header">
-                        <h4 className="card-header-title">Add Wallets</h4>
+                  <div className="flex flex-col gap-8">
+                    <div className={`bg-gradient-stepper-card-${theme} shadow-${theme} border border-color-${theme} rounded-lg  px-4`}>
+                      <div className={`bg-color-card-${theme} rounded-t-md border-color-${theme} border-b-[1px] shadow-${theme}  py-[18px] px-[16px] mb-4 flex justify-between h-full w-full`}>
+                        <h4 className={`font-light text-color-text-${theme}`}>Add Wallets</h4>
                       </div>
-                      <div className="card-body">
-                        <Form className="identity-form">
-                          <div className="row py-4">
-                            <div className="col-6 col-md-6">
-                              <div className="form-group">
-                                <label className="form-label">
+                      <div className={`px-6`}>
+                        <form className="w-full flex flex-col justify-center items-center">
+                          <div className="flex gap-4 w-full py-4">
+                            <div className="w-1/2">
+                              <div className="flex flex-col w-full">
+                                <label className="text-[15px] font-light mb-2">
                                   CryptoCurrency
                                 </label>
                                 <select
                                   type="text"
-                                  className={'form-control'}
+                                  className={`bg-color-textfield-dropdown-${theme} py-2 px-4 appearance-none rounded-lg shadow-${theme} outline-none focus:ring-[1px] focus:ring-[#2b78da] `}
                                   defaultValue={cryptoCurrency}
                                   onChange={(e) => {
                                     setCryptoCurrency(e.target.value);
                                   }}
                                 >
-                                  <option value="">Select CryptoCurrency</option>
+                                  <option value="" className={`text-[12px] font-thin`}>Select CryptoCurrency</option>
                                   {chainList?.length > 0 &&
                                     chainList.map((item, index) => (
                                       <option key={index} value={item.chain}>
@@ -646,20 +674,20 @@ export default function wallets(props) {
                                     ))}
                                 </select>
                                 {cryptoCurrencyError ? (
-                                  <span className="error-fields">
+                                  <span className="text-red-500">
                                     Select CryptoCurrency to Continue
                                   </span>
                                 ) : null}
                               </div>
                             </div>
-                            <div className="col-6 col-md-6">
-                              <div className="form-group">
-                                <label className="form-label">
+                            <div className="w-1/2">
+                              <div className="flex flex-col w-full">
+                              <label className="text-[15px] font-light mb-2">
                                   Wallet Address
                                 </label>
                                 <input
                                   type="text"
-                                  className={'form-control'}
+                                  className={`bg-color-textfield-dropdown-${theme} py-2 px-4 appearance-none rounded-lg shadow-${theme} outline-none focus:ring-[1px] focus:ring-[#2b78da] placeholder:text-sm placeholder:font-light`}
                                   placeholder="Wallet Address"
                                   defaultValue={walletAddress}
                                   onChange={(e) => {
@@ -674,10 +702,10 @@ export default function wallets(props) {
                               </div>
                             </div>
                           </div>
-                          <div className="row mb-4">
-                            <div className="col-sm-12 d-flex justify-content-center">
+                          <div className="mt-10 mb-8">
+                            <div className="flex justify-center">
                               <button
-                                className="btn btn-success btn-success-custom"
+                                 className={`bg-color-button4-${theme} hover:bg-color-button4-hover-${theme} transition-all duration-300 ease-in-out text-white font-medium text-[15px] rounded-full py-3 sm:px-7 px-2  `}
                                 onClick={(e) => {
                                   handleSubmit(e);
                                 }}
@@ -686,33 +714,38 @@ export default function wallets(props) {
                               </button>
                             </div>
                           </div>
-                        </Form>
+                        </form>
                       </div>
                     </div>
-                    <div className="card">
-                      <div className="card-header">
-                        <h4 className="card-header-title">Wallets List</h4>
+                    <div className={`bg-color-card-${theme} rounded-md border-color-${theme} border-[1px] shadow-${theme}  px-2 sm:px-4 flex flex-col items-center justify-center h-full w-full`}
+     >
+                      <div className={`bg-color-card-${theme} rounded-t-md border-color-${theme} border-b-[1px] shadow-${theme}  py-[18px] px-[16px] mb-4 flex justify-between h-full w-full`}
+   >
+                        <h4 className={`font-light text-color-text-${theme}`}>Wallets List</h4>
                       </div>
-                      <div className="card-body">
-                        <table className="table table-sm table-nowrap card-table">
-                          <thead>
-                            <tr>
-                              <th>Chain</th>
-                              <th>Address</th>
-                              <th>Action</th>
+                      <div className="w-full overflow-x-auto">
+                        <table className="w-[97%] ml-4 mr-4 mb-4">
+                          <thead className={`bg-color-table-color-${theme}`}>
+                          <tr
+            className={` text-[#6e84a3] sm:text-[10px] text-[6px] text-left font-light uppercase border-color-${theme} border-b-[1px] `}
+          >
+                              <th className="py-4 px-4 sm:px-6 ">Chain</th>
+                              <th className="py-4 px-4 sm:px-6 ">Address</th>
+                              <th className="py-4 px-4 sm:px-6 ">Action</th>
                             </tr>
                           </thead>
-                          <tbody className="list">
+                          <tbody className="">
                             {walletAddressData &&
                               walletAddressData.map((item, index) => (
-                                <tr key={index}>
-                                  <td className="uppercase-text">
+                                <tr key={index} className={`text-color-h1-${theme} sm:text-sm text-[6px] text-left font-light border-color-${theme} border-t-[1px]`}
+                                >
+                                  <td className="py-4 px-2 sm:px-6 uppercase">
                                     {item?.meta?.data?.chain}
                                   </td>
-                                  <td className="uppercase-text">
+                                  <td className="py-4 px-2 sm:px-6 uppercase">
                                     {item?.meta?.data?.address}
                                   </td>
-                                  <td className="uppercase-text">
+                                  <td className="py-4 px-2 sm:px-6">
                                     {' '}
                                     <FeatherIcon
                                       icon="trash"
@@ -733,7 +766,7 @@ export default function wallets(props) {
                 )}
                 <br />
                 <br />
-              </Col>
+              </div>
             
           )}
 
@@ -742,16 +775,18 @@ export default function wallets(props) {
             ?.applicant?.identity?.bank?.enabled === true ||
             props?.dataOfAccountSetup?.fund_data?.fund_setting?.account
               ?.applicant?.identity?.bank?.enabled == 'true') && (
-              <Col xs={12} lg={12} xl={12} style={{ padding: '0px 25px' }}>
+              <div className="px-[25px]">
                 {isLoaderBank ? (
                   <LoadingSpinner animation="grow" custom={true} height="70vh" />
                 ) : (
-                  <div className="row">
-                    <div className="card">
-                      <div className="card-header">
-                        <h4 className="card-header-title">Beneficiary Bank List</h4>
+                  <div className={`bg-color-card-${theme} rounded-md border-color-${theme} border-[1px] shadow-${theme} mb-16 px-2 sm:px-4 flex flex-col items-center justify-center h-full w-full`}
+     >
+                    <div className="w-full">
+                    <div className={`bg-color-card-${theme} rounded-t-md border-color-${theme} border-b-[1px] shadow-${theme}  py-[8px] px-[16px] mb-4 flex items-center justify-between h-full w-full`}
+   >
+                        <h4 className={`font-light text-color-text-${theme}`}>Beneficiary Bank List</h4>
                         <button
-                          className="btn btn-primary"
+                          className={`bg-color-button3-${theme} hover:bg-color-button3-hover-${theme} transition-all duration-200 ease-in-out text-white  rounded-lg py-4 sm:px-7 px-2 text-xs sm:text-[15px] font-light`}
                           onClick={(e) => {
                             setAddBank(!addBank);
                           }}
@@ -759,47 +794,50 @@ export default function wallets(props) {
                           Add New Bank
                         </button>
                       </div>
-                      <div className="card-body">
-                        <table className="table table-sm table-nowrap card-table ">
-                          <thead>
-                            <tr>
-                              <th>Label</th>
-                              <th>Bank Name</th>
+                      <div className="w-full overflow-x-auto">
+                        <table className="w-[97%] ml-4 mr-4 mb-4">
+                        <thead className={`bg-color-table-color-${theme}`}>
+                          <tr
+            className={` text-[#6e84a3] sm:text-[10px] text-[6px] text-left font-light uppercase border-color-${theme} border-b-[1px] `}
+          >
+                              <th className="py-4 px-4 sm:px-6 ">Label</th>
+                              <th className="py-4 px-4 sm:px-6 ">Bank Name</th>
                               {/* <th>Account Type</th> */}
-                              <th>Account Number</th>
-                              <th>Swift/IFSC</th>
-                              <th>Currency</th>
-                              <th>Status</th>
-                              <th>Action</th>
+                              <th className="py-4 px-4 sm:px-6 ">Account Number</th>
+                              <th className="py-4 px-4 sm:px-6 ">Swift/IFSC</th>
+                              <th className="py-4 px-4 sm:px-6 ">Currency</th>
+                              <th className="py-4 px-4 sm:px-6 ">Status</th>
+                              <th className="py-4 px-4 sm:px-6 ">Action</th>
                             </tr>
                           </thead>
-                          <tbody className="list">
+                          <tbody className="">
                             {banKDataList &&
                               banKDataList.map((item, index) => (
-                                <tr>
-                                  <td className="uppercase-text">
+                                <tr key={index} className={`text-color-h1-${theme} sm:text-sm text-[6px] text-left font-light border-color-${theme} border-t-[1px]`}
+                                >
+                                  <td className="py-4 px-2 sm:px-6 uppercase">
                                     {item?.label}
                                   </td>
-                                  <td className="uppercase-text">
+                                  <td className="py-4 px-2 sm:px-6 uppercase">
                                     {item?.meta?.data['bank.basic.bank_name']}
                                   </td>
                                  
-                                  <td className="uppercase-text">
+                                  <td className="py-4 px-2 sm:px-6 uppercase">
                                     {
                                       item?.meta?.data[
                                       'bank.basic.account_number'
                                       ]
                                     }
                                   </td>
-                                  <td className="uppercase-text">
+                                  <td className="py-4 px-2 sm:px-6 uppercase">
                                     {item?.meta?.data["bank.basic.swift_bic__ifsc_code"] || item?.meta?.data["bank.basic.swift_bic_ifsc_code"]}
                                   </td>
-                                  <td className="uppercase-text">
+                                  <td className="py-4 px-2 sm:px-6 uppercase">
                                     {item?.meta?.data['bank.basic.currency']}
                                   </td>
                                   {item?.meta?.providerInfo ? (
                                     <td
-                                      className="uppercase-text"
+                                      className="py-4 px-2 sm:px-6 uppercase"
                                       style={{
                                         color: item?.meta?.providerInfo?.data
                                           ?.status
@@ -814,7 +852,7 @@ export default function wallets(props) {
                                     </td>
                                   ) : (
                                     <td
-                                      className="uppercase-text"
+                                      className="py-4 px-2 sm:px-6 uppercase"
                                       style={{
                                         color:
                                           item?.status == 'draft'
@@ -826,10 +864,10 @@ export default function wallets(props) {
                                       {item?.status}
                                     </td>
                                   )}
-                                  <td className="uppercase-text">
+                                  <td className="py-4 px-2 sm:px-6 uppercase">
                                     {item?.meta?.providerInfo?.provider === 'SIGN_DESK_PENNY_DROP' &&
                                       item?.meta?.providerInfo?.data?.status && (
-                                       <Tooltip>Penny Drop Details
+                                       <Tooltip content="Penny Drop Details" >
                                           <span>
                                             <FeatherIcon
                                               icon="list"
@@ -846,10 +884,10 @@ export default function wallets(props) {
                                       checkIfTimeExceededTenMins(
                                         item?.meta?.providerInfo?.data?.payment?.response_time_stamp
                                       ) && (
-                                       <Tooltip>Verify Bank Identity
+                                       <Tooltip content="Verify Bank Identity">
                                           <span>
                                             <button
-                                              variant="primary"
+                                             
                                               style={{ marginRight: '5px' }}
                                               onClick={(e) =>
                                                 handleVerifyBankIdentity(
@@ -879,7 +917,7 @@ export default function wallets(props) {
                                       </span>
                                       </Tooltip>
 
-                                    <Tooltip>View Bank Details
+                                    <Tooltip content="View Bank Details">
                                     
                                       <span>
                                         <FeatherIcon
@@ -891,7 +929,7 @@ export default function wallets(props) {
                                       </span>
                                       </Tooltip>
 
-                                  <Tooltip>View History
+                                  <Tooltip content="View History">
                                       <span>
                                         <FeatherIcon
                                           icon="archive"
@@ -910,13 +948,13 @@ export default function wallets(props) {
                     </div>
                   </div>
                 )}
-              </Col>
+              </div>
             
           )}
 
 
-        </Row>
-      </Container>
+        </div>
+      </div>
       <Modal
         show={isShowPenyDropDetail}
         onHide={handleModalClosePennyDropDetail}
@@ -1115,23 +1153,34 @@ export default function wallets(props) {
           </table>
         </Modal.Body>
       </Modal>
-      <Modal size="lg" show={addBank} onHide={handleModalCloseAddBank}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add Beneficiary Bank Details</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="card-body">
-            <Form className="identity-form">
-              <div className="row">
+      {/* <Modal size="lg" show={addBank} onHide={handleModalCloseAddBank}> */}
+      <div className={`fixed inset-0 z-50 flex items-center justify-center overflow-y-auto max-h-screen ${addBank ? 'block' : 'hidden'}`}>
+      <div
+        className={`bg-[#152e4d]  border border-color-${theme} rounded-md sm:w-8/12 w-full mb-5 lg:mt-20 sm:mt-0 xs:mt-40 2xs:mt-10 py-4  shadow-sm text-white overflow-y-auto max-h-screen`}
+      >
+      <div className="flex items-center justify-between mb-6 py-4 border-b border-[#1d385a]">
+    <h2 className="text-[15px] font-light px-4">Add Beneficiary Bank Details</h2>
+    <button
+        onClick={handleModalCloseAddBank}
+        className="text-gray-500 hover:text-gray-700 px-4 focus:outline-none"
+    >
+        &times;
+    </button>
+</div>
+        
+          <div className="w-full px-8">
+            <form className="w-full" >
+              <div className="w-full">
+             
                 {showLabel && (
-                  <div className="col-12 col-md-12">
-                    <div className="form-group">
-                      <div className="d-flex flex-row justify-content-start align-items-baseline">
+                  <div className="w-full">
+                    <div className="w-full">
+                      <div className="flex justify-start items-baseline">
                         <span>
-                          <label className="form-label">
+                          <label className="font-light text-[15px]">
                             {' '}
                             Identity Label{' '}
-                            <span className="text-danger">*</span>
+                            <span className="text-red-500">*</span>
                           </label>
                         </span>
                       </div>
@@ -1139,7 +1188,7 @@ export default function wallets(props) {
                       <input
                         type="text"
                         className={
-                          label ? 'form-control' : 'form-control field_warning'
+                          label ? `w-full p-2 bg-color-textfield-${theme} border-[0.5px] border-[#e19800] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md mb-4 outline-none focus:ring-[1px] focus:ring-[#2b78da]` : `w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md mb-4 outline-none focus:ring-[1px] focus:ring-[#2b78da]`
                         }
                         name={'Identity Label'}
                         value={label}
@@ -1156,6 +1205,8 @@ export default function wallets(props) {
                     </div>
                   </div>
                 )}
+                </div>
+                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {particularFields &&
                   particularFields.map((item, index) => {
                     let key = Object.keys(item);
@@ -1221,60 +1272,59 @@ export default function wallets(props) {
                             }
                             if (fieldType === 'text') {
                               console.log('the label is :', label);
-                              // if (fieldName === 'phone') {
-                              //   return (
-                              //     <div className="col-6 col-md-6">
-                              //       <div className="form-group">
-                              //         <label className="form-label">
-                              //           {label}
-                              //           {requiredField && (
-                              //             <span className="text-danger">*</span>
-                              //           )}
-                              //         </label>
-                              //         <div
-                              //           className={
-                              //             requiredField &&
-                              //               !identityDataFields?.[formKeyVal] &&
-                              //               (getUpdatedData(formKeyVal) == '' ||
-                              //                 getUpdatedData(formKeyVal) == null)
-                              //               ? 'form-control field_warning'
-                              //               : 'form-control' && darkMode
-                              //                 ? 'darkMode'
-                              //                 : ''
-                              //           }
-                              //         >
-                              //           <div
-                              //             style={{
-                              //               display: 'flex',
-                              //               alignItems: 'center',
-                              //             }}
-                              //           >
-                              //             <PhoneInput
-                              //               value={getUpdatedData(formKeyVal)}
-                              //               country={'sg'}
-                              //               name={fieldName}
-                              //               onChange={(e) => {
-                              //                 handlePhoneNumber(e, formKeyVal);
-                              //               }}
-                              //               inputProps={{
-                              //                 name: 'phone',
-                              //                 required: true,
-                              //               }}
-                              //             />
-                              //           </div>
-                              //         </div>
-                              //       </div>
-                              //     </div>
-                              //   );
-                              // } 
-                               if (label === 'Bank/Branch Address') {
+                              if (fieldName === 'phone') {
                                 return (
-                                  <div className="col-12 col-md-12">
-                                    <div className="form-group">
-                                      <label className="form-label">
+                                  <div className="w-1/2 md:w-1/2" key={index}>
+
+                                    <div className="font-light text-[15px]">
+                                      <label className="">
                                         {label}
                                         {requiredField && (
-                                          <span className="text-danger">*</span>
+                                          <span className="text-red-500">*</span>
+                                        )}
+                                      </label>
+                                      <div
+                                        className={
+                                          requiredField &&
+                                            !identityDataFields?.[formKeyVal] &&
+                                            (getUpdatedData(formKeyVal) == '' ||
+                                              getUpdatedData(formKeyVal) == null)
+                                            ? `w-full p-2 bg-color-textfield-${theme} border-[0.5px] border-[#e19800] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md outline-none focus:ring-[1px] focus:ring-[#2b78da]`
+                                            : `w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md outline-none focus:ring-[1px] focus:ring-[#2b78da]` 
+                                        }
+                                      >
+                                        <div
+                                          style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                          }}
+                                        >
+                                          <PhoneInput
+                                            value={getUpdatedData(formKeyVal)}
+                                            country={'sg'}
+                                            name={fieldName}
+                                            onChange={(e) => {
+                                              handlePhoneNumber(e, formKeyVal);
+                                            }}
+                                            inputProps={{
+                                              name: 'phone',
+                                              required: true,
+                                            }}
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                );
+                              } else if (label === 'Bank/Branch Address') {
+                                return (
+                                  <div className="w-1/2 md:w-full" key={index}>
+
+                                    <div className={``}>
+                                      <label className="font-light text-[15px]">
+                                        {label}
+                                        {requiredField && (
+                                          <span className="text-red-500">*</span>
                                         )}
                                       </label>
                                       <div
@@ -1291,8 +1341,8 @@ export default function wallets(props) {
                                               (getUpdatedData(formKeyVal) == '' ||
                                                 getUpdatedData(formKeyVal) ==
                                                 null)
-                                              ? 'form-control field_warning'
-                                              : 'form-control'
+                                              ? `w-full p-2 bg-color-textfield-${theme} border-[0.5px] border-[#e19800] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] mt-2 placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md outline-none focus:ring-[1px] focus:ring-[#2b78da]`
+                                              : `w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] mt-2 placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md outline-none focus:ring-[1px] focus:ring-[#2b78da]`
                                           }
                                           defaultValue={
                                             editableField == false
@@ -1309,59 +1359,58 @@ export default function wallets(props) {
                                     </div>
                                   </div>
                                 );
-                              } 
-                              // else {
-                              //   return (
-                              //     <div className="col-6 col-md-6">
-                              //       <div className="form-group">
-                              //         <label className="form-label">
-                              //           {label}
-                              //           {requiredField && (
-                              //             <span className="text-danger">*</span>
-                              //           )}
-                              //         </label>
-                              //         <div
-                              //           style={{
-                              //             display: 'flex',
-                              //             alignItems: 'center',
-                              //           }}
-                              //         >
-                              //           <input
-                              //             type={fieldType}
-                              //             className={
-                              //               requiredField &&
-                              //                 !identityDataFields?.[formKeyVal] &&
-                              //                 (getUpdatedData(formKeyVal) == '' ||
-                              //                   getUpdatedData(formKeyVal) ==
-                              //                   null)
-                              //                 ? 'form-control field_warning'
-                              //                 : 'form-control'
-                              //             }
-                              //             defaultValue={
-                              //               editableField == false
-                              //                 ? valueField
-                              //                 : getUpdatedData(formKeyVal)
-                              //             }
-                              //             name={formKeyVal}
-                              //             placeholder={label}
-                              //             onChange={(e) => {
-                              //               handleChange(e);
-                              //             }}
-                              //           />
-                              //         </div>
-                              //       </div>
-                              //     </div>
-                              //   );
-                              // }
+                              } else {
+                                return (
+                                  <div className="w-full" key={index}>
+                                    <div className="w-full">
+                                      <label className="">
+                                        {label}
+                                        {requiredField && (
+                                          <span className="text-danger">*</span>
+                                        )}
+                                      </label>
+                                      <div
+                                        style={{
+                                          display: 'flex',
+                                          alignItems: 'center',
+                                        }}
+                                      >
+                                        <input
+                                          type={fieldType}
+                                          className={
+                                            requiredField &&
+                                              !identityDataFields?.[formKeyVal] &&
+                                              (getUpdatedData(formKeyVal) == '' ||
+                                                getUpdatedData(formKeyVal) ==
+                                                null)
+                                              ? `w-full p-2 bg-color-textfield-${theme} border-[0.5px] border-[#e19800] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white mt-2 rounded-md outline-none focus:ring-[1px] focus:ring-[#2b78da]`
+                                              : `w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white mt-2 rounded-md outline-none focus:ring-[1px] focus:ring-[#2b78da]`
+                                          }
+                                          defaultValue={
+                                            editableField == false
+                                              ? valueField
+                                              : getUpdatedData(formKeyVal)
+                                          }
+                                          name={formKeyVal}
+                                          placeholder={label}
+                                          onChange={(e) => {
+                                            handleChange(e);
+                                          }}
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                );
+                              }
                             }
                             if (fieldType == 'date') {
                               return (
-                                <div className="col-6 col-md-6">
-                                  <div className="form-group">
-                                    <label className="form-label">
+                                <div className="w-full">
+                                  <div className="w-full">
+                                    <label className="font-light text-[15px]">
                                       {label}
                                       {requiredField && (
-                                        <span className="text-danger">*</span>
+                                        <span className="text-red-500">*</span>
                                       )}
                                     </label>
                                     <div
@@ -1378,8 +1427,8 @@ export default function wallets(props) {
                                             !identityDataFields?.[formKeyVal] &&
                                             (getUpdatedData(formKeyVal) == '' ||
                                               getUpdatedData(formKeyVal) == null)
-                                            ? 'form-control field_warning'
-                                            : 'form-control'
+                                            ? `w-full p-2 bg-color-textfield-${theme} border-[0.5px] border-[#e19800] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md outline-none focus:ring-[1px] focus:ring-[#2b78da] mt-2`
+                                            :  `w-full p-2 bg-color-textfield-${theme} shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md outline-none focus:ring-[1px] focus:ring-[#2b78da] mt-2`
                                         }
                                         name={formKeyVal}
                                         options={{
@@ -1480,8 +1529,8 @@ export default function wallets(props) {
                                               (getUpdatedData(formKeyVal) == '' ||
                                                 getUpdatedData(formKeyVal) ==
                                                 null)
-                                              ? 'form-control field_warning'
-                                              : 'form-control'
+                                              ? `w-full p-2 bg-color-textfield-${theme} border-[0.5px] border-[#e19800] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md outline-none focus:ring-[1px] focus:ring-[#2b78da] mt-2`
+                                              : `w-full p-2 bg-color-textfield-${theme}  shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md outline-none focus:ring-[1px] focus:ring-[#2b78da] mt-2`
                                           }
                                           defaultValue={
                                             editableField == false
@@ -1543,8 +1592,8 @@ export default function wallets(props) {
                                               (getUpdatedData(formKeyVal) == '' ||
                                                 getUpdatedData(formKeyVal) ==
                                                 null)
-                                              ? 'form-control field_warning'
-                                              : 'form-control'
+                                              ? `w-full p-2 bg-color-textfield-${theme} border-[0.5px] border-[#e19800] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md outline-none focus:ring-[1px] focus:ring-[#2b78da] mt-2`
+                                              : `w-full p-2 bg-color-textfield-${theme}  shadow-[0px_6px_20px_rgba(0,0,0,0.9)] placeholder-[#6e84a3] placeholder:text-sm text-white rounded-md outline-none focus:ring-[1px] focus:ring-[#2b78da] mt-2`
                                           }
                                           defaultValue={
                                             editableField == false
@@ -1608,7 +1657,7 @@ export default function wallets(props) {
                                       alignItems: 'center',
                                     }}
                                   >
-                                    <Form.Check
+                                    <input
                                       // className={requiredField && !identityDataFields?.[formKeyVal] && (getUpdatedData(formKeyVal) == '' || getUpdatedData(formKeyVal) == null) ? "checkbox-field field_warning" : "checkbox-field"}
                                       className={'checkbox-field'}
                                       type={'checkbox'}
@@ -1634,10 +1683,11 @@ export default function wallets(props) {
                     }
                   })}
               </div>
-              <div className="col-sm-2">
+              <div className="">
                 <button
-                  className="btn btn-primary"
-                  // disabled={submitButtonDisable}
+                type="submit"
+                  className={`py-3 mt-4 px-8 rounded-lg font-light text-[15px] bg-color-button-${theme} `}
+                  disabled={submitButtonDisable}
                   onClick={(e) => {
                     handleSubmitBank(e);
                   }}
@@ -1645,10 +1695,11 @@ export default function wallets(props) {
                   Submit
                 </button>
               </div>
-            </Form>
+            </form>
           </div>
-        </Modal.Body>
-      </Modal>
+        
+        </div>
+      </div>
       <Modal show={showHistoryModal} onHide={handleCloseHisroeyModal}>
         <Modal.Header closeButton>
           <Modal.Title>History</Modal.Title>

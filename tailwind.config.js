@@ -18,6 +18,15 @@ module.exports = {
       },
     },
     extend: {
+      keyframes: {
+        zoom: {
+          '0%': { transform: 'scale(1)' },
+          '100%': { transform: 'scale(1.1)' },
+        },
+      },
+      animation: {
+        zoom: 'zoom 0.5s infinite alternate',
+      },
       backgroundImage: {
         "gradient-card-SC":
           "linear-gradient(to bottom, #243279 0%, #0055BB 100%)",
@@ -65,8 +74,6 @@ module.exports = {
         "color-button-Ascent": "#2bb02a", // For All Buttons + Processing Case
         "color-button1-SC": "#8DC63F", //For Accepted Case
         "color-button2-SC": "#F74036", // For Rejected Case
-        "color-button3-SC": "#F2A428", // For Pending Case
-        "color-button4-SC": "#EE381F", // For On Hold Case
         "color-stepper-SC": "#8DC63F", // For Done State Stepper
         "color-stepper1-SC": "#2C75E6", // For Active State Stepper
         "color-stepper2-SC": "#A1AEBE", // For Inactive State Stepper
@@ -106,6 +113,10 @@ module.exports = {
         "color-button3-SC": '#3DA500',
          "color-button3-hover-Ascent": '#2569c3',
         "color-button3-hover-SC": '#348a01',
+        "color-button4-hover-SC": '#348a01',
+        "color-button4-hover-Ascent": '#00b86b',
+        "color-button4-SC": '#3DA500',
+        "color-button4-Ascent": '#3DA500',
       },
 
       borderColor: {
@@ -344,6 +355,9 @@ module.exports = {
       pattern: /bg-color-button1-(SC|lightTheme|Ascent)/,
     },
     {
+      pattern: /bg-color-button4-(SC|lightTheme|Ascent)/,
+    },
+    {
       pattern: /border-color-(SC|lightTheme|Ascent)/,
     },
     {
@@ -361,6 +375,10 @@ module.exports = {
     },
     {
       pattern: /border-color-(SC|lightTheme|Ascent)/, // Hover border color
+      variants: ["hover"],
+    },
+    {
+      pattern: /bg-color-button4-hover-(SC|lightTheme|Ascent)/, // Hover border color
       variants: ["hover"],
     },
     {

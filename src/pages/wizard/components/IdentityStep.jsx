@@ -4589,11 +4589,12 @@ import {
                                               )}
                                             </label>
                                            
-                                            <div className={`flex flex-col items-start w-full flatpickr-wrapper-width`}
+                                            <div className={`flex flex-col items-start w-full `}
                                             >
+                                              <div className='w-full'>
                                               <Flatpickr
                                                 placeholder={label}
-                                                className={`w-full mt-2 p-2 rounded-lg ${
+                                                className={`w-full mt-2 px-2 py-[12px] rounded-lg ${
                                                   requiredField &&
                                                   !identityDataFields?.[formKeyVal] &&
                                                   (!getUpdatedData(formKeyVal) || getUpdatedData(formKeyVal) === null)
@@ -4677,6 +4678,7 @@ import {
                                                   handleChangeDate(formKeyVal, e);
                                                 }}
                                               />
+                                              </div>
                                               {dobError && (
                                                 <span
                                                   style={{ marginTop: '1em' }}

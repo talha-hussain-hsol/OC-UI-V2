@@ -1486,7 +1486,7 @@ export default function Wizard() {
               : null}
 
             <button
-              className={`bg-color-button-${theme} px-8 py-3 rounded-lg text-white outline-none`}
+              className={`bg-color-button4-${theme} hover:bg-color-button4-hover-${theme} px-8 py-3 rounded-lg text-white outline-none transition-all duration-300 ease-in-out`}
               disabled={checkIfNextButtonDisabled()}
               onClick={(e) => handleNextButton(e)}
             >

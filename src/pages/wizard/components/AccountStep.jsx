@@ -354,7 +354,7 @@ export default function AccountStep(props) {
                 <div className="relative w-full mt-10 mb-10">
                   <input
                     placeholder="Enter The Account Code"
-                    className={`bg-color-textfield-dropdown-${theme} text-color-text-${theme} w-[93%] xl:w-[96.8%] p-2 xs:pl-6 pl-4 rounded-l-full border border-color-dropdown-${theme} shadow-${theme} focus:outline-none xs:text-lg text-xs placeholder:text-base`}
+                    className={`bg-color-textfield-dropdown-${theme} text-color-text-${theme} w-[93%]  xl:w-[96.8%] py-[14px] px-2 xs:pl-6 pl-4 rounded-l-full border border-color-dropdown-${theme} shadow-${theme} focus:outline-none xs:text-[15px] text-xs placeholder:text-sm`}
                     type="text"
                     value={fundCode}
                     onChange={(event) => setFundCode(event.target.value)}
@@ -714,7 +714,7 @@ export default function AccountStep(props) {
                             <div className={`flex justify-center flex-col items-center`}
                               
                             >
-                              <p style={{ color: "gray" }} >
+                              <p className={`text-color-description-${theme}`} >
                                 No options available. Please create a new one.
                               </p>
                               <Tooltip content="Create New Identity" position="upper">

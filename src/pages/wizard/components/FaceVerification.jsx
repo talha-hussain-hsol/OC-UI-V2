@@ -903,7 +903,7 @@ return (
   
         {face && (
           <div>
-            <button className="bg-red-500 text-white px-4 py-2 rounded" onClick={resetData}>
+            <button className="bg-[#e63757] hover:bg-[#c4304a] text-[15px] font-light px-[30px] py-[10px] rounded-lg" onClick={resetData}>
               Retake
             </button>
           </div>
@@ -971,7 +971,9 @@ return (
                 <LoadingSpinner animation="grow" custom={true} height="70vh" />
               </div>
             ) : (
-              <div className="flex justify-center">
+              <div className='flex flex-col w-full items-center gap-6'>
+
+              <div className="flex w-full justify-center">
                 {faceSnapDataConfiguration?.steps?.map((item, index) => (
                   <div
                     key={index}
@@ -1032,7 +1034,7 @@ return (
                             </div>
                             <button
                               disabled={faceKey !== item.key}
-                              className="bg-[#e63757] text-[15px] font-light text-white mt-4 px-[30px] py-[10px] rounded-lg disabled:opacity-50"
+                              className="bg-[#e63757] hover:bg-[#c4304a] text-[15px] font-light text-white mt-4 px-[30px] py-[10px] rounded-lg disabled:opacity-50"
                               onClick={() => handleProceedClick(item.key)}
                             >
                               Proceed
@@ -1059,20 +1061,22 @@ return (
                       </div>
                     </div>
                   </div>
+                  
                 ))}
+                </div>
                 {console.log('vvvface 1', face)}
                     {face &&
                       faceSnapDataConfiguration?.integration?.enabled &&
                       isAssistance && (
-                        <div className={`w-[82%] flex justify-center`}
+                        <div className={`w-[84%] flex justify-center items-center`}
                           
                         >
-                          <div>
-                            <div>
-                              <div className='flex'>
+                          <div className='w-full'>
+                            <div className='w-full'>
+                              <div className={`bg-gradient-stepper-card-${theme} shadow-${theme} rounded-lg px-6 py-3 mb-20 border border-color-${theme} flex w-full`}>
                               <div className="w-1/2 lg:w-1/3 xl:w-1/3 flex">
                                   <div
-                                    className="flex items-center"
+                                    className="flex items-center justify-center"
                                   >
                                     {/* Increase font size for 'Assistance' */}
                                     <span
@@ -1084,10 +1088,10 @@ return (
                                 </div>
                                 <div className="w-1/2 lg:w-1/3 xl:w-1/3 flex">
                                   <>
-                                    <div>
+                                    <div className='flex'>
                                       {/* Increase font size for 'Status' */}
                                       <small
-                                        className="fund_info_small"
+                                        className="flex gap-1 items-center"
                                         style={{
                                           fontSize: '1.0625rem;',
                                           color: 'white',
@@ -1165,6 +1169,7 @@ return (
                         </div>
                       )}
               </div>
+
             )}
           </div>
         </div>
