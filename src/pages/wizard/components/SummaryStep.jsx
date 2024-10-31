@@ -707,9 +707,9 @@ export default function Summary(props) {
                       Incomplete
                     </span>
                   ) : (
-                    <span className="text-[#01cc7a] font-light flex">
+                    <span className="text-[#01cc7a]  font-light flex items-center gap-1">
                       <FeatherIcon
-                        className={``}
+                        className={`text-[#01cc7a] font-light`}
                         icon="check-circle"
                         color="green"
                         size="15"
@@ -833,7 +833,7 @@ export default function Summary(props) {
                       {/* <span className={props?.dataOfAccountSetup?.bank && props?.dataOfAccountSetup?.wallet ? `` : 'text-danger'}> */}
                       <span
                         className={
-                          checkIfWalleAdded() ? "text-[#01cc7a] font-light flex" : "text-[#DC4C64] font-light flex items-center gap-1"
+                          checkIfWalleAdded() ? "text-[#01cc7a] font-light flex items-center gap-1" : "text-[#DC4C64] font-light flex items-center gap-1"
                         }
                       >
                         <FeatherIcon
