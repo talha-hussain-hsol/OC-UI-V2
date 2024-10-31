@@ -1,25 +1,44 @@
-import { Col, Container, Row, Nav, Spinner,  Button, OverlayTrigger, Tooltip } from "react-bootstrap";
+import {
+  Col,
+  Container,
+  Row,
+  Nav,
+  Spinner,
+  Button,
+  OverlayTrigger,
+  Tooltip,
+} from "react-bootstrap";
 import React, { useState, useEffect, useLayoutEffect } from "react";
-import  getMissingDataOfIdentity  from "../../../helpers/getMissingDataOfIdentity";
+import getMissingDataOfIdentity from "../../../helpers/getMissingDataOfIdentity";
 import axios from "axios";
-import {  useParams, useSearchParams } from "react-router-dom";
-import {useNavigate } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import FeatherIcon from "feather-icons-react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
-import { getSingleAccountDetailByIdAPI, getParticularFieldsApi, getFlatCPRListAPI, getParticularsDetailByIdentityIdAPI, getIdentityDocument, getRequiredDocumentCRP } from "../../../api/network/CustomerApi";
+import {
+  getSingleAccountDetailByIdAPI,
+  getParticularFieldsApi,
+  getFlatCPRListAPI,
+  getParticularsDetailByIdentityIdAPI,
+  getIdentityDocument,
+  getRequiredDocumentCRP,
+} from "../../../api/network/CustomerApi";
 import LoadingSpinner from "../../../components/ui/loader/index";
 // import { AiOutlineConsoleSql } from "react-icons/ai";
 import countries from "../../../helpers/countries";
 import CustomerBox from "../../../widgets/components/CustomerBox";
+import { useTheme } from "../../../contexts/themeContext";
 
 export default function Summary(props) {
   console.log(props, "props props props props summary");
+  const { theme } = useTheme();
   const [isCollapsed, setIsCollapsed] = useState(true);
   const navigate = useNavigate();
   const params = useParams();
   const cancelTokenSource = axios.CancelToken.source();
   const [isLoader, setIsLoader] = useState(false);
-  const [isLoaderApplicationStatus, setIsLoaderApplicationStatus] = useState(true);
+  const [isLoaderApplicationStatus, setIsLoaderApplicationStatus] =
+    useState(true);
   const [accountData, setAccountData] = useState([]);
   const [particularFields, setParticularFields] = useState([]);
   const [crpListData, setCrpListData] = useState([]);
@@ -27,29 +46,40 @@ export default function Summary(props) {
   const [identityData, setIdentityData] = useState([]);
   const [crpIdentityUploadDocList, setCrpIdentityUploadDocList] = useState([]);
   const [requiredDocumentList, setRequiredDocumentList] = useState([]);
-  const [subscriptionApplicationStatus, setSubscriptionApplicationStatus] = useState(false);
-  const [requiredSubscriptionDocument, setRequiredSubscriptionDocument] = useState(null);
-  const [isShowFaceVerificationVCIP, setIsShowFaceVerificationVCIP] = useState(false);
-  const entityId = localStorage.getItem('entity_id');
+  const [subscriptionApplicationStatus, setSubscriptionApplicationStatus] =
+    useState(false);
+  const [requiredSubscriptionDocument, setRequiredSubscriptionDocument] =
+    useState(null);
+  const [isShowFaceVerificationVCIP, setIsShowFaceVerificationVCIP] =
+    useState(false);
+  const entityId = localStorage.getItem("entity_id");
   const [searchParams] = useSearchParams();
   const openDocs = searchParams?.get("openDoc") || "";
 
   useLayoutEffect(() => {
-    if (!openDocs || identityData?.type !== 'CORPORATE') return
-    props.handleGoToStep('Documents')
+    if (!openDocs || identityData?.type !== "CORPORATE") return;
+    props.handleGoToStep("Documents");
     const url = new URL(window.location);
-    url.search = ''; // Clear query parameters
-    window.history.replaceState({}, '', url.toString());
-  }, [openDocs])
-
+    url.search = ""; // Clear query parameters
+    window.history.replaceState({}, "", url.toString());
+  }, [openDocs]);
 
   useEffect(() => {
     if (props?.dataOfAccountSetup) {
-      console.log(props?.dataOfAccountSetup, 'props?.dataOfAccountSetupprops?.dataOfAccountSetupprops?.dataOfAccountSetupprops?.dataOfAccountSetup')
-      if (props?.dataOfAccountSetup?.accountData?.meta?.created_by?.portal == 'customer') {
-        setIsShowFaceVerificationVCIP(true)
-      } else if (props?.dataOfAccountSetup?.accountData?.meta?.created_by?.id != localStorage.getItem("login_user_id")) {
-        setIsShowFaceVerificationVCIP(true)
+      console.log(
+        props?.dataOfAccountSetup,
+        "props?.dataOfAccountSetupprops?.dataOfAccountSetupprops?.dataOfAccountSetupprops?.dataOfAccountSetup"
+      );
+      if (
+        props?.dataOfAccountSetup?.accountData?.meta?.created_by?.portal ==
+        "customer"
+      ) {
+        setIsShowFaceVerificationVCIP(true);
+      } else if (
+        props?.dataOfAccountSetup?.accountData?.meta?.created_by?.id !=
+        localStorage.getItem("login_user_id")
+      ) {
+        setIsShowFaceVerificationVCIP(true);
       }
     }
   }, [props?.dataOfAccountSetup]);
@@ -68,11 +98,23 @@ export default function Summary(props) {
   useEffect(() => {
     props?.getTransactionHistory(account_id);
   }, []);
-  let type = props.dataOfAccountSetup?.isIndividual ? "individual" : "corporate";
+  let type = props.dataOfAccountSetup?.isIndividual
+    ? "individual"
+    : "corporate";
   let fundData = props.dataOfAccountSetup?.fund_data;
   let selectedIdentityData = props.dataOfAccountSetup?.selectedIdentityData;
-  console.log(getMissingDataOfIdentity(selectedIdentityData, props.dataOfAccountSetup?.fundData, null)?.missingDocuments, "missing documentd data yytt");
-  console.log(selectedIdentityData, "selectedIdentityData selectedIdentityData selectedIdentityData selectedIdentityData selectedIdentityData");
+  console.log(
+    getMissingDataOfIdentity(
+      selectedIdentityData,
+      props.dataOfAccountSetup?.fundData,
+      null
+    )?.missingDocuments,
+    "missing documentd data yytt"
+  );
+  console.log(
+    selectedIdentityData,
+    "selectedIdentityData selectedIdentityData selectedIdentityData selectedIdentityData selectedIdentityData"
+  );
   useEffect(() => {
     if (identity_id) {
       setIsLoader(true);
@@ -93,19 +135,19 @@ export default function Summary(props) {
     ) {
       console.log(
         props?.transactionHistoryData,
-        'props?.transactionHistoryData',
+        "props?.transactionHistoryData"
       );
       let status = matchDocumentType(
         props?.transactionHistoryData,
-        requiredSubscriptionDocument,
+        requiredSubscriptionDocument
       );
-      console.log(status, 'statusstatusstatusstatusstatus');
+      console.log(status, "statusstatusstatusstatusstatus");
       setSubscriptionApplicationStatus(status);
       setIsLoaderApplicationStatus(false);
     }
   }, [requiredSubscriptionDocument, props?.transactionHistoryData]);
   useEffect(() => {
-    console.log('isLoaderApplicationStatus', isLoaderApplicationStatus);
+    console.log("isLoaderApplicationStatus", isLoaderApplicationStatus);
   }, [isLoaderApplicationStatus]);
 
   const matchDocumentType = (uploadedDocuments, requiredDocuments) => {
@@ -117,22 +159,22 @@ export default function Summary(props) {
         } else {
           if (uploadedDoc[0]?.docuSign) {
             if (uploadedDoc[0]?.docuSign?.status) {
-              if (uploadedDoc[0]?.docuSign?.status != 'signing_complete') {
+              if (uploadedDoc[0]?.docuSign?.status != "signing_complete") {
                 return false;
               }
             }
           }
         }
         const uploadedDocIds = uploadedDoc.map((doc) =>
-          parseInt(doc.documentTypeId),
+          parseInt(doc.documentTypeId)
         );
-        console.log(uploadedDocIds, 'uploadedDocIds');
+        console.log(uploadedDocIds, "uploadedDocIds");
         if (!uploadedDocIds.includes(parseInt(requiredDoc.id))) {
           return false; // Required document type is missing
         } else {
           if (uploadedDoc[0]?.docuSign) {
             if (uploadedDoc[0]?.docuSign?.status) {
-              if (uploadedDoc[0]?.docuSign?.status != 'signing_complete') {
+              if (uploadedDoc[0]?.docuSign?.status != "signing_complete") {
                 return false;
               }
             }
@@ -164,19 +206,19 @@ export default function Summary(props) {
 
     const response = await getIdentityDocument(
       identity_id,
-      cancelTokenSource.token,
+      cancelTokenSource.token
     );
-    console.log('object 1', response);
+    console.log("object 1", response);
     if (response.success == true) {
       // setIsLoader(false);
       console.log(
         Object.keys(response?.data?.IdentityDocuments),
-        'Object.keys(response?.data?.IdentityDocuments)',
+        "Object.keys(response?.data?.IdentityDocuments)"
       );
       setCrpIdentityUploadDocList(
         response?.data?.IdentityDocuments
           ? Object.keys(response?.data?.IdentityDocuments)
-          : [],
+          : []
       );
     } else {
       // setIsLoader(false);
@@ -190,7 +232,7 @@ export default function Summary(props) {
     const response = await getRequiredDocumentCRP(
       account_id,
       identity_id,
-      cancelTokenSource.token,
+      cancelTokenSource.token
     );
     if (response.success == true) {
       let documentsRequiredCRP = [];
@@ -198,15 +240,15 @@ export default function Summary(props) {
       if (response?.data?.required_documents_types.length > 0) {
         for (let doc of response?.data?.required_documents_types) {
           if (
-            doc?.category_key == 'DOCUMENT' &&
-            doc?.key != 'OTHER' &&
-            doc?.key != 'FACE_VERIFICATION'
+            doc?.category_key == "DOCUMENT" &&
+            doc?.key != "OTHER" &&
+            doc?.key != "FACE_VERIFICATION"
           ) {
-            console.log(doc, 'doc doc doc doc doc doc doc');
+            console.log(doc, "doc doc doc doc doc doc doc");
             documentsRequiredCRP.push(doc);
           }
 
-          if (doc?.category_key == 'SUBSCRIPTION_DOCUMENT' && doc?.isRequired) {
+          if (doc?.category_key == "SUBSCRIPTION_DOCUMENT" && doc?.isRequired) {
             subscriptionDocuments.push(doc);
           }
         }
@@ -214,7 +256,7 @@ export default function Summary(props) {
       setRequiredSubscriptionDocument(subscriptionDocuments);
       console.log(
         documentsRequiredCRP,
-        'documents documents documents crp documents',
+        "documents documents documents crp documents"
       );
       setRequiredDocumentList(documentsRequiredCRP);
       setIsLoaderApplicationStatus(false);
@@ -244,20 +286,20 @@ export default function Summary(props) {
     setIsLoader(true);
     const response = await getParticularsDetailByIdentityIdAPI(
       identity_id,
-      cancelTokenSource.token,
+      cancelTokenSource.token
     );
     if (response.success == true) {
       setIsLoader(false);
-      console.log(response?.data, 'response response response response ');
+      console.log(response?.data, "response response response response ");
       // setLabelIdentity(response.data?.label);
       setIdentityData(response.data);
-      if (response?.data?.parentId != '0') {
+      if (response?.data?.parentId != "0") {
         setIsCrp(true);
-        accountData['attach_identities'] = [{ identity: response?.data }];
+        accountData["attach_identities"] = [{ identity: response?.data }];
         setAccountData(accountData);
         console.log(
           accountData,
-          'accountData accountData accountData accountData accountData accountData',
+          "accountData accountData accountData accountData accountData accountData"
         );
       } else {
         setIsCrp(false);
@@ -270,16 +312,16 @@ export default function Summary(props) {
     // setIsLoader(true);
     const response = await getSingleAccountDetailByIdAPI(
       accountId,
-      cancelTokenSource.token,
+      cancelTokenSource.token
     );
-    console.log('response?.data?.account_detail', response);
+    console.log("response?.data?.account_detail", response);
     // setIsLoader(false);
     if (response.success == true) {
       setAccountData(response?.data?.account_detail);
       getSpecificIdentity(identity_id);
       console.log(
-        'response?.data?.account_detail',
-        response?.data?.account_detail,
+        "response?.data?.account_detail",
+        response?.data?.account_detail
       );
     } else {
     }
@@ -290,10 +332,10 @@ export default function Summary(props) {
     if (account_id) {
       account_idss = account_id;
     }
-    console.log('getParticularFields called');
+    console.log("getParticularFields called");
     const response = await getParticularFieldsApi(
       account_idss,
-      cancelTokenSource.token,
+      cancelTokenSource.token
     );
     // setIsLoader(false);
     if (response.success == true) {
@@ -318,7 +360,7 @@ export default function Summary(props) {
     const response = await getFlatCPRListAPI(
       identity_id,
       account_id,
-      cancelTokenSource.token,
+      cancelTokenSource.token
     );
     if (response.success == true) {
       setIsLoader(false);
@@ -329,16 +371,16 @@ export default function Summary(props) {
   };
 
   const handleClickOnStatusBtn = (section) => {
-    console.log('hanfle dasljd');
+    console.log("hanfle dasljd");
     navigate(
-      `/profile/identity/${type}/${section}/${identity_id}/${account_id}/`,
+      `/profile/identity/${type}/${section}/${identity_id}/${account_id}/`
     );
   };
   const getDataFromIdentity = (field) => {
     let identityData = selectedIdentityData?.meta?.data
       ? selectedIdentityData?.meta?.data
       : selectedIdentityData?.data;
-    if (field == 'email' || field == 'phone') {
+    if (field == "email" || field == "phone") {
       if (identityData?.[`${type}.extended.${field}`]) {
         if (identityData?.[`${type}.extended.${field}`]?.value) {
           return identityData?.[`${type}.extended.${field}`]?.value;
@@ -356,14 +398,15 @@ export default function Summary(props) {
       ? selectedIdentityData?.meta?.data
       : selectedIdentityData?.data;
 
-    let countryCode = '';
-    if (type == 'individual') {
+    let countryCode = "";
+    if (type == "individual") {
       if (identityDataValue?.[`${type}.basic.country_of_residence_code`]) {
         if (
           identityDataValue?.[`${type}.basic.country_of_residence_code`]?.value
         ) {
           countryCode =
-            identityDataValue?.[`${type}.basic.country_of_residence_code`]?.value;
+            identityDataValue?.[`${type}.basic.country_of_residence_code`]
+              ?.value;
         }
       }
     } else {
@@ -372,14 +415,15 @@ export default function Summary(props) {
           identityDataValue?.[`${type}.basic.incorporate_country_code`]?.value
         ) {
           countryCode =
-            identityDataValue?.[`${type}.basic.incorporate_country_code`]?.value;
+            identityDataValue?.[`${type}.basic.incorporate_country_code`]
+              ?.value;
         }
       }
     }
     return getCountryNameFromEnums(countryCode);
   };
   const getCountryNameFromEnums = (countryCode) => {
-    let countryName = '';
+    let countryName = "";
     if (countries.length > 0) {
       for (let a of countries) {
         if (a.code == countryCode) {
@@ -387,7 +431,7 @@ export default function Summary(props) {
         }
       }
     }
-    if (countryName == '') {
+    if (countryName == "") {
       return countryCode;
     } else {
       return countryName;
@@ -398,7 +442,7 @@ export default function Summary(props) {
       props?.dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant
         ?.identity?.bank?.enabled === true ||
       props?.dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant
-        ?.identity?.bank?.enabled == 'true'
+        ?.identity?.bank?.enabled == "true"
     ) {
       // if(!props?.dataOfAccountSetup?.bank){
       //     return false
@@ -409,7 +453,7 @@ export default function Summary(props) {
       props?.dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant
         ?.identity?.wallet?.enabled === true ||
       props?.dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant
-        ?.identity?.wallet?.enabled == 'true'
+        ?.identity?.wallet?.enabled == "true"
     ) {
       // if(!props?.dataOfAccountSetup?.wallet){
       //     return false
@@ -419,682 +463,695 @@ export default function Summary(props) {
     return true;
   };
   return (
-    <div className="main-content">
-     <div className="w-full p-4">
-  <div className="bg-white shadow-md rounded-md p-6">
-            <div>
-              {fundData?.fund_setting?.display?.fund_info === true ||
-                fundData?.fund_setting?.display?.fund_info == 'true' ? (
-                    <div className="flex w-1/2 lg:w-1/3 xl:w-1/3">
-
-                  <div className="d-flex" style={{ alignItems: 'center' }}>
-                    <img
-                      className="fund-logo"
-                      src={
-                        fundData?.logoBucketKey
-                          ? fundData?.logoBucketKey
-                          : fundData?.fund_logo_url
-                      }
-                    />
-                    <span className="fund-name-box">{fundData?.name}</span>
-                  </div>
+    <div  className=" flex flex-col justify-center items-center">
+      <div className={` bg-color-card-${theme} rounded-lg shadow-${theme} border border-color-${theme} h-[10%] sm:h-[10%] w-[90%] sm:w-[95%] mt-4`}>
+        <div className="flex flex-col item-center gap-1 my-2 ">
+          <div className="flex justify-center w-full">
+            {fundData?.fund_setting?.display?.fund_info === true ||
+            fundData?.fund_setting?.display?.fund_info == "true" ? (
+                <div className="flex flex-row w-full" >
+                  <img
+                    className="h-[55px] w-[20%]"
+                    src={
+                      fundData?.logoBucketKey
+                        ? fundData?.logoBucketKey
+                        : fundData?.fund_logo_url
+                    }
+                  />
+                  <span className={`ml-3 mt-4 font-light text-color-${theme}`}>{fundData?.name}</span>
+              </div>
+            ) : (
+              <div className="w-full flex ">
+                <div className="flex ">
+                  <img
+                    className="h-[55px] w-[20%]"
+                    src={
+                      fundData?.logoBucketKey
+                        ? fundData?.logoBucketKey
+                        : fundData?.fund_logo_url
+                    }
+                  />
+                  <span className={`ml-3 mt-4 font-light  text-color-${theme}`}>{fundData?.name}</span>
                 </div>
-              ) : (
-                <div className="w-full lg:w-full xl:w-full flex justify-center">
+              </div>
+            )}
 
-                  <div className="d-flex" style={{ alignItems: 'center' }}>
-                    <img
-                      className="fund-logo"
-                      src={
-                        fundData?.logoBucketKey
-                          ? fundData?.logoBucketKey
-                          : fundData?.fund_logo_url
-                      }
-                    />
-                    <span className="fund-name-box">{fundData?.name}</span>
-                  </div>
-                </div>
-              )}
-
-              {(fundData?.fund_setting?.display?.fund_info === true ||
-                fundData?.fund_setting?.display?.fund_info == 'true') && (
+            {(fundData?.fund_setting?.display?.fund_info === true ||
+              fundData?.fund_setting?.display?.fund_info == "true") && (
+              <>
+                <div className="flex flex-col w-full">
                   <>
-                    <div className="w-1/2 lg:w-1/3 xl:w-1/3">
-                      <>
-                        <div>
-                          <small className="fund_info_small">
-                            <span class="text-success">
-                              <FeatherIcon
-                                className={`text-success`}
-                                icon="check-circle"
-                                color="green"
-                                size="15"
-                              />
-                            </span>{' '}
-                            Fund's KYC:{' '}
-                            {fundData?.fund_setting?.kyb?.status
-                              ? fundData?.fund_setting?.kyb?.status
-                                .charAt(0)
-                                .toUpperCase() +
-                              fundData?.fund_setting?.kyb?.status.slice(1)
-                              : fundData?.meta?.config?.kyb?.status
-                                .charAt(0)
-                                .toUpperCase() +
-                              fundData?.meta?.config?.kyb?.status.slice(1)}
-                          </small>
-                        </div>
-                        <div>
-                          <small className="text-muted fund_info_small">
-                            <span class="text-success">
-                              <FeatherIcon
-                                className={`text-success`}
-                                icon="check-circle"
-                                color="green"
-                                size="15"
-                              />
-                            </span>{' '}
-                            Fund Domicile:{' '}
-                            {fundData?.fund_setting?.region
-                              ? fundData?.fund_setting?.region
-                              : fundData?.meta?.config?.settings?.region}
-                          </small>
-                        </div>
-                      </>
+                    <div>
+                      <small className={`text-base flex font-light text-color-${theme} `}>
+                        <span className="mt-1 mr-3">
+                          <FeatherIcon
+                            className={``}
+                            icon="check-circle"
+                            color="green"
+                            size="15"
+                          />
+                        </span>{" "}
+                        Fund's KYC:{" "}
+                        {fundData?.fund_setting?.kyb?.status
+                          ? fundData?.fund_setting?.kyb?.status
+                              .charAt(0)
+                              .toUpperCase() +
+                            fundData?.fund_setting?.kyb?.status.slice(1)
+                          : fundData?.meta?.config?.kyb?.status
+                              .charAt(0)
+                              .toUpperCase() +
+                            fundData?.meta?.config?.kyb?.status.slice(1)}
+                      </small>
                     </div>
-                    <div className="w-1/2 lg:w-1/3 xl:w-1/3">
-                      <>
-                        <div>
-                          <small className="fund_info_small">
-                            <FeatherIcon
-                              className={`text-success`}
-                              icon="clock"
-                              color="green"
-                              size="15"
-                            />{' '}
-                            Dealing Cycle:{' '}
-                            {fundData?.fund_setting?.dealing?.type?.end
-                              ? fundData?.fund_setting?.dealing?.type?.end
-                              : fundData?.fund_setting?.dealing?.type?.end}
-                          </small>
-                        </div>
-                        {fundData?.fund_setting?.account?.applicant?.asset
-                          ?.digital?.status && (
-                            <div>
-                              <small className="text-muted fund_info_small">
-                                <span class="text-success">
-                                  <FeatherIcon
-                                    className={`text-success`}
-                                    icon="check-circle"
-                                    color="green"
-                                    size="15"
-                                  />
-                                </span>{' '}
-                                Digital Fund:{' '}
-                                {fundData?.fund_setting?.account?.applicant?.asset
-                                  ?.digital?.status
-                                  ? fundData?.fund_setting?.account?.applicant
-                                    ?.asset?.digital?.status
-                                    ? 'Active'
-                                    : 'Not Active'
-                                  : fundData?.meta?.config?.settings?.account
-                                    ?.applicant?.asset?.digital?.status
-                                    ? 'Active'
-                                    : 'Not Active'}
-                              </small>
-                            </div>
-                          )}
-                      </>
+                    <div>
+                      <small className="text-muted font-light text-base flex text-gray-400">
+                        <span className="mt-1 mr-3">
+                          <FeatherIcon
+                            className={``}
+                            icon="check-circle"
+                            color="green"
+                            size="15"
+                          />
+                        </span>{" "}
+                        Fund Domicile:{" "}
+                        {fundData?.fund_setting?.region
+                          ? fundData?.fund_setting?.region
+                          : fundData?.meta?.config?.settings?.region}
+                      </small>
                     </div>
                   </>
-                )}
-            </div>
-          </div>
-        </div>
-        <div className="border rounded-lg shadow-lg overflow-hidden">
-  <div className="bg-gray-800 text-white p-4 font-bold">
-            <h4 className="card-header-title">Reference Documents</h4>
-            <button
-              onClick={toggleCollapse}
-              variant="link"
-              className="btn-collapse"
-            >
-              {isCollapsed ? <FaChevronDown /> : <FaChevronUp />}
-            </button>
-          </div>
-          {!isCollapsed && (
-            <div>
-              {fundData?.reference_document?.documents &&
-                fundData?.reference_document?.documents.map((item, index) => (
+                </div>
+                <div className="flex flex-col w-full">
+                  <>
                     <div>
-                      <div
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <div>
-                          <p className="mb-0">{item?.title}</p>
-                          <p className="mb-0">{item?.description}</p>
-                        </div>
-                        <div>
-                          <button
-                            onClick={(e) =>
-                              handleClickReferenceDocument(item?.url)
-                            }
-                            className="lift"
-                            style={{
-                              height: '30px',
-                              width: '30px',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              padding: '6px',
-                              marginTop: '5px',
-                              marginBottom: '5px',
-                            }}
-                          >
-                            <FeatherIcon icon="eye" size="1em" />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                ))}
-            </div>
-          )}
-        </div>
-        <div className="flex flex-wrap">
-  <div className="w-full md:w-1/2 lg:w-1/2 xl:w-1/2">
-            <div>
-              <div>
-                <h3 className="text-muted mb-0">Profile</h3>
-              </div>
-              <div>
-                <div>
-                <div className="w-full md:w-2/3 lg:w-2/3 xl:w-2/3">
-                    <div className="text-muted mt-4 mb-4 identity-info-summary">
-                      <p>Name : {selectedIdentityData?.label}</p>
-                      {selectedIdentityData?.type === 'INDIVIDUAL' && (
-                        <p>
-                          Nationality :{' '}
-                          {selectedIdentityData?.type === 'INDIVIDUAL' &&
-                            getCountryNameFromEnums(
-                              selectedIdentityData?.meta?.data[
-                                'individual.basic.nationality_code'
-                              ].value,
-                            )}
-                        </p>
-                      )}
-                      <p>
-                        {selectedIdentityData?.type === 'INDIVIDUAL'
-                          ? 'Country Of Residence'
-                          : 'Country for Incorporation'}
-                        : {getCountryName()}
-                      </p>
-                      <p>
-                        Customer Type :{' '}
-                        {selectedIdentityData?.type
-                          .split(' ')
-                          .map(
-                            (word) =>
-                              word.charAt(0).toUpperCase() +
-                              word.slice(1).toLowerCase(),
-                          )
-                          .join(' ')}
-                      </p>
-                      <p>Email : {getDataFromIdentity('email')}</p>
-                      <p>Phone : {getDataFromIdentity('phone')}</p>
-                    </div>
-                  </div>
-                  <div className="w-full md:w-1/3 lg:w-1/3 xl:w-1/3"></div>
-
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="w-full md:w-1/2 lg:w-1/2 xl:w-1/2">
-
-            <div className="mb-2">
-              <div className="d-flex justify-content-between">
-                <div>Particulars Form</div>
-                <div className="d-flex justify-content-between">
-                  <div>
-                    <span class="text-success">
-                      <FeatherIcon
-                        className={`text-success`}
-                        icon="check-circle"
-                        color="green"
-                        size="15"
-                      />{' '}
-                      Completed
-                    </span>
-                  </div>
-                  <div style={{ marginLeft: '10px' }}>
-                    <FeatherIcon
-                      icon="eye"
-                      size="15"
-                      onClick={(e) => props.handleGoToStep('Identity Setup')}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="mb-2">
-              <div className="d-flex justify-content-between">
-                <div>Document Upload</div>
-                <div className="d-flex justify-content-between">
-                  <div>
-                    {console.log(
-                      selectedIdentityData,
-                      ' selectedIdentityData selectedIdentityData selectedIdentityData selectedIdentityData selectedIdentityData selectedIdentityData selectedIdentityData',
-                    )}
-                    {getMissingDataOfIdentity(
-                      selectedIdentityData,
-                      props.dataOfAccountSetup?.fundData,
-                      null,
-                    )?.missingDocuments?.length > 0 ? (
-                      <span class="text-danger">
+                      <small className={`text-base font-light	 flex text-color-${theme} `}>
+                      <span className="mt-1 mr-3">
                         <FeatherIcon
-                          className={`text-danger`}
-                          icon="check-circle"
-                          color="red"
-                          size="15"
-                        />{' '}
-                        Incomplete
-                      </span>
-                    ) : (
-                      <span class="text-success">
-                        <FeatherIcon
-                          className={`text-success`}
-                          icon="check-circle"
+                          className={``}
+                          icon="clock"
                           color="green"
                           size="15"
-                        />{' '}
-                        Completed
-                      </span>
-                    )}
-                  </div>
-                  <div style={{ marginLeft: '10px' }}>
-                    <FeatherIcon
-                      icon="eye"
-                      size="15"
-                      onClick={(e) => props.handleGoToStep('Documents')}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            {fundData?.fund_setting?.account?.applicant?.identity[
-              type == 'individual' ? 'indivisual' : 'corporate'
-            ]?.provider?.verify?.face?.enabled &&
-              isShowFaceVerificationVCIP && (
-                <div className="mb-2">
-                  <div className="d-flex justify-content-between">
-                    <div>Face Verification</div>
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        <span
-                          class={
-                            props?.dataOfAccountSetup?.faceVerification
-                              ? `text-success`
-                              : 'text-danger'
-                          }
-                        >
-                          <FeatherIcon
-                            className={
-                              props?.dataOfAccountSetup?.faceVerification
-                                ? `text-success`
-                                : 'text-danger'
-                            }
-                            icon="check-circle"
-                            color="green"
-                            size="15"
-                          />{' '}
-                          {props?.dataOfAccountSetup?.faceVerification
-                            ? 'Completed'
-                            : 'Incomplete'}
+                        />{" "}
                         </span>
-                      </div>
-                      <div style={{ marginLeft: '10px' }}>
-                        <FeatherIcon
-                          icon="eye"
-                          size="15"
-                          onClick={(e) =>
-                            props.handleGoToStep('Face Verification')
-                          }
-                        />
-                      </div>
+                        Dealing Cycle:{" "}
+                        {fundData?.fund_setting?.dealing?.type?.end
+                          ? fundData?.fund_setting?.dealing?.type?.end
+                          : fundData?.fund_setting?.dealing?.type?.end}
+                      </small>
                     </div>
-                  </div>
-                </div>
-              )}
-            {fundData?.fund_setting?.account?.applicant?.identity[
-              type == 'individual' ? 'indivisual' : 'corporate'
-            ]?.provider?.verify?.vcip?.enabled &&
-              isShowFaceVerificationVCIP && (
-                <div className="mb-2">
-                  <div className="d-flex justify-content-between">
-                    <div>VCIP</div>
-                    <div className="d-flex justify-content-between">
+                    {fundData?.fund_setting?.account?.applicant?.asset?.digital
+                      ?.status && (
                       <div>
-                        <span
-                          class={
-                            props?.dataOfAccountSetup?.vcip
-                              ? `text-success`
-                              : 'text-danger'
-                          }
-                        >
-                          <FeatherIcon
-                            className={
-                              props?.dataOfAccountSetup?.vcip
-                                ? `text-success`
-                                : 'text-danger'
-                            }
-                            icon="check-circle"
-                            color="green"
-                            size="15"
-                          />{' '}
-                          {props?.dataOfAccountSetup?.vcip
-                            ? 'Completed'
-                            : 'Incomplete'}
-                        </span>
-                      </div>
-                      <div style={{ marginLeft: '10px' }}>
-                        <FeatherIcon
-                          icon="eye"
-                          size="15"
-                          onClick={(e) => props.handleGoToStep('VCIP')}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            {(props?.dataOfAccountSetup?.fund_data?.fund_setting?.account
-              ?.applicant?.identity?.bank?.enabled === true ||
-              props?.dataOfAccountSetup?.fund_data?.fund_setting?.account
-                ?.applicant?.identity?.bank?.enabled == 'true' ||
-              props?.dataOfAccountSetup?.fund_data?.fund_setting?.account
-                ?.applicant?.identity?.wallet?.enabled === true ||
-              props?.dataOfAccountSetup?.fund_data?.fund_setting?.account
-                ?.applicant?.identity?.wallet?.enabled == 'true') &&
-              props?.dataOfAccountSetup?.fund_data?.named_id?.toUpperCase() !==
-              'AXSA-WM' && (
-                <div className="mb-2">
-                  <div className="d-flex justify-content-between">
-                    <div>Bank Wallet</div>
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        {/* <span class={props?.dataOfAccountSetup?.bank && props?.dataOfAccountSetup?.wallet ? `text-success` : 'text-danger'}> */}
-                        <span
-                          class={
-                            checkIfWalleAdded() ? `text-success` : 'text-danger'
-                          }
-                        >
-                          <FeatherIcon
-                            className={
-                              checkIfWalleAdded()
-                                ? `text-success`
-                                : 'text-danger'
-                            }
-                            icon="check-circle"
-                            color="green"
-                            size="15"
-                          />{' '}
-                          {checkIfWalleAdded() ? 'Completed' : 'Incomplete'}
-                        </span>
-                      </div>
-                      <div style={{ marginLeft: '10px' }}>
-                        <FeatherIcon
-                          icon="eye"
-                          size="15"
-                          onClick={(e) => props.handleGoToStep('Bank/Wallets')}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            {fundData?.fund_setting?.account?.subscription?.status && (
-              <>
-                <div className="mb-2">
-                  <div className="d-flex justify-content-between">
-                    <div>Application Document</div>
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        {isLoaderApplicationStatus ? (
-                          <Spinner
-                            color="blue"
-                            animation="border"
-                            role="status"
-                          ></Spinner>
-                        ) : (
-                          <span
-                            className={
-                              subscriptionApplicationStatus === false
-                                ? 'text-danger'
-                                : subscriptionApplicationStatus
-                                  ? 'text-success'
-                                  : 'text-danger'
-                            }
-                          >
+                        <small className="text-muted text-base font-light flex text-gray-400">
+                          <span className="mt-1 mr-3">
                             <FeatherIcon
-                              className={
-                                subscriptionApplicationStatus === false
-                                  ? 'text-danger'
-                                  : subscriptionApplicationStatus
-                                    ? 'text-success'
-                                    : 'text-danger'
-                              }
+                              className={``}
                               icon="check-circle"
                               color="green"
                               size="15"
                             />
-                            {subscriptionApplicationStatus === false
-                              ? 'Incomplete'
-                              : subscriptionApplicationStatus
-                                ? 'Completed'
-                                : 'Incomplete'}
-                          </span>
-                        )}
+                          </span>{" "}
+                          Digital Fund:{" "}
+                          {fundData?.fund_setting?.account?.applicant?.asset
+                            ?.digital?.status
+                            ? fundData?.fund_setting?.account?.applicant?.asset
+                                ?.digital?.status
+                              ? "Active"
+                              : "Not Active"
+                            : fundData?.meta?.config?.settings?.account
+                                ?.applicant?.asset?.digital?.status
+                            ? "Active"
+                            : "Not Active"}
+                        </small>
                       </div>
-                      <div style={{ marginLeft: '10px' }}>
-                        <FeatherIcon
-                          icon="eye"
-                          size="15"
-                          onClick={(e) => props.handleGoToStep('Application')}
-                        />
-                      </div>
-                    </div>
-                  </div>
+                    )}
+                  </>
                 </div>
               </>
             )}
           </div>
         </div>
-        <div>
-          {selectedIdentityData?.type.toLowerCase() == 'corporate' ? (
-            !isLoader ? (
-              <>
-                <div className="w-full">
-                  <div className="card" style={{ backgroundColor: '#1f3958' }}>
-                    {/* <div className="card-header">
+      </div>
+      <div
+        className={` bg-color-card-${theme} rounded-lg shadow-${theme} border border-color-${theme} h-[10%] sm:h-[10%] w-[90%] sm:w-[95%] mt-4`}
+      >
+        <div className={`flex justify-between items-center px-4 py-2`}>
+          <h4
+            className={`text-color-${theme} text-xs sm:text-sm font-light m-3`}
+          >
+            Reference Documents
+          </h4>
+          <button
+            onClick={toggleCollapse}
+            className="text-slate-500 hover:text-slate-700"
+          >
+            {isCollapsed ? <FaChevronDown /> : <FaChevronUp />}
+          </button>
+        </div>
+        {!isCollapsed && (
+          <div className="w-full mt-4">
+            {fundData?.reference_document?.documents &&
+              fundData?.reference_document?.documents.map((item, index) => (
+                <div
+                  key={index}
+                  className={`flex justify-between items-center bg-color-card-${theme} rounded-lg shadow-${theme} p-3 mb-2`}
+                >
+                  <div className="flex justify-between w-full">
+                    
+                      <div className="flex flex-col">
+                        <p
+                          className={`mb-0 text-xs font-semibold text-color-${theme}`}
+                        >
+                          {item?.title}
+                        </p>
+                        <p className={`mb-0 text-xs text-gray-500`}>
+                          {item?.description}
+                        </p>
+                      </div>
+                      <div className="flex">
+                        <button
+                          onClick={(e) =>
+                            handleClickReferenceDocument(item?.url)
+                          }
+                          className={`p-2 rounded-full bg-gradient-card-${theme} flex items-center justify-center`}
+                          style={{
+                            height: "30px",
+                            width: "30px",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            padding: "6px",
+                            marginTop: "5px",
+                            marginBottom: "5px",
+                          }}
+                        >
+                          <FeatherIcon icon="eye" size="1em" />
+                        </button>
+                      </div>
+                    </div>
+                </div>
+              ))}
+          </div>
+        )}
+      </div>
+      <div className={` flex justify-between h-[10%] sm:h-[10%] w-[90%] sm:w-[95%] mt-4`}>
+        <div
+          className={`bg-color-stepstatus-${theme}  rounded-md border-[#1b3050] border-[1px] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] mb-8 flex flex-col  justify-center h-full w-[48%]`}
+        >
+          <div
+            className={`bg-gradient-profile-card-${theme} rounded-md border-color-${theme} border-b-[1px] shadow-${theme}  py-4 px-8 flex justify-between h-full w-full`}
+          >
+            <h3 className={`text-[10px] xs:text-sm`}>Profile</h3>
+          </div>
+
+          
+            <div className={`flex flex-col ml-4 my-8 gap-3`}>
+              <p className="text-white uppercase text-sm">Name : {selectedIdentityData?.label}</p>
+              {selectedIdentityData?.type === "INDIVIDUAL" && (
+                <p className="text-white uppercase text-sm">
+                  Nationality :{" "}
+                  {selectedIdentityData?.type === "INDIVIDUAL" &&
+                    getCountryNameFromEnums(
+                      selectedIdentityData?.meta?.data[
+                        "individual.basic.nationality_code"
+                      ].value
+                    )}
+                </p>
+              )}
+              <p className="text-white uppercase text-sm">
+                {selectedIdentityData?.type === "INDIVIDUAL"
+                  ? "Country Of Residence"
+                  : "Country for Incorporation"}
+                : {getCountryName()}
+              </p>
+              <p className="text-white uppercase text-sm">
+                Customer Type :{" "}
+                {selectedIdentityData?.type
+                  .split(" ")
+                  .map(
+                    (word) =>
+                      word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+                  )
+                  .join(" ")}
+              </p>
+              <p className="text-white uppercase text-sm">Email : {getDataFromIdentity("email")}</p>
+              <p className="text-white uppercase text-sm">Phone : {getDataFromIdentity("phone")}</p>
+            </div>
+          
+          <div className="w-full md:w-1/3 lg:w-1/3 xl:w-1/3"></div>
+        </div>
+        <div className="flex flex-col gap-2 w-[48%]">
+          <div  className={`bg-color-stepstatus-${theme} rounded-lg border-[#1b3050] border-[1px] shadow-[2px_6px_20px_rgba(0,0,0,0.9)] py-1 px-4  w-full text-sm`}>
+            <div className="flex justify-between  gap-1 my-2">
+              <div className="font-normal text-white">Particulars Form</div>
+              <div className="flex  items-center gap-1">
+                <div>
+                  <span className="text-[#01cc7a] font-light flex items-center gap-1">
+                    <FeatherIcon
+                      className={`text-[#01cc7a]`}
+                      icon="check-circle"
+                      color="green"
+                      size="15"
+                    />{" "}
+                    Completed
+                  </span>
+                </div>
+                <div style={{ marginLeft: "10px" }}>
+                  <FeatherIcon
+                    icon="eye"
+                    size="15"
+                    onClick={(e) => props.handleGoToStep("Identity Setup")}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={`bg-color-stepstatus-${theme} rounded-lg border-[#1b3050] border-[1px] shadow-[2px_6px_20px_rgba(0,0,0,0.9)] py-1 px-4 w-full text-sm`}>
+            <div className="flex justify-between items-center gap-1 my-2">
+              <div className="font-normal text-white">Document Upload</div>
+              <div className="flex items-center gap-1">
+                <div>
+                  {console.log(
+                    selectedIdentityData,
+                    " selectedIdentityData selectedIdentityData selectedIdentityData selectedIdentityData selectedIdentityData selectedIdentityData selectedIdentityData"
+                  )}
+                  {getMissingDataOfIdentity(
+                    selectedIdentityData,
+                    props.dataOfAccountSetup?.fundData,
+                    null
+                  )?.missingDocuments?.length > 0 ? (
+                    <span className="text-[#DC4C64] font-light flex items-center gap-1">
+                      <FeatherIcon
+                        className={`text-[#DC4C64] font-light`}
+                        icon="check-circle"
+                        color="red"
+                        size="15"
+                      />{" "}
+                      Incomplete
+                    </span>
+                  ) : (
+                    <span className="text-[#01cc7a] font-light flex">
+                      <FeatherIcon
+                        className={``}
+                        icon="check-circle"
+                        color="green"
+                        size="15"
+                      />{" "}
+                      Completed
+                    </span>
+                  )}
+                </div>
+                <div style={{ marginLeft: "10px" }}>
+                  <FeatherIcon
+                    icon="eye"
+                    size="15"
+                    onClick={(e) => props.handleGoToStep("Documents")}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          {fundData?.fund_setting?.account?.applicant?.identity[
+            type == "individual" ? "indivisual" : "corporate"
+          ]?.provider?.verify?.face?.enabled &&
+            isShowFaceVerificationVCIP && (
+              <div className={`bg-color-stepstatus-${theme} rounded-lg border-[#1b3050] border-[1px] shadow-[2px_6px_20px_rgba(0,0,0,0.9)] py-1 px-4  w-full text-sm`}>
+                <div className="flex justify-between items-center gap-1 my-2">
+                  <div className="font-normal text-white">Face Verification</div>
+                  <div className="flex items-center gap-1">
+                    <div>
+                      <span
+                        className={
+                          props?.dataOfAccountSetup?.faceVerification
+                            ? "text-[#01cc7a] font-light flex items-center gap-1"
+                            : "text-[#DC4C64] font-light flex items-center gap-1"
+                            
+                        }
+                      >
+                        <FeatherIcon
+                          className={
+                            props?.dataOfAccountSetup?.faceVerification
+                              ? "text-[#01cc7a] font-light"
+                              : "text-[#DC4C64] font-light"
+                          }
+                          icon="check-circle"
+                          color="green"
+                          size="15"
+                        />
+                        {props?.dataOfAccountSetup?.faceVerification
+                          ? "Completed"
+                          : "Incomplete"}
+                      </span>
+                    </div>
+                    <div style={{ marginLeft: "10px" }}>
+                      <FeatherIcon
+                        icon="eye"
+                        size="15"
+                        onClick={(e) =>
+                          props.handleGoToStep("Face Verification")
+                        }
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          {fundData?.fund_setting?.account?.applicant?.identity[
+            type == "individual" ? "indivisual" : "corporate"
+          ]?.provider?.verify?.vcip?.enabled &&
+            isShowFaceVerificationVCIP && (
+              <div className={`bg-color-stepstatus-${theme} rounded-lg border-[#1b3050] border-[1px] shadow-[2px_6px_20px_rgba(0,0,0,0.9)] py-1 px-4  w-full text-sm`}>
+                <div className="flex justify-between items-center gap-1 my-2">
+                  <div className="font-normal text-white">VCIP</div>
+                  <div className="flex items-center gap-1">
+                    <div>
+                      <span
+                        className={
+                          props?.dataOfAccountSetup?.vcip
+                            ? "text-[#01cc7a] font-light flex items-center gap-1"
+                            : "text-[#DC4C64] font-light flex items-center gap-1 "
+                        }
+                      >
+                        <FeatherIcon
+                          className={
+                            props?.dataOfAccountSetup?.vcip
+                              ? "text-[#01cc7a] font-light"
+                              : "text-[#DC4C64] font-light"
+                          }
+                          icon="check-circle"
+                          color="green"
+                          size="15"
+                        />{" "}
+                        {props?.dataOfAccountSetup?.vcip
+                          ? "Completed"
+                          : "Incomplete"}
+                      </span>
+                    </div>
+                    <div style={{ marginLeft: "10px" }}>
+                      <FeatherIcon
+                        icon="eye"
+                        size="15"
+                        onClick={(e) => props.handleGoToStep("VCIP")}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          {(props?.dataOfAccountSetup?.fund_data?.fund_setting?.account
+            ?.applicant?.identity?.bank?.enabled === true ||
+            props?.dataOfAccountSetup?.fund_data?.fund_setting?.account
+              ?.applicant?.identity?.bank?.enabled == "true" ||
+            props?.dataOfAccountSetup?.fund_data?.fund_setting?.account
+              ?.applicant?.identity?.wallet?.enabled === true ||
+            props?.dataOfAccountSetup?.fund_data?.fund_setting?.account
+              ?.applicant?.identity?.wallet?.enabled == "true") &&
+            props?.dataOfAccountSetup?.fund_data?.named_id?.toUpperCase() !==
+              "AXSA-WM" && (
+              <div className={`bg-color-stepstatus-${theme} rounded-lg border-[#1b3050] border-[1px] shadow-[2px_6px_20px_rgba(0,0,0,0.9)] py-1 px-4  w-full text-sm`}>
+                <div className="flex justify-between items-center gap-1 my-2">
+                  <div className="font-normal text-white">Bank Wallet</div>
+                  <div className="flex items-center gap-1">
+                    <div>
+                      {/* <span className={props?.dataOfAccountSetup?.bank && props?.dataOfAccountSetup?.wallet ? `` : 'text-danger'}> */}
+                      <span
+                        className={
+                          checkIfWalleAdded() ? "text-[#01cc7a] font-light flex" : "text-[#DC4C64] font-light flex items-center gap-1"
+                        }
+                      >
+                        <FeatherIcon
+                          className={
+                            checkIfWalleAdded() ? "text-[#01cc7a] font-light" : "text-[#DC4C64] font-light"
+                          }
+                          icon="check-circle"
+                          color="green"
+                          size="15"
+                        />{" "}
+                        {checkIfWalleAdded() ? "Completed" : "Incomplete"}
+                      </span>
+                    </div>
+                    <div style={{ marginLeft: "10px" }}>
+                      <FeatherIcon
+                        icon="eye"
+                        size="15"
+                        onClick={(e) => props.handleGoToStep("Bank/Wallets")}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          {fundData?.fund_setting?.account?.subscription?.status && (
+            <>
+              <div className={`bg-color-stepstatus-${theme} rounded-lg border-[#1b3050] border-[1px] shadow-[2px_6px_20px_rgba(0,0,0,0.9)] py-1 px-4 w-full text-sm`}>
+                <div className="flex justify-between items-center gap-1 my-2">
+                  <div className="font-normal text-white">Application Document</div>
+                  <div className="flex items-center gap-1">
+                    <div>
+                      {isLoaderApplicationStatus ? (
+                        <Spinner
+                          color="blue"
+                          animation="border"
+                          role="status"
+                        ></Spinner>
+                      ) : (
+                        <span
+                          className={
+                            subscriptionApplicationStatus === false
+                              ? "text-[#DC4C64] font-light flex items-center gap-1"
+                              : subscriptionApplicationStatus
+                              ? "text-[#01cc7a] font-light flex items-center gap-1"
+                              : "text-[#DC4C64] font-light flex items-center gap-1"
+                          }
+                        >
+                          <FeatherIcon
+                            className={
+                              subscriptionApplicationStatus === false
+                                ? "text-[#DC4C64] font-light"
+                                : subscriptionApplicationStatus
+                                ?"text-[#01cc7a] font-light"
+                                : "text-[#DC4C64] font-light"
+                            }
+                            icon="check-circle"
+                            color="green"
+                            size="15"
+                          />
+                          {subscriptionApplicationStatus === false
+                            ? "Incomplete"
+                            : subscriptionApplicationStatus
+                            ? "Completed"
+                            : "Incomplete"}
+                        </span>
+                      )}
+                    </div>
+                    <div style={{ marginLeft: "10px" }}>
+                      <FeatherIcon
+                        icon="eye"
+                        size="15"
+                        onClick={(e) => props.handleGoToStep("Application")}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+      <div>
+        {selectedIdentityData?.type.toLowerCase() == "corporate" ? (
+          !isLoader ? (
+            <>
+              <div className="w-full">
+                <div className="card" style={{ backgroundColor: "#1f3958" }}>
+                  {/* <div className="card-header">
                       <h4 className="card-header-title">
                         Corporate Underlying Parties
                       </h4>
                     </div> */}
-                    <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <h4 className="card-header-title">
-                        Corporate Underlying Parties
-                      </h4>
+                  <div
+                    className="card-header"
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <h4 className="card-header-title">
+                      Corporate Underlying Parties
+                    </h4>
 
-                      <OverlayTrigger
-                        placement="top"
-                        overlay={<Tooltip>Invite Underlying Corporate Parties</Tooltip>}
-                      >
-                        <span>
-                          <FeatherIcon
-                            icon="user-plus"
-                            size="20"
-                            style={{ cursor: 'pointer' }}
-                            onClick={() =>
-                              window.open(`${process.env.AUTH_API_URL}/entity-users-management/${entityId}?invite_user=true`, "_blank")
-                            }
-                          />
-                        </span>
-                      </OverlayTrigger>
-                    </div>
+                    <OverlayTrigger
+                      placement="top"
+                      overlay={
+                        <Tooltip>Invite Underlying Corporate Parties</Tooltip>
+                      }
+                    >
+                      <span>
+                        <FeatherIcon
+                          icon="user-plus"
+                          size="20"
+                          style={{ cursor: "pointer" }}
+                          onClick={() =>
+                            window.open(
+                              `${process.env.AUTH_API_URL}/entity-users-management/${entityId}?invite_user=true`,
+                              "_blank"
+                            )
+                          }
+                        />
+                      </span>
+                    </OverlayTrigger>
+                  </div>
 
-
-                    <div className="card-body">
-                      {crpListData &&
-                        crpListData.map((item, index) => (
-                          <>
-                            <div style={{ minHeight: '161px' }}>
-                                <div className="w-full md:w-1/2 lg:w-1/2 xl:w-1/2">
-                                <CustomerBox
-                                  customerData={item}
-                                  isCrp={true}
-                                  params={params}
-                                />
-                              </div>
-                                <div className="w-full md:w-1/2 lg:w-1/2 xl:w-1/2">
-                                <div
-                                  style={{ minHeight: '161px' }}
-                                  className="card"
-                                >
-                                  <div className="card-body">
-                                    {getMissingDataOfIdentity(
-                                      item,
-                                      accountData?.fund,
-                                      particularFields,
-                                      true,
-                                    )?.missingIdentityFields.length > 0 ? (
-                                      <div
-                                        className="missing_required_fields_documents"
-                                        style={{
-                                          marginBottom: '1em',
-                                        }}
-                                      >
-                                        <p
-                                          className="text-muted"
-                                          style={{ maxWidth: '60%' }}
-                                        >
-                                          <span>Please note: </span>We need a
-                                          bit more information to complete this
-                                          application.
-                                        </p>
-                                        <button
-                                          className="btn btn-warning"
-                                          style={{ fontSize: '12px' }}
-                                          onClick={(e) =>
-                                            handleClickMissingParticularsForCrp(
-                                              e,
-                                              item,
-                                            )
-                                          }
-                                        >
-                                          Incomplete Particulars
-                                        </button>
-                                      </div>
-                                    ) : (
-                                      <div className="missing_required_fields_documents_success">
-                                        <p
-                                          className="text-muted"
-                                          style={{ maxWidth: '60%' }}
-                                        >
-                                          <span>Success! </span>You provided all
-                                          necessary information.
-                                        </p>
-                                        <button
-                                          className="btn btn-primary"
-                                          style={{ fontSize: '12px' }}
-                                          onClick={(e) =>
-                                            handleClickMissingParticularsForCrp(
-                                              e,
-                                              item,
-                                            )
-                                          }
-                                        >
-                                          View Particulars
-                                        </button>
-                                      </div>
-                                    )}
-                                    {getMissingDataOfIdentity(
-                                      item,
-                                      accountData?.fund,
-                                      particularFields,
-                                      true,
-                                      item?.documents,
-                                      item?.requiredDocs,
-                                    )?.missingDocuments.length > 0 ? (
-                                      <div
-                                        className="missing_required_fields_documents"
-                                        style={{
-                                          marginBottom: '1em',
-                                        }}
-                                      >
-                                        <p
-                                          className="text-muted"
-                                          style={{ maxWidth: '60%' }}
-                                        >
-                                          <span>Please note: </span>We need a
-                                          bit more information to complete this
-                                          application.
-                                        </p>
-                                        <button
-                                          className="btn btn-warning"
-                                          style={{ fontSize: '12px' }}
-                                          onClick={(e) =>
-                                            handleClickMissingDocumentsForCrp(
-                                              e,
-                                              item,
-                                            )
-                                          }
-                                        >
-                                          Incomplete Documents
-                                        </button>
-                                      </div>
-                                    ) : (
-                                      <div className="missing_required_fields_documents_success">
-                                        <p
-                                          className="text-muted"
-                                          style={{ maxWidth: '60%' }}
-                                        >
-                                          <span>Success! </span>You provided all
-                                          necessary information.
-                                        </p>
-                                        <button
-                                          className="btn btn-primary"
-                                          style={{ fontSize: '12px' }}
-                                          onClick={(e) =>
-                                            handleClickMissingDocumentsForCrp(
-                                              e,
-                                              item,
-                                            )
-                                          }
-                                        >
-                                          View Documents
-                                        </button>
-                                      </div>
-                                    )}
-                                  </div>
-                                </div>
-
-                                {/* <MissingFields selectedIdentityData={item?.identity} fundData={accountData?.fund} /> */}
-                              </div>
+                  <div className="card-body">
+                    {crpListData &&
+                      crpListData.map((item, index) => (
+                        <>
+                          <div style={{ minHeight: "161px" }}>
+                            <div className="w-full md:w-1/2 lg:w-1/2 xl:w-1/2">
+                              <CustomerBox
+                                customerData={item}
+                                isCrp={true}
+                                params={params}
+                              />
                             </div>
-                          </>
-                        ))}
-                    </div>
+                            <div className="w-full md:w-1/2 lg:w-1/2 xl:w-1/2">
+                              <div
+                                style={{ minHeight: "161px" }}
+                                className="card"
+                              >
+                                <div className="card-body">
+                                  {getMissingDataOfIdentity(
+                                    item,
+                                    accountData?.fund,
+                                    particularFields,
+                                    true
+                                  )?.missingIdentityFields.length > 0 ? (
+                                    <div
+                                      className="missing_required_fields_documents"
+                                      style={{
+                                        marginBottom: "1em",
+                                      }}
+                                    >
+                                      <p
+                                        className="text-muted"
+                                        style={{ maxWidth: "60%" }}
+                                      >
+                                        <span>Please note: </span>We need a bit
+                                        more information to complete this
+                                        application.
+                                      </p>
+                                      <button
+                                        className="btn btn-warning"
+                                        style={{ fontSize: "12px" }}
+                                        onClick={(e) =>
+                                          handleClickMissingParticularsForCrp(
+                                            e,
+                                            item
+                                          )
+                                        }
+                                      >
+                                        Incomplete Particulars
+                                      </button>
+                                    </div>
+                                  ) : (
+                                    <div className="missing_required_fields_documents_success">
+                                      <p
+                                        className="text-muted"
+                                        style={{ maxWidth: "60%" }}
+                                      >
+                                        <span>Success! </span>You provided all
+                                        necessary information.
+                                      </p>
+                                      <button
+                                        className="btn btn-primary"
+                                        style={{ fontSize: "12px" }}
+                                        onClick={(e) =>
+                                          handleClickMissingParticularsForCrp(
+                                            e,
+                                            item
+                                          )
+                                        }
+                                      >
+                                        View Particulars
+                                      </button>
+                                    </div>
+                                  )}
+                                  {getMissingDataOfIdentity(
+                                    item,
+                                    accountData?.fund,
+                                    particularFields,
+                                    true,
+                                    item?.documents,
+                                    item?.requiredDocs
+                                  )?.missingDocuments.length > 0 ? (
+                                    <div
+                                      className="missing_required_fields_documents"
+                                      style={{
+                                        marginBottom: "1em",
+                                      }}
+                                    >
+                                      <p
+                                        className="text-muted"
+                                        style={{ maxWidth: "60%" }}
+                                      >
+                                        <span>Please note: </span>We need a bit
+                                        more information to complete this
+                                        application.
+                                      </p>
+                                      <button
+                                        className="btn btn-warning"
+                                        style={{ fontSize: "12px" }}
+                                        onClick={(e) =>
+                                          handleClickMissingDocumentsForCrp(
+                                            e,
+                                            item
+                                          )
+                                        }
+                                      >
+                                        Incomplete Documents
+                                      </button>
+                                    </div>
+                                  ) : (
+                                    <div className="missing_required_fields_documents_success">
+                                      <p
+                                        className="text-muted"
+                                        style={{ maxWidth: "60%" }}
+                                      >
+                                        <span>Success! </span>You provided all
+                                        necessary information.
+                                      </p>
+                                      <button
+                                        className="btn btn-primary"
+                                        style={{ fontSize: "12px" }}
+                                        onClick={(e) =>
+                                          handleClickMissingDocumentsForCrp(
+                                            e,
+                                            item
+                                          )
+                                        }
+                                      >
+                                        View Documents
+                                      </button>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+
+                              {/* <MissingFields selectedIdentityData={item?.identity} fundData={accountData?.fund} /> */}
+                            </div>
+                          </div>
+                        </>
+                      ))}
                   </div>
                 </div>
-              </>
-            ) : (
-              <LoadingSpinner animation="grow" custom={true} height="70vh" />
-            )
-          ) : null}
-        </div>
+              </div>
+            </>
+          ) : (
+            <LoadingSpinner animation="grow" custom={true} height="70vh" />
+          )
+        ) : null}
       </div>
+    </div>
   );
 }
