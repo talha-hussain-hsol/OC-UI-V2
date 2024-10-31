@@ -21,7 +21,8 @@ import CustomAlert from "../../../widgets/components/Alerts";
 // import  Avatar  from "../../../components/Avatar";
 import "@nosferatu500/react-sortable-tree/style.css"; //install 
 import SortableTree from "@nosferatu500/react-sortable-tree"; //2
-import EntityIcon from "../../../icons/entity-icon-small.svg";
+// import EntityIcon from "../../../icons/entity.svg";
+import UserIcon from '../../../assets/UserIcon.jpg'
 import formatDateRegionWise  from "../../../helpers/formatDateRegionWise";
 // var theme = localStorage.getItem("portal_theme");
 let crpIdValueSelected = "";
@@ -1967,14 +1968,7 @@ export default function Documents(props) {
             {node?.data?.type == "INDIVIDUAL" ? (
               <img src="/img/investor/default-avatar.png" alt="..." class="" style={{ height: "35px", marginRight: "8px" }} />
             ) : (
-              <EntityIcon
-                className={"nodeIcon"}
-                fontSize={"large"}
-                color={"action"}
-                style={{
-                  fill: theme == "dark" || theme == undefined ? "white" : "black",
-                }}
-              />
+              <img src={UserIcon} alt="EntityIcon" className="w-16 rounded-full"/>
             )}
           </div>
           <div style={{ display: "flex", flexDirection: "column", maxWidth: "80%", wordWrap: "break-word" }}>
@@ -2098,8 +2092,10 @@ export default function Documents(props) {
                       {type === "individual" ? (
                         <img src="/img/investor/default-avatar.png" alt="Avatar" className="h-8 mr-2" />
                       ) : (
-                        <EntityIcon className="nodeIcon" fontSize="large" color="action" style={{ fill: 'currentColor' }} />
-                      )}
+                        // <EntityIcon className="nodeIcon" fontSize="large" color="action" style={{ fill: 'currentColor' }} />
+
+                        <img src={UserIcon} alt="EntityIcon" className="w-16 rounded-full"/>
+                        )}
                     </>
                   )}
                 </div>

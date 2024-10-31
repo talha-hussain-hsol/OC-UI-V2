@@ -1393,7 +1393,7 @@ export default function Wizard() {
 <hr className="w-full border-t-[1px] border-t-[#6e84a3] opacity-30 my-4" />
           <div className="xs:flex-row flex flex-col space-y-2 xs:space-y-0 xs:justify-between  w-full px-8">
             <button
-              className={`bg-color-button-${theme} px-6 py-3 rounded-lg text-white outline-none`}
+              className={`bg-color-cancelBtn-${theme} hover:bg-color-cancelBtn-hover-${theme} border border-white hover:border-color-iconButton-hover-${theme} transition-all duration-300 ease-in-out px-6 py-3 rounded-lg text-white outline-none`}
               onClick={(e) => handleBackCancel(e)}
             >
               {currentSection == 0 ? "Cancel" : "Back"}

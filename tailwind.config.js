@@ -126,7 +126,10 @@ module.exports = {
         "color-stepper-button-hover-Ascent": '#00b86b',
         "color-stepper-button-SC": '#3DA500',
         "color-stepper-button-Ascent": '#3DA500',
-       
+       "color-cancelBtn-SC": "rgba(0, 0, 0, 0)",
+        "color-cancelBtn-Ascent": "#152e4d",
+        "color-cancelBtn-hover-SC": "rgba(0, 0, 0, 0)",
+        "color-cancelBtn-hover-Ascent": "#12273F",
         "color-account-Ascent": 'rgba(0, 0, 0, 0)',
         "color-documents-SC": 'rgba(0, 0, 0, 0)',
       },
@@ -325,7 +328,14 @@ module.exports = {
       pattern: /text-color-fundName-(SC|lightTheme|Ascent)/,
     },
     {
+      pattern: /bg-color-cancelBtn-(SC|lightTheme|Ascent)/,
+    },
+    {
       pattern: /text-color-sidebar-icon-hover-(SC|lightTheme|Ascent)/,
+      variants: ["hover"],
+    },
+    {
+      pattern: /bg-color-cancelBtn-hover-(SC|lightTheme|Ascent)/,
       variants: ["hover"],
     },
     {
