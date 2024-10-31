@@ -1422,7 +1422,9 @@ export default function Wizard() {
 
                       <div>
                         <button
-                          className={`bg-color-button-${theme} px-6 py-3 rounded-lg text-white outline-none`}
+                          className={`bg-color-stepper-button-${theme}  px-8 py-3 rounded-lg text-white outline-none transition-all duration-300 ease-in-out ${
+                            checkIfSubmitButtonDisabled() ? "bg-[#00b86b] opacity-70" : `hover:bg-color-stepper-button-hover-${theme}` }`}
+                         
                           disabled={checkIfSubmitButtonDisabled()}
                           onClick={handleSubmitReview}
                         >
