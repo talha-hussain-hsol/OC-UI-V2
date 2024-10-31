@@ -23,10 +23,8 @@ function deleteAllCookies() {
 }
 API.interceptors.response.use(
   function (response) {
-    console.log(response, "responseresponseresponseresponseresponse");
     // generateResponseForLoggin(response, true)
     if (response?.data?.success == false && response?.data?.status_code?.value == 401) {
-      console.log(response, "response in response");
 
       // logoutCustomer();
       // navigate('/sign-in');
@@ -36,9 +34,7 @@ API.interceptors.response.use(
   },
   function (error) {
     // generateResponseForLoggin(error, false)
-    console.log("responseresponseresponseresponseresponse error", error);
-    console.log(error?.toJSON(), "response?.data?.status_code?.value");
-    console.log(error?.response?.status, "error?.response?.status");
+   
     if (401 === error?.response?.status && error?.toJSON()?.config?.url != "/auth/userDetails") {
       localStorage.clear();
       deleteAllCookies();
@@ -257,7 +253,6 @@ export async function processRequest(request, token) {
   }
   switch (request.type) {
     case "GET":
-      console.log("API ==>", request.urlString);
       const getResponse = await API.get(request.urlString, { cancelToken: token, headers: headers, timeout: TIMEOUT });
       
       return getResponse;

@@ -6,7 +6,6 @@ import { useTheme } from "../../../contexts/themeContext";
 
 const BankWallets = (fundData) => {
   const theme = useTheme();
-  console.log("Fund Data iss: ", fundData);
   const {
     isLoader,
     isLoaderBank,

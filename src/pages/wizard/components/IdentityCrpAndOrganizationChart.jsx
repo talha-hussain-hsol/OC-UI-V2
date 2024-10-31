@@ -23,7 +23,6 @@ let treeDataGlobal = [];
 let oldCrpId = "";
 let showParticularForm = false;
 export default function particular(props) {
-  console.log(props, "props props");
   const [updateLabel, setUpdateLabel] = useState(false);
   const params = useParams();
   const [crpIdentityId, setCrpIdentityId] = useState(null);
@@ -58,7 +57,6 @@ export default function particular(props) {
   let identity_id_from_props = props?.dataOfAccountSetup?.identity_id;
   let account_id_from_props = props?.dataOfAccountSetup?.account_id;
   let crp_id_from_props = props?.crp_id;
-  console.log(crp_id_from_props, "crp_id_from_props");
   let customerType_from_props = props?.dataOfAccountSetup?.isIndividual ? "individual" : "corporate";
   const [identity_id, setIdentityId] = useState(identity_id_from_props);
 
@@ -90,7 +88,6 @@ export default function particular(props) {
   };
 
   // const [oldCrpId, setOldCrpId] = useState("");
-  console.log(customerType, "customerType customerType customerTypecustomerType");
 
   useEffect(() => {
     if (identityDataFields && particularAddedData && updateLabel) {
@@ -107,7 +104,7 @@ export default function particular(props) {
     }
   }, [message]);
   useEffect(() => {
-    console.log("selectedRolesForSelectData identity_id", identity_id);
+
   }, [identity_id]);
   useEffect(() => {
     if (errorMessage) {
@@ -133,7 +130,6 @@ export default function particular(props) {
   }, [customerType, rolesMetaData]);
   useEffect(() => {
     treeDataGlobal = treeData;
-    console.log(treeData, "treeData useEffect");
   }, [treeData]);
   useEffect(() => {
     if (identity_id) {
@@ -159,7 +155,6 @@ export default function particular(props) {
           return indexA - indexB;
         });
       setParticularFields(filteredObj);
-      console.log(filteredObj, "array   arrayarrayarrayarrayarray");
     }
   }, [particularFieldsDataAll, customerType]);
 
@@ -167,8 +162,7 @@ export default function particular(props) {
     let selectedRolesForSelect = [];
 
     if (rolesMeta && particularAddedDataRoles) {
-      console.log(rolesMeta, "rolesMeta");
-      console.log(particularAddedDataRoles, "particularAddedData particularAddedData particularAddedData");
+ 
       for (let selected of particularAddedDataRoles) {
         for (let i of rolesMeta) {
           if (i?.value == selected?.crpRoleMetaId) {
@@ -176,7 +170,6 @@ export default function particular(props) {
           }
         }
       }
-      console.log(selectedRolesForSelect, "selectedRolesForSelect");
       setSelectedRolesForSelectData(selectedRolesForSelect);
       setSelectedRolesMeta(selectedRolesForSelect);
     }
@@ -206,7 +199,6 @@ export default function particular(props) {
           return indexA - indexB;
         });
       setParticularFields(filteredObj);
-      console.log(filteredObj, "array   arrayarrayarrayarrayarray");
       // setParticularFields(array)
     } else {
     }
@@ -281,7 +273,6 @@ export default function particular(props) {
   const transformToTreeData = (node) => {
     setIsLoaderCrp(true);
     const { id, label, children, type, roles } = node;
-    console.log(node, "node transformToTreeData");
     let name = "";
     let ownerShip = "";
     let rolesData = [];
@@ -318,7 +309,6 @@ export default function particular(props) {
       // Add any other properties you want here
       // For example, 'id', 'entityId', 'parentId', etc.
     };
-    console.log(treeDataNode, "treeDataNode");
     setIsLoaderCrp(false);
 
     return treeDataNode;
@@ -327,11 +317,9 @@ export default function particular(props) {
   const handleDeleteCRP = (node) => {
     setDeleteConfirmationModal(true);
     setSelectedRow(node?.data);
-    console.log("sdsadasdasdasdasd", node);
   };
 
   const clearInputFieldsAndForms = () => {
-    console.log("selectedRolesForSelectData", selectedRolesForSelectData);
 
     setSelectedRolesMeta([]);
     setParticularAddedData([]);
@@ -391,8 +379,7 @@ export default function particular(props) {
     }
   };
   const filterRolesByType = (data) => {
-    console.log(data, "data filterRolesByType");
-    console.log(customerType.toUpperCase(), "customerType.toUpperCase()");
+ 
     if (data) {
       let filterRolesMeta = [];
       for (let item of data) {
@@ -400,7 +387,6 @@ export default function particular(props) {
           filterRolesMeta.push({ value: item?.id, label: item?.name });
         }
       }
-      console.log(filterRolesMeta, "filterRolesMeta  filterRolesMetafilterRolesMetafilterRolesMeta");
       setRolesMeta(filterRolesMeta);
     }
   };
@@ -468,13 +454,11 @@ export default function particular(props) {
       return;
     }
 
-    console.log(selectedRolesMeta, "selectedRolesMeta");
     let selectedRoles = [];
     selectedRolesMeta &&
       selectedRolesMeta.map((item) => {
         selectedRoles.push({ crp_role_meta_id: item?.value });
       });
-    console.log(selectedRoles, "selectedRoles");
     // return;
     const dataToSend = {
       label: label,
@@ -528,7 +512,6 @@ export default function particular(props) {
   };
   const handleSelectRolesChange = (selectedOptions) => {
     setSelectedRolesMeta(selectedOptions);
-    console.log(selectedOptions, "selectedOptions");
     setRolesError("");
   };
   const handleChangeEntityKey = (e) => {
@@ -548,7 +531,6 @@ export default function particular(props) {
     setShowParticularFormData(true);
   };
   const handleEditCRP = (type, selectedCrpId, parentId) => {
-    console.log(selectedCrpId, "selectedCrpId");
     if (parentId != 0) {
       setCustomerType(type);
       crpIdValueSelected = selectedCrpId;
@@ -558,7 +540,6 @@ export default function particular(props) {
   };
   const handleShowHideCRP = (type, selectedCrpId, parentId) => {
     setCrpIdentityId();
-    console.log(selectedCrpId, "selectedCrpId");
     setCrpId(null);
     setCustomerType(null);
     setAddNewCrp(null);
@@ -579,7 +560,6 @@ export default function particular(props) {
     }
   };
   const handleShowHideCRPProps = (type, selectedCrpId, parentId) => {
-    console.log(selectedCrpId, "selectedCrpId");
     setCrpId(null);
     setCustomerType(null);
     setAddNewCrp(null);
@@ -603,7 +583,6 @@ export default function particular(props) {
   const toggleExpandById = (data, id) => {
     return data.map((item) => {
       if (item.data.id === id) {
-        console.log(item.expanded, "matched toggleExpandById");
         return {
           ...item,
           expanded: item.expanded === true ? false : true,
@@ -622,10 +601,7 @@ export default function particular(props) {
   };
 
   const nodeContentRenderer = ({ node }) => {
-    console.log(showParticularForm, "showParticularForm nodeContentRenderer nodeContentRenderer");
-    console.log(node, "node nodenode");
-    console.log(crpIdValueSelected, "crpIdValueSelected crpIdValueSelected");
-    console.log(node?.data.id, "node?.data.id node?.data.id");
+   
     let ownerShip = 0;
     let borderStyle = "";
     if (node?.type == "CORPORATE") {
@@ -639,12 +615,10 @@ export default function particular(props) {
         borderStyle = "1px solid red";
       }
       if (node?.data.id == crpIdValueSelected) {
-        console.log("crp id matcheededed");
         borderStyle = "2px solid #1b636e";
       }
     }
     if (node?.data.id == crpIdValueSelected) {
-      console.log("crp id matcheededed");
       borderStyle = "2px solid #1b636e";
     }
 
@@ -864,17 +838,11 @@ export default function particular(props) {
   };
   return (
     <div className="main-content">
-      {console.log(crp_id, "crp_id aksdnaks dja jdhs")}
       <Container fluid>
         <Row className="justify-content-center">
           {showParticularFormData}
           {showParticularForm}
-          {console.log(showParticularForm, "showParticularForm showParticularForm")}
-          {console.log(customerType, "  treeDatatreeDatatreeDatatreeDatatreeData customerType")}
-          {console.log(crp_id, "  treeDatatreeDatatreeDatatreeDatatreeData crpId")}
-          {console.log(treeData, "  treeDatatreeDatatreeDatatreeDatatreeData")}
-          {console.log(particularFields, "  treeDatatreeDatatreeDatatreeDatatreeData particularFields")}
-          {console.log(label, "  label  label label")}
+         
           <Col xs={12} lg={5} xl={5}>
             {/* {isLoaderCrp && (
                             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "20rem" }}>
@@ -1235,8 +1203,7 @@ export default function particular(props) {
                           </div>
                           {selectedRolesForSelectData.length > 0 && crp_id ? (
                             <div>
-                              {console.log(selectedRolesForSelectData, "selectedRolesForSelectData")}
-                              {console.log(rolesMeta, "rolesMeta")}
+                              
                               <h2>Roles</h2>
                               <div className="col-12 col-md-12">
                                 <div className="form-group">

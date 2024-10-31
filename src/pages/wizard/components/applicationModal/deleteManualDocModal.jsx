@@ -25,8 +25,7 @@ const DeleteManualDocModal = ({
   selectedRequiredRow,
   handleAlert
 }) => {
-  console.log("selectedRow", selectedRow)
-  console.log("selectedRow selectedRequiredRow", selectedRequiredRow)
+
   const [isLoaderModal, setIsLoaderModal] = useState(false)
   const params = useParams()
   const cancelTokenSource = axios.CancelToken.source()
@@ -44,7 +43,6 @@ const DeleteManualDocModal = ({
         data,
       cancelTokenSource.token
     )
-    console.log("response", response)
     if (response.success == true) {
       setIsLoaderModal(false)
       getList()

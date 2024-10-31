@@ -66,7 +66,6 @@ export default function NewIdentitySection(props) {
   }, [isStandAlone, isIndividual, selectedProvider, isPanVerified, isAadhaarVerified, isCKYCVerified, panData, adhaarData, cKYCData]);
   const handleGetDataApi = async () => {
     setIsLoader(true);
-    console.log(registrationProvider, "registrationProvider");
     // return;
     if (registrationProvider.state === "PAN") {
       setPanLoader(true);
@@ -191,7 +190,6 @@ export default function NewIdentitySection(props) {
   return (
     <div className={`w-full px-8`}>
       
-      {console.log(isNotCKYCVerified, "isNotCKYCVerified")}
       <div className="md:flex md:flex-row flex flex-col gap-10 justify-center ">
       <div className="md:w-1/2 w-full">
           <h3>Are you applying as an Individual or Corporate?</h3>

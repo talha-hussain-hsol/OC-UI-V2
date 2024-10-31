@@ -38,7 +38,6 @@ function Documents(dataOfAccountSetups) {
 
   useEffect(() => {
     fetchAPIs();
-    console.log("dataOfAccountSetups33", dataOfAccountSetups);
   }, []);
 
   const { theme } = useTheme();

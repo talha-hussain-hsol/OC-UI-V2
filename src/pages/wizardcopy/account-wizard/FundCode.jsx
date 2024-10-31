@@ -18,7 +18,6 @@ const FundCode = () => {
   let [fundData, setFundData] = useState([]); // will use this in future
   // let fundData;
   let entity_id = localStorage.getItem("entityId");
-  console.log("entity_id", entity_id);
   let fund_id;
   let fund_named_id;
   let dataOfAccountSetups = [];
@@ -39,8 +38,7 @@ const FundCode = () => {
     };
     dataOfAccountSetups.push(account_detail);
 
-    console.log(`Fund with ID ${fund_id} added.`);
-    console.log("dataOfAccountSetups", dataOfAccountSetups);
+   
   }
 
   useEffect(() => {
@@ -92,7 +90,6 @@ const FundCode = () => {
       }
     } catch (error) {
       if (axios.isCancel(error)) {
-        console.log("Request canceled:", error.message);
       } else {
         console.error("API Error:", error);
       }

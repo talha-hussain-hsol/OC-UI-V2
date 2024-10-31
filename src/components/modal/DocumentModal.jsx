@@ -21,7 +21,6 @@ export default function DocumentModal(props) {
 
   const region = localStorage.getItem("fundRegion");
   const placeHolderForDate = region === "united-states-of-america-(USA)" ? "MM/DD/YYYY" : "DD/MM/YYYY";
-  console.log(props, "props");
   const cancelTokenSource = axios.CancelToken.source();
 
   let identity_id = "";
@@ -88,9 +87,7 @@ export default function DocumentModal(props) {
   let docImage = React.useRef();
   let docImage1 = React.useRef();
   let docImage2 = React.useRef();
-  console.log("aaaaaaaaaaa props", props);
   useEffect(() => {
-    console.log("modalShow", props.show);
     if (!props.show) {
       clearFormData();
     }
@@ -107,7 +104,6 @@ export default function DocumentModal(props) {
   useEffect(() => {
     if (contentTypeData?.search("pdf") != -1 || contentTypeData?.search("jpg") != -1 || contentTypeData?.search("png") != -1 || contentTypeData?.search("jpeg") != -1) {
       setFormatFileError(false);
-      console.log("dasdasdsadasdasdad");
     } else {
       if (contentTypeData != "") {
         setFormatFileError(true);
@@ -120,13 +116,10 @@ export default function DocumentModal(props) {
     // ) : contentTypeData?.search("word") != -1 ? (
     //   <MicrosoftWord style={{ fill: "black" }} fontSize={"medium"} color={"action"}></MicrosoftWord>
     // ) : null}
-    console.log("setFormatFileError setFormatFileError", contentTypeData);
   }, [contentTypeData]);
   useEffect(() => {
-    console.log("formatFileError contentTypeData", contentTypeData);
   }, [contentTypeData]);
   useEffect(() => {
-    console.log("formatFileError formatFileError", formatFileError);
   }, [formatFileError]);
 
   const clearFormData = () => {
@@ -140,13 +133,12 @@ export default function DocumentModal(props) {
   };
 
   useEffect(() => {
-    console.log("types modal", props.requiredDocumentSelected?.children);
 
     if (props.requiredDocumentSelected?.children.length > 0) {
       setDocumentTypes(props.requiredDocumentSelected?.children);
     } else {
       setDocumentTypes([props.requiredDocumentSelected]);
-    }console.log('props.requiredDocumentSelected?.id', props.requiredDocumentSelected?.id)
+    }
     props.requiredDocumentSelected && setDocumentParentId(props.requiredDocumentSelected?.id);
   }, [props, documentTypeSelected]);
   useEffect(() => {
@@ -174,21 +166,15 @@ export default function DocumentModal(props) {
     isPassportDateValid();
   }, [expiryDate]);
   useEffect(() => {
-    console.log("expiryDateexpiryDate", expiryDate);
     if (expiryDate === null) {
       setErrorExpiryDate(false);
     }
   }, [expiryDate]);
 
   useEffect(() => {
-    console.log(docImage1, "docImage1");
-    console.log(docImage2, "docImage2");
     if (image1 && image2) {
       if (docImage1?.current && docImage2?.current) {
-        console.log(docImage1, "docImage1 innner");
-        console.log(docImage2, "docImage2 inner");
         if (documentTypeSelected == nationalId) {
-          console.log("i am in");
           let img1 = URL.createObjectURL(docImage1.current?.files?.item(0));
           let img2 = URL.createObjectURL(docImage2.current?.files?.item(0));
 
@@ -198,7 +184,6 @@ export default function DocumentModal(props) {
           setTimeout(function () {
             // setViewLoader(false)
             let img1Height = document.getElementById("img1").height;
-            console.log(img1Height, "img1Height");
             mergeImages(
               [
                 { src: img1, x: 0, y: 0 },
@@ -213,13 +198,13 @@ export default function DocumentModal(props) {
                 // image.style.display = 'block';
                 // document.getElementById('imagePreview').src = b64;
                 // // document.querySelector('img').src = b64
-                console.log(b64, "b6464646464gbjjchbcsd  j k");
+
                 // toggleAllImageTags('none');
-                console.log("dasdasdasdas", getBlob(b64));
+
                 fetch(b64)
                   .then((res) => res.blob())
                   .then((blob) => {
-                    console.log("dsda", blob);
+
                     setContentTypeData(blob?.type); // blob object
                     // continue with your code
                   })
@@ -229,18 +214,15 @@ export default function DocumentModal(props) {
         }
       }
     }
-    console.log(`iamsnd ${image1} and ${image2}`);
+
   }, [image1, image2]);
 
   useEffect(() => {
-    console.log("types modal documentTypes", documentTypes);
-    console.log("types modal documentTypeSelected", documentTypeSelected);
-    console.log("types modal documentParentId", documentParentId);
-
+   
+    
     if (documentTypes[0] !== null) {
       const selectedItem = documentTypes.find((item) => item.id === parseInt(documentTypeSelected));
       const selectedItemName = selectedItem ? selectedItem.name.toLowerCase() : "";
-      console.log("contentTypeData", contentTypeData);
       setDocumentTypeSelectedName(selectedItemName);
     }
   }, [documentTypeSelected, contentTypeData]);
@@ -257,7 +239,6 @@ export default function DocumentModal(props) {
 
     const isPassportValid = selectedDocumentType?.name === "PASSPORT" && Date.parse(expiryDate) > minValidityPeriod;
 
-    console.log(isPassportValid, "isPassportValid");
 
     // return !(isContentTypeValid && isIssueDateValid && isExpiryDateValid && (selectedDocumentType?.name !== "PASSPORT" || isPassportValid));
 
@@ -284,7 +265,6 @@ export default function DocumentModal(props) {
     if (files.length === 1) {
       file = files[0];
       setFileDrop(file);
-      console.log("Dropped file: " + file.name);
       // setSelectedFile(file);
       // You can handle the file here or initiate an upload.
     } else {
@@ -305,7 +285,6 @@ export default function DocumentModal(props) {
         setTimeout(function () {
           // setViewLoader(false)
           let img1Height = document.getElementById("img1").height;
-          console.log(img1Height, "img1Height");
           mergeImages(
             [
               { src: img1, x: 0, y: 0 },
@@ -332,7 +311,6 @@ export default function DocumentModal(props) {
         if (!formatFileError) {
           image.style.display = "block";
 
-          console.log(file, "file");
           if (file) {
             toggleAllImageTags("none");
             let data = URL.createObjectURL(file);
@@ -368,7 +346,6 @@ export default function DocumentModal(props) {
       // setViewLoader(true)
 
       if (image) {
-        console.log(docImage, "docImage.current?.files");
 
         if (docImage.current?.files.length > 2) {
           setImageLengthErr(true);
@@ -385,7 +362,6 @@ export default function DocumentModal(props) {
             setTimeout(function () {
               // setViewLoader(false)
               let img1Height = document.getElementById("img1").height;
-              console.log(img1Height, "img1Height");
               mergeImages(
                 [
                   { src: img1, x: 0, y: 0 },
@@ -412,7 +388,6 @@ export default function DocumentModal(props) {
             if (!formatFileError) {
               image.style.display = "block";
 
-              console.log(file, "file");
               if (file) {
                 toggleAllImageTags("none");
                 let data = URL.createObjectURL(file);
@@ -447,17 +422,13 @@ export default function DocumentModal(props) {
     elem?.addEventListener("change", function () {
       let image = document.getElementById("imagePreview1");
       // setViewLoader(true)
-      console.log(image, "image");
       if (image) {
-        console.log(docImage, "docImage.current?.files");
 
         image.style.display = "block";
 
         // return;
         let file = docImage1.current?.files?.item(0);
-        console.log(docImage1, "docImage1");
         setContentTypeData1(file?.type);
-        console.log(file, "file");
         // contentTypeData?.search("jpg")
         if (file.type.search("jpg") != -1 || file.type.search("jpeg") != -1 || file.type.search("png") != -1 || file.type.search("pdf") != -1) {
           setImage1(true);
@@ -486,7 +457,6 @@ export default function DocumentModal(props) {
       setDocumentErr(true);
       setDocumentErrMessage("Select Document Type to Continue");
       // setErrorMessage('Select Document Type to Continue')
-      console.log(documentTypeSelected, "documentTypeSelected");
       return;
     }
     let elem = document.getElementById("inputImageElement2");
@@ -497,13 +467,11 @@ export default function DocumentModal(props) {
       // setViewLoader(true)
 
       if (image) {
-        console.log(docImage, "docImage.current?.files");
 
         image.style.display = "block";
 
         let file = docImage2.current?.files?.item(0);
         setContentTypeData2(file.type);
-        console.log(file, "file");
         if (file.type.search("jpg") != -1 || file.type.search("jpeg") != -1 || file.type.search("png") != -1 || file.type.search("pdf") != -1) {
           setImage2(true);
         } else {
@@ -534,7 +502,6 @@ export default function DocumentModal(props) {
 
     // Convert it to a blob to upload
     var blob = b64toBlob(realData, contentType, 512);
-    console.log(blob, "blob");
     setContentTypeData(blob.type);
     setImageBlob(blob);
   }
@@ -583,7 +550,6 @@ export default function DocumentModal(props) {
     }
   }
   function toggleAllImageTags1(input) {
-    console.log(input, "imput");
     let icon = document.getElementById("imageUploadIcon1");
     let text1 = document.getElementById("imageUploadText11");
     let text2 = document.getElementById("imageUploadText21");
@@ -591,9 +557,7 @@ export default function DocumentModal(props) {
     // let text4 = document.getElementById('imageUploadText41');
     let image = document.getElementById("imagePreview1");
     // console.log(icon, "icon");
-    console.log(text1, "text1");
-    console.log(text2, "text2");
-    console.log(text3, "text3");
+
     if (icon && text1 && text2 && text3) {
       icon.style.display = input;
       text1.style.display = input;
@@ -633,7 +597,6 @@ export default function DocumentModal(props) {
     setShowDescriptionModal(false);
     for (let a of documentTypes) {
       if (a?.id == event.target.value) {
-        console.log(a?.id, "a?.ida?.ida?.ida?.ida?.id");
         if (a?.bucket_key) {
           setSelectedDocumentData(a);
           setShowDescriptionModal(true);
@@ -641,22 +604,18 @@ export default function DocumentModal(props) {
       }
     }
 
-    console.log("event.target.value", event.target.value);
   };
 
   const handleClickUploadDocument = async () => {
     setIsLoader(true);
     let file = "";
-    console.log(`${documentTypeSelected} and ${nationalId} here`);
     if (isCameraMode) {
       file = imageBlob;
     } else if (fileDrop == null) {
       if (documentTypeSelected == nationalId) {
-        console.log(imageBlob, "imageBlob");
         file = imageBlob;
       } else {
         file = docImage.current?.files?.item(0);
-        console.log(docImage.current?.files?.item(0), "docImage.current?.files?.item(0)");
       }
     } else {
       file = fileDrop;
@@ -726,7 +685,6 @@ export default function DocumentModal(props) {
           }
         })
         .catch((err) => {
-          console.log("Image Upload Failed Response", err);
           axios.defaults.headers["x-auth-token"] = token;
           // setErrorMessage(response.system_message);
           setIsLoader(false);
@@ -1477,7 +1435,6 @@ export default function DocumentModal(props) {
                                       conjunction: "/", // Allow users to separate date parts with slashes
 
                                       onClose: function (selectedDates, dateStr, instance) {
-                                        console.log("debuggeing sdasd")
                                         // Your onClose logic here, if needed
                                         handleCloseExpiryModal(selectedDates, dateStr, instance);
                                       },
@@ -1540,7 +1497,6 @@ export default function DocumentModal(props) {
                           <h2 style={{ color: "red" }}>The expiry date should be greater than 3 months from the current date </h2>
                         </div>
                       ) : null}
-                      {console.log("ABC")}
                       <div className="col-sm-6">
                         <div className="form-group">
                           <button onClick={() => handleClickUploadDocument()} className={`bg-color-button3-${theme} text-[15px] font-light py-[10px] px-[30px] rounded-lg hover:bg-color-button3-hover-${theme} transition-all duration-300 ease-in-out`} size="lg" disabled={isFormValid()}>
@@ -1560,8 +1516,7 @@ export default function DocumentModal(props) {
         </div>
         </div>
       </div>
-      {console.log(issueDate, "issueDate issueDate issueDate")}
-      {console.log(expiryDate, "expiryDate expiryDate expiryDate")}
+
       {/* <Modal size="md" show={showDescriptionModal} onHide={handleCloseDescriptionModal} aria-labelledby="contained-modal-title-vcenter" centered>
         <Modal.Header closeButton>
           <Modal.Title>

@@ -53,7 +53,6 @@ export function getErrorResponse(error) {
         console.error(
           `FAILED API = ${error.response.config.url} | Error Code = ${customResponse.status_code?.value} | System Message = ${customResponse.system_message}`
         );
-      !!!error && console.log("FAILED API with undefined error");
     }
   } catch (e) {
     customResponse.success = false;
@@ -351,7 +350,6 @@ export const postgetToken = async (code, code_challenge, cancelToken) => {
     const response = await processRequest(request, cancelToken);
     return response;
   } catch (error) {
-    console.log("error:", error);
     return getErrorResponse(error);
   }
 };

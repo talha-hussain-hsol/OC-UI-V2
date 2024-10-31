@@ -12,7 +12,6 @@ const { entityId } = useEntityStore.getState();
 const { baseURL } = "CAPI";
 
 export function getErrorResponse(error) {
-  console.log(error, "error error    error ");
   let customResponse = [];
   try {
     if (error.data?.masssage === "timeout exceeded") {
@@ -37,10 +36,8 @@ export function getErrorResponse(error) {
         console.error(
           `FAILED API = ${error.response.config.url} | Error Code = ${customResponse.status_code?.value} | System Message = ${customResponse.system_message}`
         );
-      !!!error && console.log("FAILED API with undefined error");
     }
   } catch (e) {
-    console.log(e, "error catch");
     customResponse.success = false;
     customResponse.status_code = { key: "failed", value: -1, name: "network" };
     customResponse.user_message = "Internet problem";

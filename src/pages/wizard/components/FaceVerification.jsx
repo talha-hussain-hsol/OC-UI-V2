@@ -22,8 +22,7 @@ import {
 
   export default function FaceVerification(props) {
     const {theme} = useTheme()
-    console.log(props, 'props');
-    console.log(props?.dataOfAccountSetup, 'props?.dataOfAccountSetup');
+   
     const identity_id = props?.dataOfAccountSetup?.identity_id;
   
     const cancelTokenSource = axios.CancelToken.source();
@@ -132,7 +131,6 @@ import {
     }, [apiResponse]);
   
     useEffect(() => {
-      console.log('locationDatalocationData', locationData);
     }, [locationData]);
   
     useEffect(() => {
@@ -148,8 +146,7 @@ import {
       );
     }, []);
     useEffect(() => {
-      console.log('vvvface', face);
-      console.log('vvvface faceSnapDataConfiguration', faceSnapDataConfiguration);
+     
     }, [face, faceSnapDataConfiguration]);
     useEffect(() => {
       if (face && identification) {
@@ -163,7 +160,6 @@ import {
     }, [face, identification]);
     useEffect(() => {
       if (props.handleCallAPIForFaceVerficationData) {
-        console.log(imageCapturedData, 'imageCapturedData');
         // return;
         if (
           imageCapturedData['img1_base64'] &&
@@ -180,7 +176,6 @@ import {
       handleGetAccountDetail();
     }, []);
     useEffect(() => {
-      console.log('imageCapturedData', imageCapturedData);
   
       if (imageCapturedData['img1_base64'] && imageCapturedData['img2_base64']) {
         props?.handleSetFaceImages({
@@ -201,10 +196,7 @@ import {
       );
       setIsLoader(false);
       if (response.success == true) {
-        console.log(
-          response?.data?.account_detail?.attach_identities[0]?.id,
-          'response?.data?.account_detail?.attach_identities[0]?.id',
-        );
+       
         setShareHolderID(
           response?.data?.account_detail?.attach_identities[0]?.id,
         );
@@ -239,15 +231,8 @@ import {
       }
     };
   
-    console.log(
-      props?.dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant
-        ?.identity[
-        props?.dataOfAccountSetup?.isIndividual ? 'indivisual' : 'corporate'
-      ]?.provider?.verify?.face,
-      'dataOfAccountSetup faceverification',
-    );
   
-    console.log(shareHolderID, 'shareHolderID');
+  
     const handleImageCaptureOne = (data) => {
       if (data?.faceSnapkey === 'img1_base64') {
         props?.handleSetFaceImages({
@@ -262,10 +247,8 @@ import {
       }
   
       setImageDataOne(data?.capturedImageData);
-      console.log(data, 'data handleImageCaptureOne');
       imageCapturedData[data?.faceSnapkey] = data?.capturedImageData;
       setImageCapturedData(imageCapturedData);
-      console.log(imageCapturedData, 'imageCapturedData');
   
       if (faceSnapDataConfiguration?.steps[data?.index + 1]) {
         setFaceKey(faceSnapDataConfiguration?.steps[data?.index + 1]?.key);
@@ -284,11 +267,9 @@ import {
           setShowSubmit(true);
         }
       }
-      console.log(data, 'data');
     };
     const handleImageCaptureTwo = (data) => {
       setImageDataTwo(data);
-      console.log(data, 'data');
     };
     const confirmatioinModal = (
       <Modal
@@ -403,7 +384,6 @@ import {
     const cameraClose = (stream, videoRef) => {
       if (stream) {
         stream.getTracks().forEach((track) => {
-          console.log('Stopping camera track', track);
           track.stop();
         });
       }
@@ -427,7 +407,6 @@ import {
           track.stop();
         });
       }
-      console.log(imageCapturedData, 'dataToSend');
       // Copying the imageCapturedData object
       const modifiedImageCapturedData = { ...imageCapturedData };
   
@@ -439,7 +418,6 @@ import {
       modifiedImageCapturedData.location = locationData;
   
       // Logging the modified data
-      console.log('modifiedImageCapturedData', modifiedImageCapturedData);
       if (locationData?.latitude === null) {
         setIsLocationEnabled(false);
       } else {
@@ -474,14 +452,10 @@ import {
           props?.faceVerificationCompleted(true);
         }
   
-        console.log(
-          response.data?.faceVerification,
-          'response.data?.faceVerification',
-        );
+       
         setApiResponse(response.data?.faceVerification);
         setIsFaceSnapsUploaded({ error: false, message: '' });
       } else {
-        console.log(response, 'error');
         setIsFaceSnapsUploaded({
           error: true,
           message: `${response?.user_message} Please again capture the images`,
@@ -507,10 +481,8 @@ import {
         );
         setIsLoader(false);
         if (response.success == true) {
-          console.log(response?.data, 'response?.data');
           setFace(response?.data);
         } else {
-          console.log(response, 'error');
         }
       }
       if (apiResponse?.images?.identification) {
@@ -524,10 +496,8 @@ import {
         );
         setIsLoader(false);
         if (response.success == true) {
-          console.log(response?.data, 'response?.data');
           setIdentification(response?.data);
         } else {
-          console.log(response, 'error');
         }
       }
     };
@@ -535,7 +505,6 @@ import {
     const handleProceedClick = (key) => {
       setFaceKey(key);
       imageCapturedData[key] = {};
-      console.log(imageCapturedData, 'imageCapturedData');
       setImageCapturedData(imageCapturedData);
       setProceed(true);
     };
@@ -879,7 +848,6 @@ import {
  */
 return (
     <div className="w-full">
-      {console.log(face, 'face face face face')}
       <div
         className="flex justify-between mb-6 border-b-4 border-[#1e3c5c] ml-10 mr-10 "
       >
@@ -1064,7 +1032,6 @@ return (
                   
                 ))}
                 </div>
-                {console.log('vvvface 1', face)}
                     {face &&
                       faceSnapDataConfiguration?.integration?.enabled &&
                       isAssistance && (

@@ -123,25 +123,20 @@ export default function Wizard() {
   };
 
   useEffect(() => {
-    console.log("imagesForfaceVerificationp", imagesForfaceVerification);
   }, [imagesForfaceVerification]);
   useEffect(() => {
-    console.log("imagesForfaceVerificationp entityType", entityType);
     if (entityType !== null || entityType !== "") {
-      console.log("dsdasdas", typeof entityType);
-      console.log("dsdasdas aaa", entityType);
+      // console.log("dsdasdas", typeof entityType);
     }
   }, [entityType]);
 
   const handleChangeCkyc = (value) => {
-    console.log("value ssdasdada", value);
     setProviderCkyc(value);
   };
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     if (queryParams) {
-      console.log(queryParams.get("step"), "quersdsd");
       const event = queryParams.get("event");
 
       const step = queryParams.get("step");
@@ -245,7 +240,6 @@ export default function Wizard() {
   }, [dataOfAccountSetup?.fundData, dataOfAccountSetup?.isIndividual]);
 
   useEffect(() => {
-    console.log("currentSection", currentSection);
   }, [currentSection]);
   const getTransactionHistory = async (account_id) => {
     const response = await getTransactionHistoryAPI(
@@ -256,7 +250,6 @@ export default function Wizard() {
       setTransactionHistoryData(response?.data);
       let isSubscriptionDocument = Object.keys(response?.data);
       dataOfAccountSetup["AccountSubscriptionDocs"] = response?.data;
-      console.log(isSubscriptionDocument, "isSubscriptionDocument");
       if (isSubscriptionDocument && isSubscriptionDocument?.length > 0) {
         dataOfAccountSetup["application"] = true;
       } else {
@@ -397,11 +390,7 @@ export default function Wizard() {
             ) {
               stepsData.push({ title: "VCIP" });
             }
-            console.log(
-              dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant
-                ?.identity?.indivisual?.provider?.verify?.face,
-              "dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant?.identity[customerType]?.provider?.verify?.face"
-            );
+            
           } else {
             let customerType = "";
             if (dataOfAccountSetup?.isIndividual) {
@@ -447,10 +436,7 @@ export default function Wizard() {
         }
         setSteps(stepsData);
         setActiveStep(stepsData?.length);
-        console.log(
-          dataOfAccountSetup,
-          "dataOfAccountSetup dataOfAccountSetup    dataOfAccountSetupdataOfAccountSetupdataOfAccountSetup"
-        );
+        
       }
     } else {
       if (dataOfAccountSetup) {
@@ -474,11 +460,7 @@ export default function Wizard() {
           ) {
             stepsData.push({ title: "VCIP" });
           }
-          console.log(
-            dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant
-              ?.identity?.indivisual?.provider?.verify?.face,
-            "dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant?.identity[customerType]?.provider?.verify?.face"
-          );
+          
         } else {
           let customerType = "";
           if (dataOfAccountSetup?.isIndividual) {
@@ -525,10 +507,7 @@ export default function Wizard() {
         stepsData.push({ title: "Summary" });
       }
       setSteps(stepsData);
-      console.log(
-        dataOfAccountSetup,
-        "dataOfAccountSetup dataOfAccountSetup    dataOfAccountSetupdataOfAccountSetupdataOfAccountSetup"
-      );
+      
     }
     const queryParams = new URLSearchParams(location.search);
     if (queryParams) {
@@ -540,10 +519,7 @@ export default function Wizard() {
           if (stepsData?.length > 0) {
             for (let a = 0; a < stepsData?.length; a++) {
               if (stepsData[a].title == "Application") {
-                console.log(
-                  stepsData[a].title,
-                  "stepsData[a].title stepsData[a].title"
-                );
+               
                 setCurrentSection(a);
                 setActiveStep(a);
                 queryParams.delete("event");
@@ -555,10 +531,7 @@ export default function Wizard() {
         } else if (stepsData?.length > 0) {
           for (let a = 0; a < stepsData?.length; a++) {
             if (stepsData[a].title == "Application") {
-              console.log(
-                stepsData[a].title,
-                "stepsData[a].title stepsData[a].title"
-              );
+              
               setCurrentSection(a);
               setActiveStep(a);
               queryParams.delete("event");
@@ -593,7 +566,6 @@ export default function Wizard() {
     );
     if (response.success == true) {
       setIsLoader(false);
-      console.log("blsdalsdlka", response);
       let authoriseUrl;
       dataOfAccountSetup?.isIndividual
         ? (authoriseUrl =
@@ -626,7 +598,6 @@ export default function Wizard() {
             "CORPPASS" +
             "&redirect_uri=" +
             process.env.VITE_CORPPASS_CALL_BACK_URL);
-      console.log("sdasda", authoriseUrl);
       //   return;
       window.location.href = authoriseUrl;
     } else {
@@ -634,7 +605,7 @@ export default function Wizard() {
     }
   };
   const handleClickSpecificTab = (index) => {
-    console.log(index, "index handleClickSpecificTab");
+    // console.log(index, "index handleClickSpecificTab");
   };
   const customSteps = steps.map((step, index) => {
     const isCompleted = index < activeStep;
@@ -657,15 +628,12 @@ export default function Wizard() {
   };
   const getDataFromAccountStep = (data) => {
     // localStorage.setItem('accountSetup', data)
-    console.log(data, "data getDataFromAccountStep");
     setDataOfAccountSetup(data);
   };
   const getDataForButtonEnableDisable = (data) => {
-    console.log(data, "data getDataFromIdentityStep");
     setDataOfIdentityStep(data);
   };
   const handleNextButtonClickDocumentStep = (data) => {
-    console.log(data, "data handleNextButtonClickDocumentStep");
     setButtonIsDisabledDocumentStep(data);
   };
   const setWalletData = (data) => {
@@ -678,7 +646,6 @@ export default function Wizard() {
     dataOfAccountSetup["BanKData"] = data;
   };
   const setApplicationStepData = (data) => {
-    console.log(data, "data data setApplicationStepData");
     dataOfAccountSetup["application"] = data;
   };
   const handleSetFaceImages = (data) => {
@@ -729,7 +696,6 @@ export default function Wizard() {
       dataOfAccountSetup["account_id"] = account_id;
       dataOfAccountSetup["accountData"] = accountData;
       dataOfAccountSetup["selectedIdentityData"] = identityData;
-      console.log(dataOfAccountSetup, "dataOfAccountSetup");
       setDataOfAccountSetup(dataOfAccountSetup);
     }
     if (!isCrp) {
@@ -751,7 +717,6 @@ export default function Wizard() {
     setButtonDisabledForFaceVerification(data);
   };
   const submitVCIP = (data) => {
-    console.log(data, "data submitVCIP submitVCIP");
     setSubmitVCIPAPI(data);
     setButtonDisabledForVCIP(data);
   };
@@ -861,10 +826,7 @@ export default function Wizard() {
           }
         }
       }
-      console.log(
-        dataOfAccountSetup,
-        "dataOfAccountSetup getSingleAccountDetailByIdAPI"
-      );
+    
       setDataOfAccountSetup(dataOfAccountSetup);
     }
   };
@@ -877,9 +839,7 @@ export default function Wizard() {
     }
   };
   const setIsNewIdentity = (data) => {
-    console.log(data, "data setIsNewIdentity");
     dataOfAccountSetup["isNewIdentity"] = data;
-    console.log(dataOfAccountSetup, "dataOfAccountSetup");
     setDataOfAccountSetup(dataOfAccountSetup);
   };
   const _getSelectedSection = (section) => {
@@ -1003,10 +963,7 @@ export default function Wizard() {
     if (steps?.length > 0) {
       for (let a = 0; a < steps?.length; a++) {
         if (steps[a].title == step) {
-          console.log(
-            a,
-            "setCurrentSection setCurrentSection setCurrentSection setCurrentSection "
-          );
+          
           setCurrentSection(a);
           setActiveStep(a);
         }
@@ -1014,7 +971,6 @@ export default function Wizard() {
     }
   };
   const checkIfNextButtonDisabled = (e) => {
-    console.log(dataOfAccountSetup, "dataOfAccountSetup");
 
     if (currentSection == 0) {
       if (dataOfAccountSetup) {
@@ -1081,7 +1037,6 @@ export default function Wizard() {
       }
     }
     if (currentSection == 1) {
-      console.log(dataOfIdentityStep, "dataOfIdentityStep");
       if (dataOfIdentityStep) {
         if (!dataOfAccountSetup?.isIndividual) {
           if (entityType === null || entityType === "") {
@@ -1097,7 +1052,6 @@ export default function Wizard() {
       }
     }
     if (steps[currentSection]?.title == "Documents") {
-      console.log(buttonIsDisabledDocumentStep, "buttonIsDisabledDocumentStep");
       if (buttonIsDisabledDocumentStep) {
         return false;
       } else {
@@ -1157,7 +1111,6 @@ export default function Wizard() {
       cancelTokenSource.token
     );
     setIsLoader(false);
-    console.log("checking response", response);
     if (response.success == true) {
       dataOfAccountSetup["isAadhaarVerified"] = false;
       dataOfAccountSetup["isCKYCVerified"] = false;
@@ -1191,7 +1144,6 @@ export default function Wizard() {
     setIsAssistAvail(data);
   };
   const handleApiResponseFace = (data) => {
-    console.log("data", data);
     setFaceResponse(data);
   };
   function advanceSection() {
@@ -1206,10 +1158,7 @@ export default function Wizard() {
         handleSubmitApplication();
       }
     } else if (currentSection == 0) {
-      console.log(
-        dataOfAccountSetup.selectedProvider,
-        "dataOfAccountSetup.selectedProvider"
-      );
+     
       if (!dataOfAccountSetup.selectedProvider) {
         // handleJoinFund()
         setCurrentSection(currentSection + 1);
@@ -1219,7 +1168,6 @@ export default function Wizard() {
         setCurrentSection(currentSection + 1);
         setActiveStep(currentSection + 1);
       } else if (dataOfAccountSetup.selectedProvider != "manual") {
-        console.log(dataOfAccountSetup, "dataOfAccountSetup for next");
         if (
           dataOfAccountSetup.selectedProvider == "singpass" ||
           dataOfAccountSetup.selectedProvider == "corppass"
@@ -1270,9 +1218,7 @@ export default function Wizard() {
             return;
           }
 
-          console.log("isAssistanceData", isAssistanceData);
-          console.log("isAssistanceData faceResponse", faceResponse);
-          console.log("isAssistanceData visAssistAvail", isAssistAvail);
+         
           if (!isAssistanceData) {
             if (isAssistAvail) {
               setHandleCallAPIForFaceVerficationData(true);
@@ -1346,7 +1292,6 @@ export default function Wizard() {
   };
   const handleSubmitReview = async () => {
     handleSubmitApplication();
-    console.log("handleSubmitReview");
   };
 
   const handleRefreshAccountDetail = () => {

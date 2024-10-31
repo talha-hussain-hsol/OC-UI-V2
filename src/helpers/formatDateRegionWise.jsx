@@ -10,7 +10,6 @@ export  default function formatDateRegionWise(dataDate, time = false, dateFormat
         if (dataDate) {
             const dateString = dataDate;
             const date = new Date(dateString);
-            console.log(date, 'date date date')
             let formatString;
 
             if (time) {
@@ -18,9 +17,7 @@ export  default function formatDateRegionWise(dataDate, time = false, dateFormat
             } else {
                 formatString = region === 'united-states-of-america-(USA)' ? 'MM/dd/yyyy' : 'dd/MM/yyyy';
             }
-            console.log(formatString, 'formatString')
-            console.log(format(date, formatString), 'format(date, formatString)')
-
+          
             return format(date, formatString);
         }
     }

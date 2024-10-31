@@ -652,7 +652,6 @@ import faceimg from "../../../assets/face.png";
 
 function FaceVerification(props) {
   const { dataOfAccountSetups } = props; 
-  console.log('dataOfAccountSetups4', dataOfAccountSetups);  
   const { theme } = useTheme();
   const [isLoader, setIsLoader] = useState(false);
   const [apiResponse, setApiResponse] = useState([]);
@@ -678,12 +677,10 @@ function FaceVerification(props) {
             ?.faceVerification;
 
         setApiResponse(accountDetails);
-        console.log("setApiResponse1", accountDetails);
-        console.log("setApiResponsess", apiResponse);
+        
       }
     } catch (error) {
       if (axios.isCancel(error)) {
-        console.log("Request canceled:", error.message);
       } else {
         console.error("Error fetching account details:", error);
       }
@@ -702,10 +699,8 @@ function FaceVerification(props) {
       );
       setIsLoader(false);
       if (response.success === true) {
-        console.log(response?.data, "response?.data");
         setFace(faceimg);
       } else {
-        console.log(response, "error");
       }
     }
     if (apiResponse?.images?.identification) {
@@ -719,10 +714,8 @@ function FaceVerification(props) {
       );
       setIsLoader(false);
       if (response.success === true) {
-        console.log(response?.data, "response?.data");
         setIdentification(faceimg);
       } else {
-        console.log(response, "error");
       }
     }
   };

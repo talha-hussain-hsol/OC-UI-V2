@@ -52,8 +52,7 @@ export default function FaceVerification(props) {
     ? props?.dataOfAccountSetup?.accountData?.attach_identities[0]?.id
     : null;
     const params = useParams();
-  console.log("sdasjkdhljahsd", params);
-  console.log("sdasjkdhljahsd windowWidth", windowWidth);
+
   const [locationData, setLocationData] = useState({
     latitude: null,
     longitude: null,
@@ -107,7 +106,6 @@ export default function FaceVerification(props) {
     }
   }, [props.handleCallAPIForVCIPData]);
   useEffect(() => {
-    console.log("refrencrefrenceDocument", refrenceDocument);
   }, [refrenceDocument]);
 
   useEffect(() => {
@@ -194,7 +192,6 @@ export default function FaceVerification(props) {
         const reader = new FileReader();
         reader.onload = () => {
           const base64Video = reader.result;
-          console.log("Base64 video:", base64Video);
 
           const binaryData = atob(base64Video.split(",")[1]);
           const length = binaryData.length;
@@ -205,7 +202,6 @@ export default function FaceVerification(props) {
           const videoBlobFromBase64 = new Blob([uint8Array], {
             type: "video/mp4",
           });
-          console.log("Blob from Base64:", videoBlobFromBase64);
           setVideoBlob(videoBlobFromBase64);
 
           stopCamera();
@@ -277,7 +273,6 @@ export default function FaceVerification(props) {
 
       const timer = setInterval(() => {
         setCountdownStartVideo((prevCount) => {
-          console.log(prevCount, "prevCount prevCount");
           if (prevCount == 4) {
             clearInterval(timer);
           }
@@ -322,14 +317,11 @@ export default function FaceVerification(props) {
       cancelTokenSource.token
     );
 
-    console.log("firsct checking respdjaslkdj.nas", response);
     if (response.success) {
       let url = response.data.video_signed_url;
-      console.log(videoBlob, "imageBlob file");
       let token = axios.defaults.headers["x-auth-token"];
 
       delete axios.defaults.headers["x-auth-token"];
-      console.log(videoBlob, "imageBlob file");
 
       axios
         .put(url, videoBlob, {
@@ -362,21 +354,18 @@ export default function FaceVerification(props) {
           }
         })
         .catch((err) => {
-          console.log("Image Upload Failed Response", err);
           axios.defaults.headers["x-auth-token"] = token;
           setIsLoader(false);
         });
     }
   };
   const handleGetIdentityDocumentApi = async (refrenceDoc) => {
-    console.log(`checking`);
     setIsLoader(true);
 
     const response = await getIdentityDocument(
       identity_id,
       cancelTokenSource.token
     );
-    console.log("object 1", response);
     if (response.success == true) {
       setIsLoader(false);
       setIdentityUploadDocList(response?.data?.IdentityDocuments);
@@ -404,7 +393,6 @@ export default function FaceVerification(props) {
         }
       });
 
-      console.log("resulted_refrence_document", resulted_refrence_document);
       setRefrenceDocument(resulted_refrence_document);
     } else {
       setIsLoader(false);
@@ -412,7 +400,6 @@ export default function FaceVerification(props) {
   };
 
   const handleClickSingleDocument = async (data) => {
-    console.log(`checking single document`);
     // return
     setIsLoader(true);
     const dataToSend = {
@@ -423,10 +410,8 @@ export default function FaceVerification(props) {
       dataToSend,
       cancelTokenSource.token
     );
-    console.log("object 1 getSingleDocument", response);
     setIsLoader(false);
     if (response.success == true) {
-      console.log("object 1 getSingleDocument", response);
       let url = response.data;
       window.open(url, "_blank");
     } else {
@@ -463,22 +448,14 @@ export default function FaceVerification(props) {
 
       setIsLoader(false);
 
-      console.log(
-        "response?.data?.account_detail?.attach_identi",
-        response?.data?.account_detail?.attach_identities[0]?.meta?.identities[
-          identity_id
-        ]?.vcip
-      );
+     
       if (
         response?.data?.account_detail?.attach_identities[0]?.meta?.identities[
           identity_id
         ]?.vcip !== undefined
       ) {
         setIsLoader(true);
-        console.log(
-          "response?.data?.account_detail?.attach_identities[0]?.meta?.identities",
-          response?.data?.account_detail?.attach_identities[0]?.meta?.identities
-        );
+     
         const dataToSend = {
           key: response?.data?.account_detail?.attach_identities[0]?.meta
             ?.identities[identity_id]?.vcip?.video,
@@ -487,7 +464,6 @@ export default function FaceVerification(props) {
         if (res.success) {
           setIsLoader(false);
 
-          console.log("url is her", res);
           let url = res?.data;
           setVideoUrl(url);
           setSubmited(true);

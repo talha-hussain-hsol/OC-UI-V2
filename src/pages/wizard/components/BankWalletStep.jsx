@@ -25,7 +25,6 @@ import { useTheme } from "../../../contexts/themeContext";
 
 export default function wallets(props) {
 
-  console.log("Hussain Props:", props);
   
 const {theme} = useTheme();
   const navigate = useNavigate()
@@ -87,15 +86,10 @@ const {theme} = useTheme();
     getParticularFields()
   }, [])
   useEffect(() => {
-    console.log("particularAddedDataparticularAddedData", particularAddedData)
   }, [particularAddedData])
 
   useEffect(() => {
-    console.log("identityDataFieldsidentityDataFields", identityDataFields)
-    console.log(
-      "identityDataFieldsidentityDataFields particularFields",
-      particularFields
-    )
+  
   }, [identityDataFields, particularFields])
 
   useEffect(() => {
@@ -116,7 +110,6 @@ const {theme} = useTheme();
     }
   }, [props]);
 
-  console.log("The Seleted Crypto Option is:", cryptoValue);
   
 
   const autoPopulateLabel = () => {
@@ -163,7 +156,6 @@ const {theme} = useTheme();
           return 0
         })
 
-      console.log(filteredObj, "filteredObj filteredObj filteredObj")
       setParticularFields(filteredObj)
     } else {
       setIsLoader(false)
@@ -207,14 +199,10 @@ const {theme} = useTheme();
     )
     setIsLoader(false)
     if (response.success == true) {
-      console.log(
-        response?.data?.length > 0 ? true : false,
-        "response?.data getBankIdentities getBankIdentities"
-      )
+    
       props.setIsBankData(response?.data?.length > 0 ? true : false)
       setBanKDataList(response?.data)
       setRemarks(response?.data[0]?.meta?.remarks)
-      console.log(response?.data[0]?.meta?.remarks, "rrr")
     } else {
     }
   }
@@ -487,11 +475,7 @@ const {theme} = useTheme();
   }
   const handleChange = (e) => {
     setShowLabel(true)
-    console.log(e.target.name, "e.target.name")
-    console.log(
-      identityDataFields,
-      "identityDataFields identityDataFields handleChange"
-    )
+   
     if (e.target.name === "Phone") {
       // If the input is the phone number field, update the phone number
       setIdentityDataFields({
@@ -542,7 +526,6 @@ const {theme} = useTheme();
   const handleValidate = () => {
     let status = true
     if (allRequiredField?.length > 0) {
-      console.log(identityDataFields, "dentityDataFields handleValidate")
       for (let item of allRequiredField) {
         if (identityDataFields && identityDataFields[item]) {
           if (
@@ -581,11 +564,7 @@ const {theme} = useTheme();
 
   return (
     <div className="main-content">
-      {console.log(
-        props?.dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant
-          ?.identity?.wallet?.enabled,
-        'dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant?.identity?.bank?.enabled',
-      )}
+      
       {alertProps.show && (
         <CustomAlert
           handleCloseAlert={handleCloseAlert}
@@ -1114,7 +1093,6 @@ const {theme} = useTheme();
               <tr>
                 <th>Sort Code (For UK Banks)</th>
                 <th>
-                  {console.log(selectedBankDetail, 'selectedBankDetail')}
                   {selectedBankDetail?.meta?.data['bank.extended.sort_code']}
                 </th>
               </tr>
@@ -1271,7 +1249,6 @@ const {theme} = useTheme();
                               allRequiredField.push(key[0]);
                             }
                             if (fieldType === 'text') {
-                              console.log('the label is :', label);
                               if (fieldName === 'phone') {
                                 return (
                                   <div className="w-1/2 md:w-1/2" key={index}>

@@ -25,7 +25,6 @@ const DeleteAccountModal = ({
   handleAlert,
   clearFieldsAndForms
 }) => {
-  console.log("selectedRow", selectedRow)
   const [isLoaderModal, setIsLoaderModal] = useState(false)
   const params = useParams()
   const cancelTokenSource = axios.CancelToken.source()
@@ -35,7 +34,6 @@ const DeleteAccountModal = ({
       selectedRow?.id,
       cancelTokenSource.token
     )
-    console.log("response", response)
     if (response.success == true) {
       setIsLoaderModal(false)
       getList()
