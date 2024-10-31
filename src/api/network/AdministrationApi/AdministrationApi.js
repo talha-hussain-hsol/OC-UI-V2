@@ -33,10 +33,8 @@ export function getErrorResponse(error) {
     } else {
       customResponse = error?.response.data;
       !!error && console.error(`FAILED API = ${error.response.config.url} | Error Code = ${customResponse.status_code?.value} | System Message = ${customResponse.system_message}`);
-      !!!error && console.log("FAILED API with undefined error");
     }
   } catch (e) {
-    console.log(e, "error catch");
     customResponse.success = false;
     customResponse.status_code = { key: "failed", value: -1, name: "network" };
     customResponse.user_message = "Internet problem";
@@ -120,7 +118,6 @@ export const getPeriodicReviewAPI = async (fundId, offset, limit, cancelToken) =
   }
 };
 export const getDueDiligenceAPI = async (fundId, data, cancelToken) => {
-  console.log(data, "data data data data data data data data data data data data data data");
   let url = "";
   if (data?.type === null) {
     url = `/${entityId}/${baseURL}/${fundId}/on-going-due-diligence/?offset=${data?.offset}&limit=${data?.limit}&filter=${data?.filter}&name=${data?.name}&sDate=${data?.startDate}&eDate=${data?.endDate}`;
@@ -311,11 +308,9 @@ export const updateCustomerToRestrictedList = async (data, restrictedListId, cus
   const url = `/${entityId}/${baseURL}/restricted-list/${restrictedListId}/customers/${customerId}`;
   const request = { type: "PUT", urlString: url, params: data };
   try {
-    console.log("error no", cancelToken);
     const response = await processRequest(request, cancelToken);
     return response.data;
   } catch (error) {
-    console.log("error", error);
     return getErrorResponse(error);
   }
 };
@@ -325,11 +320,9 @@ export const postQuickScanAPI = async (fund_id, data, cancelToken) => {
   const url = `/${entityId}/${baseURL}/${fund_id}/doQuickScan`;
   const request = { type: "POST", urlString: url, params: data };
   try {
-    console.log("error no", cancelToken);
     const response = await processRequest(request, cancelToken);
     return response.data;
   } catch (error) {
-    console.log("error", error);
     return getErrorResponse(error);
   }
 };
@@ -523,11 +516,9 @@ export const postCustomerToRestrictedList = async (data, listId, cancelToken) =>
   const url = `/${entityId}/${baseURL}/restricted-list/${listId}/customers`;
   const request = { type: "POST", urlString: url, params: data };
   try {
-    console.log("error no", cancelToken);
     const response = await processRequest(request, cancelToken);
     return response.data;
   } catch (error) {
-    console.log("error", error);
     return getErrorResponse(error);
   }
 };
@@ -536,11 +527,9 @@ export const getPreviousRiskAssessmentAPI = async (fundId, identity_id, cancelTo
   const url = `/${entityId}/${baseURL}/${fundId}/previousRiskAssessments?identityId=${identity_id}`;
   const request = { type: "GET", urlString: url };
   try {
-    console.log("error no", cancelToken);
     const response = await processRequest(request, cancelToken);
     return response.data;
   } catch (error) {
-    console.log("error", error);
     return getErrorResponse(error);
   }
 };

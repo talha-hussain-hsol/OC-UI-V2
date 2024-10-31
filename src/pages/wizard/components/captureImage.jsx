@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { Button } from "react-bootstrap";
 
 function CameraCapture({ handleChangeLocation, onImageCapture, faceSnapkey, index, isIdCard, resetData, cameraCloseBrowser,handleSetFaceImages,faceImages, dataOfAccountSetup }) {
-  console.log(faceSnapkey, "faceSnapkey");
   const [showCamera, setShowCamera] = useState(true);
   const [imageData, setImageData] = useState(null);
   const videoRef = useRef(null);
@@ -51,7 +50,6 @@ function CameraCapture({ handleChangeLocation, onImageCapture, faceSnapkey, inde
     try {
       stream = await navigator.mediaDevices.getUserMedia({ video: true });
       videoRef.current.srcObject = stream;
-      console.log("Camera started", videoRef);
     } catch (error) {
       console.error("Error accessing camera:", error);
     }
@@ -74,7 +72,6 @@ function CameraCapture({ handleChangeLocation, onImageCapture, faceSnapkey, inde
   const stopCamera = () => {
     if (stream) {
       stream.getTracks().forEach((track) => {
-        console.log("Stopping camera track", track);
         track.stop();
       });
     }
@@ -82,7 +79,6 @@ function CameraCapture({ handleChangeLocation, onImageCapture, faceSnapkey, inde
     if (videoRef.current) {
       videoRef.current.srcObject = null; // Clear the video source
     }
-    console.log("Camera stopped");
   };
 
   const retakeImage = () => {
@@ -91,8 +87,7 @@ function CameraCapture({ handleChangeLocation, onImageCapture, faceSnapkey, inde
     startCamera();
     onImageCapture(null);
     resetData(faceSnapkey);
-    console.log("faceSnapkeyabcvs", faceSnapkey);
-    console.log("faceSnapkeyabcvs faceImages", faceImages);
+    
   
     // if (faceSnapkey === "img1_base64") {
     //   handleSetFaceImages({
@@ -144,7 +139,6 @@ function CameraCapture({ handleChangeLocation, onImageCapture, faceSnapkey, inde
       {showCamera && (
         <>
           <div style={{ display: "flex", justifyContent: "center", position: "relative", filter: dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant?.identity?.indivisual?.provider?.verify?.face?.isBlured ? "blur(5px)" : "" }}>
-            {console.log(dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant?.identity?.indivisual?.provider?.verify?.face?.isBlured, "check")}
             <img
               src={isIdCard ? "/img/idcardscanner.png" : "/img/face.png"}
               style={{
@@ -174,7 +168,6 @@ function CameraCapture({ handleChangeLocation, onImageCapture, faceSnapkey, inde
           </div>
         </>
       )}
-      {console.log(imageData, "img data")}
 
       {imageData && (
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>

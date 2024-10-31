@@ -30,7 +30,6 @@ import CustomerBox from "../../../widgets/components/CustomerBox";
 import { useTheme } from "../../../contexts/themeContext";
 
 export default function Summary(props) {
-  console.log(props, "props props props props summary");
   const { theme } = useTheme();
   const [isCollapsed, setIsCollapsed] = useState(true);
   const navigate = useNavigate();
@@ -66,10 +65,7 @@ export default function Summary(props) {
 
   useEffect(() => {
     if (props?.dataOfAccountSetup) {
-      console.log(
-        props?.dataOfAccountSetup,
-        "props?.dataOfAccountSetupprops?.dataOfAccountSetupprops?.dataOfAccountSetupprops?.dataOfAccountSetup"
-      );
+     
       if (
         props?.dataOfAccountSetup?.accountData?.meta?.created_by?.portal ==
         "customer"
@@ -103,18 +99,7 @@ export default function Summary(props) {
     : "corporate";
   let fundData = props.dataOfAccountSetup?.fund_data;
   let selectedIdentityData = props.dataOfAccountSetup?.selectedIdentityData;
-  console.log(
-    getMissingDataOfIdentity(
-      selectedIdentityData,
-      props.dataOfAccountSetup?.fundData,
-      null
-    )?.missingDocuments,
-    "missing documentd data yytt"
-  );
-  console.log(
-    selectedIdentityData,
-    "selectedIdentityData selectedIdentityData selectedIdentityData selectedIdentityData selectedIdentityData"
-  );
+  
   useEffect(() => {
     if (identity_id) {
       setIsLoader(true);
@@ -133,21 +118,16 @@ export default function Summary(props) {
       requiredSubscriptionDocument !== null &&
       props?.transactionHistoryData
     ) {
-      console.log(
-        props?.transactionHistoryData,
-        "props?.transactionHistoryData"
-      );
+     
       let status = matchDocumentType(
         props?.transactionHistoryData,
         requiredSubscriptionDocument
       );
-      console.log(status, "statusstatusstatusstatusstatus");
       setSubscriptionApplicationStatus(status);
       setIsLoaderApplicationStatus(false);
     }
   }, [requiredSubscriptionDocument, props?.transactionHistoryData]);
   useEffect(() => {
-    console.log("isLoaderApplicationStatus", isLoaderApplicationStatus);
   }, [isLoaderApplicationStatus]);
 
   const matchDocumentType = (uploadedDocuments, requiredDocuments) => {
@@ -168,7 +148,6 @@ export default function Summary(props) {
         const uploadedDocIds = uploadedDoc.map((doc) =>
           parseInt(doc.documentTypeId)
         );
-        console.log(uploadedDocIds, "uploadedDocIds");
         if (!uploadedDocIds.includes(parseInt(requiredDoc.id))) {
           return false; // Required document type is missing
         } else {
@@ -201,20 +180,15 @@ export default function Summary(props) {
   };
 
   const getUploadDocument = async (identity_id) => {
-    console.log(`checking getUploadDocument`);
     // setIsLoader(true);
 
     const response = await getIdentityDocument(
       identity_id,
       cancelTokenSource.token
     );
-    console.log("object 1", response);
     if (response.success == true) {
       // setIsLoader(false);
-      console.log(
-        Object.keys(response?.data?.IdentityDocuments),
-        "Object.keys(response?.data?.IdentityDocuments)"
-      );
+     
       setCrpIdentityUploadDocList(
         response?.data?.IdentityDocuments
           ? Object.keys(response?.data?.IdentityDocuments)
@@ -226,7 +200,6 @@ export default function Summary(props) {
   };
   const getRequiredDocument = async (account_id, identity_id) => {
     setIsLoaderApplicationStatus(true);
-    console.log(`checking getUploadDocument`);
     // setIsLoader(true);
 
     const response = await getRequiredDocumentCRP(
@@ -244,7 +217,7 @@ export default function Summary(props) {
             doc?.key != "OTHER" &&
             doc?.key != "FACE_VERIFICATION"
           ) {
-            console.log(doc, "doc doc doc doc doc doc doc");
+           
             documentsRequiredCRP.push(doc);
           }
 
@@ -254,10 +227,7 @@ export default function Summary(props) {
         }
       }
       setRequiredSubscriptionDocument(subscriptionDocuments);
-      console.log(
-        documentsRequiredCRP,
-        "documents documents documents crp documents"
-      );
+     
       setRequiredDocumentList(documentsRequiredCRP);
       setIsLoaderApplicationStatus(false);
     } else {
@@ -290,17 +260,13 @@ export default function Summary(props) {
     );
     if (response.success == true) {
       setIsLoader(false);
-      console.log(response?.data, "response response response response ");
       // setLabelIdentity(response.data?.label);
       setIdentityData(response.data);
       if (response?.data?.parentId != "0") {
         setIsCrp(true);
         accountData["attach_identities"] = [{ identity: response?.data }];
         setAccountData(accountData);
-        console.log(
-          accountData,
-          "accountData accountData accountData accountData accountData accountData"
-        );
+    
       } else {
         setIsCrp(false);
       }
@@ -314,15 +280,11 @@ export default function Summary(props) {
       accountId,
       cancelTokenSource.token
     );
-    console.log("response?.data?.account_detail", response);
     // setIsLoader(false);
     if (response.success == true) {
       setAccountData(response?.data?.account_detail);
       getSpecificIdentity(identity_id);
-      console.log(
-        "response?.data?.account_detail",
-        response?.data?.account_detail
-      );
+     
     } else {
     }
   };
@@ -332,7 +294,6 @@ export default function Summary(props) {
     if (account_id) {
       account_idss = account_id;
     }
-    console.log("getParticularFields called");
     const response = await getParticularFieldsApi(
       account_idss,
       cancelTokenSource.token
@@ -371,7 +332,6 @@ export default function Summary(props) {
   };
 
   const handleClickOnStatusBtn = (section) => {
-    console.log("hanfle dasljd");
     navigate(
       `/profile/identity/${type}/${section}/${identity_id}/${account_id}/`
     );
@@ -731,10 +691,7 @@ export default function Summary(props) {
               <div className="font-normal text-white">Document Upload</div>
               <div className="flex items-center gap-1">
                 <div>
-                  {console.log(
-                    selectedIdentityData,
-                    " selectedIdentityData selectedIdentityData selectedIdentityData selectedIdentityData selectedIdentityData selectedIdentityData selectedIdentityData"
-                  )}
+             
                   {getMissingDataOfIdentity(
                     selectedIdentityData,
                     props.dataOfAccountSetup?.fundData,

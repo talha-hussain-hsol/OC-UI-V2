@@ -6,7 +6,6 @@ import EntityIcon from "../../icons/entity-icon-small.svg";
 var theme = localStorage.getItem("portal_theme");
 export default function CustomerBox({ customerData, isCrp = false, params = null }) {
   let data = customerData?.identity ? customerData?.identity : customerData;
-  console.log(customerData, "customerData CustomerBox");
   const navigate = useNavigate();
   return (
     <div className="main-content">
@@ -42,7 +41,6 @@ export default function CustomerBox({ customerData, isCrp = false, params = null
                     // </Link>
                   ) : (
                     <h4 className="mb-1">
-                      {console.log("customerData?.identity?.label", customerData?.identity?.label)}
                       <a href="#!">{data?.label}</a>
                     </h4>
                   )}

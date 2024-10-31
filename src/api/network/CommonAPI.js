@@ -49,7 +49,6 @@ export function getErrorResponse(error) {
         console.error(
           `FAILED API = ${error.response.config.url} | Error Code = ${customResponse.status_code?.value} | System Message = ${customResponse.system_message}`
         );
-      !!!error && console.log("FAILED API with undefined error");
     }
   } catch (e) {
     customResponse.success = false;

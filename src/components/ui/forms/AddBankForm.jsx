@@ -111,7 +111,6 @@ const AddBankForm = ({ isOpen, onClose, fundId, fetchBankIdentities }) => {
         payload,
         cancelTokenSource.token
       );
-      console.log("Add Bank API Response: ", response);
 
       if (response && response.success === true) {
         await fetchBankIdentities();

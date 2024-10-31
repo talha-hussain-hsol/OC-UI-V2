@@ -177,7 +177,6 @@ export default function Documents(props) {
       const reRenderDocs = documentUploadedSelected.filter(
         (item) => item.id !== documentId,
       );
-      console.log(reRenderDocs, '');
       const resultIdentityUploadDoc = identityUploadDoc.filter(
         (item) => item.id !== documentId,
       );

@@ -46,7 +46,6 @@ import {
   export default function Particular(props) {
     const {theme} = useTheme();
     const registered_user_email = localStorage?.getItem('user_email') || '';
-    console.log(props, 'props particular particular particular');
     const params = useParams();
     const location = useLocation();
     // const isAccepted = props?.dataOfAccountSetup?.accountData?.status == "accepted" ? true : false;
@@ -113,17 +112,13 @@ import {
       props.fillAllFields(handleValidate());
     }, [identityDataFields, label]);
     useEffect(() => {
-      console.log('setParticularAddedData', particularAddedData);
-      console.log('identityDataFields', identityDataFields);
-      console.log('particularFields particularFields', particularFields);
+     
       if (identityDataFields) {
         const isEmail = Object.keys(identityDataFields)?.filter((item) => {
           const keyLast = item.split('.')[2];
-          console.log('keyLastkeyLast', keyLast);
   
           return keyLast === 'email' ? item : false;
         });
-        console.log('keyLastkeyLast isEmail', isEmail);
   
         if (isEmail && particularAddedData?.length === 0) {
           setParticularAddedData({ [isEmail]: { value: registered_user_email } });
@@ -133,10 +128,7 @@ import {
     useEffect(() => {
       const query = new URLSearchParams(location.search);
   
-      console.log('abcdefghijkll', query.get('pan'));
-      console.log('location', location?.state?.data);
-      console.log('location awais', location);
-      console.log('location pan', panData);
+     
   
       if (props?.providerCkyc !== null && props?.providerCkyc !== undefined) {
         if (props?.dataOfAccountSetup?.isIndividual) {
@@ -149,7 +141,6 @@ import {
             let identityDataFieldsValues = {};
             const fieldsWithValue = particularFields.map((field) => {
               const [key, value] = Object.entries(field)[0];
-              console.log(key, 'key key key keysdmfjsdnfjsdnf');
               const keyParts = key.split('.');
               const fieldObject = { [key]: value };
               const fullName =
@@ -480,19 +471,12 @@ import {
               return fieldObject;
             });
             setIdentityDataFields(identityDataFieldsValues);
-            console.log('fieldsWithValue');
   
-            console.log('fieldsWithValue', fieldsWithValue);
             const result = fieldsWithValue.reduce((acc, cur) => {
               const [key, value] = Object.entries(cur)[0];
               return { ...acc, [key]: value };
             }, {});
   
-            console.log('fieldsWithValue result', result);
-            console.log(
-              'fieldsWithValue result fieldsWithValue',
-              fieldsWithValue,
-            );
   
             setParticularAddedData(result);
             setParticularFields(fieldsWithValue);
@@ -501,7 +485,6 @@ import {
             setIsUpdateRegisteredValue(false);
           }
         } else {
-          console.log('props?.providerCkyc', props?.providerCkyc);
           if (
             particularFields !== undefined &&
             particularFields.length > 0 &&
@@ -511,7 +494,6 @@ import {
             let identityDataFieldsValues = {};
             const fieldsWithValue = particularFields.map((field) => {
               const [key, value] = Object.entries(field)[0];
-              console.log(key, 'key key key keysdmfjsdnfjsdnf');
               const keyParts = key.split('.');
               const fieldObject = { [key]: value };
   
@@ -822,15 +804,12 @@ import {
   
               return fieldObject;
             });
-            console.log('fieldsWithValue');
-  
-            console.log('fieldsWithValue', fieldsWithValue);
+          
             const result = fieldsWithValue.reduce((acc, cur) => {
               const [key, value] = Object.entries(cur)[0];
               return { ...acc, [key]: value };
             }, {});
-            console.log(identityDataFieldsValues, 'identityDataFieldsValues');
-            console.log('fieldsWithValue result', result);
+    
             setIdentityDataFields(identityDataFieldsValues);
             setParticularAddedData(result);
             setParticularFields(fieldsWithValue);
@@ -885,15 +864,9 @@ import {
         .catch(() => setIsLoader(false));
     }, []);
     useEffect(() => {
-      console.log(
-        identityDataFields,
-        'identityDataFields useEffectuseEffectuseEffectuseEffect',
-      );
+    
       if (particularFields.length > 0 && identityDataFields && isUpdate) {
-        console.log(
-          particularFields,
-          'particularFields useEffectuseEffectuseEffectuseEffectuseEffect',
-        );
+       
   
         particularFields &&
           particularFields.map((item, index) => {
@@ -943,7 +916,6 @@ import {
     }, [identityDataFields, particularFields]);
     
     useEffect(() => {
-      console.log('particularFieldsparticularFields', particularFields);
       if (particularFields.length > 0) {
   
         let arr = particularFields;
@@ -955,7 +927,6 @@ import {
               Object.keys(obj)[0].split('.')[2] === 'email'),
         );
   
-        console.log("Filtered Array:", filteredArr);
   
         const result = filteredArr.filter((obj) => {
           const keys = Object.keys(obj);
@@ -970,10 +941,7 @@ import {
           setIdentityDataFields((prevState) => {
             const newState = { ...prevState };
             result.forEach((item) => {
-              console.log(
-                ' Object.keys(item) Object.keys(item)',
-                Object.keys(item),
-              );
+              
               const key = Object.keys(item)[0];
               if (
                 key.startsWith(
@@ -994,7 +962,6 @@ import {
                 }
               }
             });
-            console.log('newStatenewState', newState);
   
             return newState;
           });
@@ -1061,7 +1028,6 @@ import {
               const [key, value] = Object.entries(field)[0];
               const keyParts = key.split('.');
               const fieldObject = { [key]: value };
-              console.log(key, 'key key key key');
   
               let race = registrationProviderData?.race?.desc;
               switch (keyParts[2]) {
@@ -1371,7 +1337,6 @@ import {
                   // Combining parts with proper punctuation
                   let formattedAddress = `${addressPart1}, ${addressPart2}`;
   
-                  console.log(formattedAddress);
   
                   // Street, Block, Unit, Floor, Country, Postal Code
                   if (formattedAddress) {
@@ -1423,24 +1388,15 @@ import {
               return fieldObject;
             });
   
-            console.log(
-              identityDataFieldsValues,
-              'identityDataFieldsValues identityDataFieldsValues',
-            );
+          
             setIdentityDataFields(identityDataFieldsValues);
             const result = fieldsWithValue.reduce((acc, cur) => {
               const [key, value] = Object.entries(cur)[0];
               return { ...acc, [key]: value };
             }, {});
             setLabelForSignPass(identityDataFieldsValues);
-            console.log(
-              result,
-              'resultresultresultresultresult result resultresultresult',
-            );
-            console.log(
-              fieldsWithValue,
-              'fieldsWithValue fieldsWithValue fieldsWithValue',
-            );
+          
+           
             setParticularAddedData(result);
             setParticularFields(fieldsWithValue);
             setIsUpdateRegisteredValue(false);
@@ -1627,11 +1583,7 @@ import {
               const [key, value] = Object.entries(cur)[0];
               return { ...acc, [key]: value };
             }, {});
-            console.log(
-              identityDataFieldsValues,
-              'identityDataFieldsValues identityDataFieldsValues identityDataFieldsValues',
-            );
-            console.log(result, 'result result result result');
+         
             setLabelForSignPass(identityDataFieldsValues);
             setIdentityDataFields(identityDataFieldsValues);
             setParticularAddedData(result);
@@ -1649,24 +1601,15 @@ import {
       );
     };
     const getValidPhoneNumber = (phoneNumber, country) => {
-      console.log(phoneNumber, 'phoneNumber phoneNumber');
-      console.log(country, 'country country');
+   
       if (!phoneNumber || phoneNumber === '') {
         return;
       }
       const phoneNumberFormatted = phoneNumber.replace(/\s/g, ''); // Remove any whitespace
-      console.log(phoneNumberFormatted, 'phoneNumberFormatted');
       try {
         let countryCode = getCountryData(country);
         const formattedPhoneNumber = `${countryCode?.phone[0]}${phoneNumberFormatted}`;
-        console.log(
-          formattedPhoneNumber,
-          'formattedPhoneNumber formattedPhoneNumberformattedPhoneNumber',
-        );
-        console.log(
-          countryCode,
-          'countryCode countryCodecountryCode countryCodecountryCode',
-        );
+       
         return formattedPhoneNumber;
       } catch (error) {
         console.error('Error validating phone number:', error);
@@ -1674,11 +1617,7 @@ import {
     };
     const getLabelFromDataForPan = () => {
       //panData?.pan?.result?.validated_data?.full_name
-      console.log('panData params?.identity_id', params?.identity_id);
-      console.log(
-        'panData params?.identity_id',
-        panData?.pan?.result?.validated_data?.full_name,
-      );
+    
       if (
         props?.providerCkyc?.download?.result?.kycResult?.personalIdentifiableData
           ?.personalDetails?.fullName
@@ -1729,10 +1668,7 @@ import {
         cancelTokenSource.token,
       );
       setIsLoader(false);
-      console.log(
-        'propsprops',
-        props?.dataOfAccountSetup?.fund_data?.fund_setting?.sections,
-      );
+      
   
       let array = [];
   
@@ -1768,7 +1704,6 @@ import {
             return indexA - indexB;
           });
   
-        console.log('Filtered Object:', filteredObj);
         
   
         // Separate compliance fields from non-compliance fields
@@ -1799,7 +1734,6 @@ import {
         // Combine non-compliance fields and compliance fields
         filteredObj = [...nonComplianceFields, ...complianceFields];
   
-        console.log("filteredObj", filteredObj);
         filteredObj.forEach((item) => {
           Object.keys(item).forEach((key) => {
             if (key?.includes("compliance") && item[key]?.type === "check") {
@@ -1807,7 +1741,6 @@ import {
             }
           });
         });
-        console.log('filteredOconsole.log(data)', filteredObj);
   
         setParticularFields(filteredObj);
       } else {
@@ -1862,10 +1795,7 @@ import {
     };
   
     const getSpecificIdentity = async (identity_id_val) => {
-      console.log(
-        identity_id_val,
-        ' identity_id identity_id getSpecificIdentity',
-      );
+    
       setIsLoader(true);
       const response = await getParticularsDetailByIdentityIdAPI(
         identity_id_val,
@@ -1880,7 +1810,6 @@ import {
         setParticularEditMetaData(response.data?.meta);
         setEntityType(response.data?.entityTypeId);
         props?.handleEntityType(response.data?.entityTypeId);
-        console.log(response.data?.label, 'response.data?.label');
         setLabel(response.data?.label);
         // setIsCrp(response.data?.parentId == "0" ? false : true);
         if (response.data?.meta?.data) {
@@ -1917,11 +1846,7 @@ import {
   
     const handleChange = (e) => {
       setShowLabel(true);
-      console.log(e.target.name, 'e.target.name');
-      console.log(
-        identityDataFields,
-        'identityDataFields identityDataFields handleChange',
-      );
+    
       if (e.target.name === 'individual.basic.country_of_residence_code') {
         setCountryCode(e.target.value);
       }
@@ -1965,7 +1890,6 @@ import {
       setShowLabel(true);
     };
     const handleChangeCheckBox = (e, label) => {
-      console.log('DAsdasd', label);
   
       setIdentityDataFields({
         ...identityDataFields,
@@ -1986,7 +1910,6 @@ import {
     };
     const preparePayloadForSingPass = (data) => {
       const fieldObject = data;
-      console.log(data, 'data preparePayloadForSingPass');
       if (props?.dataOfAccountSetup?.isIndividual) {
         // if (
         //   registrationProviderData.name &&
@@ -2135,8 +2058,7 @@ import {
     const handleValidate = () => {
       let status = true;
       if (allRequiredField.length > 0) {
-        console.log(identityDataFields, 'dentityDataFields handleValidate');
-        console.log('allRequiredField allRequiredField', allRequiredField);
+  
         for (let item of allRequiredField) {
           if (identityDataFields && identityDataFields[item]) {
             if (
@@ -2162,7 +2084,6 @@ import {
       //     status = false;
       //   }
       // }
-      console.log(status, 'status handleValidate ');
       // if (identityType == 'CORPORATE' && (entityType == '' || entityType === null)) {
       //     setEntityError(true);
       //     status = false;
@@ -2270,11 +2191,7 @@ import {
     };
   
     const handleSubmitCall = async (data) => {
-      console.log(
-        identity_id,
-        'identity_ididentity_ididentity_ididentity_id handleSubmitCall',
-      );
-      console.log(data, 'data data data data handleSubmitCall');
+      
       // return;
       setSubmitLoader(true);
       const response = await postIdentityAPI(data, cancelTokenSource.token);
@@ -2328,7 +2245,6 @@ import {
         data,
         cancelTokenSource.token,
       );
-      console.log('checking response', response);
       if (response.success == true) {
         if (props?.isCrp) {
           props.handleNextButtonClick(
@@ -2406,8 +2322,7 @@ import {
       if (isAccepted) {
         return true;
       }
-      console.log(particularEditMetaData, 'particularEditMetaData?.identity');
-      console.log(particularFields, 'particularFields?.identity');
+ 
       if (particularEditMetaData && particularEditMetaData?.identity) {
         const keyParts = key[0]?.split('.');
         if (props?.dataOfAccountSetup?.isIndividual) {
@@ -3159,29 +3074,14 @@ import {
       }
     };
     const getFullNameAndCountryLabel = (label) => {
-      console.log(label, 'labellabel label');
-      console.log(
-        registrationProviderData,
-        'registrationProviderData registrationProviderData',
-      );
-      console.log(
-        particularAddedData,
-        'particularAddedData particularAddedDataparticularAddedDataparticularAddedDataparticularAddedData',
-      );
+    
       let newLabel;
       //identityDataFieldss
       if (!isEmptyObject(registrationProviderData)) {
         // Retrieve the first name, last name, and country from the state
   
         if (!props?.dataOfAccountSetup?.isIndividual) {
-          console.log(
-            identityDataFields['corporate.basic.name'],
-            'particularAddedData["corporate.basic.name"]',
-          );
-          console.log(
-            identityDataFields['corporate.basic.incorporate_country_code'],
-            'particularAddedData["corporate.basic.incorporate_country_code"]',
-          );
+         
           const name = identityDataFields['corporate.basic.name'] || '';
           const country =
             identityDataFields['corporate.basic.incorporate_country_code'] || '';
@@ -3249,7 +3149,6 @@ import {
       const resultedName = name.split('.');
       const lastKey = resultedName[resultedName.length - 1];
   
-      console.log('namename', name);
       if (value && value.length > 0) {
         const selectedDate = new Date(value[0]);
         const minDate = new Date();
@@ -3259,7 +3158,6 @@ import {
             // If selected date is not at least 18 years ago
             // You can handle this case as per your requirement, such as displaying an error message
             // For now, I'm just logging a message to the console
-            console.log('Date of birth must be at least 18 years ago.');
             setDobError(true);
   
             return; // Don't update state if validation fails
@@ -3319,17 +3217,7 @@ import {
       }
     };
     const checkDataMatchedWithKYCData = (key) => {
-      console.log(
-        identityDataFields,
-        'identityDataFields checkDataMatchedWithKYCData',
-      );
-      console.log(fetchDataFromCKYCByKey(key), 'fetchDataFromCKYCByKey(key)');
-      console.log(
-        identityDataFields[key]?.value == null
-          ? ''
-          : identityDataFields[key]?.value,
-        'particularAddedData[key]?.value == null ? "" : particularAddedData[key]?.value',
-      );
+     
       if (fetchDataFromCKYCByKey(key) != false) {
         if (fetchDataFromCKYCByKey(key) == identityDataFields[key]) {
           return {
@@ -3353,9 +3241,7 @@ import {
       }
     };
     const fetchDataFromCKYCByKey = (key) => {
-      console.log(key, 'key');
       const keyParts = key.split('.');
-      console.log(keyParts, 'keyParts');
       if (particularEditMetaData?.identity?.provider == 'SIGNDESK') {
         const type = props?.dataOfAccountSetup?.isIndividual
           ? 'individual'
@@ -3578,7 +3464,6 @@ import {
             case 'cross_street_address':
               const fullAddressCorres =
                 permLine1Corres + ' ' + permLine2Corres + ' ' + permLine3Corres;
-              console.log(fullAddressCorres, 'fullAddressCorres');
               if (fullAddressCorres == '') {
                 return false;
               } else {
@@ -3608,7 +3493,6 @@ import {
               break;
             case 'street_address':
               const addreess = permLine1 + ' ' + permLine2 + ' ' + permLine3;
-              console.log(addreess, 'addreess');
               if (addreess == '') {
                 return false;
               } else {
@@ -3857,7 +3741,6 @@ import {
             case 'cross_street_address':
               const fullAddressCorres =
                 permLine1Corres + ' ' + permLine2Corres + ' ' + permLine3Corres;
-              console.log(fullAddressCorres, 'fullAddressCorres');
               if (fullAddressCorres == '') {
                 return false;
               } else {
@@ -3867,7 +3750,6 @@ import {
               break;
             case 'street_address':
               const addreess = permLine1 + ' ' + permLine2 + ' ' + permLine3;
-              console.log(addreess, 'addreess');
               if (addreess == '') {
                 return false;
               } else {
@@ -4022,14 +3904,7 @@ import {
   
     return (
       <div className="main-content">
-        {console.log(
-          identityDataFields,
-          'identityDataFieldsidentityDataFieldsidentityDataFieldsidentityDataFields',
-        )}
-        {console.log(
-          particularAddedData,
-          'particularAddedDataparticularAddedDataparticularAddedDataparticularAddedData}',
-        )}
+       
         <div>
           <div className="flex justify-center">
             {isCrp && (
@@ -4255,7 +4130,6 @@ import {
                                   let returnKey = item[key[0]]?.source?.returnKey;
                                   let fieldData = item[key[0]]?.source?.data;
                                   let requiredField = item[key[0]]?.required;
-                                  console.log(requiredField, 'requiredField');
                                   let valueField = item[key[0]]?.DefaultValue;
   
                                   let editableField = '';
@@ -4291,10 +4165,7 @@ import {
                                       } else {
                                         allRequiredField.push(key[0]);
                                       }
-                                      console.log(
-                                        'individual.compliance.investor_type_key',
-                                        key[0],
-                                      );
+                                     
                                     }
                                     if (fieldType == 'text') {
                                       if (fieldName == 'phone') {
@@ -5203,10 +5074,7 @@ import {
                                           ?.selectedIdentityData?.meta?.data?.[
                                           `${customerType}.compliance.is_investing_own_behalf.Label`
                                         ]?.value;
-                                      console.log(
-                                        'dasjldkasnkdjalsd',
-                                        investingValue,
-                                      );
+                                      
   
                                       return (
                                         <div

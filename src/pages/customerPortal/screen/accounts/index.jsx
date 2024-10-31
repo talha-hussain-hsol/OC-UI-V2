@@ -71,16 +71,11 @@ export default function InvestorSubscriptionList({ ...props }) {
   }, [theme]);
 
   useEffect(() => {
-    console.log("isLoaderAccount", isLoaderAccount);
   }, [isLoaderAccount]);
   useEffect(() => {
-    console.log("accountsData", accountsData);
   }, [accountsData]);
   useEffect(() => {
-    console.log(
-      "customerAccountscustomerAccountscustomerAccountscustomerAccountscustomerAccounts",
-      customerAccounts
-    );
+   
   }, [customerAccounts]);
 
   useEffect(() => {

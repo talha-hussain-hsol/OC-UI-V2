@@ -1,5 +1,4 @@
 export function checkSubscriptionAllow(data) {
-    console.log("checking data for configuration", data);
     return data?.meta?.config?.settings?.account?.subscription?.status;
   }
   export function getMaxSubscriptionAmount(data) {
@@ -23,7 +22,6 @@ export function checkSubscriptionAllow(data) {
   }
   
   export function isFaceEnabled(data, identityType) {
-    console.log("checking data for configuration awais", data);
   
     let faceConfig;
   
@@ -56,13 +54,11 @@ export function checkSubscriptionAllow(data) {
     } else if (identityType === "individual") {
       documentConfig = data?.meta?.config?.settings?.account?.applicant?.identity?.indivisual?.provider?.verify?.document;
     }
-    console.log("checkisdlasndasdocumentConfig ", documentConfig);
   
     return !!documentConfig?.ctc;
   }
   
   export function isKYCEnabled(config) {
-    console.log("checking config", config);
   
     const kycSubProperties = [
         "Accounts",
@@ -72,7 +68,6 @@ export function checkSubscriptionAllow(data) {
         "Expiring_Documents"
     ];
   
-    console.log("kycSubProperties.some(property => config?.modules?.kyc?.[property] === true)",kycSubProperties.some(property => config?.modules?.kyc?.[property] === true))
     return kycSubProperties.some(property => config?.modules?.kyc?.[property] === true);
   }
   

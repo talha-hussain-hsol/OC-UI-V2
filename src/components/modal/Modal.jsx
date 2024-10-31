@@ -33,7 +33,6 @@ const Modal = ({
   const [documentTypes, setDocumentTypes] = useState([]);
 
   useEffect(() => {
-    console.log("types modal", requiredDocumentSelected?.children);
 
     if (requiredDocumentSelected?.children.length > 0) {
       setDocumentTypes(requiredDocumentSelected?.children);
@@ -68,7 +67,6 @@ const Modal = ({
       if (expiryDate) {
         data.expiry_date = expiryDate;
       }
-      console.log(data);
       const response = await postIdentityDocument(
         data,
         cancelTokenSource.token
@@ -104,7 +102,6 @@ const Modal = ({
   const handleChangeDocumentType = (event) => {
     setDocumentTypeSelected(event.target.value);
     setDocumentErrMessage("");
-    console.log("event.target.value", event.target.value);
   };
 
   const isUploadDisabled = () => {
@@ -236,7 +233,6 @@ const Modal = ({
                     disabled={!documentTypeSelected}
                     onChange={(e) => {
                       setIssueDate(e.target.value);
-                      console.log("Issue Date:", e.target.value); // Log the issue date
                     }}
                   />
                 </div>

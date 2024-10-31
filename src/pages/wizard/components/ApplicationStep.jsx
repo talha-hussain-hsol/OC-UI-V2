@@ -42,9 +42,7 @@ import DeleteTransactionModal from "./deleteModalCrp/DeleteAccountModal";
 import DeleteManualDocModal from "./applicationModal/deleteManualDocModal";
 export default function investment({ ...props }) {
   const {theme} = useTheme();
-  console.log(props, "props?.props?.props?.props?.");
   const manualTranssaction = props?.dataOfAccountSetup?.fund_data?.fund_setting?.sections?.manual_transaction;
-  console.log("√manualTranssaction", manualTranssaction);
   const [deleteManualDocConfirmation, setDeleteManualConfirmation] = useState(false);
 
   const [selectedManualUploadedDoc, setSelectedManualUploadedDoc] = useState(null);
@@ -155,7 +153,6 @@ export default function investment({ ...props }) {
     }
   }, [history]);
   useEffect(() => {
-    console.log(transactionHistoryData, "transactionHistoryData transactionHistoryDatatransactionHistoryData");
     // if (transactionHistoryData && requiredDocListAll && accountData) {
     //   if (transactionHistoryData.hasOwnProperty("SUBSCRIPTION_AGREEMENT")) {
     //     for (let item of requiredDocListAll) {
@@ -183,7 +180,6 @@ export default function investment({ ...props }) {
     // }
     if (transactionList?.length > 0 && accountData && checkIfESignEnable()) {
       for (let a of transactionList) {
-        console.log(a, 'aaaaaaa transactionList')
         if (a.type = "subscription") {
           if (a?.meta?.subscription?.length > 0) {
             if (a?.meta?.subscription?.[a?.meta?.subscription?.length - 1]) {
@@ -204,7 +200,6 @@ export default function investment({ ...props }) {
     }
   }, [accountData, transactionList]);
   useEffect(() => {
-    console.log("contentTypeData", contentTypeData);
   }, [contentTypeData]);
   useEffect(() => {
     if (account_id) {
@@ -226,8 +221,7 @@ export default function investment({ ...props }) {
       if (accountData?.attach_identities[0]) {
         if (accountData?.attach_identities[0]?.identity?.meta?.data) {
           let email = accountData?.attach_identities[0]?.identity?.meta?.data[`${accountData?.attach_identities[0]?.identity?.type.toLowerCase()}.extended.email`]?.value;
-          console.log(email, "email email email");
-          console.log(isValidEmail(email), "isValidEmail(email)");
+        
           if (!isValidEmail(email)) {
             setIsEmailValid(false);
           } else {
@@ -249,7 +243,6 @@ export default function investment({ ...props }) {
       setAccountData(response?.data?.account_detail);
       setIsLoaderAccount(false);
 
-      console.log("response", response);
     } else {
       setIsLoaderAccount(false);
     }
@@ -257,23 +250,19 @@ export default function investment({ ...props }) {
   const getUserDetail = async () => {
     setIsLoader(true);
     const response = await getAuthUserDetail(cancelTokenSource.token);
-    console.log("trrrrrrrr", response);
 
     if (response.success == true) {
       setUserId(response?.data?.id);
       let customerData = [];
 
-      console.log(customerData, "customerData");
     } else {
       setIsLoader(false);
     }
   };
 
-  console.log("selectedCurrencyValues", selectedCurrencyValues);
 
   const handleRedemptionAmountChange = (event) => {
     const value = parseInt(event.target.value);
-    console.log("value", value);
 
     if (isNaN(value)) {
       setRedemptionAmount(null);
@@ -281,8 +270,7 @@ export default function investment({ ...props }) {
     }
 
     const { min, max } = props?.dataOfAccountSetup?.fund_data?.fund_setting?.account?.redemption || {};
-    console.log("min", typeof min);
-    console.log("max", max);
+    
 
     if (value >= min && value <= max) {
       setRedemptionAmount(value);
@@ -298,7 +286,6 @@ export default function investment({ ...props }) {
   };
   const handleAdditionalAmountChange = (event) => {
     const value = parseInt(event.target.value);
-    console.log("value", value);
 
     if (isNaN(value)) {
       setAdditionalAmount(null);
@@ -306,8 +293,7 @@ export default function investment({ ...props }) {
     }
 
     const { min, max } = props?.dataOfAccountSetup?.fund_data?.fund_setting?.account?.addition || {};
-    console.log("min", typeof min);
-    console.log("max", max);
+
 
     if (value >= min && value <= max) {
       setAdditionalAmount(value);
@@ -332,7 +318,6 @@ export default function investment({ ...props }) {
     getTransactionHistory();
   }, []);
   useEffect(() => {
-    console.log(amount, "amount amount amount");
 
     if (amount >= getMinSubscriptionAmount(props?.dataOfAccountSetup?.fund_data?.fund_setting) && amount <= getMaxSubscriptionAmount(props?.dataOfAccountSetup?.fund_data?.fund_setting)) {
     } else {
@@ -342,12 +327,10 @@ export default function investment({ ...props }) {
     setMinSubscriptionAmount(getMinSubscriptionAmount(props?.dataOfAccountSetup?.fund_data?.fund_setting));
   }, [amount]);
   useEffect(() => {
-    console.log("history", history);
   }, [history]);
   const getInitialInvestmentSign = async () => {
     const response = await getInitialInvestmentSignAPI(account_id, cancelTokenSource.token);
     if (response.success == true) {
-      console.log(response?.data, "response?.data response?.data response?.data response?.data");
       setTransactionData(response?.data);
     }
   };
@@ -371,7 +354,6 @@ export default function investment({ ...props }) {
     }
   };
   const handleGetRequiredDocument = async () => {
-    console.log(`checking`);
     setRequiredDocListAll([]);
     setIsLoader(true);
     if (account_id) {
@@ -379,12 +361,10 @@ export default function investment({ ...props }) {
 
       if (response.success == true) {
         setIsLoader(false);
-        console.log("checking required", response);
         let data = [];
         if (response?.data?.req_documents?.length > 0) {
           for (let item of response?.data?.req_documents) {
             if (item?.key == "SUBSCRIPTION_AGREEMENT") {
-              console.log(item, "item item item itemasdasd");
               data.push(item);
             }
 
@@ -404,7 +384,6 @@ export default function investment({ ...props }) {
             }
 
           }
-          console.log(data, "data data data dataasdnajsdnakjhs");
           setRequiredDocListAll(data);
           setSignSubmit(false);
         } else {
@@ -417,7 +396,6 @@ export default function investment({ ...props }) {
     }
   };
   const handleClickChoice = (key) => {
-    console.log(singleTransactionData, 'transactionDatatransactionDatatransactionDatatransactionData')
     localStorage.setItem("accountWizardAllData", JSON.stringify(props?.dataOfAccountSetup));
     const dateToSend = {
       redirect_url: window.location.href.split("?")[0],
@@ -428,7 +406,6 @@ export default function investment({ ...props }) {
       // currency: 'INR',
       transactionId: singleTransactionData?.id
     };
-    console.log("redirect_url", dateToSend);
     requestSignUrl(dateToSend);
   };
   const requestSignUrl = async (data) => {
@@ -483,7 +460,6 @@ export default function investment({ ...props }) {
     setAmount(data?.amount)
     setCurrency(data?.currency)
     let requiredDocument = getDocumentByType(data?.type)
-    console.log(requiredDocument, 'requiredDocumentrequiredDocumentrequiredDocumentrequiredDocumentrequiredDocumentrequiredDocument')
     setRequiredDocList(requiredDocument);
     setIsAmount(false);
     if (status == "re-sign") {
@@ -563,28 +539,24 @@ export default function investment({ ...props }) {
       identity_id: identity_id,
     };
 
-    console.log("is it ", data);
     const response = await transactionDocAddApi(data, cancelTokenSource.token);
     if (response.success) {
       setUploadDocument(false);
       setIsLoader(true);
       // setDocumentIdForVerifyUpload(requiredDocList?.id);
       const randomString = getShortestTimeSpan(response?.data?.account_info?.meta?.subscriptionDocuments, requiredDocList?.id);
-      console.log("randomString", randomString); // Output: cDzAy9HoLm0M6id0ykbL
       const dataToUpload = {
         req_id: response?.data?.doc_id,
         transaction_id: singleTransactionData?.id
       };
       let url = response.data.signed_url;
       let file = docImage.current?.files?.item(0);
-      console.log(file, "imageBlob file");
-      console.log(url, "url url url url");
+     
       //Removing and Adding Token
       let token = axios.defaults.headers["x-auth-token"];
 
       delete axios.defaults.headers["x-auth-token"];
 
-      console.log(file, "imageBlob file");
       axios
         .put(url, file, {
           headers: {
@@ -592,7 +564,6 @@ export default function investment({ ...props }) {
           },
         })
         .then(async (response) => {
-          console.log("Image Upload Success ", response);
 
           axios.defaults.headers["x-auth-token"] = token;
 
@@ -614,7 +585,6 @@ export default function investment({ ...props }) {
           }
         })
         .catch((err) => {
-          console.log("Image Upload Failed Response", err);
           axios.defaults.headers["x-auth-token"] = token;
           // setErrorMessage(response.system_message);
           setIsLoader(false);
@@ -649,7 +619,6 @@ export default function investment({ ...props }) {
     // setUploadDocument(false)
   };
   const handleClickDocument = (e) => {
-    console.log("hello handleClickDocument");
     let elem = document.getElementById("input_field_document");
     if (elem) {
       elem.click();
@@ -665,13 +634,11 @@ export default function investment({ ...props }) {
       if (image) {
         image.style.display = "block";
         let file = docImage.current?.files?.item(0);
-        console.log(file, "file");
         if (file.type != "application/pdf") {
           setPDFError(true);
           return;
         }
         setContentTypeData(file.type);
-        console.log(docImage, "docImage handleImageClick");
         if (file) {
           let data = URL.createObjectURL(file);
           // image.src = data;
@@ -693,7 +660,6 @@ export default function investment({ ...props }) {
   }
 
   function toggleAllImageTags(input) {
-    console.log(input, "input");
     let icon = document.getElementById("imageUploadIcon");
     let text1 = document.getElementById("imageUploadText1");
     let text2 = document.getElementById("imageUploadText2");
@@ -713,9 +679,7 @@ export default function investment({ ...props }) {
   }
   const handleClickDownloadManual = async (item, id) => {
     setIsLoader(true);
-    console.log("ittttem", item);
     const response = await getDownloadSigningDocument(item, id, account_id, cancelTokenSource.token);
-    console.log("response id", response);
     if (response.success == true) {
       setIsLoader(false);
       window.open(`${response?.data?.signed_url?.url}`, "_blank");
@@ -734,7 +698,6 @@ export default function investment({ ...props }) {
       type: "subscription",
     };
     const response = await getDocuSignURLForFinishSigningAPI(data, documentType, cancelTokenSource.token);
-    console.log("response id", response);
     if (response.success == true) {
       setIsLoader(false);
       window.open(`${response?.data?.signing_url}`, "_blank");
@@ -743,14 +706,12 @@ export default function investment({ ...props }) {
     }
   };
   const handleDownloadDocument = async (documentTypeId, randomString) => {
-    console.log("in loader");
     setIsLoader(true);
     let dataToSend = {
       randomString: randomString,
       accountId: account_id,
     };
     const response = await getDownloadDocuSignAPI(documentTypeId, dataToSend, cancelTokenSource.token);
-    console.log("response id", response);
     if (response.success == true) {
       setIsLoader(false);
 
@@ -771,10 +732,7 @@ export default function investment({ ...props }) {
     setSelectedCurrencyValues(selectedOption);
   };
   const handleChangeAmount = (event) => {
-    console.log("weaeawe", event.target.value);
-    console.log("weaeawe minSubscriptionAmount", minSubscriptionAmount);
-    console.log("weaeawe maxSubscriptionAmount", maxSubscriptionAmount);
-    console.log("requiredDocList requiredDocList", requiredDocList);
+  
     const value = event.target.value === "" ? 0 : parseFloat(event.target.value);
 
     setAmount(value);
@@ -807,7 +765,6 @@ export default function investment({ ...props }) {
     }
   };
   const handleSignSubmitClose = (e) => {
-    console.log("ksjlhdliashdlhsalidhaidhilashdlsahdkgas;d;gsld;g")
     setSignSubmit(false);
     setAmount("");
     setSelectedCurrencyValues([])
@@ -829,9 +786,7 @@ export default function investment({ ...props }) {
               ?.filter(item => !(item?.deleted?.status === true))
               ?.sort((a, b) => b.docUploadDateTime - a.docUploadDateTime);
 
-            console.log(filteredDocuments[0]?.documentTypeId, "filteredDocuments filteredDocuments");
-            console.log(id, "filteredDocuments filteredDocuments id");
-            console.log(filteredDocuments[0], "filteredDocuments filteredDocuments");
+           
 
             if (filteredDocuments[0]?.documentTypeId == id) {
               return filteredDocuments[0];
@@ -844,17 +799,14 @@ export default function investment({ ...props }) {
   };
 
   const getStatus = (item) => {
-    console.log("props itttt", item);
-    console.log("props accountData", props?.accountData);
+   
     const keyOfDocument = item?.key;
-    console.log("keyOfDocument", keyOfDocument);
     var documents = [];
     if (accountData?.meta?.subscriptionDocuments) {
       if (accountData?.meta?.subscriptionDocuments.hasOwnProperty(keyOfDocument)) {
         documents = accountData?.meta?.subscriptionDocuments[keyOfDocument];
       }
     }
-    console.log("documents", documents);
 
     let shortestTimeSpan = Infinity;
 
@@ -878,7 +830,6 @@ export default function investment({ ...props }) {
         latestDocumentRandomStatus = filteredDocuments[i].status;
       }
     }
-    console.log("latestDocumentRandomStatus", latestDocumentRandomStatus);
 
     return latestDocumentRandomStatus == "" ? "Not Completed" : latestDocumentRandomStatus == "pending" ? "Signed" : "Draft";
   };
@@ -928,7 +879,6 @@ export default function investment({ ...props }) {
       transaction_id: data?.id,
     };
     const response = await doStampingAPI(identity_id, accountShareHolderId, dataToSend, cancelTokenSource.token);
-    console.log("response id", response);
     setLoaderDescription("");
     if (response.success == true) {
       if (response?.data?.error) {
@@ -966,7 +916,6 @@ export default function investment({ ...props }) {
       transaction_id: transactionId,
     };
     const response = await doESignAPI(identity_id, accountShareHolderId, dataToSend, cancelTokenSource.token);
-    console.log("response id", response);
     if (response.success == true) {
       // setIsLoader(false);
       // getTransactionHistory();
@@ -991,7 +940,6 @@ export default function investment({ ...props }) {
       key: bucketKey,
     };
     const response = await handleDownloadStampDocumentAPI(dataToSend, cancelTokenSource.token);
-    console.log("response id", response);
     if (response.success == true) {
       setIsLoader(false);
       // getTransactionHistory();
@@ -1038,8 +986,7 @@ export default function investment({ ...props }) {
   };
 
   const handleDeleteClick = (uploadedData, key) => {
-    console.log("sdljashdljkashjlda", uploadedData)
-    console.log("sdljashdljkashjlda requiredData", key)
+ 
     setSelectedManualUploadedDoc(uploadedData);
     setSelectedManualRequiredKey(key)
     setDeleteManualConfirmation(true);
@@ -1482,7 +1429,6 @@ export default function investment({ ...props }) {
                               <th>Action</th>
                             </tr>
                           </thead>
-                          {console.log(transactionHistoryData, "transactionHistoryData")}
                           <tbody class="list">
                             {transactionHistoryData &&
                               Object.keys(transactionHistoryData).map((item, index) => (
@@ -1806,7 +1752,6 @@ export default function investment({ ...props }) {
                       {/* <Dropdown.Toggle as="span" className="dropdown-ellipses" role="button">
                           <Button className="lift">Manual Signature</Button>
                         </Dropdown.Toggle> */}
-                      {console.log(requiredDocList, "requiredDocList requiredDocList requiredDocList requiredDocList")}
                       <Dropdown.Menu as="div" className="custom-dropdown-menu">
                         <Dropdown.Item
                           onClick={(e) => {

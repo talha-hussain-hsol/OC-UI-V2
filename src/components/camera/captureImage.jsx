@@ -14,7 +14,6 @@ function CameraCapture({
   faceImages,
   dataOfAccountSetup,
 }) {
-  console.log(faceSnapkey, "faceSnapkey");
   const { theme } = useTheme();
   const [showCamera, setShowCamera] = useState(true);
   const [imageData, setImageData] = useState(null);
@@ -66,7 +65,6 @@ function CameraCapture({
       stream = await navigator.mediaDevices.getUserMedia({ video: true });
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
-        console.log("Camera started", videoRef);
       }
     } catch (error) {
       console.error("Error accessing camera:", error);
@@ -97,7 +95,6 @@ function CameraCapture({
   const stopCamera = () => {
     if (stream) {
       stream.getTracks().forEach((track) => {
-        console.log("Stopping camera track", track);
         track.stop();
       });
     }
@@ -105,7 +102,6 @@ function CameraCapture({
     if (videoRef.current) {
       videoRef.current.srcObject = null;
     }
-    console.log("Camera stopped");
   };
 
   const retakeImage = () => {
@@ -114,8 +110,6 @@ function CameraCapture({
     startCamera();
     onImageCapture(null);
     resetData(faceSnapkey);
-    console.log("faceSnapkeyabcvs", faceSnapkey);
-    console.log("faceSnapkeyabcvs faceImages", faceImages);
   };
 
   const convertToBase64 = (file) => {
@@ -147,11 +141,7 @@ function CameraCapture({
                 : "",
             }}
           >
-            {console.log(
-              dataOfAccountSetup?.fund_data?.fund_setting?.account?.applicant
-                ?.identity?.indivisual?.provider?.verify?.face?.isBlured,
-              "check"
-            )}
+           
             <img
               src={isIdCard ? "/img/idcardscanner.png" : "/img/face.png"}
               style={{
@@ -193,7 +183,7 @@ function CameraCapture({
           </div>
         </>
       )}
-      {console.log(imageData, "img data")}
+      
 
       {imageData && (
         <div

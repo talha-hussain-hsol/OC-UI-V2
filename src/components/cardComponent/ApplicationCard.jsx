@@ -338,7 +338,6 @@ const ApplicationCard = ({
                               <li
                                 className="px-4 py-4 text-white text-sm hover:bg-gradient-to-b from-[#70888e] to-[#214267] cursor-pointer"
                                 onClick={() => {
-                                  console.log("Download Document");
                                 }}
                               >
                                 Download Document
@@ -356,7 +355,6 @@ const ApplicationCard = ({
                             <li
                               className="px-4 py-4 text-white text-sm hover:bg-gradient-to-b from-[#70888e] to-[#214267] cursor-pointer"
                               onClick={() => {
-                                console.log("Upload Document");
                               }}
                             >
                               Asd

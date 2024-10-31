@@ -19,7 +19,6 @@ import { useTheme } from "../../../contexts/themeContext";
 import TermsCondition from "../../../components/modal/TermsCondition";
 
 export default function AccountStep(props) {
-  console.log(props, "props props props props AccountStep");
   const { theme } = useTheme();
   const [isCollapsed, setIsCollapsed] = useState(true);
   const cancelTokenSource = axios.CancelToken.source();
@@ -68,14 +67,7 @@ export default function AccountStep(props) {
         : true,
       fund_data: fundData,
     };
-    console.log(
-      fundData,
-      "fundData fundData fundData checkIfDataSelectedForButtons"
-    );
-    console.log(
-      dataToSend,
-      "dataToSend dataToSend dataToSend checkIfDataSelectedForButtons"
-    );
+   
     props.checkIfDataSelectedForButtons(dataToSend);
   }, [fundData, selectedIdentity, selectedIdentityData]);
   useEffect(() => {
@@ -153,12 +145,7 @@ export default function AccountStep(props) {
       ) {
         props.handleChangeTermsCondition();
       }
-      console.log(
-        response?.data?.reference_document?.term_documents?.[
-          response?.data?.reference_document?.term_documents?.length - 1
-        ]?.is_required,
-        "response?.data?.reference_document?.term_documents?.[response?.data?.reference_document?.term_documents?.length-1]?.is_required"
-      );
+    
 
       setDescriptionText(
         "Please select if you are applying as an individual or corporate. You may an attach an existing identity or create a new one."
@@ -302,7 +289,6 @@ export default function AccountStep(props) {
   }
   const shouldShowSelect =
     options?.length > 1 || (options?.length === 1 && options[0].value !== null);
-  console.log("options is great ", options);
   const checkIfDataSelected = (data) => {
     data["fund_id"] = fundData?.id;
     data["fund_data"] = fundData;

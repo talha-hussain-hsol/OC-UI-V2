@@ -27,7 +27,6 @@ const BankCard = ({
   const { isLoaderBank, fetchAllData, fetchBankIdentities } =
     useBankWalletHook();
   const { theme } = useTheme();
-  console.log("fundID", fundId);
   const [isAddBankModalOpen, setAddBankModalOpen] = useState(false);
   const [CryptoCurrency, setCryptoCurrency] = useState("");
   const [walletAddress, setWalletAddress] = useState("");
@@ -78,7 +77,6 @@ const BankCard = ({
         dataToSend,
         cancelTokenSource.token
       );
-      console.log("Add Wallet API Response:", response);
       // setIsLoader(false);
       if (response.success === true) {
         await fetchWalletAddresses();
@@ -129,9 +127,7 @@ const BankCard = ({
   const handleDeleteConfirm = async () => {
     if (walletToDelete) {
       try {
-        console.log("Deleting Wallet:", walletToDelete);
         const response = await deleteBankWalletAPI(cancelTokenSource.token);
-        console.log("Delete API Response:", response);
 
         setWalletAddresses((prev) =>
           prev.filter((wallet) => wallet.id !== walletToDelete.id)

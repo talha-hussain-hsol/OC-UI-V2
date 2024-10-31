@@ -6,35 +6,18 @@ export default function getMissingDataOfIdentity(
   crpDocument,
   crpRequiredDocument
 ) {
-  console.log(identityData, "identityData getMissingDataOfIdentity");
-  console.log(fundData, "fundData getMissingDataOfIdentity");
-  console.log(
-    allFieldsData,
-    "allFieldsData allFieldsData allFieldsData allFieldsData"
-  );
-  console.log(isCrp, "isCrp isCrp isCrp isCrp isCrp isCrp");
-  console.log(
-    crpDocument,
-    "crpDocument crpDocument crpDocument crpDocument crpDocument"
-  );
-  console.log(
-    crpRequiredDocument,
-    "crpRequiredDocument crpRequiredDocument crpRequiredDocument crpRequiredDocument"
-  );
+
   crpRequiredDocument = crpRequiredDocument?.filter(
     (item) => item.isRequired === true
   );
-  console.log(
-    crpRequiredDocument,
-    "crpRequiredDocument crpRequiredDocument crpRequiredDocument crpRequiredDocument"
-  );
+  
   let fundDataFields = null;
   if (fundData?.fund_fields) {
     fundDataFields = fundData?.fund_fields;
   } else {
     fundDataFields = fundData?.meta?.data;
   }
-  console.log(fundDataFields, "fundDataFields fundDataFields ");
+  
   let allIdentityFields = identityData?.meta?.data
     ? identityData?.meta?.data
     : identityData;
@@ -42,15 +25,12 @@ export default function getMissingDataOfIdentity(
   let missingFields = [];
   let missingDocuments = [];
 
-  console.log(allIdentityFields, "allIdentityFields allIdentityFields ");
-  console.log(allFieldsData, "allFieldsData allFieldsData ");
   if (allIdentityFields) {
     if (allFieldsData) {
       allFieldsData &&
         allFieldsData.map((items, index) => {
           let item = Object.keys(items);
           item = item[0];
-          console.log(item, "item item item itemsdasdasd");
           let splitKeys = item.split(".");
           let customerType = splitKeys[0];
           let formType = splitKeys[1];
@@ -105,7 +85,6 @@ export default function getMissingDataOfIdentity(
           }
         });
     }
-    console.log(missingFields, "missingFields");
 
     // if (allIdentityFields && fundDataFields) {
     //     let keysAllIdentityFields = Object.keys(allIdentityFields);
@@ -160,7 +139,6 @@ export default function getMissingDataOfIdentity(
     if (identityTypeId === null) {
       identityTypeId = 1;
     }
-    console.log(identityTypeId, "identityTypeId identityTypeId identityTypeId");
     // if (identityType == "INDIVIDUAL") {
     //     identityTypeId = 1
     // } else {
@@ -169,7 +147,6 @@ export default function getMissingDataOfIdentity(
     let fundRequiredDocuments = fundData?.requiredDocuments?.filter(
       (item) => item.isRequired === true
     );
-    console.log(fundRequiredDocuments, "fundRequiredDocuments");
     let filteredDocumentsByIdentityTypeId = [];
     if (isCrp) {
       if (crpRequiredDocument?.length > 0) {
@@ -200,14 +177,8 @@ export default function getMissingDataOfIdentity(
         });
       }
     }
-    console.log(
-      identityDocuments,
-      "identityDocuments identityDocuments identityDocuments"
-    );
-    console.log(
-      filteredDocumentsByIdentityTypeId,
-      "filteredDocumentsByIdentityTypeId"
-    );
+    
+
 
     let identityDocumentsAdded = [];
     if (isCrp) {
@@ -227,20 +198,11 @@ export default function getMissingDataOfIdentity(
         }
       }
     }
-    console.log(
-      identityDocumentsAdded,
-      "identityDocumentsAdded identityDocumentsAdded identityDocumentsAdded "
-    );
-    console.log(
-      filteredDocumentsByIdentityTypeId,
-      "filteredDocumentsByIdentityTypeId filteredDocumentsByIdentityTypeId filteredDocumentsByIdentityTypeId "
-    );
 
     missingDocuments = filteredDocumentsByIdentityTypeId.filter(
       (x) => !identityDocumentsAdded.includes(x)
     );
   }
-  console.log(missingDocuments, "missingDocuments missingDocuments");
   let data = {
     missingIdentityFields: missingFields,
     missingDocuments: missingDocuments,
