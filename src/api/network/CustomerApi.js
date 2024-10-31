@@ -9,8 +9,8 @@ if (localStorage.getItem("x-auth-token"))
   };
 
 
-let baseURL = localStorage.getItem("base_url");
-let entityId = localStorage.getItem("entityId") ;
+let baseURL = localStorage.getItem("base_url")  || 'CAPI';
+let entityId = localStorage.getItem("entityId") || 'a24ee21c-f747-4006-bfd3-8b87343c5119';
 if (
   baseURL === null &&
   isSubDomain() === true &&

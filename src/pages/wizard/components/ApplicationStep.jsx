@@ -1148,258 +1148,147 @@ export default function investment({ ...props }) {
             className={`bg-color-card-${theme} rounded-md  shadow-${theme} mb-8 flex flex-col items-center justify-center h-full w-full`}
           >
               {/* <div class="col-12 col-md-9"> */}
-              <div class={checkIfShowAdditional() ? "col-9 col-md-9" : "col-12 col-md-12"}>
+              <div class={checkIfShowAdditional() ? "col-9 col-md-9" : "w-full"}>
                 {isLoader || isLoaderESign || isLoaderAccount ? <SpinnerWithBackDrop animation="grow" custom={true} height="100vh" loaderDescription={loaderDescription} /> : null}
                 {/* {transactionData.length == 0 ? ( */}
                 {isLoaderAccount ? (
                   <SpinnerWithBackDrop animation="grow" custom={true} height="100vh" loaderDescription={loaderDescription} />
                 ) : (
-                  <div class="card">
-                    {/* <div class="card-header">
-                                        <h4 class="card-header-title">Review & Sign Documents</h4>
-                                    </div> */}
 
-                    <div
-                      className="card-header"
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <h4 className="card-header-title">Review & Sign Documents</h4>
-                      {checkIfShowManualTransaction() && (
-                        <Button
-                          onClick={(e) => {
-                            handleAddTransaction(e);
-                          }}
-                        >
-                          New Transaction Request
-                        </Button>
-                      )}
-                    </div>
-                    <div class="card-body">
-                      <div>
-                        {addTransaction && (
-                          <Card {...props}>
-                            <Card.Header>
-                              <h4 className="card-header-title">Add Transaction Request</h4>
-                            </Card.Header>
-                            <Card.Body>
-                              <Row className="justify-content-center mb-4">
-                                <Col xs={12} lg={4} xl={4}>
-                                  <label className="form-label">Type</label>
-                                  <select
-                                    className="form-control"
-                                    onChange={(e) => {
-                                      setTransactionType(e.target.value);
-                                    }}
-                                  >
-                                    <option value="">Select Type</option>
-                                    <option value="subscription" disabled={transactionList?.length>=1}>Initial Subscription</option>
-                                    <option value="addition" disabled={transactionList?.length==0}>Additional Subscription</option>
-                                    <option value="redemption" disabled={transactionList?.length==0}>Redemption</option>
-                                    <option value="full-redemption" disabled={transactionList?.length==0}>Full Redemption</option>
-                                    <option value="partial-redemption" disabled={transactionList?.length==0}>Partial Redemption</option>
-                                    {/* <option value="internal">Internal</option>
-                                                            <option value="exchange">Exchange</option>
-                                                            <option value="deposit">Deposit</option> */}
-                                  </select>
-                                  {typeError && <p className="error-fields">Select Type To Continue</p>}
-                                </Col>
-
-                                <Col xs={12} lg={4} xl={4}>
-                                  <label className="form-label">Amount</label>
-                                  <input
-                                    type="number"
-                                    className="form-control"
-                                    placeholder="Amount"
-                                    onChange={(e) => {
-                                      setTransactionAmount(e.target.value);
-                                    }}
-                                  />
-                                  {amountError && <p className="error-fields">Enter Amount To Continue</p>}
-                                </Col>
-                                <Col xs={12} lg={4} xl={4}>
-                                  <label className="form-label">Currency</label>
-                                  <select
-                                    className="form-control"
-                                    onChange={(e) => {
-                                      setCurrency(e.target.value);
-                                    }}
-                                  >
-                                    <option value="">Select Currency</option>
-
-                                    {props?.dataOfAccountSetup?.fund_data?.fund_setting?.sections?.manual_transaction?.currency !== ""
-                                      ? props?.dataOfAccountSetup?.fund_data?.fund_setting?.sections?.manual_transaction?.currency?.map((item) => {
-                                        return (
-                                          <>
-                                            <option value={item}>{item}</option>
-                                          </>
-                                        );
-                                      })
-                                      : null}
-                                  </select>
-                                  {currencyError && <p className="error-fields">Enter Currency To Continue</p>}
-                                </Col>
-                              </Row>
-                              <Row className="justify-content-center mb-4">
-                                <Col xs={12} lg={4} xl={4}>
-                                  <label className="form-label">No Of Shares</label>
-                                  <input
-                                    type="number"
-                                    className="form-control"
-                                    placeholder="No. Of Shares"
-                                    onChange={(e) => {
-                                      setNoOfShares(e.target.value);
-                                    }}
-                                  />
-                                  {noOfSharesError && <p className="error-fields">Enter No. Of Shares To Continue</p>}
-                                </Col>
-                                <Col xs={12} lg={4} xl={4}>
-                                  <label className="form-label">Class Type</label>
-                                  <select
-                                    className="form-control"
-                                    onChange={(e) => {
-                                      setClassType(e.target.value);
-                                    }}
-                                  >
-                                    <option value="">Select type</option>
-
-                                    {props?.dataOfAccountSetup?.fund_data?.fund_setting?.sections?.manual_transaction?.class_type !== ""
-                                      ? props?.dataOfAccountSetup?.fund_data?.fund_setting?.sections?.manual_transaction?.class_type?.map((item) => {
-                                        return (
-                                          <>
-                                            <option value={item}>{item}</option>
-                                          </>
-                                        );
-                                      })
-                                      : null}
-                                  </select>
-
-                                  {classTypeError && <p className="error-fields">Enter Class Type To Continue</p>}
-                                </Col>
-                                <Col xs={12} lg={4} xl={4}>
-                                  <label className="form-label">Transaction Date</label>
-                                  <input
-                                    type="date"
-                                    className="form-control"
-                                    placeholder="Transaction Date"
-                                    onChange={(e) => {
-                                      setTransactionDate(e.target.value);
-                                    }}
-                                  />
-                                  {transactionDateError && <p className="error-fields">Enter Transaction Date To Continue</p>}
-                                </Col>
-                              </Row>
-                              <Row className="mb-4">
-                                <Col xs={12} lg={4} xl={4}>
-                                  <label className="form-label">Latest NAV Price</label>
-                                  <input type="text" className="form-control" placeholder="Latest NAV Price" defaultValue={"1 share = 6.15 USD - From VITAL"} readOnly />
-                                </Col>
-                                <Col xs={12} lg={4} xl={4}>
-                                  <label className="form-label">No Shares Owned</label>
-                                  <input type="text" className="form-control" placeholder="No Shares Owned" defaultValue={"(Investor Perspective) - From VITAL"} readOnly />
-                                </Col>
-                                {/* <Col xs={12} lg={4} xl={4}>
-                                                            <label className="form-label">
-                                                                Dealing Cycle
-                                                            </label>
-                                                            <input type="date" className="form-control" placeholder="Dealing Cycle"
-                                                                onChange={(e) => { setDealingCycle(e.target.value) }} />
-                                                            {dealingCycleError && (
-                                                                <p className="error-fields">Enter Dealing Cycle To Continue</p>
-                                                            )}
-                                                        </Col> */}
-                              </Row>
-                              <div
-                                style={{
-                                  display: "flex",
-                                  justifyContent: "flex-end",
-                                  marginTop: "20px",
-                                  marginBottom: "20px",
-                                }}
-                              >
-                                <button
-                                  className="btn btn-success"
-                                  onClick={(e) => {
-                                    handleSubmitTransactions(e);
-                                  }}
-                                >
-                                  Submit
-                                </button>
-                              </div>
-                              {/* <div>
-                                                        <div
-                                                            style={{
-                                                                display: "flex",
-                                                                justifyContent: "center",
-                                                                marginTop: "20px",
-                                                            }}
-                                                        >
-                                                            <div className="card" style={{ width: "450px", padding: "10px" }}>
-                                                                <div
-                                                                    style={{
-                                                                        border: "dotted",
-                                                                        height: "350px",
-                                                                        cursor: "pointer",
-                                                                        display: "flex",
-                                                                        flexDirection: "column",
-                                                                        alignItems: "center",
-                                                                        justifyContent: "center",
-                                                                    }}
-                                                                    onClick={(e) => {
-                                                                        handleImageClick(e);
-                                                                    }}
-                                                                >
-                                                                    <img id="imagePreview" src="" alt="Upload image" className="subscriptionUploadDocument" style={{ display: "none" }}></img>
-                                                                    {contentTypeData.search("pdf") != -1 ? (
-                                                                        <FeatherIcon icon="file" />
-                                                                    ) :
-                                                                        contentTypeData.search("word") != -1 ? (
-                                                                            <FeatherIcon icon="file-text" />
-                                                                        ) : null}
-                                                                    <div id="imageUploadIcon">
-                                                                        <FeatherIcon icon="camera" />
-                                                                    </div>
-                                                                    <div id="imageUploadText1">
-                                                                        <h3>Upload Document</h3>
-                                                                    </div>
-                                                                    <div id="imageUploadText2">
-                                                                        <p>Formats PDF only</p>
-                                                                    </div>
-                                                                    <div id="imageUploadText3">
-                                                                        <p>Max Size 75 MB</p>
-                                                                    </div>
-                                                                </div>
-                                                                <input type="file" id="inputImageElement" ref={docImage} style={{ display: "none" }} />
-                                                                <div
-                                                                    style={{
-                                                                        display: "flex",
-                                                                        justifyContent: "space-around",
-                                                                        marginTop: "20px",
-                                                                    }}
-                                                                >
-                                                                    <button
-                                                                        className="btn btn-primary"
-                                                                        disabled={contentTypeData == "" ? true : false}
-                                                                        onClick={(e) => {
-                                                                            handleSubmitTransactions(e);
-                                                                        }}
-                                                                    >
-                                                                        Submit
-                                                                    </button>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div> */}
-                            </Card.Body>
-                          </Card>
-                        )}
-                      </div>
-
-                    </div>
+                  <div className={`bg-gradient-stepper-card-${theme} shadow-${theme} border border-color-${theme} rounded-lg px-4 w-full`}>
+                  <div className={`bg-color-card-${theme} rounded-t-md border-b-[1px] border-color-${theme} shadow-${theme} py-[18px] px-[16px] mb-4 flex justify-between`}>
+                    <h4 className={`font-light text-color-text-${theme}`}>Review & Sign Documents</h4>
+                    {checkIfShowManualTransaction() && (
+                      <Button
+                        className={`bg-color-button4-${theme} hover:bg-color-button4-hover-${theme} transition-all duration-300 ease-in-out text-white font-medium text-[15px] rounded-full py-2 px-4`}
+                        onClick={handleAddTransaction}
+                      >
+                        New Transaction Request
+                      </Button>
+                    )}
                   </div>
+
+                  <div className={`px-6`}>
+                    {addTransaction && (
+                      <div className={`bg-color-card-${theme} shadow-${theme} rounded-lg p-6`}>
+                        <h4 className={`font-light text-color-text-${theme} mb-6`}>Add Transaction Request</h4>
+                        <form className="w-full flex flex-col gap-6">
+                          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                            <div>
+                              <label className="text-[15px] font-light mb-2 block">Type</label>
+                              <select
+                                className={`bg-color-textfield-dropdown-${theme} py-2 px-4 rounded-lg shadow-${theme} outline-none focus:ring-[1px] focus:ring-[#2b78da] w-full`}
+                                onChange={(e) => setTransactionType(e.target.value)}
+                              >
+                                <option value="">Select Type</option>
+                                <option value="subscription" disabled={transactionList?.length >= 1}>Initial Subscription</option>
+                                <option value="addition" disabled={transactionList?.length == 0}>Additional Subscription</option>
+                                <option value="redemption" disabled={transactionList?.length == 0}>Redemption</option>
+                                <option value="full-redemption" disabled={transactionList?.length == 0}>Full Redemption</option>
+                                <option value="partial-redemption" disabled={transactionList?.length == 0}>Partial Redemption</option>
+                              </select>
+                              {typeError && <span className="text-red-500">Select Type To Continue</span>}
+                            </div>
+
+                            <div>
+                              <label className="text-[15px] font-light mb-2 block">Amount</label>
+                              <input
+                                type="number"
+                                className={`bg-color-textfield-dropdown-${theme} py-2 px-4 rounded-lg shadow-${theme} outline-none focus:ring-[1px] focus:ring-[#2b78da] w-full`}
+                                placeholder="Amount"
+                                onChange={(e) => setTransactionAmount(e.target.value)}
+                              />
+                              {amountError && <span className="text-red-500">Enter Amount To Continue</span>}
+                            </div>
+
+                            <div>
+                              <label className="text-[15px] font-light mb-2 block">Currency</label>
+                              <select
+                                className={`bg-color-textfield-dropdown-${theme} py-2 px-4 rounded-lg shadow-${theme} outline-none focus:ring-[1px] focus:ring-[#2b78da] w-full`}
+                                onChange={(e) => setCurrency(e.target.value)}
+                              >
+                                <option value="">Select Currency</option>
+                                {props?.dataOfAccountSetup?.fund_data?.fund_setting?.sections?.manual_transaction?.currency?.map((item) => (
+                                  <option key={item} value={item}>{item}</option>
+                                ))}
+                              </select>
+                              {currencyError && <span className="text-red-500">Enter Currency To Continue</span>}
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                            <div>
+                              <label className="text-[15px] font-light mb-2 block">No Of Shares</label>
+                              <input
+                                type="number"
+                                className={`bg-color-textfield-dropdown-${theme} py-2 px-4 rounded-lg shadow-${theme} outline-none focus:ring-[1px] focus:ring-[#2b78da] w-full`}
+                                placeholder="No. Of Shares"
+                                onChange={(e) => setNoOfShares(e.target.value)}
+                              />
+                              {noOfSharesError && <span className="text-red-500">Enter No. Of Shares To Continue</span>}
+                            </div>
+
+                            <div>
+                              <label className="text-[15px] font-light mb-2 block">Class Type</label>
+                              <select
+                                className={`bg-color-textfield-dropdown-${theme} py-2 px-4 rounded-lg shadow-${theme} outline-none focus:ring-[1px] focus:ring-[#2b78da] w-full`}
+                                onChange={(e) => setClassType(e.target.value)}
+                              >
+                                <option value="">Select Type</option>
+                                {props?.dataOfAccountSetup?.fund_data?.fund_setting?.sections?.manual_transaction?.class_type?.map((item) => (
+                                  <option key={item} value={item}>{item}</option>
+                                ))}
+                              </select>
+                              {classTypeError && <span className="text-red-500">Enter Class Type To Continue</span>}
+                            </div>
+
+                            <div>
+                              <label className="text-[15px] font-light mb-2 block">Transaction Date</label>
+                              <input
+                                type="date"
+                                className={`bg-color-textfield-dropdown-${theme} py-2 px-4 rounded-lg shadow-${theme} outline-none focus:ring-[1px] focus:ring-[#2b78da] w-full`}
+                                onChange={(e) => setTransactionDate(e.target.value)}
+                              />
+                              {transactionDateError && <span className="text-red-500">Enter Transaction Date To Continue</span>}
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+                            <div>
+                              <label className="text-[15px] font-light mb-2 block">Latest NAV Price</label>
+                              <input
+                                type="text"
+                                className={`bg-color-textfield-dropdown-${theme} py-2 px-4 rounded-lg shadow-${theme} w-full`}
+                                defaultValue="1 share = 6.15 USD - From VITAL"
+                                readOnly
+                              />
+                            </div>
+
+                            <div>
+                              <label className="text-[15px] font-light mb-2 block">No Shares Owned</label>
+                              <input
+                                type="text"
+                                className={`bg-color-textfield-dropdown-${theme} py-2 px-4 rounded-lg shadow-${theme} w-full`}
+                                defaultValue="(Investor Perspective) - From VITAL"
+                                readOnly
+                              />
+                            </div>
+                          </div>
+
+                          <div className="flex justify-end mt-6">
+                            <button
+                              className={`bg-color-button4-${theme} hover:bg-color-button4-hover-${theme} transition-all duration-300 ease-in-out text-white font-medium text-[15px] rounded-full py-3 px-7`}
+                              onClick={handleSubmitTransactions}
+                            >
+                              Submit
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
                 )}
                 {/* ) : null} */}
               </div>
@@ -1407,19 +1296,15 @@ export default function investment({ ...props }) {
                 (transactionHistoryData?.hasOwnProperty("SUBSCRIPTION_AGREEMENT") || transactionHistoryData?.hasOwnProperty("SUBSCRIPTION_APPLICATION") || transactionHistoryData.hasOwnProperty('CONTRIBUTION_AGREEMENT')) &&
                 props?.dataOfAccountSetup?.accountData?.status == "accepted" && (
                   <>
-                    {/* {transactionHistoryData.hasOwnProperty("SUBSCRIPTION_AGREEMENT") || transactionHistoryData.hasOwnProperty("SUBSCRIPTION_APPLICATION") ? ( */}
                     <>
-                      <div class="col-12 col-md-3">
+                      {/* <div class="col-12 col-md-3">
                         {props?.dataOfAccountSetup?.fundData?.meta?.config?.settings?.account?.addition?.status && (
                           <div class="card">
                             <div class="card-header">
                               <h4 class="card-header-title">Additional Investment</h4>
                             </div>
                             <div class="card-body">
-                              {/* <div class="form-floating form-group">
-                                <input type="number" class="form-control" id="floatingInput" value={additionalAmount} onChange={(event) => handleAdditionalAmountChange(event)} placeholder="Enter Additional Amount" />
-                                <label for="floatingInput">Additional Amount</label>
-                              </div> */}
+                           
                               {isEmailValid && (
                                 <button
                                   className="btn btn-primary"
@@ -1440,10 +1325,7 @@ export default function investment({ ...props }) {
                               <h4 class="card-header-title">Request Redemption</h4>
                             </div>
                             <div class="card-body">
-                              {/* <div class="form-floating form-group">
-                                <input type="number" class="form-control" id="floatingInput" value={redemptionAmount} onChange={(event) => handleRedemptionAmountChange(event)} placeholder="Enter Redemption Amount" />
-                                <label for="floatingInput">Redemption Amount</label>
-                              </div> */}
+                            
                               {isEmailValid && (
                                 <button
                                   className="btn btn-primary"
@@ -1458,98 +1340,231 @@ export default function investment({ ...props }) {
                             </div>
                           </div>
                         )}
-                      </div>
+                      </div> */}
+                      <div className={`w-full md:w-1/4`}>
+  {props?.dataOfAccountSetup?.fundData?.meta?.config?.settings?.account?.addition?.status && (
+    <div className={`bg-${theme}-background shadow-md rounded-lg overflow-hidden mb-6`}>
+      <div className={`bg-${theme}-header text-white px-4 py-3`}>
+        <h4 className="text-lg font-semibold">Additional Investment</h4>
+      </div>
+      <div className="p-4">
+        {/* Input field (if needed) */}
+        {/* 
+        <div className="mb-4">
+          <input
+            type="number"
+            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-${theme}-primary`}
+            value={additionalAmount}
+            onChange={(event) => handleAdditionalAmountChange(event)}
+            placeholder="Enter Additional Amount"
+          />
+        </div> 
+        */}
+        {isEmailValid && (
+          <button
+            className={`w-full bg-${theme}-button hover:bg-${theme}-button-hover text-white font-semibold py-2 px-4 rounded-md transition duration-200`}
+            type="submit"
+            onClick={(e) => handleSignAndSubmit(e, "new", additionalSubscription)}
+          >
+            Sign & Submit
+          </button>
+        )}
+      </div>
+    </div>
+  )}
+
+  {props?.dataOfAccountSetup?.fundData?.meta?.config?.settings?.account?.redemption?.status && (
+    <div className={`bg-${theme}-background shadow-md rounded-lg overflow-hidden mb-6`}>
+      <div className={`bg-${theme}-header text-white px-4 py-3`}>
+        <h4 className="text-lg font-semibold">Request Redemption</h4>
+      </div>
+      <div className="p-4">
+        {/* Input field (if needed) */}
+        {/* 
+        <div className="mb-4">
+          <input
+            type="number"
+            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-${theme}-primary`}
+            value={redemptionAmount}
+            onChange={(event) => handleRedemptionAmountChange(event)}
+            placeholder="Enter Redemption Amount"
+          />
+        </div> 
+        */}
+        {isEmailValid && (
+          <button
+            className={`w-full bg-${theme}-button hover:bg-${theme}-button-hover text-white font-semibold py-2 px-4 rounded-md transition duration-200`}
+            type="submit"
+            onClick={(e) => handleSignAndSubmit(e, "new", redemptionSubscription)}
+          >
+            Sign & Submit
+          </button>
+        )}
+      </div>
+    </div>
+  )}
+</div>
+
+
                     </>
                     {/* ) : null} */}
                   </>
                 )}
             </div>
             {transactionHistoryData && Object.keys(transactionHistoryData)?.length !== 0 ? (
-              <div class="card">
-                <div class="card-header">
-                  <h4 class="card-header-title">Document History</h4>
-                </div>
-                <div class="card-body">
-                  <div class="row">
-                    <div class={"col-12 col-md-12"}>
-                      <div class="table-responsive">
-                        <table class="table table-sm table-nowrap card-table">
-                          <thead>
-                            <tr>
-                              <th>Type</th>
-                              <th>Date</th>
-                              <th>Status</th>
-                              <th>Action</th>
-                            </tr>
-                          </thead>
-                          {console.log(transactionHistoryData, "transactionHistoryData")}
-                          <tbody class="list">
-                            {transactionHistoryData &&
-                              Object.keys(transactionHistoryData).map((item, index) => (
-                                <>
-                                  {transactionHistoryData[item].map((itemData, index) => (
-                                    <tr>
-                                      <td>{item.replaceAll("_", " ")}</td>
-                                      <td>{formatDateRegionWise(itemData?.docUploadDateTime, true)}</td>
-                                      <td>{itemData?.status == "pending" ? "Signed" : "Draft"}</td>
-                                      <td>
-                                        <div
-                                          style={{
-                                            display: "flex",
-                                            alignItems: "center",
-                                          }}
-                                        >
-                                          {itemData?.status != "draft" && itemData?.status != "canceled" && (
-                                            <FeatherIcon
-                                              style={{
-                                                cursor: "pointer",
-                                              }}
-                                              icon="download"
-                                              color="green"
-                                              size="15"
-                                              onClick={(e) => {
-                                                handleDownloadDocument(itemData?.documentTypeId, itemData?.randomString);
-                                              }}
-                                            />
-                                          )}
+              // <div class="card">
+              //   <div class="card-header">
+              //     <h4 class="card-header-title">Document History</h4>
+              //   </div>
+              //   <div class="card-body">
+              //     <div class="row">
+              //       <div class={"col-12 col-md-12"}>
+              //         <div class="table-responsive">
+              //           <table class="table table-sm table-nowrap card-table">
+              //             <thead>
+              //               <tr>
+              //                 <th>Type</th>
+              //                 <th>Date</th>
+              //                 <th>Status</th>
+              //                 <th>Action</th>
+              //               </tr>
+              //             </thead>
+              //             {console.log(transactionHistoryData, "transactionHistoryData")}
+              //             <tbody class="list">
+              //               {transactionHistoryData &&
+              //                 Object.keys(transactionHistoryData).map((item, index) => (
+              //                   <>
+              //                     {transactionHistoryData[item].map((itemData, index) => (
+              //                       <tr>
+              //                         <td>{item.replaceAll("_", " ")}</td>
+              //                         <td>{formatDateRegionWise(itemData?.docUploadDateTime, true)}</td>
+              //                         <td>{itemData?.status == "pending" ? "Signed" : "Draft"}</td>
+              //                         <td>
+              //                           <div
+              //                             style={{
+              //                               display: "flex",
+              //                               alignItems: "center",
+              //                             }}
+              //                           >
+              //                             {itemData?.status != "draft" && itemData?.status != "canceled" && (
+              //                               <FeatherIcon
+              //                                 style={{
+              //                                   cursor: "pointer",
+              //                                 }}
+              //                                 icon="download"
+              //                                 color="green"
+              //                                 size="15"
+              //                                 onClick={(e) => {
+              //                                   handleDownloadDocument(itemData?.documentTypeId, itemData?.randomString);
+              //                                 }}
+              //                               />
+              //                             )}
 
-                                          {itemData?.mode === "manual" && (
-                                            <div style={{ marginLeft: "1rem" }}>
-                                              <Button
-                                                onClick={() => handleDeleteClick(itemData, item)} //
-                                                className="lift"
-                                                style={{
-                                                  height: "30px",
-                                                  width: "30px",
-                                                  display: "flex",
-                                                  alignItems: "center",
-                                                  justifyContent: "center",
-                                                  padding: "6px",
-                                                  marginTop: "5px",
-                                                  marginBottom: "5px",
-                                                  backgroundColor: "red", // Add the red background color
-                                                }}
-                                              >
-                                                <FeatherIcon icon="trash" size="1em" />
-                                              </Button>
-                                            </div>
-                                          )}
-                                        </div>
-                                      </td>
-                                    </tr>
-                                  ))}
-                                </>
-                              ))}
-                          </tbody>
-                        </table>
+              //                             {itemData?.mode === "manual" && (
+              //                               <div style={{ marginLeft: "1rem" }}>
+              //                                 <Button
+              //                                   onClick={() => handleDeleteClick(itemData, item)} //
+              //                                   className="lift"
+              //                                   style={{
+              //                                     height: "30px",
+              //                                     width: "30px",
+              //                                     display: "flex",
+              //                                     alignItems: "center",
+              //                                     justifyContent: "center",
+              //                                     padding: "6px",
+              //                                     marginTop: "5px",
+              //                                     marginBottom: "5px",
+              //                                     backgroundColor: "red", // Add the red background color
+              //                                   }}
+              //                                 >
+              //                                   <FeatherIcon icon="trash" size="1em" />
+              //                                 </Button>
+              //                               </div>
+              //                             )}
+              //                           </div>
+              //                         </td>
+              //                       </tr>
+              //                     ))}
+              //                   </>
+              //                 ))}
+              //             </tbody>
+              //           </table>
+              //         </div>
+              //       </div>
+              //     </div>
+              //   </div>
+              // </div>
+              <div className={`bg-${theme}-background shadow-md rounded-lg overflow-hidden`}>
+  <div className={`bg-${theme}-header text-white px-4 py-3`}>
+    <h4 className="text-lg font-semibold">Document History</h4>
+  </div>
+  <div className="p-4">
+    <div className="overflow-x-auto">
+      <table className="w-full table-auto text-left text-sm border-collapse">
+        <thead>
+          <tr className={`bg-${theme}-table-header text-${theme}-table-header-text`}>
+            <th className="px-4 py-2 border-b">Type</th>
+            <th className="px-4 py-2 border-b">Date</th>
+            <th className="px-4 py-2 border-b">Status</th>
+            <th className="px-4 py-2 border-b">Action</th>
+          </tr>
+        </thead>
+        {console.log(transactionHistoryData, "transactionHistoryData")}
+        <tbody>
+          {transactionHistoryData &&
+            Object.keys(transactionHistoryData).map((item) => (
+              <>
+                {transactionHistoryData[item].map((itemData) => (
+                  <tr key={itemData?.randomString} className="border-b">
+                    <td className="px-4 py-2">{item.replaceAll("_", " ")}</td>
+                    <td className="px-4 py-2">
+                      {formatDateRegionWise(itemData?.docUploadDateTime, true)}
+                    </td>
+                    <td className="px-4 py-2">
+                      {itemData?.status === "pending" ? "Signed" : "Draft"}
+                    </td>
+                    <td className="px-4 py-2">
+                      <div className="flex items-center space-x-4">
+                        {itemData?.status !== "draft" &&
+                          itemData?.status !== "canceled" && (
+                            <FeatherIcon
+                              className="cursor-pointer"
+                              icon="download"
+                              color="green"
+                              size="15"
+                              onClick={() =>
+                                handleDownloadDocument(
+                                  itemData?.documentTypeId,
+                                  itemData?.randomString
+                                )
+                              }
+                            />
+                          )}
+
+                        {itemData?.mode === "manual" && (
+                          <button
+                            onClick={() => handleDeleteClick(itemData, item)}
+                            className={`flex items-center justify-center bg-${theme}-delete-button hover:bg-${theme}-delete-button-hover text-white rounded-full h-8 w-8`}
+                          >
+                            <FeatherIcon icon="trash" size="1em" />
+                          </button>
+                        )}
                       </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                    </td>
+                  </tr>
+                ))}
+              </>
+            ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
             ) : null}
 
-              <div class="card">
+              {/* <div class="card">
                 <div class="card-header">
                   <h4 class="card-header-title">Transaction History</h4>
                 </div>
@@ -1740,8 +1755,158 @@ export default function investment({ ...props }) {
                     </div>
                   </div>
                 </div>
-              </div>
-            <Modal show={signSubmit} onHide={handleSignSubmitClose}>
+              </div> */}
+              <div className={`card bg-color-card-${theme} shadow-lg rounded-lg`}>
+                  <div className={`bg-color-card-${theme} rounded-t-md border-color-${theme} px-6 py-4 border-b border-gray-200`}>
+                    <h4 className={`text-lg font-light text-color-text-${theme}`}>Transaction History</h4>
+                  </div>
+
+                  <div className="card-body px-6 py-4">
+                    <div className="table-responsive">
+                      <table className="w-full text-left table-auto border-collapse">
+                        <thead className="bg-gray-100">
+                          <tr>
+                            <th className="px-4 py-2 border-b font-medium text-gray-700">Subscription Type</th>
+                            <th className="px-4 py-2 border-b font-medium text-gray-700">Amount</th>
+                            <th className="px-4 py-2 border-b font-medium text-gray-700">No of Shares</th>
+                            <th className="px-4 py-2 border-b font-medium text-gray-700">Currency</th>
+                            <th className="px-4 py-2 border-b font-medium text-gray-700">Status</th>
+                            <th className="px-4 py-2 border-b font-medium text-gray-700">Date</th>
+
+                            {checkIfStampingEnable() && <th className="px-4 py-2 border-b font-medium text-gray-700">Stamp</th>}
+                            {props?.dataOfAccountSetup?.fundData?.region === "India" && checkIfESignEnable() && (
+                              <th className="px-4 py-2 border-b font-medium text-gray-700">E Sign</th>
+                            )}
+                            <th className="px-4 py-2 border-b font-medium text-gray-700">Action</th>
+                          </tr>
+                        </thead>
+
+                        <tbody className="divide-y divide-gray-200">
+                          {transactionList &&
+                            transactionList.map((item, index) => (
+                              <tr key={index} className="hover:bg-gray-50">
+                                <td className="px-4 py-3">{item?.type}</td>
+                                <td className="px-4 py-3">{new Intl.NumberFormat().format(item?.amount ?? 0) || 0}</td>
+                                <td className="px-4 py-3">{item?.meta?.moreInfo?.no_of_shares}</td>
+                                <td className="px-4 py-3">{(item?.currency || "").toUpperCase()}</td>
+                                <td className="px-4 py-3">
+                                  {item?.status === "pending" ? "Pending For Review" : item?.status}
+                                </td>
+                                <td className="px-4 py-3">{item?.transactionDate}</td>
+
+                                {checkIfStampingEnable() && item.type === "subscription" && (
+                                  <td className="px-4 py-3">
+                                    {item?.meta?.[item.type]?.[item.meta[item.type]?.length - 1]?.docuSign?.status ===
+                                      "signing_complete" ||
+                                    item?.meta?.[item.type]?.[item.meta[item.type]?.length - 1]?.docuSign?.mode === "manual" ? (
+                                      <>
+                                        {item?.meta?.[item.type]?.[item.meta[item.type]?.length - 1]?.STAMP_DOCUMENT ? (
+                                          <>
+                                            <FeatherIcon
+                                              className="cursor-pointer text-green-500"
+                                              icon="download"
+                                              size={15}
+                                              onClick={() =>
+                                                handleDownloadStampDocument(
+                                                  item.meta[item.type][item.meta[item.type].length - 1]?.STAMP_DOCUMENT.bucketKey
+                                                )
+                                              }
+                                            />
+                                            {item?.meta?.[item.type]?.[item.meta[item.type]?.length - 1]?.STAMP_DOCUMENT?.stamp_paper_no.join(", ")}
+                                          </>
+                                        ) : (
+                                          <button
+                                            className="btn btn-primary"
+                                            onClick={() => handleStamping(item)}
+                                          >
+                                            Proceed
+                                          </button>
+                                        )}
+                                      </>
+                                    ) : null}
+                                  </td>
+                                )}
+
+                                {props?.dataOfAccountSetup?.fundData?.region === "India" &&
+                                  checkIfESignEnable() &&
+                                  item.type === "subscription" && (
+                                    <td className="px-4 py-3">
+                                      {item.meta[item.type][item.meta[item.type]?.length - 1]?.AADHAAR_SIGN_DOCUMENT ? (
+                                        item.meta[item.type][item.meta[item.type]?.length - 1]?.AADHAAR_SIGN_DOCUMENT?.status ===
+                                        "completed" ? (
+                                          <FeatherIcon
+                                            className="cursor-pointer text-green-500"
+                                            icon="download"
+                                            size={15}
+                                            onClick={() =>
+                                              handleDownloadStampDocument(
+                                                item.meta[item.type][item.meta[item.type]?.length - 1]?.AADHAAR_SIGN_DOCUMENT.bucketKey
+                                              )
+                                            }
+                                          />
+                                        ) : (
+                                          <>
+                                            {item.meta[item.type][item.meta[item.type]?.length - 1]?.AADHAAR_SIGN_DOCUMENT?.signer_meta_info.map(
+                                              (signer, index) =>
+                                                signer.type === "CUSTOMER" && signer.sign !== "SIGNED" && (
+                                                  <button
+                                                    key={index}
+                                                    className="btn btn-primary"
+                                                    onClick={() =>
+                                                      handleESign(
+                                                        item.type,
+                                                        item.meta[item.type][item.meta[item.type]?.length - 1]?.randomString,
+                                                        item.id
+                                                      )
+                                                    }
+                                                  >
+                                                    Proceed
+                                                  </button>
+                                                )
+                                            )}
+                                          </>
+                                        )
+                                      ) : null}
+                                    </td>
+                                  )}
+
+                                <td className="px-4 py-3">
+                                  <div className="flex items-center gap-4">
+                                    <button
+                                      className="btn btn-danger"
+                                      onClick={(e) => handleSignAndSubmit(e, "new", item)}
+                                    >
+                                      Sign & Submit
+                                    </button>
+
+                                    {userId === item?.meta?.moreInfo?.created_by?.id && (
+                                      <div
+                                        onClick={() => {
+                                          setDeleteConfirmationModal(true);
+                                          setSelectedRow(item);
+                                        }}
+                                      >
+                                        <OverlayTrigger overlay={<Tooltip>Delete transaction</Tooltip>}>
+                                          <span className="cursor-pointer text-red-500">
+                                            <FeatherIcon icon="trash" size="1.5em" />
+                                          </span>
+                                        </OverlayTrigger>
+                                      </div>
+                                    )}
+                                  </div>
+                                </td>
+                              </tr>
+                            ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+            {/* <Modal show={signSubmit} onHide={handleSignSubmitClose}>
               <Modal.Header closeButton>
                 <Modal.Title>Please select document signing mode</Modal.Title>
               </Modal.Header>
@@ -1749,7 +1914,6 @@ export default function investment({ ...props }) {
                 {isAmount && (
                   <div className="row mt-2">
                     <div className="col-sm-7">
-                      {/* <label for="floatingInput">Initial Investment Amount</label> */}
                       <input
                         class="form-control"
                         id="floatingInput"
@@ -1770,11 +1934,7 @@ export default function investment({ ...props }) {
                           Amount is required
                         </span>
                       ) : null}
-                      {/* {subscriptionAmountRangeError && (
-                            <span style={{ color: "red" }} className="danger">
-                              Amount should be between {minSubscriptionAmount} and {maxSubscriptionAmount}
-                            </span>
-                          )} */}
+                    
                     </div>
                     <div className="col-sm-5">
                       <Select
@@ -1783,7 +1943,6 @@ export default function investment({ ...props }) {
                         onChange={handleChangeCurrency}
                         placeholder={`Select Currency`}
                         defaultValue={selectedCurrencyValues || "Select"}
-                      // className={errors && errors[field] ? "is-invalid" : ""}
                       />
                       {errorCurrency ? (
                         <span style={{ color: "red" }} className="danger">
@@ -1803,9 +1962,7 @@ export default function investment({ ...props }) {
                           Manual Signature
                         </Button>
                       </Dropdown.Toggle>
-                      {/* <Dropdown.Toggle as="span" className="dropdown-ellipses" role="button">
-                          <Button className="lift">Manual Signature</Button>
-                        </Dropdown.Toggle> */}
+                  
                       {console.log(requiredDocList, "requiredDocList requiredDocList requiredDocList requiredDocList")}
                       <Dropdown.Menu as="div" className="custom-dropdown-menu">
                         <Dropdown.Item
@@ -1860,9 +2017,7 @@ export default function investment({ ...props }) {
                           Digital Signature
                         </Button>
                       </Dropdown.Toggle>
-                      {/* <Dropdown.Toggle as="span" className="dropdown-ellipses" role="button">
-                          <Button className="lift">Digital Signature</Button>
-                        </Dropdown.Toggle> */}
+                  
                       {requiredDocList?.choices ? (
                         <Dropdown.Menu
                           as="div"
@@ -1934,7 +2089,7 @@ export default function investment({ ...props }) {
                           contentTypeData.search("word") != -1 ? (
                             <FeatherIcon icon="file-text" />
                           ) : null}
-                        {/* <canvas class="result"></canvas> */}
+                        {/* <canvas class="result"></canvas> *
                         <div id="imageUploadIcon">
                           <FeatherIcon icon="camera" />
                         </div>
@@ -1983,7 +2138,176 @@ export default function investment({ ...props }) {
                   Close
                 </Button>
               </Modal.Footer>
-            </Modal>
+            </Modal> */}
+            <Modal show={signSubmit} onHide={handleSignSubmitClose}>
+  <div className={`bg-white p-6 rounded-lg shadow-lg max-w-3xl mx-auto bg-color-modal-${theme}`}>
+    <div className="flex justify-between items-center">
+      <h2 className={`text-xl font-semibold text-color-heading-${theme}`}>Please select document signing mode</h2>
+      <button
+        onClick={handleSignSubmitClose}
+        className={`text-gray-600 hover:text-red-500 focus:outline-none`}
+      >
+        ✖
+      </button>
+    </div>
+
+    <div className="mt-4">
+      {isAmount && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+          <div>
+            <input
+              className={`w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring focus:ring-indigo-300 bg-color-input-${theme}`}
+              id="amount"
+              value={amount}
+              onChange={handleChangeAmount}
+              placeholder={
+                requiredDocList?.category_key === "SUBSCRIPTION_DOCUMENT"
+                  ? "Enter Investment/ Commitment Amount"
+                  : requiredDocList?.category_key === "ADDITIONAL_SUBSCRIPTION_DOCUMENT"
+                  ? "Enter Addition Investment Amount"
+                  : requiredDocList?.category_key === "REDEMPTION_DOCUMENT"
+                  ? "Enter Redemption Amount"
+                  : "Enter Investment/ Commitment Amount"
+              }
+            />
+            {errorAmount && <span className="text-red-500">Amount is required</span>}
+          </div>
+
+          <div>
+            <Select
+              options={currencyOptions}
+              styles={customStyles}
+              onChange={handleChangeCurrency}
+              placeholder="Select Currency"
+              defaultValue={selectedCurrencyValues || "Select"}
+            />
+            {errorCurrency && <span className="text-red-500">Currency is required</span>}
+          </div>
+        </div>
+      )}
+    </div>
+
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
+      <div>
+        <Dropdown align="end">
+          <button className={`flex items-center bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition`}>
+            <FontAwesomeIcon icon={faFileSignature} className="mr-2" />
+            Manual Signature
+          </button>
+
+          <Dropdown.Menu as="div" className="mt-2 bg-gray-700 p-2 rounded-md">
+            <Dropdown.Item onClick={handleClickUpload}>Upload Document</Dropdown.Item>
+            <Dropdown align="right">
+              <Dropdown.Toggle as="span">
+                <button className="mt-2 text-white bg-transparent border-0">
+                  Download Document
+                </button>
+              </Dropdown.Toggle>
+
+              {requiredDocList?.choices ? (
+                <Dropdown.Menu as="div">
+                  {Object.keys(requiredDocList.choices).map((item, index) => (
+                    <Dropdown.Item
+                      key={index}
+                      onClick={() => handleClickDownloadManual(item, requiredDocList.id)}
+                    >
+                      {item}
+                    </Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              ) : (
+                <Dropdown.Item>No Data Found</Dropdown.Item>
+              )}
+            </Dropdown>
+          </Dropdown.Menu>
+        </Dropdown>
+      </div>
+
+      <div className="flex justify-end">
+        <Dropdown align="end">
+          <button className={`flex items-center bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition`}>
+            <FontAwesomeIcon icon={faFileSignature} className="mr-2" />
+            Digital Signature
+          </button>
+
+          {requiredDocList?.choices ? (
+            <Dropdown.Menu as="div" className="mt-2">
+              {Object.keys(requiredDocList.choices).map((item, index) =>
+                item === "deleted" ? null : (
+                  <Dropdown.Item key={index} onClick={() => handleClickChoice(item)}>
+                    <p>{item.replace(/\b\w/g, (char) => char.toUpperCase())}</p>
+                  </Dropdown.Item>
+                )
+              )}
+            </Dropdown.Menu>
+          ) : (
+            <Dropdown.Menu as="div">
+              <Dropdown.Item>No Data Found</Dropdown.Item>
+            </Dropdown.Menu>
+          )}
+        </Dropdown>
+      </div>
+    </div>
+
+    {uploadDocument && (
+      <div className="mt-6 flex justify-center">
+        <div className="w-96 bg-white shadow-md p-4 rounded-lg">
+          {pDFError && <p className="text-red-500">Only PDF files are allowed to upload</p>}
+          <div
+            className={`border-2 border-dotted border-gray-400 h-80 flex flex-col items-center justify-center cursor-pointer bg-color-upload-${theme}`}
+            onClick={handleImageClick}
+          >
+            <img
+              id="imagePreview"
+              src=""
+              alt="Upload"
+              className="hidden"
+            />
+            {contentTypeData.includes("pdf") ? (
+              <FeatherIcon icon="file" />
+            ) : contentTypeData.includes("word") ? (
+              <FeatherIcon icon="file-text" />
+            ) : null}
+
+            <div id="imageUploadIcon">
+              <FeatherIcon icon="camera" />
+            </div>
+            <h3 className="mt-2">Upload Document</h3>
+            <p>Formats: PDF only</p>
+            <p>Max Size: 75 MB</p>
+          </div>
+
+          <input type="file" id="inputImageElement" ref={docImage} className="hidden" />
+          <div className="flex justify-around mt-4">
+            <button
+              className={`btn btn-primary ${!contentTypeData && "opacity-50 cursor-not-allowed"}`}
+              disabled={!contentTypeData}
+              onClick={handleUploadDocument}
+            >
+              Upload
+            </button>
+            <button className="btn btn-primary" onClick={handleCancelUploadDocument}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
+
+    <div className="mt-6 flex justify-end">
+      <button
+        onClick={handleSignSubmitClose}
+        className={`bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition`}
+      >
+        Close
+      </button>
+    </div>
+  </div>
+</Modal>
+
+
+
+
           </Col>
         </div>
         {deleteManualDocConfirmation && (
