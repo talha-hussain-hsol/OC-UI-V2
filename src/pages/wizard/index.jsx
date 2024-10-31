@@ -1363,18 +1363,22 @@ export default function Wizard() {
             onClose={() => setAlertProps({ ...alertProps, show: false })}
           />
         )}
-
-        <Stepper
+<div className={`lg:pt-0 pt-12`}>
+<Stepper
           steps={customSteps}
           activeStep={currentSection}
           activeColor="#007bff"
           completeColor="green"
-          activeTitleColor={"white"}
+          activeTitleColor={`text-color-activeTitle-${theme}`}
           completeTitleColor={"white"}
           completeBorderColor={"green"}
           completeBarColor={"green"}
           circleFontColor={"black"}
+         
+          className={`py-80`}
         />
+</div>
+        
 
         <div  className={`bg-gradient-stepper-card-${theme} w-full shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] mx-auto py-4  md:mt-12 rounded-lg text-white flex flex-col justify-center`}
         >
@@ -1413,8 +1417,8 @@ export default function Wizard() {
                 params?.account_id &&
                 currentSection === 0 && (
                   <>
-                    <Tooltip id="tooltip">
-                      {tooltipMessage}
+                    <Tooltip id="tooltip"
+                      content={tooltipMessage} position="upper">
 
                       <div>
                         <button

@@ -543,7 +543,7 @@ export default function Documents(props) {
   };
   const renderRequiredDocuments = (entityValueData) => (
     <div
-      className="flex w-full mt-[20px]"
+      className="lg:flex lg:flex-row flex flex-col w-full mt-[20px]"
     >
       <div className="sm:w-5/12 md:w-5/12 lg:w-5/12 px-6 max-h-[28em] min-h-[28em] overflow-y-scroll">
  
@@ -577,11 +577,11 @@ export default function Documents(props) {
                   requiredDocumentSelected?.id == item.id && isItemSelected
                     ? ``
                     : handleWarningMessage(item)
-                    ? `border-2 border-[#ff0000] shadow-${theme} mb-4 mt-2 px-[15px] py-[20px] rounded-lg bg-gradient-stepper-card-${theme}`
+                    ? `border-2 border-[#ff0000] shadow-${theme} mb-4 mt-2 px-[15px] py-[20px] rounded-lg bg-color-documents-${theme}`
                     : getUploadedDocumentChildName(item) ||
                       getUploadedDocumentIfChildrenNotFound(item.id)
-                    ? `border-2 border-[#30d158] shadow-${theme} mb-4 mt-2 px-[15px] py-[17px] rounded-lg bg-gradient-stepper-card-${theme}`
-                    : `border-color-${theme} shadow-${theme} mb-4 mt-2 px-[15px] py-[20px] rounded-lg bg-gradient-stepper-card-${theme}`
+                    ? `border-2 border-[#30d158] shadow-${theme} mb-4 mt-2 px-[15px] py-[17px] rounded-lg bg-color-documents-${theme}`
+                    : `border-color-${theme} shadow-${theme} mb-4 mt-2 px-[15px] py-[20px] rounded-lg bg-color-documents-${theme} border border-color-documents-${theme}`
                 }
               >
                 <div

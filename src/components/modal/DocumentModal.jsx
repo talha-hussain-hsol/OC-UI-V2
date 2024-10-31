@@ -1173,7 +1173,7 @@ export default function DocumentModal(props) {
                           <div className="w-full" >
                             <label className={`font-light text-[15px]`}>Document Type </label> <span className="text-red-500">*</span>
                             <select
-                            className={`bg-color-textfield-dropdown-${theme} mt-[8px] mb-[18px] pl-[12px] pr-[28px] py-[8px] w-full outline-none shadow-${theme} rounded-lg placeholder:font-light font-light text-[15px]`}
+                            className={`bg-color-textfield-dropdown-${theme} text-color-text-${theme} mt-[8px] mb-[18px] pl-[12px] pr-[28px] py-[8px] w-full outline-none shadow-${theme} rounded-lg placeholder:font-light font-light text-[15px]`}
                               aria-label="Default select example"
                               style={{
                                 border: documentTypeSelected !== "" ? "none" : "2px solid orange",
@@ -1207,7 +1207,7 @@ export default function DocumentModal(props) {
                             <div className="w-full" style={{ width: "100%" }}>
                             <label className={`font-light text-[15px]`}>Document Description</label>
                               {/* <Form.Control as="textarea" rows={3} value={selectedDocumentData?.bucket_key?.doc_note} readOnly /> */}
-                              <textarea rows={3} value={selectedDocumentData?.bucket_key?.doc_note} readOnly/>
+                              <textarea rows={3} value={selectedDocumentData?.bucket_key?.doc_note} readOnly className={`text-color-text-${theme}`}/>
                             </div>
                           </div>
                         </div>
@@ -1219,13 +1219,13 @@ export default function DocumentModal(props) {
                           {documentTypeSelected === "10" ? (
                             <div className="w-full" >
                               <label className={`font-light text-[15px]`}>Document Number (Optional)</label>
-                              <input  className={`bg-color-textfield-dropdown-${theme} mt-[8px] mb-[18px] pl-[12px] pr-[28px] py-[8px] w-full outline-none shadow-${theme} rounded-lg placeholder:font-light font-light text-[15px]`}
+                              <input  className={`bg-color-textfield-dropdown-${theme} mt-[8px] mb-[18px] pl-[12px] pr-[28px] py-[8px] w-full outline-none shadow-${theme} rounded-lg placeholder:font-light font-light text-color-text-${theme} text-[15px]`}
                              placeholder="Enter Document Number" type="text" value={documentNumber} onChange={(event) => setDocumentNumber(event.target.value)} />
                             </div>
                           ) : (
                             <div className="w-full">
                               <label className={`font-light text-[15px]`}>Document Number</label>
-                              <input  className={`bg-color-textfield-dropdown-${theme} mt-[8px] mb-[18px] pl-[12px] pr-[28px] py-[8px] w-full outline-none shadow-${theme} rounded-lg placeholder:font-light font-light text-[15px]`}
+                              <input  className={`bg-color-textfield-dropdown-${theme} mt-[8px] mb-[18px] pl-[12px] pr-[28px] py-[8px] w-full outline-none shadow-${theme} rounded-lg placeholder:font-light font-light text-color-text-${theme} text-[15px]`}
                              placeholder="Enter Document Number" type="text" value={documentNumber} onChange={(event) => setDocumentNumber(event.target.value)} />
                             </div>
                           )}
@@ -1251,7 +1251,7 @@ export default function DocumentModal(props) {
                               >
                                 <Flatpickr
                                   placeholder={placeHolderForDate}
-                                  className={`flatpickr-custom bg-color-textfield-dropdown-${theme} mt-[8px] mb-[18px] pl-[12px] pr-[28px] py-[8px] w-full outline-none shadow-${theme} rounded-lg placeholder:font-light font-light text-[15px]`}
+                                  className={`flatpickr-custom text-color-text-${theme} bg-color-textfield-dropdown-${theme} mt-[8px] mb-[18px] pl-[12px] pr-[28px] py-[8px] w-full outline-none shadow-${theme} rounded-lg placeholder:font-light font-light text-[15px]`}
                              
                                   options={{
                                     dateFormat: formatDateRegionWise(null, null, true),
@@ -1328,7 +1328,7 @@ export default function DocumentModal(props) {
                                 >
                                   <Flatpickr
                                     placeholder={placeHolderForDate}
-                                    className={`flatpickr-custom w-full bg-color-textfield-dropdown-${theme} mt-[8px] mb-[18px] pl-[12px] pr-[28px] py-[8px] w-full outline-none shadow-${theme} rounded-lg placeholder:font-light font-light text-[15px]`}
+                                    className={`flatpickr-custom text-color-text-${theme} w-full bg-color-textfield-dropdown-${theme} mt-[8px] mb-[18px] pl-[12px] pr-[28px] py-[8px] w-full outline-none shadow-${theme} rounded-lg placeholder:font-light font-light text-[15px]`}
                              
                                     options={{
                                       dateFormat: formatDateRegionWise(null, null, true),
@@ -1417,7 +1417,7 @@ export default function DocumentModal(props) {
                                 >
                                   <Flatpickr
                                     placeholder={placeHolderForDate}
-                                    className={`flatpickr-custom w-full bg-color-textfield-dropdown-${theme} mt-[8px] mb-[30px] pl-[12px] pr-[28px] py-[8px] w-full outline-none shadow-${theme} rounded-lg placeholder:font-light font-light text-[15px]`}
+                                    className={`flatpickr-custom text-color-text-${theme} w-full bg-color-textfield-dropdown-${theme} mt-[8px] mb-[30px] pl-[12px] pr-[28px] py-[8px] w-full outline-none shadow-${theme} rounded-lg placeholder:font-light font-light text-[15px]`}
                              
                                     value={expiryDate}
                                     style={{ border: (imageData !== "" || contentTypeData !== "") && documentTypes.filter((item) => item?.id == documentTypeSelected)[0]?.has_expiry_date ? "2px solid orange" : "none" }}

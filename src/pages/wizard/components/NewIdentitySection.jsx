@@ -196,7 +196,7 @@ export default function NewIdentitySection(props) {
           <div className="mt-4">
             <button
               disabled={!props?.fundData?.fund_setting?.account?.applicant?.identity?.indivisual?.enabled}
-              className={` py-3 w-5/12 rounded-l-full text-white  ${
+              className={` py-3 w-1/2 md:w-5/12 rounded-l-full text-white md:text-[15px] text-[12px]  ${
                 isIndividualClick ? "bg-[#5db160] font-semibold" : "bg-[#083a61]"
               } hover:bg-[#5db160] focus:outline-none`} onClick={() => handleButtonClick(true, "individual")}
             >
@@ -204,7 +204,7 @@ export default function NewIdentitySection(props) {
             </button>
             <button
               disabled={!props?.fundData?.fund_setting?.account?.applicant?.identity?.corporate?.enabled}
-              className={` py-3 w-5/12 rounded-r-full text-white ${
+              className={` py-3 w-1/2 md:w-5/12 rounded-r-full text-white md:text-[15px] text-[12px] ${
                 !isIndividualClick ? "bg-[#5db160] font-semibold" : "bg-[#083a61]"
               } hover:bg-[#5db160] focus:outline-none`}
                onClick={() => handleButtonClick(false, "corporate")}
@@ -218,7 +218,7 @@ export default function NewIdentitySection(props) {
           <div className="w-full flex flex-col justify-between items-start">
             <h3>How would you like to create your identity?</h3>
             <div
-  className={`flex justify-between gap-8 mt-[2em] relative ${
+  className={`sm:flex sm:flex-row flex flex-col justify-between gap-8 mt-[2em] relative ${
     selectedProvider === null ? "" : ""
   }`}
             >
@@ -245,7 +245,7 @@ export default function NewIdentitySection(props) {
                           alt="Singpass"
                         />
                          {selectedProvider === "singpass" && (
-                <span className="absolute top-[-28px] left-[20%] transform translate-x-[-50%] text-white" style={{ color: 'rgba(34, 197, 94, 1) !important' }}>✔</span>
+                <span className="absolute top-[-28px] sm:left-[20%] left-[50%] transform translate-x-[-50%] text-white" style={{ color: 'rgba(34, 197, 94, 1) !important' }}>✔</span>
               )}
                       </label>
                     </>
@@ -270,7 +270,7 @@ export default function NewIdentitySection(props) {
                           alt="Adhar"
                         />
                         {selectedProvider === "adhar" && (
-                <span className="absolute top-[-28px] left-[54%] transform translate-x-[-50%] text-white" style={{ color: 'rgba(34, 197, 94, 1) !important' }}>✔</span>
+                <span className="absolute sm:top-[-28px] sm:bottom-0 bottom-[130px] sm:left-[50%] left-[40%] transform translate-x-[-50%] text-white" style={{ color: 'rgba(34, 197, 94, 1) !important' }}>✔</span>
               )}
                       </label>
                 </>
@@ -296,7 +296,7 @@ export default function NewIdentitySection(props) {
                           alt="Manual"
                         />
                         {selectedProvider === "manual" && (
-                <span className="absolute top-[-28px] left-[84%] transform translate-x-[-50%] text-green-500 font-bold leading-[1.2]">✔</span> // Changed color to green
+                <span className="absolute sm:top-[-28px] sm:bottom-0 bottom-[70px] sm:left-[84%] sm:right-0 right-[40%] transform translate-x-[-50%] text-green-500 font-bold leading-[1.2]">✔</span> // Changed color to green
               )}
                       </label>
                     </>

@@ -50,6 +50,8 @@ module.exports = {
           "linear-gradient(to bottom, #243279 0%, #0055BB 100%)",
            "color-card-header-Ascent": "linear-gradient(to bottom, #0e335b 0%, #161f3d 100%)",
            "color-account-SC":   "linear-gradient(to right, #243279 0%, #0091BB 100%)",
+           "color-documents-Ascent":  "linear-gradient(to bottom, #0d345d 0%, #151c39 100%)",
+           "color-stepstatus-Ascent":  "linear-gradient(to bottom, #0d345d 0%, #151c39 100%)",
       },
       backgroundColor: {
         "theme-SC": "#edf2f4", // Color for Theme 1 (SC)
@@ -126,6 +128,7 @@ module.exports = {
         "color-stepper-button-Ascent": '#3DA500',
        
         "color-account-Ascent": 'rgba(0, 0, 0, 0)',
+        "color-documents-SC": 'rgba(0, 0, 0, 0)',
       },
 
       borderColor: {
@@ -145,6 +148,8 @@ module.exports = {
         "color-iconButton-hover-SC": "#C4C4C4",
         "color-iconButton-Ascent": "#ffffff",
         "color-iconButton-SC": "#e0e0e0",
+        "color-documents-SC": "#ffffff",
+        "color-documents-Ascent": "rgba(0, 0, 0, 0)",
        
       },
       textColor: {
@@ -181,7 +186,8 @@ module.exports = {
         "color-fundName-Ascent": '#ffffff',
         "color-fundStatus-SC": '#000000',
         "color-fundStatus-Ascent": '#ffffff',
-       
+       "color-activeTitle-Ascent": '#ffffff',
+       "color-activeTitle-SC": '#3DA500',
       },
       fontFamily: {
         SC: ['"Roboto"', "sans-serif"], // Theme 1
@@ -253,6 +259,9 @@ module.exports = {
       pattern: /bg-color-sidebar-(SC|lightTheme|Ascent)/,
     },
     {
+      pattern: /bg-color-documents-(SC|lightTheme|Ascent)/,
+    },
+    {
       pattern: /bg-color-header-(SC|lightTheme|Ascent)/,
     },
     {
@@ -298,7 +307,10 @@ module.exports = {
       pattern: /text-color-fundStatus-(SC|lightTheme|Ascent)/,
     },
     {
-      pattern: /text-color-status-(SC|lightTheme|Ascent)/,
+      pattern: /text-color-fundStatus-(SC|lightTheme|Ascent)/,
+    },
+    {
+      pattern: /text-color-activeTitle-(SC|lightTheme|Ascent)/,
     },
     {
       pattern: /text-color-sidebar-icon-(SC|lightTheme|Ascent)/,
@@ -400,6 +412,9 @@ module.exports = {
     },
     {
       pattern: /border-color-tooltip-(SC|lightTheme|Ascent)/, // Hover border color
+    },
+    {
+      pattern: /border-color-documents-(SC|lightTheme|Ascent)/, // Hover border color
     },
     {
       pattern: /bg-color-iconButton-(SC|lightTheme|Ascent)/, // iconButtons in Accounts
