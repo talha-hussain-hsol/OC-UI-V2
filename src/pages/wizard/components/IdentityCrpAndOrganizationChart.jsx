@@ -7,7 +7,8 @@ import axios from "axios";
 import FeatherIcon from "feather-icons-react";
 import "@nosferatu500/react-sortable-tree/style.css";
 import SortableTree from "@nosferatu500/react-sortable-tree";
-import EntityIcon from "../../../icons/entity-icon-small.svg";
+// import EntityIcon from "../../../icons/entity.svg";
+import UserIcon from '../../../assets/UserIcon.jpg'
 import IndividualIcon from '../../../icons/individual.svg'
 import DeleteAccountModal from "./deleteModalCrp/DeleteAccountModal";
 import CustomAlert from "../../../widgets/components/Alerts";
@@ -654,14 +655,15 @@ export default function particular(props) {
                 }}
               />
             ) : (
-              <EntityIcon
-                className={"nodeIcon"}
-                fontSize={"large"}
-                color={"action"}
-                style={{
-                  fill: theme == "dark" || theme == undefined ? "white" : "black",
-                }}
-              />
+              // <EntityIcon
+              //   className={"nodeIcon"}
+              //   fontSize={"large"}
+              //   color={"action"}
+              //   style={{
+              //     fill: theme == "dark" || theme == undefined ? "white" : "black",
+              //   }}
+              // />
+              <img src={UserIcon} alt="EntityIcon" className="w-16 rounded-full"/>
             )}
           </div>
           <div
@@ -888,14 +890,15 @@ export default function particular(props) {
                           {customerType == "individual" ? (
                             <img src="/img/investor/default-avatar.png" alt="..." class="" style={{ height: "35px", marginRight: "8px" }} />
                           ) : (
-                            <EntityIcon
-                              className={"nodeIcon"}
-                              fontSize={"large"}
-                              color={"action"}
-                              style={{
-                                fill: theme == "dark" || theme == undefined ? "white" : "black",
-                              }}
-                            />
+                            // <EntityIcon
+                            //   className={"nodeIcon"}
+                            //   fontSize={"large"}
+                            //   color={"action"}
+                            //   style={{
+                            //     fill: theme == "dark" || theme == undefined ? "white" : "black",
+                            //   }}
+                            // />
+                            <img src={UserIcon} alt="EntityIcon" className="w-16 rounded-full"/>
                           )}
                         </>
                       )}

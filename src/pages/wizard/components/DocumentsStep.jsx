@@ -21,7 +21,8 @@ import CustomAlert from "../../../widgets/components/Alerts";
 // import  Avatar  from "../../../components/Avatar";
 import "@nosferatu500/react-sortable-tree/style.css"; //install 
 import SortableTree from "@nosferatu500/react-sortable-tree"; //2
-import EntityIcon from "../../../icons/entity-icon-small.svg";
+// import EntityIcon from "../../../icons/entity.svg";
+import UserIcon from '../../../assets/UserIcon.jpg'
 import formatDateRegionWise  from "../../../helpers/formatDateRegionWise";
 // var theme = localStorage.getItem("portal_theme");
 let crpIdValueSelected = "";
@@ -543,7 +544,7 @@ export default function Documents(props) {
   };
   const renderRequiredDocuments = (entityValueData) => (
     <div
-      className="flex w-full mt-[20px]"
+      className="lg:flex lg:flex-row flex flex-col w-full mt-[20px]"
     >
       <div className="sm:w-5/12 md:w-5/12 lg:w-5/12 px-6 max-h-[28em] min-h-[28em] overflow-y-scroll">
  
@@ -577,11 +578,11 @@ export default function Documents(props) {
                   requiredDocumentSelected?.id == item.id && isItemSelected
                     ? ``
                     : handleWarningMessage(item)
-                    ? `border-2 border-[#ff0000] shadow-${theme} mb-4 mt-2 px-[15px] py-[20px] rounded-lg bg-gradient-stepper-card-${theme}`
+                    ? `border-2 border-[#ff0000] shadow-${theme} mb-4 mt-2 px-[15px] py-[20px] rounded-lg bg-color-documents-${theme}`
                     : getUploadedDocumentChildName(item) ||
                       getUploadedDocumentIfChildrenNotFound(item.id)
-                    ? `border-2 border-[#30d158] shadow-${theme} mb-4 mt-2 px-[15px] py-[17px] rounded-lg bg-gradient-stepper-card-${theme}`
-                    : `border-color-${theme} shadow-${theme} mb-4 mt-2 px-[15px] py-[20px] rounded-lg bg-gradient-stepper-card-${theme}`
+                    ? `border-2 border-[#30d158] shadow-${theme} mb-4 mt-2 px-[15px] py-[17px] rounded-lg bg-color-documents-${theme}`
+                    : `border-color-${theme} shadow-${theme} mb-4 mt-2 px-[15px] py-[20px] rounded-lg bg-color-documents-${theme} border border-color-documents-${theme}`
                 }
               >
                 <div
@@ -1967,14 +1968,7 @@ export default function Documents(props) {
             {node?.data?.type == "INDIVIDUAL" ? (
               <img src="/img/investor/default-avatar.png" alt="..." class="" style={{ height: "35px", marginRight: "8px" }} />
             ) : (
-              <EntityIcon
-                className={"nodeIcon"}
-                fontSize={"large"}
-                color={"action"}
-                style={{
-                  fill: theme == "dark" || theme == undefined ? "white" : "black",
-                }}
-              />
+              <img src={UserIcon} alt="EntityIcon" className="w-16 rounded-full"/>
             )}
           </div>
           <div style={{ display: "flex", flexDirection: "column", maxWidth: "80%", wordWrap: "break-word" }}>
@@ -2061,11 +2055,11 @@ export default function Documents(props) {
           <h3>Select Entity Type from particulars screen to upload documents</h3>
         </div>
       ) : (
-        <div className="flex justify-center my-4">
+        <div className="flex ml-4 mr-4 justify-center my-4">
           {customerType_from_props === "corporate" && (
             <div className="w-full lg:w-1/2 xl:w-1/2 p-2">
-              <div className={`bg-gradient-stepper-card-${theme} shadow-${theme} rounded-lg overflow-hidden`}>
-                <div className="bg-gray-100 p-4">
+              <div className={`bg-color-stepstatus-${theme} shadow-${theme} rounded-lg overflow-hidden`}>
+                <div className=" p-4">
                   <h3 className="mb-0">Ultimate Beneficial Owner (UBO)</h3>
                 </div>
                 <div className="h-[70vh] overflow-auto ">
@@ -2089,17 +2083,19 @@ export default function Documents(props) {
             </div>
           )}
           <div className={`w-full ${customerType_from_props === "corporate" ? 'lg:w-1/2 xl:w-1/2' : 'lg:w-3/4 xl:w-10/12'} `}>
-            <div className={`bg-gradient-stepper-card-${theme} shadow-${theme} rounded-lg overflow-hidden`}>
+            <div className={`bg-gradient-stepper-card-${theme} shadow-${theme} border border-color-${theme} rounded-lg overflow-hidden`}>
               {customerType_from_props === "corporate" && (
-                <div className="bg-gray-100 p-4 flex justify-between items-center">
+                <div className={`bg-gradient-stepper-card-${theme} shadow-${theme} border-b border-color-${theme} p-4 flex justify-between items-center`}>
                   <h3 className="mb-0 capitalize">{type}</h3>
                   {type && (
                     <>
                       {type === "individual" ? (
                         <img src="/img/investor/default-avatar.png" alt="Avatar" className="h-8 mr-2" />
                       ) : (
-                        <EntityIcon className="nodeIcon" fontSize="large" color="action" style={{ fill: 'currentColor' }} />
-                      )}
+                        // <EntityIcon className="nodeIcon" fontSize="large" color="action" style={{ fill: 'currentColor' }} />
+
+                        <img src={UserIcon} alt="EntityIcon" className="w-10 rounded-full"/>
+                        )}
                     </>
                   )}
                 </div>
@@ -2107,7 +2103,7 @@ export default function Documents(props) {
               <div className="h-[70vh] overflow-auto ">
                 {isLoader ? (
                   <div className="flex justify-center items-center h-80">
-                    <LoadingSpinner animation="grow" custom={true} height="70vh" />
+                    <LoadingSpinner  />
                   </div>
                 ) : identity_id !== undefined ? (
                   <>

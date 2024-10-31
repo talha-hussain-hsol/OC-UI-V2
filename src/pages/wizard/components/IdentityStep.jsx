@@ -3996,7 +3996,7 @@ import {
   
                               <input
                                 type="text"
-                                className={`bg-color-textfield-dropdown-${theme} mt-2 w-full py-[10px] px-4 border-color-${theme} rounded-lg shadow-${theme} focus:outline-none focus:ring-1 focus:ring-[#2d7ce2] focus:border-[#2d7ce2] placeholder:text-sm placeholder:text-[#8ca4c2]  ${
+                                className={`bg-color-textfield-dropdown-${theme} text-color-text-${theme} mt-2 w-full py-[10px] px-4 border-color-${theme} rounded-lg shadow-${theme} focus:outline-none focus:ring-1 focus:ring-[#2d7ce2] focus:border-[#2d7ce2] placeholder:text-sm placeholder:text-[#8ca4c2]  ${
                                   label ? `w-full px-4 py-[10px] border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500` : 'form-control'}`
                                 }
                                 name={'Identity Label'}
@@ -4027,7 +4027,7 @@ import {
                               </label>
                               <select
                                 type="text"
-                                className={`bg-color-textfield-dropdown-${theme} mt-2 w-full py-2 px-4 border-color-${theme} rounded-lg shadow-${theme} focus:outline-none focus:ring-1 focus:ring-[#2d7ce2] focus:border-[#2d7ce2] placeholder:text-sm placeholder:text-[#8ca4c2]  ${
+                                className={`bg-color-textfield-dropdown-${theme}  text-color-text-${theme} mt-2 w-full py-2 px-4 border-color-${theme} rounded-lg shadow-${theme} focus:outline-none focus:ring-1 focus:ring-[#2d7ce2] focus:border-[#2d7ce2] placeholder:text-sm placeholder:text-[#8ca4c2]  ${
                                   entityType ? `w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500` : 'form-control'}`
                                 }
                                 value={entityType}
@@ -4076,7 +4076,7 @@ import {
                                 <label className="font-light">Full Name</label>
                                 <input
                                   type="text"
-                                  className={`bg-color-textfield-dropdown-${theme} mt-2 w-full py-2 px-4 border-color-${theme} rounded-lg shadow-${theme} focus:outline-none focus:ring-1 focus:ring-[#2d7ce2] focus:border-[#2d7ce2] placeholder:text-sm placeholder:text-[#8ca4c2] `}
+                                  className={`bg-color-textfield-dropdown-${theme}  text-color-text-${theme} mt-2 w-full py-2 px-4 border-color-${theme} rounded-lg shadow-${theme} focus:outline-none focus:ring-1 focus:ring-[#2d7ce2] focus:border-[#2d7ce2] placeholder:text-sm placeholder:text-[#8ca4c2] `}
                                   name={'Full Name'}
                                   value={registrationProviderData?.name?.value}
                                   placeholder="Full Name"
@@ -4191,8 +4191,8 @@ import {
                                                     `` ||
                                                     getUpdatedData(formKeyVal) ==
                                                       null)
-                                                    ? `bg-color-textfield-dropdown-${theme} mt-2 w-full py-1 px-4 border-[0.5px] border-[#e19800] rounded-lg shadow-${theme} focus:outline-none focus:ring-1 focus:ring-[#2d7ce2] focus:border-[#2d7ce2] placeholder:text-sm placeholder:text-[#8ca4c2] text-sm font-light `
-                                                    : `text-sm font-light outline-none bg-color-textfield-dropdown-${theme}`  
+                                                    ? `bg-color-textfield-dropdown-${theme} text-color-text-${theme} mt-2 w-full py-1 px-4 border-[0.5px] border-[#e19800] rounded-lg shadow-${theme} focus:outline-none focus:ring-1 focus:ring-[#2d7ce2] focus:border-[#2d7ce2] placeholder:text-sm placeholder:text-[#8ca4c2] text-sm font-light `
+                                                    : `text-sm font-light outline-none bg-color-textfield-dropdown-${theme}  text-color-text-${theme}`  
                                                 }
                                               >
                                                 <div className={`w-full bg-color-textfield-dropdown-${theme}`}
@@ -4340,8 +4340,8 @@ import {
                                                       getUpdatedData(
                                                         formKeyVal,
                                                       ) == null)
-                                                      ? `w-full border-[0.5px] border-[#e19800] mt-2 bg-color-textfield-dropdown-${theme} py-[10px] px-4 placeholder:text-sm text-sm font-light outline-none rounded-lg shadow-${theme}`
-                                                      : `w-full mt-2 bg-color-textfield-dropdown-${theme} py-[10px] px-4 text-sm font-light  rounded-lg placeholder:text-sm outline-none shadow-${theme} `
+                                                      ? `w-full border-[0.5px] border-[#e19800]  text-color-text-${theme} mt-2 bg-color-textfield-dropdown-${theme} py-[10px] px-4 placeholder:text-sm text-sm font-light outline-none rounded-lg shadow-${theme}`
+                                                      : `w-full mt-2 bg-color-textfield-dropdown-${theme}  text-color-text-${theme} py-[10px] px-4 text-sm font-light  rounded-lg placeholder:text-sm outline-none shadow-${theme} `
                                                   }
                                                   defaultValue={
                                                     editableField == false
@@ -4469,8 +4469,8 @@ import {
                                                   requiredField &&
                                                   !identityDataFields?.[formKeyVal] &&
                                                   (!getUpdatedData(formKeyVal) || getUpdatedData(formKeyVal) === null)
-                                                    ? `w-full border-[0.5px] border-[#e19800] bg-color-textfield-dropdown-${theme} placeholder:text-sm text-sm font-light px-4 py-[10px] shadow-${theme} flatpickr-input`
-                                                    : `w-full bg-color-textfield-dropdown-${theme} placeholder:text-sm px-4 py-[10px] text-sm font-light shadow-${theme}`
+                                                    ? `w-full border-[0.5px]  text-color-text-${theme} border-[#e19800] bg-color-textfield-dropdown-${theme} placeholder:text-sm text-sm font-light px-4 py-[10px] shadow-${theme} flatpickr-input`
+                                                    : `w-full bg-color-textfield-dropdown-${theme}  text-color-text-${theme} placeholder:text-sm px-4 py-[10px] text-sm font-light shadow-${theme}`
                                                 }`}
                                                 disabled={
                                                   !editableField ||
@@ -4665,9 +4665,9 @@ import {
                                                       getUpdatedData(
                                                         formKeyVal,
                                                       ) == null)
-                                                      ? `w-full appearance-none border-[0.5px] border-[#e19800] mt-2 bg-color-textfield-dropdown-${theme} px-4 py-[12px] rounded-lg shadow-${theme} outline-none text-sm font-light`
+                                                      ? `w-full appearance-none border-[0.5px]  text-color-text-${theme} border-[#e19800] mt-2 bg-color-textfield-dropdown-${theme} px-4 py-[12px] rounded-lg shadow-${theme} outline-none text-sm font-light`
                                                    
-                                                      : `w-full mt-2 bg-color-textfield-dropdown-${theme} appearance-none outline-none px-4 py-[12px] rounded-lg shadow-${theme} text-sm font-light`
+                                                      : `w-full mt-2 bg-color-textfield-dropdown-${theme} text-color-text-${theme} appearance-none outline-none px-4 py-[12px] rounded-lg shadow-${theme} text-sm font-light`
                                                    
                                                   }
                                                   defaultValue={
@@ -4828,9 +4828,9 @@ import {
                                                       getUpdatedData(
                                                         formKeyVal,
                                                       ) == null)
-                                                      ? `w-full placeholder:font-light border-[0.5px] border-[#e19800] mt-2 bg-color-textfield-dropdown-${theme} py-[12px] px-4 appearance-none outline-none rounded-lg text-sm font-light shadow-${theme}`
+                                                      ? `w-full placeholder:font-light border-[0.5px]  text-color-text-${theme} border-[#e19800] mt-2 bg-color-textfield-dropdown-${theme} py-[12px] px-4 appearance-none outline-none rounded-lg text-sm font-light shadow-${theme}`
                                                    
-                                                      : `w-full mt-2 bg-color-textfield-dropdown-${theme} py-[12px] px-4 appearance-none outline-none rounded-lg shadow-${theme} text-sm font-light`
+                                                      : `w-full mt-2 bg-color-textfield-dropdown-${theme} text-color-text-${theme} py-[12px] px-4 appearance-none outline-none rounded-lg shadow-${theme} text-sm font-light`
                                                    
                                                   }
                                                   defaultValue={

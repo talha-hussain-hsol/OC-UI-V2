@@ -1363,18 +1363,22 @@ export default function Wizard() {
             onClose={() => setAlertProps({ ...alertProps, show: false })}
           />
         )}
-
-        <Stepper
+<div className={`lg:pt-0 pt-12`}>
+<Stepper
           steps={customSteps}
           activeStep={currentSection}
           activeColor="#007bff"
           completeColor="green"
-          activeTitleColor={"white"}
+          activeTitleColor={`text-color-activeTitle-${theme}`}
           completeTitleColor={"white"}
           completeBorderColor={"green"}
           completeBarColor={"green"}
           circleFontColor={"black"}
+         
+          className={`py-80`}
         />
+</div>
+        
 
         <div  className={`bg-gradient-stepper-card-${theme} w-full shadow-[5px_5px_15px_5px_rgba(0,0,0,0.3)] mx-auto py-4  md:mt-12 rounded-lg text-white flex flex-col justify-center`}
         >
@@ -1389,7 +1393,7 @@ export default function Wizard() {
 <hr className="w-full border-t-[1px] border-t-[#6e84a3] opacity-30 my-4" />
           <div className="xs:flex-row flex flex-col space-y-2 xs:space-y-0 xs:justify-between  w-full px-8">
             <button
-              className={`bg-color-button-${theme} px-6 py-3 rounded-lg text-white outline-none`}
+              className={`bg-color-cancelBtn-${theme} hover:bg-color-cancelBtn-hover-${theme} border border-white hover:border-color-iconButton-hover-${theme} transition-all duration-300 ease-in-out px-6 py-3 rounded-lg text-white outline-none`}
               onClick={(e) => handleBackCancel(e)}
             >
               {currentSection == 0 ? "Cancel" : "Back"}
@@ -1413,8 +1417,8 @@ export default function Wizard() {
                 params?.account_id &&
                 currentSection === 0 && (
                   <>
-                    <Tooltip id="tooltip">
-                      {tooltipMessage}
+                    <Tooltip id="tooltip"
+                      content={tooltipMessage} position="upper">
 
                       <div>
                         <button
@@ -1430,19 +1434,22 @@ export default function Wizard() {
                 )
               : null}
 
-            <button
-              className={`bg-color-stepper-button-${theme} hover:bg-color-stepper-button-hover-${theme} px-8 py-3 rounded-lg text-white outline-none transition-all duration-300 ease-in-out`}
-              disabled={checkIfNextButtonDisabled()}
-              onClick={(e) => handleNextButton(e)}
-            >
-              {currentSection + 1 == steps?.length
-                ? params?.account_id
-                  ? "Finish"
-                  : "Submit"
-                : currentSection === 0
-                ? "Next"
-                : "Save & Next"}
-            </button>
+<button
+  className={`bg-color-stepper-button-${theme}  px-8 py-3 rounded-lg text-white outline-none transition-all duration-300 ease-in-out ${
+    checkIfNextButtonDisabled() ? "bg-[#00b86b] opacity-70" : `hover:bg-color-stepper-button-hover-${theme}`
+  }`}
+  disabled={checkIfNextButtonDisabled()}
+  onClick={(e) => handleNextButton(e)}
+>
+  {currentSection + 1 === steps?.length
+    ? params?.account_id
+      ? "Finish"
+      : "Submit"
+    : currentSection === 0
+    ? "Next"
+    : "Save & Next"}
+</button>
+
           </div>
         </div>
 

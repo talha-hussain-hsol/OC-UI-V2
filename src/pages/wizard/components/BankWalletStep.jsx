@@ -622,21 +622,21 @@ const {theme} = useTheme();
                   <LoadingSpinner animation="grow" custom={true} height="70vh" />
                 ) : (
                   <div className="flex flex-col gap-8">
-                    <div className={`bg-gradient-stepper-card-${theme} shadow-${theme} border border-color-${theme} rounded-lg  px-4`}>
-                      <div className={`bg-color-card-${theme} rounded-t-md border-color-${theme} border-b-[1px] shadow-${theme}  py-[18px] px-[16px] mb-4 flex justify-between h-full w-full`}>
-                        <h4 className={`font-light text-color-text-${theme}`}>Add Wallets</h4>
+                    <div className={`bg-color-documents-${theme} shadow-${theme} border border-color-${theme} rounded-lg  px-4`}>
+                      <div className={`bg-color-documents-${theme} rounded-t-md border-color-${theme} border-b-[1px] shadow-${theme}  py-[18px] px-[16px] mb-4 flex justify-between h-full w-full`}>
+                        <h4 className={`font-light text-white`}>Add Wallets</h4>
                       </div>
                       <div className={`px-6`}>
                         <form className="w-full flex flex-col justify-center items-center">
                           <div className="flex gap-4 w-full py-4">
                             <div className="w-1/2">
                               <div className="flex flex-col w-full">
-                                <label className="text-[15px] font-light mb-2">
+                                <label className={`text-[15px] font-light mb-2 text-white`}>
                                   CryptoCurrency
                                 </label>
                                 <select
                                   type="text"
-                                  className={`bg-color-textfield-dropdown-${theme} py-2 px-4 appearance-none rounded-lg shadow-${theme} outline-none focus:ring-[1px] focus:ring-[#2b78da] `}
+                                  className={`bg-color-textfield-dropdown-${theme} text-color-text-${theme} py-2 px-4 appearance-none rounded-lg shadow-${theme} outline-none focus:ring-[1px] focus:ring-[#2b78da] `}
                                   defaultValue={cryptoCurrency}
                                   onChange={(e) => {
                                     setCryptoCurrency(e.target.value);
@@ -661,12 +661,12 @@ const {theme} = useTheme();
                             </div>
                             <div className="w-1/2">
                               <div className="flex flex-col w-full">
-                              <label className="text-[15px] font-light mb-2">
+                              <label className={`text-[15px] font-light mb-2 text-white`}>
                                   Wallet Address
                                 </label>
                                 <input
                                   type="text"
-                                  className={`bg-color-textfield-dropdown-${theme} py-2 px-4 appearance-none rounded-lg shadow-${theme} outline-none focus:ring-[1px] focus:ring-[#2b78da] placeholder:text-sm placeholder:font-light`}
+                                  className={`bg-color-textfield-dropdown-${theme} text-color-text-${theme} py-2 px-4 appearance-none rounded-lg shadow-${theme} outline-none focus:ring-[1px] focus:ring-[#2b78da] placeholder:text-sm placeholder:font-light`}
                                   placeholder="Wallet Address"
                                   defaultValue={walletAddress}
                                   onChange={(e) => {

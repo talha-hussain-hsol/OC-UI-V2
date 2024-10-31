@@ -2,7 +2,8 @@ import FeatherIcon from "feather-icons-react";
 import React, { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-import EntityIcon from "../../icons/entity-icon-small.svg";
+// import EntityIcon from "../../icons/entity.svg";
+import UserIcon from '../../assets/UserIcon.jpg'
 var theme = localStorage.getItem("portal_theme");
 export default function CustomerBox({ customerData, isCrp = false, params = null }) {
   let data = customerData?.identity ? customerData?.identity : customerData;
@@ -19,14 +20,15 @@ export default function CustomerBox({ customerData, isCrp = false, params = null
                     {customerData?.identity?.type == "INDIVIDUAL" ? (
                       <img src="/img/investor/default-avatar.png" alt="..." className="avatar-img rounded-circle" />
                     ) : (
-                      <EntityIcon
-                        className={"nodeIcon"}
-                        fontSize={"large"}
-                        color={"action"}
-                        style={{
-                          fill: theme == "dark" || theme == undefined ? "white" : "black",
-                        }}
-                      />
+                      // <EntityIcon
+                      //   className={"nodeIcon"}
+                      //   fontSize={"large"}
+                      //   color={"action"}
+                      //   style={{
+                      //     fill: theme == "dark" || theme == undefined ? "white" : "black",
+                      //   }}
+                      // />
+                      <img src={UserIcon} alt="EntityIcon" className="w-16 rounded-full"/>
                     )}
                   {/* </a> */}
                 </div>

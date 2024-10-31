@@ -322,11 +322,11 @@ export default function AccountStep(props) {
         className={`ml-10 mr-10 flex flex-col items-center bg-transparent `}
       >
         <h3
-          className={`text-color-h3-${theme} text-2xl sm:text-xl md:text-2xl font-light mt-6`}
+          className={`text-color-h3-${theme} text-base xs:text-xl md:text-2xl font-light mt-6`}
         >
           Let's start with the basics.
         </h3>
-        <p className={`text-color-description-${theme} text-xs sm:text-sm font-light mt-2 text-center sm:text-left`}>
+        <p className={`text-color-description-${theme} text-xs sm:text-sm  font-light mt-2 text-center `}>
           {descriptionText}
         </p>
         <>
@@ -350,7 +350,7 @@ export default function AccountStep(props) {
                     disabled={fundCode?.length > 1 ? false : true}
                     onClick={() => getFundForJoinApi()}
                     className={`absolute right-[1px] xs:py-[13px] py-[12px] sm:px-8 xs:px-6 px-4 rounded-r-full  ${
-                      fundCode ? "bg-[#2bb02a]" : "bg-[#0f9969]"
+                      fundCode ? `bg-[#3DA500] hover:bg-[#348a01] transition-all ease-in-out duration-300` : "bg-[#0f9969] "
                     } text-white`}
                   >
                     <HiSearch size="20px" className={`${fundCode ? 'text-white':'text-[#adb5c0]'}`}/>
@@ -374,7 +374,7 @@ export default function AccountStep(props) {
                           }
                         />
                         <span
-                          className={`text-color-${theme} text-lg font-normal`}
+                          className={`text-color-${theme} lg:text-lg md:text-sm xs:text-lg text-sm font-normal`}
                         >
                           {fundData?.name}
                         </span>
@@ -390,7 +390,7 @@ export default function AccountStep(props) {
                           }
                         />
                         <span
-                          className={`text-color-${theme} text-lg font-normal`}
+                          className={`text-color-${theme} lg:text-lg md:text-sm xs:text-lg text-sm font-normal`}
                         >
                           {fundData?.name}
                         </span>
@@ -401,7 +401,7 @@ export default function AccountStep(props) {
                       <>
                         <>
                           <div
-                            className={`text-color-${theme}  lg:text-lg md:text-base text-xl font-light mb-4 sm:mb-0 md:w-1/3 w-full`}
+                            className={`text-color-${theme}  lg:text-lg md:text-sm xs:text-xl text-sm font-light mb-4 sm:mb-0 md:w-1/3 w-full`}
                           >
                             <small className="flex items-center gap-1">
                               <span>
@@ -418,7 +418,7 @@ export default function AccountStep(props) {
                                 : fundData?.meta?.config?.kyb?.status}
                             </small>
 
-                            <small className="text-slate-500 lg:text-base md:text-sm text-lg flex items-center">
+                            <small className="text-slate-500 lg:text-base md:text-xs sm:text-lg text-xs flex items-center">
                               <span className="flex items-center gap-1">
                                 <FeatherIcon
                                   className={`text-color-button1-${theme}`}
@@ -437,7 +437,7 @@ export default function AccountStep(props) {
 
                         <>
                           <div
-                            className={`text-color-${theme} lg:text-lg md:text-base text-xl font-light md:w-1/3 w-full`}
+                            className={`text-color-${theme} lg:text-lg md:text-sm xs:text-xl text-sm font-light md:w-1/3 w-full`}
                           >
                             <small className="flex items-center gap-1">
                               <FeatherIcon
@@ -454,7 +454,7 @@ export default function AccountStep(props) {
 
                             {fundData?.fund_setting?.account?.applicant?.asset
                               ?.digital?.status && (
-                              <small className="text-slate-500 lg:text-base md:text-sm text-lg flex items-center">
+                              <small className="text-slate-500 lg:text-base md:text-xs xs:text-lg text-xs flex items-center">
                                 <span className="flex items-center gap-1">
                                   <FeatherIcon
                                     className={`text-color-button1-${theme}`}

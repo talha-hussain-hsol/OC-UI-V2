@@ -27,6 +27,10 @@ const SideBar = ({ portalType }) => {
     logoutApiHandle();
   }
 
+  function handleProfile() {
+    // window.open(process.env.AUTH_API_URL + "/profile", "_blank");
+  }
+
   function deleteAllCookies() {
     const cookies = document.cookie.split(";");
     const url = new URL(window.location.href);
@@ -319,6 +323,11 @@ const SideBar = ({ portalType }) => {
                 className={`absolute  border-color-${theme} border w-40 right-10 text-sm bg-color-sidebar-${theme} text-color-sidebar-icon-${theme} shadow-md p-2 rounded-md`}
               >
                 <ul>
+                <li
+                    className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}
+                  >
+                    <button onClick={handleProfile}>Profile</button>
+                  </li>
                   <li
                     className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}
                   >
@@ -536,19 +545,24 @@ const SideBar = ({ portalType }) => {
             </Tooltip>
           )}
 
+          <button onClick={toggleProfileSidebar}>
           <div
             className={`bg-color-profile-icon-${theme} rounded-full text-sm text-color-profile-icon-${theme} w-10 h-10 flex items-center justify-center`}
           >
-            <button onClick={toggleProfileSidebar}>
               <p>U</p>
-            </button>
           </div>
+            </button>
           {isProfileSidebarOpen && (
             <div
               ref={profileSidebarRef}
               className={`absolute left-14 border-color-${theme} border w-40 bottom-12 text-sm bg-color-sidebar-${theme} text-color-sidebar-icon-${theme} shadow-md p-2 rounded-md`}
             >
               <ul>
+                <li
+                  className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}
+                >
+                  <button onClick={handleProfile}>Profile</button>
+                </li>
                 <li
                   className={`flex justify-between items-center cursor-pointer hover:text-color-sidebar-icon-hover-${theme} p-2`}
                 >
