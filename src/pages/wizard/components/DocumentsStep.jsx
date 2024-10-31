@@ -2055,11 +2055,11 @@ export default function Documents(props) {
           <h3>Select Entity Type from particulars screen to upload documents</h3>
         </div>
       ) : (
-        <div className="flex justify-center my-4">
+        <div className="flex ml-4 mr-4 justify-center my-4">
           {customerType_from_props === "corporate" && (
             <div className="w-full lg:w-1/2 xl:w-1/2 p-2">
-              <div className={`bg-gradient-stepper-card-${theme} shadow-${theme} rounded-lg overflow-hidden`}>
-                <div className="bg-gray-100 p-4">
+              <div className={`bg-color-stepstatus-${theme} shadow-${theme} rounded-lg overflow-hidden`}>
+                <div className=" p-4">
                   <h3 className="mb-0">Ultimate Beneficial Owner (UBO)</h3>
                 </div>
                 <div className="h-[70vh] overflow-auto ">
@@ -2083,9 +2083,9 @@ export default function Documents(props) {
             </div>
           )}
           <div className={`w-full ${customerType_from_props === "corporate" ? 'lg:w-1/2 xl:w-1/2' : 'lg:w-3/4 xl:w-10/12'} `}>
-            <div className={`bg-gradient-stepper-card-${theme} shadow-${theme} rounded-lg overflow-hidden`}>
+            <div className={`bg-gradient-stepper-card-${theme} shadow-${theme} border border-color-${theme} rounded-lg overflow-hidden`}>
               {customerType_from_props === "corporate" && (
-                <div className="bg-gray-100 p-4 flex justify-between items-center">
+                <div className={`bg-gradient-stepper-card-${theme} shadow-${theme} border-b border-color-${theme} p-4 flex justify-between items-center`}>
                   <h3 className="mb-0 capitalize">{type}</h3>
                   {type && (
                     <>
@@ -2094,7 +2094,7 @@ export default function Documents(props) {
                       ) : (
                         // <EntityIcon className="nodeIcon" fontSize="large" color="action" style={{ fill: 'currentColor' }} />
 
-                        <img src={UserIcon} alt="EntityIcon" className="w-16 rounded-full"/>
+                        <img src={UserIcon} alt="EntityIcon" className="w-10 rounded-full"/>
                         )}
                     </>
                   )}
@@ -2103,7 +2103,7 @@ export default function Documents(props) {
               <div className="h-[70vh] overflow-auto ">
                 {isLoader ? (
                   <div className="flex justify-center items-center h-80">
-                    <LoadingSpinner animation="grow" custom={true} height="70vh" />
+                    <LoadingSpinner  />
                   </div>
                 ) : identity_id !== undefined ? (
                   <>

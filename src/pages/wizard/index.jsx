@@ -1434,19 +1434,22 @@ export default function Wizard() {
                 )
               : null}
 
-            <button
-              className={`bg-color-stepper-button-${theme} hover:bg-color-stepper-button-hover-${theme} px-8 py-3 rounded-lg text-white outline-none transition-all duration-300 ease-in-out`}
-              disabled={checkIfNextButtonDisabled()}
-              onClick={(e) => handleNextButton(e)}
-            >
-              {currentSection + 1 == steps?.length
-                ? params?.account_id
-                  ? "Finish"
-                  : "Submit"
-                : currentSection === 0
-                ? "Next"
-                : "Save & Next"}
-            </button>
+<button
+  className={`bg-color-stepper-button-${theme}  px-8 py-3 rounded-lg text-white outline-none transition-all duration-300 ease-in-out ${
+    checkIfNextButtonDisabled() ? "bg-[#00b86b] opacity-70" : `hover:bg-color-stepper-button-hover-${theme}`
+  }`}
+  disabled={checkIfNextButtonDisabled()}
+  onClick={(e) => handleNextButton(e)}
+>
+  {currentSection + 1 === steps?.length
+    ? params?.account_id
+      ? "Finish"
+      : "Submit"
+    : currentSection === 0
+    ? "Next"
+    : "Save & Next"}
+</button>
+
           </div>
         </div>
 
