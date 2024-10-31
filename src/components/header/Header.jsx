@@ -36,7 +36,7 @@ const Header = ({
               {subheading}
             </h6>
             <h1
-              className={`xs:text-2xl text-lg text-color-${theme} sm:font-medium`}
+              className={`xs:text-2xl text-md text-color-${theme} sm:font-medium`}
             >
               {heading}
             </h1>
@@ -47,7 +47,7 @@ const Header = ({
           <Button
             text="Create An Account"
             onClick={onButtonClick}
-            className={`bg-color-button-${theme} text-white font-light mr-8 rounded-lg py-6 sm:px-8 px-2 text-xs sm:text-md`}
+            className={`bg-color-button3-${theme} hover:bg-color-button3-hover-${theme} transition-all duration-300 ease-in-out transform hover:-translate-y-1 text-white font-light mr-8 rounded-lg py-6 sm:px-8 xs:px-4 px-2 xs:text-xs text-[10px] sm:text-md`}
             iconPosition="left"
           />
         )}

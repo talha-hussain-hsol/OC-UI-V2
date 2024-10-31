@@ -783,7 +783,7 @@ export default function FaceVerification(props) {
                                 <>
                                   <button
                                     
-                                    className={`bg-color-button4-${theme} hover:bg-color-button4-hover-${theme} transition-all duration-300 ease-in-out py-[10px] px-[30px] mt-10 flex items-center rounded-full`}
+                                    className={`bg-color-stepper-button-${theme} hover:bg-color-stepper-button-hover-${theme} transition-all duration-300 ease-in-out py-[10px] px-[30px] mt-10 flex items-center rounded-full`}
                                    
                                     onClick={() => {
                                       handleStartRecording();

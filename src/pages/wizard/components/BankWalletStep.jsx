@@ -705,7 +705,7 @@ const {theme} = useTheme();
                           <div className="mt-10 mb-8">
                             <div className="flex justify-center">
                               <button
-                                 className={`bg-color-button4-${theme} hover:bg-color-button4-hover-${theme} transition-all duration-300 ease-in-out text-white font-medium text-[15px] rounded-full py-3 sm:px-7 px-2  `}
+                                 className={`bg-color-stepper-button-${theme} hover:bg-color-stepper-button-hover-${theme} transition-all duration-300 ease-in-out text-white font-medium text-[15px] rounded-full py-3 sm:px-7 px-2  `}
                                 onClick={(e) => {
                                   handleSubmit(e);
                                 }}

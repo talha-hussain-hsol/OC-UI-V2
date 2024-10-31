@@ -82,20 +82,21 @@ const Identities = () => {
               tabs={["My Identities"]}
               className={`text-color-h1-${theme} font-medium sm:ml-6 pt-8 pb-8`}
             />
-            <Button
-              className={`bg-color-button-${theme} text-white font-light rounded-lg xs:py-6 xs:px-8 py-6 px-4 text-sm sm:text-md`}
-              text="Create New Identity"
-              onClick={handleClick}
-            />
+           <Button
+  className={`bg-color-button3-${theme} hover:bg-color-button3-hover-${theme} transition-all duration-300 ease-in-out transform hover:-translate-y-1 text-white font-light rounded-lg xs:py-6 xs:px-8 py-6 px-4 text-sm sm:text-md`}
+  text="Create New Identity"
+  onClick={handleClick}
+/>
+
           </div>
           <hr className="border-t-[1px] border-t-[#6e84a3] opacity-20 mb-6 ml-6 lg:mr-0 mr-6" />
         </div>
         <div className="flex flex-col  items-center justify-center ml-6 lg:mr-0 mr-6">
           <div
-            className={`bg-color-card-${theme} shadow-${theme} rounded-md w-full`}
+            className={`bg-gradient-stepper-card-${theme} shadow-${theme} rounded-md w-full`}
           >
             <div
-              className={`bg-color-card-${theme} rounded-t-md border-color-${theme} border-b-[1px] shadow-${theme} flex flex-col items-center justify-center h-full w-full`}
+              className={`bg-gradient-stepper-card-${theme} rounded-t-md border-color-${theme} border-b-[1px] shadow-${theme} flex flex-col items-center justify-center h-full w-full`}
             >
               <p
                 className={`py-2 text-color-para-${theme} sm:text-xs text-[8px] w-full px-4`}
@@ -119,6 +120,7 @@ const Identities = () => {
               <Table
                 headers={headers}
                 rows={profileListData}
+                className={`bg-color-card-${theme}`}
                 headerClassName={`bg-color-table-color-${theme}`}
                 renderRow={(row, index) => (
                   <>

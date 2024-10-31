@@ -49,6 +49,7 @@ module.exports = {
         "color-modal-SC":
           "linear-gradient(to bottom, #243279 0%, #0055BB 100%)",
            "color-card-header-Ascent": "linear-gradient(to bottom, #0e335b 0%, #161f3d 100%)",
+           "color-account-SC":   "linear-gradient(to right, #243279 0%, #0091BB 100%)",
       },
       backgroundColor: {
         "theme-SC": "#edf2f4", // Color for Theme 1 (SC)
@@ -99,14 +100,17 @@ module.exports = {
         "color-search-SC": "#FAFAFB",
         "color-tab-buttons-inactive-SC": "#F5F5F5",
         "color-tab-buttons-inactive-Ascent": "#0d3e80",
-        "color-sidebar-nav-SC": "#FFFFFF",
-        "color-sidebar-nav-Ascent": "#152e4d",
-        "color-sidebar-nav-lightTheme": "",
+        "color-sidebar-nav-SC": "#243279", // Sidebar color for small screens
+        "color-sidebar-nav-Ascent": "#152e4d", // Sidebar color for small screens
+        "color-sidebar-nav-lightTheme": "", // Sidebar color for small screens
+        
         // "color-modal-SC": "#FFFFFF",
         "color-modal-Ascent": "#152e4d",
         "color-modal-lightTheme": "",
-        "color-iconButton-SC": "#f2f0f0",
-        "color-iconButton-Ascent": "#12273f",
+        "color-iconButton-SC": "#ffffff",
+        "color-iconButton-Ascent": "#152e4d",
+        "color-iconButton-hover-SC": "#F6F6F6",
+        "color-iconButton-hover-Ascent": "#12273F",
         "color-button2-Ascent": '#152e4d',
         "color-button3-Ascent": '#2c7be5',
         "color-button3-SC": '#3DA500',
@@ -115,7 +119,13 @@ module.exports = {
         "color-button4-hover-SC": '#348a01',
         "color-button4-hover-Ascent": '#00b86b',
         "color-button4-SC": '#3DA500',
-        "color-button4-Ascent": '#3DA500',
+        "color-button4-Ascent": '#2c7be5',
+        "color-stepper-button-hover-SC": '#348a01',
+        "color-stepper-button-hover-Ascent": '#00b86b',
+        "color-stepper-button-SC": '#3DA500',
+        "color-stepper-button-Ascent": '#3DA500',
+       
+        "color-account-Ascent": 'rgba(0, 0, 0, 0)',
       },
 
       borderColor: {
@@ -127,20 +137,20 @@ module.exports = {
         "color-dropdown-Ascent": "#06d3de",
         "color-button-SC": "",
         "color-button-Ascent": "#FFFFFF",
-        "color-loader-SC": "#8DC63F",
+        "color-loader-SC": "#3DA500",
         "color-loader-Ascent": "#ffffff",
         "color-tooltip-SC": "#000000",
         "color-tooltip-Ascent": "#ffffff",
         "color-iconButton-hover-Ascent": "#1e3a5c",
-        "color-iconButton-hover-SC": "#d9d9d9",
+        "color-iconButton-hover-SC": "#C4C4C4",
         "color-iconButton-Ascent": "#ffffff",
         "color-iconButton-SC": "#e0e0e0",
        
       },
       textColor: {
         "color-SC": "#3DA500",
-        "color-para-SC": "#000000",
-        "color-para-Ascent": "#e79f31",
+        "color-para-SC": "#FFFFFF", //Identities screen para text color
+        "color-para-Ascent": "#e79f31",  //Identities screen para text color
         "color-text-SC": "#000000",
         "color-text-Ascent": "#FFFFFF",
         "color-lightTheme": "#004e89",
@@ -167,6 +177,11 @@ module.exports = {
         "color-modal-Ascent": "#FFFFFF",
         "color-description-SC": '#b7b9bd',
         "color-description-Ascent": '#536b8c',
+        "color-fundName-SC": '#3DA500',
+        "color-fundName-Ascent": '#ffffff',
+        "color-fundStatus-SC": '#000000',
+        "color-fundStatus-Ascent": '#ffffff',
+       
       },
       fontFamily: {
         SC: ['"Roboto"', "sans-serif"], // Theme 1
@@ -279,7 +294,9 @@ module.exports = {
     {
       pattern: /text-color-icon-(SC|lightTheme|Ascent)/,
     },
-
+    {
+      pattern: /text-color-fundStatus-(SC|lightTheme|Ascent)/,
+    },
     {
       pattern: /text-color-status-(SC|lightTheme|Ascent)/,
     },
@@ -291,6 +308,9 @@ module.exports = {
     },
     {
       pattern: /text-color-profile-icon-(SC|lightTheme|Ascent)/,
+    },
+    {
+      pattern: /text-color-fundName-(SC|lightTheme|Ascent)/,
     },
     {
       pattern: /text-color-sidebar-icon-hover-(SC|lightTheme|Ascent)/,
@@ -306,7 +326,11 @@ module.exports = {
       pattern: /bg-color-card-header-(SC|lightTheme|Ascent)/,
     },
     {
+      
       pattern: /bg-color-table-header-(SC|lightTheme|Ascent)/,
+    },
+    {
+      pattern: /bg-color-account-(SC|lightTheme|Ascent)/,
     },
     {
       pattern: /bg-color-table-bg-(SC|lightTheme|Ascent)/,
@@ -357,6 +381,9 @@ module.exports = {
       pattern: /bg-color-button4-(SC|lightTheme|Ascent)/,
     },
     {
+      pattern: /bg-color-stepper-button-(SC|lightTheme|Ascent)/,
+    },
+    {
       pattern: /border-color-(SC|lightTheme|Ascent)/,
     },
     {
@@ -368,9 +395,15 @@ module.exports = {
     {
       pattern: /border-color-modal-(SC|lightTheme|Ascent)/, // Hover border color
     },
-
+    {
+      pattern: /border-color-loader-(SC|lightTheme|Ascent)/, // Hover border color
+    },
     {
       pattern: /border-color-tooltip-(SC|lightTheme|Ascent)/, // Hover border color
+    },
+    {
+      pattern: /bg-color-iconButton-(SC|lightTheme|Ascent)/, // iconButtons in Accounts
+     
     },
     {
       pattern: /border-color-(SC|lightTheme|Ascent)/, // Hover border color
@@ -381,11 +414,15 @@ module.exports = {
       variants: ["hover"],
     },
     {
+      pattern: /bg-color-stepper-button-hover-(SC|lightTheme|Ascent)/, // Hover border color
+      variants: ["hover"],
+    },
+    {
       pattern: /text-color-(SC|lightTheme|Ascent)/, // Hover text color
       variants: ["hover"],
     },
     {
-      pattern: /bg-color-iconButton-(SC|lightTheme|Ascent)/, // Hover text color
+      pattern: /bg-color-iconButton-hover-(SC|lightTheme|Ascent)/, // Hover iconButtons in Accounts
       variants: ["hover"],
     },
     {

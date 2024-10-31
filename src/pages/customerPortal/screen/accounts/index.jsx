@@ -210,7 +210,7 @@ export default function InvestorSubscriptionList({ ...props }) {
     <>
       <div className={`bg-color-${theme} flex flex-col md:flex-row`}>
         <SideBar portalType="Customer" />
-        <div className="flex-1 py-6 lg:ml-9 lg:px-10 px-2">
+        <div className="flex-1 py-6 lg:ml-9  lg:px-10 px-2">
           <Header
             heading="My Accounts"
             subheading="Overview"
@@ -220,16 +220,17 @@ export default function InvestorSubscriptionList({ ...props }) {
           />
           <hr className="border-t-[1px] border-t-[#6e84a3] opacity-20 mb-6 mt-4  ml-6 sm:mr-6 lg:mr-0 mr-6" />
 
-          <div className="flex flex-col gap-6">
+<div className={`bg-color-account-${theme} rounded-lg `}>
+          <div className="flex flex-col ">
             {accountsData.length > 0
               ? accountsData.map((item, index) => {
                   return (
                     <div
-                      className={`bg-color-card-${theme} shadow-${theme} border border-color-${theme} flex flex-col gap-4 rounded-lg px-4 ml-4`}
+                      className={`bg-color-card-${theme} shadow-${theme} border border-color-${theme} flex flex-col gap-4 rounded-lg px-4 ml-4 mr-4 mt-4 mb-4`}
                       key={index}
                     >
-                      <div className={`bg-color-card-${theme} shadow-${theme} border-b border-color-${theme} rounded-t-lg flex justify-between py-[6px] px-[24px] items-center gap-4`}>
-                        <h4 className={`text-[15px] font-light flex text-color-text-${theme}`}>
+                      <div className={`bg-color-card-${theme} shadow-${theme} border-b border-color-${theme} rounded-t-lg flex justify-between py-[6px] sm:px-[24px] items-center gap-4`}>
+                        <h4 className={`xs:text-[15px] text-[10px] font-light flex items-center text-color-fundName-${theme}`}>
                           <img
                             src={item?.account?.fund?.logoBucketKey}
                             style={{
@@ -245,7 +246,7 @@ export default function InvestorSubscriptionList({ ...props }) {
 
                         {/* {item?.account?.status == 'accepted' && ( */}
                         {/* http://customer.oc.sg:8002/profile/detail/098d9e73-f3e5-47c3-b8eb-92d45f5d3306/252cd9e4-17c3-4e78-90ea-62a7e88ffe29 */}
-                        <div className="flex gap-1">
+                        <div className="flex sm:gap-2 gap-1">
                         {(item?.account?.fundId === 215 ||
                           item?.account?.fundId === "215") && (
                           <button
@@ -291,18 +292,15 @@ export default function InvestorSubscriptionList({ ...props }) {
                                           }
                                         )
                                       }
-                                      className={`flex justify-center items-center w-12 h-12 rounded-md border-[1px] border-color-iconButton-${theme} hover:border-color-iconButton-hover-${theme} bg-color-sidebar-nav-${theme} hover:bg-color-iconButton-${theme} transition-all duration-300 ease-in-out text-xl`}
-                                      style={{
-                                        marginRight: "10px",
-                                        padding: "10px 15px",
-                                      }}
+                                      className={`flex justify-center items-center sm:w-12 sm:h-12 xs:w-8 xs:h-8 w-6 h-6 rounded-md border-[1px] border-color-iconButton-${theme} hover:border-color-iconButton-hover-${theme} bg-color-iconButton-${theme} hover:bg-color-iconButton-hover-${theme} transition-all duration-300 ease-in-out text-xl`}
+                                      
                                     >
                                       <Tooltip content="Additional Investment" position="upper">
                                         
                                         <span>
                                           <img
                                             className={
-                                              "subscription_list_icons"
+                                              "sm:h-[20px] sm:w-[20px] xs:w-[16px] xs:h-[16px] w-[10px] h-[10px]"
                                             }
                                             src={
                                               "/img/transaction-icons/subscription.svg"
@@ -320,19 +318,15 @@ export default function InvestorSubscriptionList({ ...props }) {
                                           }
                                         )
                                       }
-                                      className={`flex justify-center items-center w-12 h-12 rounded-md border-[1px] border-color-iconButton-${theme} hover:border-color-iconButton-hover-${theme} bg-color-sidebar-nav-${theme} hover:bg-color-iconButton-${theme} transition-all duration-300 ease-in-out text-xl`}
+                                      className={`flex justify-center items-center sm:w-12 sm:h-12 xs:w-8 xs:h-8 w-6 h-6 rounded-md border-[1px] border-color-iconButton-${theme} hover:border-color-iconButton-hover-${theme} bg-color-iconButton-${theme} hover:bg-color-iconButton-hover-${theme} transition-all duration-300 ease-in-out text-xl`}
                                      
-                                      style={{
-                                        marginRight: "10px",
-                                        padding: "10px 15px",
-                                      }}
                                     >
-                                      <Tooltip content="Redemption Request" position="upper">
+                                      <Tooltip content="Redemption Request" position="upper" className=''>
                                         
                                         <span>
                                           <img
                                             className={
-                                              "subscription_list_icons"
+                                              "sm:h-[20px] sm:w-[20px] xs:w-[16px] xs:h-[16px] w-[10px] h-[10px]"
                                             }
                                             src={
                                               "/img/transaction-icons/Redemption.svg"
@@ -347,18 +341,14 @@ export default function InvestorSubscriptionList({ ...props }) {
                           ) : checkSubscriptionAllow(item?.account?.fund) ? (
                             <Link
                               to={`/profile/detail/${item?.identityId}/${item?.accountId}?event=application`}
-                              className={`flex justify-center items-center w-12 h-12 rounded-md border-[1px] border-color-iconButton-${theme} bg-color-sidebar-nav-${theme} hover:border-color-iconButton-hover-${theme} hover:bg-color-iconButton-${theme} transition-all duration-300 ease-in-out text-xl`}
-                                     
-                              style={{
-                                marginRight: "10px",
-                                padding: "10px 15px",
-                              }}
+                              className={`flex justify-center items-center sm:w-12 sm:h-12 xs:w-8 xs:h-8 w-6 h-6 rounded-md border-[1px] border-color-iconButton-${theme} bg-color-iconButton-${theme} hover:border-color-iconButton-hover-${theme} hover:bg-color-iconButton-hover-${theme} transition-all duration-300 ease-in-out text-xl`}
+                              
                             >
-                              <Tooltip content="Sign Agreement" position="upper" className='left-[-20px] bottom-6 text-nowrap'>
+                              <Tooltip content="Sign Agreement" position="upper" className='left-[-21px] bottom-[24px] text-nowrap'>
                                 
                                 <span>
                                   <img
-                                    className={"h-[20px] w-[20px]"}
+                                    className={"sm:h-[20px] sm:w-[20px] xs:w-[16px] xs:h-[16px] w-[10px] h-[10px]"}
                                     src={
                                       "/img/transaction-icons/sign_agreement.png"
                                     }
@@ -370,18 +360,17 @@ export default function InvestorSubscriptionList({ ...props }) {
                         </>
                         <Link
                           to={`/profile/detail/${item?.identityId}/${item?.accountId}`}
-                          className={`flex justify-center items-center w-12 h-12 rounded-md border-[1px] border-color-iconButton-${theme} bg-color-sidebar-nav-${theme} hover:border-color-iconButton-hover-${theme} hover:bg-color-iconButton-${theme} transition-all duration-300 ease-in-out text-xl`}
+                          className={`flex justify-center items-center sm:w-12 sm:h-12 xs:w-8 xs:h-8 w-6 h-6  rounded-md border-[1px] border-color-iconButton-${theme} bg-color-iconButton-${theme} hover:border-color-iconButton-hover-${theme} hover:bg-color-iconButton-hover-${theme} transition-all duration-300 ease-in-out text-xl`}
                                      
-                          style={{ marginRight: "10px", padding: "10px 15px" }}
                         >
-                          <Tooltip content="Account Detail" position="upper" className='left-[-20px] bottom-7 text-nowrap'>
+                          <Tooltip content="Account Detail" position="upper" className='left-[-21px] bottom-7 text-nowrap'>
                             
                             <span >
                               {/* <img className={"subscription_list_icons"} src={"/img/transaction-icons/sign_agreement.png"} /> */}
                               <FontAwesomeIcon
                                 color="#2C7BE5"
                                 icon={faEye}
-                                style={{ fontSize: "16" }}
+                                className="sm:text-[16px] text-[12px]"
                               />
                             </span>
                           </Tooltip>
@@ -390,21 +379,18 @@ export default function InvestorSubscriptionList({ ...props }) {
                         {item?.account?.fund?.meta?.config?.settings?.account
                           ?.transfer?.enabled && (
                           <div
-                            style={{
-                              marginRight: "10px",
-                              padding: "10px 15px",
-                            }}
+                           
                             onClick={(e) => {
                               handleClickSwicthTransfer(e);
                             }}
-                            className={`flex justify-center items-center w-12 h-12 rounded-md border-[1px] border-color-iconButton-${theme} bg-color-sidebar-nav-${theme} hover:border-color-iconButton-hover-${theme} hover:bg-color-iconButton-${theme} transition-all duration-300 ease-in-out text-xl`}
+                            className={`flex justify-center items-center sm:w-12 sm:h-12 xs:w-8 xs:h-8 w-6 h-6 rounded-md border-[1px] border-color-iconButton-${theme} bg-color-iconButton-${theme} hover:border-color-iconButton-hover-${theme} hover:bg-color-iconButton-hover-${theme} transition-all duration-300 ease-in-out text-xl`}
                                      
                           >
-                            <Tooltip content="Transfer" position="upper" className='left-[-20px] bottom-6'>
+                            <Tooltip content="Transfer" position="upper" className='left-[-21px] bottom-[24px]'>
                               
                               <span>
                                 <img
-                                  className={"h-[20px] w-[20px]"}
+                                  className={"sm:h-[20px] sm:w-[20px] xs:w-[16px] xs:h-[16px] w-[10px] h-[10px]"}
                                   src={"/img/transaction-icons/icons.svg"}
                                 />
                               </span>
@@ -414,21 +400,18 @@ export default function InvestorSubscriptionList({ ...props }) {
                         {item?.account?.fund?.meta?.config?.settings?.account
                           ?.switch?.enabled && (
                           <div
-                            style={{
-                              marginRight: "10px",
-                              padding: "10px 15px",
-                            }}
+                           
                             onClick={(e) => {
                               handleClickSwicthTransfer(e);
                             }}
-                            className={`flex justify-center items-center w-12 h-12 rounded-md border-[1px] border-color-iconButton-${theme} bg-color-sidebar-nav-${theme} hover:border-color-iconButton-hover-${theme} hover:bg-color-iconButton-${theme} transition-all duration-300 ease-in-out text-xl`}
+                            className={`flex justify-center items-center sm:w-12 sm:h-12 xs:w-8 xs:h-8 w-6 h-6 rounded-md border-[1px] border-color-iconButton-${theme} bg-color-iconButton-${theme} hover:border-color-iconButton-hover-${theme} hover:bg-color-iconButton-hover-${theme} transition-all duration-300 ease-in-out text-xl`}
                                      
                           >
-                            <Tooltip content="Switch" position="upper" className='left-[-20px] bottom-6'>
+                            <Tooltip content="Switch" position="upper" className='left-[-21px] bottom-[24px]'>
                              
                               <span>
                                 <img
-                                  className={"h-[20px] w-[20px]"}
+                                  className={"sm:h-[20px] sm:w-[20px] xs:w-[16px] xs:h-[16px] w-[10px] h-[10px]"}
                                   src={"/img/transaction-icons/switch.png"}
                                 />
                               </span>
@@ -438,23 +421,21 @@ export default function InvestorSubscriptionList({ ...props }) {
                         {(item?.account?.status == "draft" ||
                           item?.account?.status == "pending") && (
                           <div
-                            style={{
-                              marginRight: "10px",
-                              padding: "10px 15px",
-                            }}
+                           
                             onClick={(e) => {
                               hanleDeleteAccount(e, item.accountId);
                             }}
-                            className={`flex justify-center items-center w-12 h-12 rounded-md border-[1px] border-color-iconButton-${theme} bg-color-sidebar-nav-${theme} hover:border-color-iconButton-hover-${theme} hover:bg-color-iconButton-${theme} transition-all duration-300 ease-in-out text-xl`}
+                            className={`flex justify-center items-center sm:w-12 sm:h-12 xs:w-8 xs:h-8 w-6 h-6 rounded-md border-[1px] border-color-iconButton-${theme} bg-color-iconButton-${theme} hover:border-color-iconButton-hover-${theme} hover:bg-color-iconButton-hover-${theme} transition-all duration-300 ease-in-out text-xl`}
                                      
                           >
-                            <Tooltip content="Delete" position="upper" className='left-[-20px]'>
+                            <Tooltip content="Delete" position="upper" className='left-[-18px]'>
                               
                               <span>
                                 <FontAwesomeIcon
                                   color="red"
                                   icon={faTrash}
-                                  style={{ fontSize: "16" }}
+                                  // style={{ fontSize: "16" }}
+                                  className="sm:text-[16px] text-[12px]"
                                 />
                               </span>
                             </Tooltip>
@@ -463,8 +444,8 @@ export default function InvestorSubscriptionList({ ...props }) {
                         </div>
                       </div>
                       <div className="flex flex-col gap-6 md:flex-row justify-center mb-5 w-full">
-                        <div className="w-full md:ml-4 flex justify-between">
-                            <div  className={`bg-color-card-${theme} rounded-lg border-color-${theme} border-[1px] shadow-${theme} py-2 px-4 w-[50%]`}>
+                        <div className="w-full md:ml-4 md:flex md:flex-row md:justify-between flex flex-col gap-4 ">
+                            <div  className={`bg-color-card-${theme} rounded-lg border-color-${theme} border-[1px] shadow-${theme} py-2 px-4 md:w-[50%] w-full`}>
                               <div className="flex flex-col md:flex-row justify-between gap-1 w-full">
                                 <div className={`flex gap-4 w-full `}>
                                   <div className="flex items-center space-x-4">
@@ -497,7 +478,7 @@ export default function InvestorSubscriptionList({ ...props }) {
                                   <div className={`flex flex-col w-full `}>
                                     <h4 className="mb-1">
                                       <p
-                                        style={{ marginBottom: "0px" }} className="text-[15px] font-light"
+                                        style={{ marginBottom: "0px" }} className={`text-color-fundName-${theme} xs:text-[15px] text-[12px] font-light`}
                                       >{`${item?.identity?.label}`}</p>
                                     </h4>
 <div>
@@ -509,7 +490,7 @@ export default function InvestorSubscriptionList({ ...props }) {
                                       {item?.identity?.type.toLowerCase() ===
                                         "corporate" && (
                                         <>
-                                        <p className={`flex items-center gap-2 text-[13px] font-light text-color-sidebar-icon-${theme} `}>
+                                        <p className={`flex items-center gap-2 sm:text-[13px] xs:text-[10px] text-[8px] font-light text-color-sidebar-icon-${theme} `}>
                                           Country of Incorporation:{" "}
                                           {item?.identity?.meta?.data[
                                             item?.identity?.type.toLowerCase() +
@@ -521,9 +502,9 @@ export default function InvestorSubscriptionList({ ...props }) {
                                             ]?.value}{" "}
                                           <span className="flex">
                                             <FeatherIcon
-                                              className={`text-success`}
+                                              className={`text-[15px]`}
                                               icon="check-circle"
-                                              color="green"
+                                              color="#3DA500"
                                               size="15"
                                             />
                                             <br />
@@ -535,7 +516,7 @@ export default function InvestorSubscriptionList({ ...props }) {
                                       {item?.identity?.type.toLowerCase() !==
                                         "corporate" && (
                                         <>
-                                          <p className={`flex items-center gap-2 text-[13px] font-light text-color-sidebar-icon-${theme}`}>
+                                          <p className={`flex items-center gap-2 sm:text-[13px] xs:text-[10px] text-[8px] font-light text-color-sidebar-icon-${theme}`}>
                                             Nationality:{" "}
                                             {getCountryNameFromEnums(
                                               item?.identity?.meta?.data[
@@ -551,17 +532,17 @@ export default function InvestorSubscriptionList({ ...props }) {
                                                       ".basic.nationality_code"
                                                   ]?.value
                                             )}{" "}
-                                            <span className="text-success">
+                                            <span className="">
                                               <FeatherIcon
-                                                className={`text-success`}
+                                                className={``}
                                                 icon="check-circle"
-                                                color="green"
+                                                color="#3DA500"
                                                 size="15"
                                               />
                                             </span>
                                           </p>
 
-                                          <p className={`flex items-center gap-2 text-[13px] font-light text-color-sidebar-icon-${theme}`}>
+                                          <p className={`flex items-center gap-2 sm:text-[13px] xs:text-[10px] text-[7px] font-light text-color-sidebar-icon-${theme}`}>
                                             Country Of Residence:{" "}
                                             <span
                                               style={{
@@ -583,7 +564,7 @@ export default function InvestorSubscriptionList({ ...props }) {
                                               <FeatherIcon
                                                 className={`text-success`}
                                                 icon="check-circle"
-                                                color="green"
+                                                color="#3DA500"
                                                 size="15"
                                               />
                                             </span>
@@ -591,7 +572,7 @@ export default function InvestorSubscriptionList({ ...props }) {
                                         </>
                                       )}
                                       {/* <br /> */}
-                                      <p className={`flex items-center gap-2 text-[13px] font-light text-color-sidebar-icon-${theme}`}>
+                                      <p className={`flex items-center gap-2 sm:text-[13px] xs:text-[10px] text-[8px] font-light text-color-sidebar-icon-${theme}`}>
                                       Customer Type:
                                       <>
                                         <span
@@ -605,7 +586,7 @@ export default function InvestorSubscriptionList({ ...props }) {
                                           <FeatherIcon
                                             className={`text-success`}
                                             icon="check-circle"
-                                            color="green"
+                                            color="#3DA500"
                                             size="15"
                                           />
                                         </span>
@@ -614,29 +595,32 @@ export default function InvestorSubscriptionList({ ...props }) {
 </p>
                                     </div>
 
-                                    <p className={`text-[13px] font-light text-color-text-${theme}`}>
-                                      <span className="text-success"> </span>{" "}
+                                    <p className={`sm:text-[13px] xs:text-[10px] text-[8px] font-light text-color-fundName-${theme}`}>
+                                      <span className=""> </span>{" "}
                                       Subscription Type:{" "}
                                       {item?.account?.scount == 1
                                         ? "Standalone"
                                         : "Joint Account"}
                                     </p>
-                                    <p className={`text-[13px] font-light text-color-text-${theme} `}>
+                                    <p className={`sm:text-[13px] xs:text-[10px] text-[8px] font-light text-color-fundStatus-${theme} `}>
                                       <span
                                         className={
                                           item?.account?.status == "pending" ||
                                           item?.account?.status == "draft"
-                                            ? "text-warning"
-                                            : "text-success"
+                                            ? ""
+                                            : ""
                                         }
                                       >
                                         {" "}
                                       </span>{" "}
-                                      Status:{" "}
+                                      <span className={`text-color-fundName-${theme}`}>Status:{" "}</span>
+                                      
                                       {item?.account?.status?.replace(
                                         /^\w/,
                                         (c) => c.toUpperCase()
                                       )}
+                               {item?.account?.status === "pending" &&
+                                    " For Screening"}
                                     </p>
                                   </div>
                                 </div>
@@ -651,18 +635,18 @@ export default function InvestorSubscriptionList({ ...props }) {
                               item?.account?.fundId == 351 ||
                               item?.account?.fundId == 1 ||
                               item?.account?.fundId == 215 ? (
-                                <div className={`bg-color-card-${theme} w-[48%] rounded-lg border-color-${theme} border-[1px] shadow-${theme}  px-4 py-4 lg:ml-0 ml-6 lg:mr-0 mr-6`}>
+                                <div className={`bg-color-card-${theme} md:w-[50%] w-full rounded-lg border-color-${theme} border-[1px] shadow-${theme}  px-4 py-4 lg:mr-0 mr-6`}>
                                   <div className="flex flex-col items-center gap-4">
                                     <div className="flex flex-col gap-6 md:flex-row justify-center mb-5 w-full">
-                                      <div className="w-full md:mr-4 flex justify-between ">
+                                      <div className="w-full md:mr-4 md:flex md:justify-between ">
                                         <div className="col-sm-6">
                                           <div className={` rounded-lg  px-4 w-full flex justify-between `}>
-                                            <small className={`text-[13px] font-light text-color-sidebar-icon-${theme} flex items-center gap-2`}>
+                                            <small className={`xl:text-[13px] text-[11px] font-light text-color-sidebar-icon-${theme} flex items-center gap-2`}>
                                               <span className="text-success">
                                                 <FeatherIcon
                                                   className={`text-success`}
                                                   icon="clock"
-                                                  color="green"
+                                                  color="#3DA500"
                                                   size="15"
                                                 />
                                               </span>
@@ -677,12 +661,12 @@ export default function InvestorSubscriptionList({ ...props }) {
                                           </div>
 
                                           <div className={` rounded-lg  px-4 w-full flex justify-between`}>
-                                          <small className={`text-[13px] font-light text-color-sidebar-icon-${theme} flex items-center gap-2`}>
+                                          <small className={`xl:text-[13px] text-[11px] font-light text-color-sidebar-icon-${theme} flex items-center gap-2`}>
                                               <span className="text-success">
                                                 <FeatherIcon
                                                   className={`text-success`}
                                                   icon="check-circle"
-                                                  color="green"
+                                                  color="#3DA500"
                                                   size="15"
                                                 />
                                               </span>
@@ -693,12 +677,12 @@ export default function InvestorSubscriptionList({ ...props }) {
                                             </small>
                                           </div>
                                           <div className={` rounded-lg  px-4 w-full flex justify-between`}>
-                                          <small className={`text-[13px] font-light text-color-sidebar-icon-${theme} flex items-center gap-2`}>
+                                          <small className={`xl:text-[13px] text-[11px] font-light text-color-sidebar-icon-${theme} flex items-center gap-2`}>
                                               <span className="text-success">
                                                 <FeatherIcon
                                                   className={`text-success`}
                                                   icon="check-circle"
-                                                  color="green"
+                                                  color="#3DA500"
                                                   size="15"
                                                 />
                                               </span>
@@ -709,12 +693,12 @@ export default function InvestorSubscriptionList({ ...props }) {
                                             </small>
                                           </div>
                                           <div className={` rounded-lg px-4 w-full flex justify-between`}>
-                                          <small className={`text-[13px] font-light text-color-sidebar-icon-${theme} flex items-center gap-2`}>
+                                          <small className={`xl:text-[13px] text-[11px] font-light text-color-sidebar-icon-${theme} flex items-center gap-2`}>
                                               <span className="text-success">
                                                 <FeatherIcon
                                                   className={`text-success`}
                                                   icon="check-circle"
-                                                  color="green"
+                                                  color="#3DA500"
                                                   size="15"
                                                 />
                                               </span>
@@ -725,12 +709,12 @@ export default function InvestorSubscriptionList({ ...props }) {
                                             </small>
                                           </div>
                                           <div className={` rounded-lg  px-4 w-full flex justify-between`}>
-                                          <small className={`text-[13px] font-light text-color-sidebar-icon-${theme} flex items-center gap-2`}>
+                                          <small className={`xl:text-[13px] text-[11px] font-light text-color-sidebar-icon-${theme} flex items-center gap-2`}>
                                               <span className="text-success">
                                                 <FeatherIcon
                                                   className={`text-success`}
                                                   icon="check-circle"
-                                                  color="green"
+                                                  color="#3DA500"
                                                   size="15"
                                                 />
                                               </span>{" "}
@@ -740,12 +724,12 @@ export default function InvestorSubscriptionList({ ...props }) {
                                         </div>
                                         <div className="col-sm-6">
                                           <div className={` rounded-lg px-4 w-full flex justify-between`}>
-                                          <small className={`text-[13px] font-light text-color-sidebar-icon-${theme} flex items-center gap-2`}>
+                                          <small className={`xl:text-[13px] text-[11px] font-light text-color-sidebar-icon-${theme} flex items-center gap-2`}>
                                               <span className="text-success">
                                                 <FeatherIcon
                                                   className={`text-success`}
                                                   icon="check-circle"
-                                                  color="green"
+                                                  color="#3DA500"
                                                   size="15"
                                                 />
                                               </span>
@@ -756,12 +740,12 @@ export default function InvestorSubscriptionList({ ...props }) {
                                             </small>
                                           </div>
                                           <div className={` rounded-lg  px-4 w-full flex justify-between`}>
-                                          <small className={`text-[13px] font-light text-color-sidebar-icon-${theme} flex items-center gap-2`}>
+                                          <small className={`xl:text-[13px] text-[11px] font-light text-color-sidebar-icon-${theme} flex items-center gap-2`}>
                                               <span className="text-success">
                                                 <FeatherIcon
                                                   className={`text-success`}
                                                   icon="check-circle"
-                                                  color="green"
+                                                  color="#3DA500"
                                                   size="15"
                                                 />
                                               </span>
@@ -783,12 +767,12 @@ export default function InvestorSubscriptionList({ ...props }) {
                                       <div className="">
                                         <div className="">
                                           <div className={` rounded-lg px-4 w-full flex justify-between`}>
-                                          <small className={`text-[13px] font-light text-color-sidebar-icon-${theme} flex items-center gap-2`}>
+                                          <small className={`xl:text-[13px] text-[11px] font-light text-color-sidebar-icon-${theme} flex items-center gap-2`}>
                                               <span className="text-success">
                                                 <FeatherIcon
                                                   className={`text-success`}
                                                   icon="clock"
-                                                  color="green"
+                                                  color="#3DA500"
                                                   size="15"
                                                 />
                                               </span>
@@ -811,12 +795,12 @@ export default function InvestorSubscriptionList({ ...props }) {
                                           </div>
 
                                           <div className={` rounded-lg  py-2 px-4 w-full flex justify-between`}>
-                                          <small className={`text-[13px] font-light text-color-sidebar-icon-${theme} flex items-center gap-2`}>
+                                          <small className={`xl:text-[13px] text-[11px] font-light text-color-sidebar-icon-${theme} flex items-center gap-2`}>
                                               <span className="text-success">
                                                 <FeatherIcon
                                                   className={`text-success`}
                                                   icon="check-circle"
-                                                  color="green"
+                                                  color="#3DA500"
                                                   size="15"
                                                 />
                                               </span>
@@ -831,12 +815,12 @@ export default function InvestorSubscriptionList({ ...props }) {
                                             </small>
                                           </div>
                                           <div className={` rounded-lg  py-2 px-4 w-full flex justify-between`}>
-                                          <small className={`text-[13px] font-light text-color-sidebar-icon-${theme} flex items-center gap-2`}>
+                                          <small className={`xl:text-[13px] text-[11px] font-light text-color-sidebar-icon-${theme} flex items-center gap-2`}>
                                               <span className="text-success">
                                                 <FeatherIcon
                                                   className={`text-success`}
                                                   icon="check-circle"
-                                                  color="green"
+                                                  color="#3DA500"
                                                   size="15"
                                                 />
                                               </span>
@@ -852,12 +836,12 @@ export default function InvestorSubscriptionList({ ...props }) {
                                             </small>
                                           </div>
                                           <div className={` rounded-lg  py-2 px-4 w-full flex justify-between`}>
-                                          <small className={`text-[13px] font-light text-color-sidebar-icon-${theme} flex items-center gap-2`}>
+                                          <small className={`xl:text-[13px] text-[11px] font-light text-color-sidebar-icon-${theme} flex items-center gap-2`}>
                                               <span className="text-success">
                                                 <FeatherIcon
                                                   className={`text-success`}
                                                   icon="check-circle"
-                                                  color="green"
+                                                  color="#3DA500"
                                                   size="15"
                                                 />
                                               </span>
@@ -886,6 +870,7 @@ export default function InvestorSubscriptionList({ ...props }) {
                 })
               : null}
           </div>
+          </div>
           {isLoaderAccount && (
             <div
               style={{
@@ -895,7 +880,7 @@ export default function InvestorSubscriptionList({ ...props }) {
                 height: "20rem",
               }}
             >
-              <LoadingSpinner animation="grow" custom={true} height="36vh" />
+              <LoadingSpinner theme={theme} />
             </div>
           )}
           {/* {
