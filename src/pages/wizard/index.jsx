@@ -126,7 +126,7 @@ export default function Wizard() {
   }, [imagesForfaceVerification]);
   useEffect(() => {
     if (entityType !== null || entityType !== "") {
-      console.log("dsdasdas", typeof entityType);
+      // console.log("dsdasdas", typeof entityType);
     }
   }, [entityType]);
 
