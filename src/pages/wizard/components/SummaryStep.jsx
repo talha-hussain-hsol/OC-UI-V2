@@ -484,7 +484,7 @@ export default function Summary(props) {
                       </small>
                     </div>
                     <div>
-                      <small className="text-muted font-light text-base flex text-gray-400">
+                      <small className="text-muted font-light text-base flex text-slate-500">
                         <span className="mt-1 mr-3">
                           <FeatherIcon
                             className={``}
@@ -522,7 +522,7 @@ export default function Summary(props) {
                     {fundData?.fund_setting?.account?.applicant?.asset?.digital
                       ?.status && (
                       <div>
-                        <small className="text-muted text-base font-light flex text-gray-400">
+                        <small className="text-muted text-base font-light flex text-slate-500">
                           <span className="mt-1 mr-3">
                             <FeatherIcon
                               className={``}
@@ -626,9 +626,9 @@ export default function Summary(props) {
 
           
             <div className={`flex flex-col ml-4 my-8 gap-3`}>
-              <p className="text-white uppercase text-sm">Name : {selectedIdentityData?.label}</p>
+              <p className="text-slate-500 uppercase text-sm">Name : {selectedIdentityData?.label}</p>
               {selectedIdentityData?.type === "INDIVIDUAL" && (
-                <p className="text-white uppercase text-sm">
+                <p className="text-slate-500 uppercase text-sm">
                   Nationality :{" "}
                   {selectedIdentityData?.type === "INDIVIDUAL" &&
                     getCountryNameFromEnums(
@@ -638,13 +638,13 @@ export default function Summary(props) {
                     )}
                 </p>
               )}
-              <p className="text-white uppercase text-sm">
+              <p className="text-slate-500 uppercase text-sm">
                 {selectedIdentityData?.type === "INDIVIDUAL"
                   ? "Country Of Residence"
                   : "Country for Incorporation"}
                 : {getCountryName()}
               </p>
-              <p className="text-white uppercase text-sm">
+              <p className="text-slate-500 uppercase text-sm">
                 Customer Type :{" "}
                 {selectedIdentityData?.type
                   .split(" ")
@@ -654,8 +654,8 @@ export default function Summary(props) {
                   )
                   .join(" ")}
               </p>
-              <p className="text-white uppercase text-sm">Email : {getDataFromIdentity("email")}</p>
-              <p className="text-white uppercase text-sm">Phone : {getDataFromIdentity("phone")}</p>
+              <p className="text-slate-500 uppercase text-sm">Email : {getDataFromIdentity("email")}</p>
+              <p className="text-slate-500 uppercase text-sm">Phone : {getDataFromIdentity("phone")}</p>
             </div>
           
           <div className="w-full md:w-1/3 lg:w-1/3 xl:w-1/3"></div>
@@ -915,26 +915,22 @@ export default function Summary(props) {
           )}
         </div>
       </div>
-      <div>
+      <div className="w-full mb-10">
         {selectedIdentityData?.type.toLowerCase() == "corporate" ? (
           !isLoader ? (
             <>
-              <div className="w-full">
-                <div className="card" style={{ backgroundColor: "#1f3958" }}>
+              <div className={`ml-6 mr-6 bg-color-card-${theme} shadow-${theme} border border-color-${theme} pb-6 rounded-lg`}>
+                <div className=" w-full" >
                   {/* <div className="card-header">
                       <h4 className="card-header-title">
                         Corporate Underlying Parties
                       </h4>
                     </div> */}
                   <div
-                    className="card-header"
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
+                    className={`w-full flex justify-between items-center bg-color-card-${theme} py-[17px] px-[24px] shadow-${theme} border-b border-color-${theme} rounded-t-lg`}
+                    
                   >
-                    <h4 className="card-header-title">
+                    <h4 className="text-[15px] font-light">
                       Corporate Underlying Parties
                     </h4>
 

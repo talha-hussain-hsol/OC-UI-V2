@@ -16,7 +16,7 @@ import FeatherIcon from "feather-icons-react";
 import { faTrash, faEye } from "@fortawesome/free-solid-svg-icons";
 import LoadingSpinner from "../../../../components/ui/loader/index";
 import UserIcon from '../../../../assets/UserIcon.jpg'
-// import EntityIcon from "../../../../icons/entity.svg";
+import EntityIcon from "../../../../assets/entityIcon.png";
 import { checkSubscriptionAllow } from "../../../../helpers/getFundConfiguration";
 import Countries from "../../../../helpers/countries";
 import { setCustomerAccounts } from "../../../../store/slices/customerAccountSlice";
@@ -460,7 +460,7 @@ export default function InvestorSubscriptionList({ ...props }) {
                                           //   color={"action"}
                                            
                                           // />
-                                          <img src={UserIcon} alt="EntityIcon" className="w-16 rounded-full"/>
+                                          <img src={EntityIcon} alt="EntityIcon" className="w-16"/>
                                         )
                                         // <img src="/img/office-building-icon-32.png" alt="..." className="avatar-img rounded-circle" />
                                       }

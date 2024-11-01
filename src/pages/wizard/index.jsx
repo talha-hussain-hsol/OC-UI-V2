@@ -1391,26 +1391,32 @@ export default function Wizard() {
           )}
 
 <hr className="w-full border-t-[1px] border-t-[#6e84a3] opacity-30 my-4" />
-          <div className="xs:flex-row flex flex-col space-y-2 xs:space-y-0 xs:justify-between  w-full px-8">
+          <div className="sm:flex-row flex flex-col space-y-2 sm:space-y-0 xs:justify-between w-full px-8">
             <button
-              className={`bg-color-cancelBtn-${theme} hover:bg-color-cancelBtn-hover-${theme} border border-white hover:border-color-iconButton-hover-${theme} transition-all duration-300 ease-in-out px-6 py-3 rounded-lg text-white outline-none`}
+              className={`bg-color-cancelBtn-${theme}  hover:bg-color-cancelBtn-hover-${theme} border border-white hover:border-color-iconButton-hover-${theme} transition-all duration-300 ease-in-out px-6 py-3 rounded-lg text-white outline-none`}
               onClick={(e) => handleBackCancel(e)}
             >
               {currentSection == 0 ? "Cancel" : "Back"}
             </button>
+           
             {dataOfAccountSetup?.isIndividual === false &&
               currentSection == 1 &&
               !isCrp && (
-                <Tooltip content='Please click "Save & Next" to skip this step'>
+                
+                <Tooltip content='Please click "Save & Next" to skip this step' className={`w-full`}>
                   <button
-                    className={`bg-color-button-${theme} px-6 py-3 rounded-lg text-white outline-none`}
+                   className={`  px-8 py-3 rounded-lg text-white outline-none transition-all duration-300 ease-in-out ${
+                    checkIfNextButtonDisabled() ? "bg-[#00b86b] opacity-70" : `bg-color-stepper-button-${theme} hover:bg-color-stepper-button-hover-${theme}`
+                  }`}
                     disabled={checkIfNextButtonDisabled()}
                     onClick={(e) => handleNextButtonCRP(e, true)}
                   >
                     Create Organization Chart
                   </button>
                 </Tooltip>
+             
               )}
+            
             {dataOfAccountSetup?.accountData?.attach_identities
               ? dataOfAccountSetup?.accountData?.attach_identities[0]
                   ?.applicationStatusId === "DRAFT" &&
@@ -1418,12 +1424,12 @@ export default function Wizard() {
                 currentSection === 0 && (
                   <>
                     <Tooltip id="tooltip"
-                      content={tooltipMessage} position="upper">
+                      content={tooltipMessage} position="upper" className={`w-full text-center left-[35%]`}>
 
                       <div>
                         <button
-                          className={`bg-color-stepper-button-${theme}  px-8 py-3 rounded-lg text-white outline-none transition-all duration-300 ease-in-out ${
-                            checkIfSubmitButtonDisabled() ? "bg-[#00b86b] opacity-70" : `hover:bg-color-stepper-button-hover-${theme}` }`}
+                          className={`  px-8 py-3 rounded-lg text-white outline-none transition-all duration-300 ease-in-out ${
+                            checkIfSubmitButtonDisabled() ? "bg-[#00b76b] opacity-70" : `bg-color-stepper-button-${theme} hover:bg-color-stepper-button-hover-${theme} opacity-100` }`}
                          
                           disabled={checkIfSubmitButtonDisabled()}
                           onClick={handleSubmitReview}
@@ -1437,8 +1443,8 @@ export default function Wizard() {
               : null}
 
 <button
-  className={`bg-color-stepper-button-${theme}  px-8 py-3 rounded-lg text-white outline-none transition-all duration-300 ease-in-out ${
-    checkIfNextButtonDisabled() ? "bg-[#00b86b] opacity-70" : `hover:bg-color-stepper-button-hover-${theme}`
+  className={`  px-8 py-3 rounded-lg text-white outline-none transition-all duration-300 ease-in-out ${
+    checkIfNextButtonDisabled() ? "bg-[#00b86b] opacity-70" : `bg-color-stepper-button-${theme}   hover:bg-color-stepper-button-hover-${theme}`
   }`}
   disabled={checkIfNextButtonDisabled()}
   onClick={(e) => handleNextButton(e)}

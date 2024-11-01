@@ -21,7 +21,7 @@ import CustomAlert from "../../../widgets/components/Alerts";
 // import  Avatar  from "../../../components/Avatar";
 import "@nosferatu500/react-sortable-tree/style.css"; //install 
 import SortableTree from "@nosferatu500/react-sortable-tree"; //2
-// import EntityIcon from "../../../icons/entity.svg";
+import EntityIcon from "../../../assets/entityIcon.png";
 import UserIcon from '../../../assets/UserIcon.jpg'
 import formatDateRegionWise  from "../../../helpers/formatDateRegionWise";
 // var theme = localStorage.getItem("portal_theme");
@@ -2055,26 +2055,27 @@ export default function Documents(props) {
           <h3>Select Entity Type from particulars screen to upload documents</h3>
         </div>
       ) : (
-        <div className="flex ml-4 mr-4 justify-center my-4">
+        <div className="lg:flex lg:flex-row flex flex-col ml-4 mr-4 justify-between gap-3 my-4">
           {customerType_from_props === "corporate" && (
-            <div className="w-full lg:w-1/2 xl:w-1/2 p-2">
-              <div className={`bg-color-stepstatus-${theme} shadow-${theme} rounded-lg overflow-hidden`}>
-                <div className=" p-4">
+            <div className="w-full lg:1/2 xl:w-2/5 ">
+              <div className={`bg-color-stepstatus-${theme} shadow-${theme} rounded-lg overflow-hidden border border-color-${theme}`}>
+                <div className={`bg-color-stepstatus-${theme} py-6 px-4 shadow-${theme} border-b border-color-${theme} rounded-t-lg`}>
                   <h3 className="mb-0">Ultimate Beneficial Owner (UBO)</h3>
                 </div>
-                <div className="h-[70vh] overflow-auto ">
+                <div className="h-[70vh] overflow-auto mt-4">
                   {isLoaderCrp && (
                     <div className="flex justify-center items-center h-80">
                       <div className="loader"></div>
                     </div>
                   )}
-                  <div className="h-full">
+                  <div className={`h-full`}>
                     {treeData?.length > 0 && (
                       <SortableTree
                         key={randomKey}
                         treeData={treeData}
                         nodeContentRenderer={nodeContentRenderer}
                         onChange={(treeDatas) => setTreeData(treeDatas)}
+                        className={``}
                       />
                     )}
                   </div>
@@ -2082,10 +2083,10 @@ export default function Documents(props) {
               </div>
             </div>
           )}
-          <div className={`w-full ${customerType_from_props === "corporate" ? 'lg:w-1/2 xl:w-1/2' : 'lg:w-3/4 xl:w-10/12'} `}>
-            <div className={`bg-gradient-stepper-card-${theme} shadow-${theme} border border-color-${theme} rounded-lg overflow-hidden`}>
+          <div className={`w-full ${customerType_from_props === "corporate" ? 'lg:1/2 xl:w-3/5' : 'lg:w-3/4 xl:w-10/12'} `}>
+            <div className={`bg-color-stepstatus-${theme} shadow-${theme} border border-color-${theme} rounded-lg overflow-hidden`}>
               {customerType_from_props === "corporate" && (
-                <div className={`bg-gradient-stepper-card-${theme} shadow-${theme} border-b border-color-${theme} p-4 flex justify-between items-center`}>
+                <div className={`bg-color-stepstatus-${theme} shadow-${theme} border-b border-color-${theme} p-4 flex justify-between items-center`}>
                   <h3 className="mb-0 capitalize">{type}</h3>
                   {type && (
                     <>
@@ -2094,7 +2095,7 @@ export default function Documents(props) {
                       ) : (
                         // <EntityIcon className="nodeIcon" fontSize="large" color="action" style={{ fill: 'currentColor' }} />
 
-                        <img src={UserIcon} alt="EntityIcon" className="w-10 rounded-full"/>
+                        <img src={EntityIcon} alt="EntityIcon" className="w-10"/>
                         )}
                     </>
                   )}
@@ -2116,7 +2117,7 @@ export default function Documents(props) {
                     {isrequiredDocListExist && requiredDocList?.length > 0 ? (
                       <>
                         {renderRequiredDocuments(entityValue)}
-                        <hr />
+                        <hr className="w-full border-t-[1px] border-t-[#6e84a3] opacity-30 my-4" />
                       </>
                     ) : (
                       renderUploadedDocuments()

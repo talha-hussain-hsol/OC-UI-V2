@@ -12,7 +12,7 @@ const Tooltip = ({ content,className, children, position = "right" }) => {
 
   return (
     <div className="relative cursor-pointer group flex items-center z-10">
-      <div>{children}</div>
+      <div className="w-full">{children}</div>
       <div
         className={`absolute border border-color-${theme} opacity-0 left-full ml-7 group-hover:opacity-100 transition-opacity duration-200 bg-color-sidebar-${theme} text-color-text-${theme} text-xs rounded-md py-2 px-3  z-10 pointer-events-none ${positionClasses[position]} ${className}`}
       >
