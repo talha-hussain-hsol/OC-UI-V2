@@ -1,11 +1,13 @@
+
 import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
-import { useTheme } from '../../../contexts/themeContext';
+import { useTheme } from '../../contexts/themeContext';
 Chart.register(ArcElement, Tooltip, Legend);
 
 const DonutChart = ({ labels, dataValues, colors }) => {
   const { theme } = useTheme();
+  console.log("theme", theme);
 
   const data = {
     labels: labels,
@@ -45,5 +47,3 @@ const DonutChart = ({ labels, dataValues, colors }) => {
 };
 
 export default DonutChart;
-
-

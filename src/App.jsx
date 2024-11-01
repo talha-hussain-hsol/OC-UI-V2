@@ -32,6 +32,16 @@ import Wiard from "./pages/wizard";
 // import Stepper from "./pages/wizard/Stepper"
 // import FundCode from "./pages/wizard/account-wizard/FundCode";
 
+import FundAccounts from "./pages/compliancePortal/complianceScreens/FundAccounts";
+// import ComplianceDashboard from "./OurComponents/ComplianceScreens/ComplianceDashboard";
+import KYW from "./pages/compliancePortal/complianceScreens/KYW";
+import DomainAccounts from "./pages/compliancePortal/complianceScreens/DomainAccounts";
+import TransactionMonitoring from "./pages/compliancePortal/complianceScreens/TransactionMonitoring";
+
+import MainScreenCompliance from "./pages/compliancePortal/complianceScreens/MainScreenCompliance";
+import CustomerList from "./pages/compliancePortal/complianceScreens/CustomerList";
+import SummaryDetails from "./pages/compliancePortal/complianceScreens/IdentityDetails/SummaryDetails";
+
 function App() {
   return (
     
@@ -52,7 +62,7 @@ function App() {
       <ToastContainer position="bottom-right" />
     </div>
   
-
+    
   );
 }
 const AppWrapper = () => {
@@ -130,6 +140,17 @@ const ComplianceRoutesWrapper = () => {
     <div className={`w-full overflow-hidden bg-custom-gradient text-white `}>
       <Routes>
         <Route path={"/"} element={<ComplianceDashboard />} />
+      <Route path="/fundsAccounts"  element={<ThemeProvider> <FundAccounts /> </ThemeProvider> } />
+      <Route path="/splash" element={<SplashScreen />} />
+      <Route path="/compliance-dashboard" element={<ThemeProvider> <ComplianceDashboard /> </ThemeProvider> } />
+      <Route path="/kyw" element={<ThemeProvider> <KYW /> </ThemeProvider> } />
+      <Route path="/domain-accounts" element={<ThemeProvider> <DomainAccounts /> </ThemeProvider>} />
+      <Route path="/compliance" element={<ThemeProvider> <MainScreenCompliance /> </ThemeProvider> } />
+      <Route path="/transaction-monitoring" element={<ThemeProvider> <TransactionMonitoring /> </ThemeProvider>} />
+      <Route path="/customers-list" element={<ThemeProvider> <CustomerList /> </ThemeProvider>} />
+      <Route path="/summary-details" element={<ThemeProvider> <SummaryDetails /> </ThemeProvider>} />
+
+
       </Routes>
     </div>
   );
