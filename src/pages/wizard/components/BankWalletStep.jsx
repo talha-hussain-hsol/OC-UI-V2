@@ -628,8 +628,8 @@ const {theme} = useTheme();
                       </div>
                       <div className={`px-6`}>
                         <form className="w-full flex flex-col justify-center items-center">
-                          <div className="flex gap-4 w-full py-4">
-                            <div className="w-1/2">
+                          <div className="sm:flex sm:flex-row flex flex-col gap-4 w-full py-4">
+                            <div className="sm:w-1/2 w-full">
                               <div className="flex flex-col w-full">
                                 <label className={`text-[15px] font-light mb-2 text-white`}>
                                   CryptoCurrency
@@ -659,7 +659,7 @@ const {theme} = useTheme();
                                 ) : null}
                               </div>
                             </div>
-                            <div className="w-1/2">
+                            <div className="sm:w-1/2 w-full">
                               <div className="flex flex-col w-full">
                               <label className={`text-[15px] font-light mb-2 text-white`}>
                                   Wallet Address
@@ -684,7 +684,7 @@ const {theme} = useTheme();
                           <div className="mt-10 mb-8">
                             <div className="flex justify-center">
                               <button
-                                 className={`bg-color-stepper-button-${theme} hover:bg-color-stepper-button-hover-${theme} transition-all duration-300 ease-in-out text-white font-medium text-[15px] rounded-full py-3 sm:px-7 px-2  `}
+                                 className={`bg-color-stepper-button-${theme} hover:bg-color-stepper-button-hover-${theme} transition-all duration-300 ease-in-out text-white font-medium text-[15px] rounded-full py-3 px-7  `}
                                 onClick={(e) => {
                                   handleSubmit(e);
                                 }}
@@ -763,9 +763,9 @@ const {theme} = useTheme();
                     <div className="w-full">
                     <div className={`bg-color-card-${theme} rounded-t-md border-color-${theme} border-b-[1px] shadow-${theme}  py-[8px] px-[16px] mb-4 flex items-center justify-between h-full w-full`}
    >
-                        <h4 className={`font-light text-color-text-${theme}`}>Beneficiary Bank List</h4>
+                        <h4 className={`font-light text-color-text-${theme} sm:text-[16px] text-[12px]`}>Beneficiary Bank List</h4>
                         <button
-                          className={`bg-color-button3-${theme} hover:bg-color-button3-hover-${theme} transition-all duration-200 ease-in-out text-white  rounded-lg py-4 sm:px-7 px-2 text-xs sm:text-[15px] font-light`}
+                          className={`bg-color-button3-${theme} hover:bg-color-button3-hover-${theme} transition-all duration-200 ease-in-out text-white  rounded-lg py-4 sm:px-7 px-2  sm:text-[15px] text-[10px] font-light`}
                           onClick={(e) => {
                             setAddBank(!addBank);
                           }}

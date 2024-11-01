@@ -544,7 +544,7 @@ export default function Documents(props) {
   };
   const renderRequiredDocuments = (entityValueData) => (
     <div
-      className="lg:flex lg:flex-row flex flex-col w-full mt-[20px]"
+      className="sm:flex sm:flex-row flex flex-col justify-between w-full mt-[20px]"
     >
       <div className="sm:w-5/12 md:w-5/12 lg:w-5/12 px-6 max-h-[28em] min-h-[28em] overflow-y-scroll">
  
@@ -590,13 +590,13 @@ export default function Documents(props) {
                   role="button"
                   className={
                     requiredDocumentSelected?.id == item.id && isItemSelected
-                      ? 'activeClassForDocument'
+                      ? `bg-color-documents-${theme} shadow-${theme} border-2 border-[#0478f4] rounded-lg px-2`
                       : null
                   }
                 >
                   <div className={``}>
                     <div
-                      className="flex flex-col justify-start"
+                      className={` flex flex-col justify-start px-2 py-4 rounded-lg`}
                     >
                       <div className={`flex justify-between mb-[5px] items-center`}
                        
@@ -606,8 +606,8 @@ export default function Documents(props) {
                           color={
                             getUploadedDocumentChildName(item) ||
                             getUploadedDocumentIfChildrenNotFound(item.id)
-                              ? '#30D158'
-                              : '#ff0000'
+                              ? ''
+                              : ''
                           }
                           fontSize={'20px'}
                         />
@@ -633,16 +633,16 @@ export default function Documents(props) {
                                   props?.dataOfAccountSetup
                                     ?.selectedIdentityData?.meta?.identity
                                     ?.provider == 'SIGNDESK' ? (
-                                   <Tooltip>
-                                    Source: CKYC
+                                   <Tooltip content='Source: CKYC' position="upper">
+                                    
                                       <FontAwesomeIcon
                                         icon={faCheck}
                                         color="green"
                                       />
                                     </Tooltip>
                                   ) : (
-                                    <Tooltip>
-                                    Source: Manual Upload
+                                    <Tooltip content='Source: Manual Upload' position="upper">
+                                    
                                       <FontAwesomeIcon
                                         icon={faCircleExclamation}
                                         color="orange"
@@ -658,11 +658,8 @@ export default function Documents(props) {
                       {getUploadedIdentityDocData(item?.id) == null ||
                       getUploadedIdentityDocData(item?.id) ==
                         undefined ? null : (
-                        <div
-                          style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                          }}
+                        <div className="flex-row flex  justify-between"
+                         
                         >
                           <div
                             className=""
@@ -774,7 +771,7 @@ export default function Documents(props) {
       </div>
       
       {isItemSelected ? (
-        <div className="col-sm-6 col-md-6 col-lg-6">
+       <div className="sm:w-1/2 md:w-1/2 lg:w-1/2">
           {/* <div style={{ border: '2px solid #037bff', borderRadius: '15px' }}>
                         <div style={{ flexDirection: "row", alignItems: "center", marginTop: "1px", justifyContent: "center" }} onClick={() => setModalShow(true)}>
                             <FaCloudUploadAlt color="#63c6d2" />
@@ -783,22 +780,12 @@ export default function Documents(props) {
                         </div>
                     </div> */}
           <div
-            className="row mb-4"
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginTop: '1px',
-              justifyContent: 'center',
-            }}
+            className="flex items-center justify-center mt-[1px]  mb-4"
+            
           >
             <div
-              className="col-sm-10 col-md-10 col-lg-10"
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginTop: '1px',
-                justifyContent: 'center',
-              }}
+             className="sm:w-5/6 md:w-5/6 lg:w-5/6 flex items-center mt-[1px] justify-center"
+             
             >
               <div
                 style={{
@@ -809,16 +796,16 @@ export default function Documents(props) {
                   justifyContent: 'center',
                   border: '3px solid #043f63',
                   borderRadius: '15px',
-                  padding: '15px 0px',
+                  padding: '15px',
                   cursor: 'pointer',
                 }}
                 onClick={() => setModalShow(true)}
               >
                 <FaCloudUploadAlt color="#63c6d2" fontSize="50px" />
-                <h5>
+                <h5 className="font-thin text-[15px]">
                   Max file size: <strong>5MB</strong>
                 </h5>
-                <h5>
+                <h5 className="font-thin text-[15px]">
                   Supported files type: <strong>PNG,JPG,PDF,DOCS</strong>
                 </h5>
               </div>
@@ -827,7 +814,7 @@ export default function Documents(props) {
 
           {!(documentUploadedSelected?.length > 0) ? (
             <div
-              className="row"
+              className="flex flex-col"
               style={{ alignItems: 'center', marginTop: '20px' }}
             >
               <h4 style={{ textAlign: 'center' }}>
@@ -836,42 +823,35 @@ export default function Documents(props) {
             </div>
           ) : (
             <div
-              className="row"
-              style={{
-                flexDirection: 'column',
-                alignItems: 'center',
-                marginTop: '8px',
-                justifyContent: 'space-between',
-              }}
+              className="flex flex-col items-canter justify-between mt-[8px]"
+              
             >
               {documentUploadedSelected.map((item) => {
                 return (
                   <>
                     {isLoader && (
                       <SpinnerWithBackDrop
-                        animation="grow"
-                        custom={true}
-                        height="70vh"
+                       
                       />
                     )}
-                    <div className="col-sm-10 col-md-10 col-lg-10">
-                      <div className="card ">
+                   <div  className="w-full flex items-center mt-[1px] justify-center">
+                      <div className={`bg-color-stepstatus-${theme} shadow-${theme} border border-color-${theme} sm:w-5/6 w-5/6 px-4 py-4 rounded-lg`}>
                         <div className="card-body">
-                          <small className="text-muted">
+                          <small className="text-slate-500">
                             {item?.subDocumentType?.name}
                             <span style={{ marginLeft: '5px' }}>
                               {item?.meta?.origin?.value == 'kyc' &&
                               props?.dataOfAccountSetup?.selectedIdentityData
                                 ?.meta?.identity?.provider == 'SIGNDESK' ? (
-                                <Tooltip>Source: CKYC
+                                <Tooltip content='Source: CKYC'>
                                   <FontAwesomeIcon
                                     icon={faCheck}
                                     color="green"
                                   />
                                 </Tooltip>
                               ) : (
-                               <Tooltip>
-                                Source: Manual Upload
+                               <Tooltip content='Source: Manual Upload'>
+                                
                                   <FontAwesomeIcon
                                     icon={faCircleExclamation}
                                     color="orange"
@@ -899,12 +879,12 @@ export default function Documents(props) {
                             >
                               <div>
                                 <small
-                                  className="text-muted"
+                                  className="text-slate-500"
                                   style={{ marginRight: '0.5em' }}
                                 >
                                   Issue Date:
                                 </small>
-                                <small className="text-muted">
+                                <small className="text-slate-500">
                                   {item?.issuedDate != null
                                     ? item?.issuedDate
                                       ? formatDateRegionWise(item?.issuedDate)
@@ -921,12 +901,12 @@ export default function Documents(props) {
                                 }}
                               >
                                 <small
-                                  className="text-muted"
+                                  className="text-slate-500"
                                   style={{ marginRight: '0.5em' }}
                                 >
                                   Expiry Date:
                                 </small>
-                                <small className="text-muted">
+                                <small className="text-slate-500">
                                   {item?.expiryDate != null
                                     ? item?.expiryDate
                                       ? formatDateRegionWise(item?.expiryDate)
@@ -947,12 +927,13 @@ export default function Documents(props) {
                                 onClick={() =>
                                   handleClickSingleDocument(item?.id)
                                 }
+                                className={`bg-color-button3-${theme} hover:bg-color-button3-hover-${theme} rounded-md transition-all duration-200 ease-in-out`}
                                 style={{ padding: '10px', marginRight: '10px' }}
                               >
                                 <HiDownload />
                               </button>
                               <button
-                                className="btn btn-danger"
+                                className={`bg-[#e63757] hover:bg-[#c92a48] rounded-md transition-all duration-200 ease-in-out`}
                                 onClick={() =>
                                   handleDeleteDocument(
                                     item?.id,
@@ -2083,7 +2064,7 @@ export default function Documents(props) {
               </div>
             </div>
           )}
-          <div className={`w-full ${customerType_from_props === "corporate" ? 'lg:1/2 xl:w-3/5' : 'lg:w-3/4 xl:w-10/12'} `}>
+          <div className={`w-full ${customerType_from_props === "corporate" ? 'lg:1/2 xl:w-3/5' : 'lg:w-full xl:w-full'} `}>
             <div className={`bg-color-stepstatus-${theme} shadow-${theme} border border-color-${theme} rounded-lg overflow-hidden`}>
               {customerType_from_props === "corporate" && (
                 <div className={`bg-color-stepstatus-${theme} shadow-${theme} border-b border-color-${theme} p-4 flex justify-between items-center`}>

@@ -425,45 +425,51 @@ export default function Summary(props) {
   return (
     <div  className=" flex flex-col justify-center items-center">
       <div className={` bg-color-card-${theme} rounded-lg shadow-${theme} border border-color-${theme} h-[10%] sm:h-[10%] w-[90%] sm:w-[95%] mt-4`}>
-        <div className="flex flex-col item-center gap-1 my-2 ">
-          <div className="flex justify-center w-full">
+        <div className="flex flex-col item-start gap-1 my-2 ">
+        <div className="flex flex-col gap-6 md:flex-row items-start w-full">
             {fundData?.fund_setting?.display?.fund_info === true ||
             fundData?.fund_setting?.display?.fund_info == "true" ? (
-                <div className="flex flex-row w-full" >
+              <div className="flex items-center md:w-1/3 w-full">
                   <img
-                    className="h-[55px] w-[20%]"
+                    className="w-16 h-12 rounded-md ml-2 mr-2 "
                     src={
                       fundData?.logoBucketKey
                         ? fundData?.logoBucketKey
                         : fundData?.fund_logo_url
                     }
                   />
-                  <span className={`ml-3 mt-4 font-light text-color-${theme}`}>{fundData?.name}</span>
+                   <span
+                          className={`text-color-${theme} lg:text-lg md:text-sm xs:text-lg text-sm font-normal`}
+                        >
+                          {fundData?.name}
+                        </span>
               </div>
             ) : (
-              <div className="w-full flex ">
-                <div className="flex ">
+             
+                <div className="flex items-center md:w-1/3 w-full">
                   <img
-                    className="h-[55px] w-[20%]"
+                     className="w-18 h-16 mr-2 "
                     src={
                       fundData?.logoBucketKey
                         ? fundData?.logoBucketKey
                         : fundData?.fund_logo_url
                     }
                   />
-                  <span className={`ml-3 mt-4 font-light  text-color-${theme}`}>{fundData?.name}</span>
+                  <span  className={`text-color-${theme} lg:text-lg md:text-sm xs:text-lg text-sm font-normal`}>{fundData?.name}</span>
                 </div>
-              </div>
+        
             )}
 
             {(fundData?.fund_setting?.display?.fund_info === true ||
               fundData?.fund_setting?.display?.fund_info == "true") && (
               <>
-                <div className="flex flex-col w-full">
+                
                   <>
-                    <div>
-                      <small className={`text-base flex font-light text-color-${theme} `}>
-                        <span className="mt-1 mr-3">
+                  <div
+                            className={`text-color-${theme}  lg:text-lg md:text-sm xs:text-xl text-sm font-light mb-4 sm:mb-0 md:w-1/3 w-full`}
+                          >
+                            <small className="flex items-center gap-1">
+                        <span className="">
                           <FeatherIcon
                             className={``}
                             icon="check-circle"
@@ -482,10 +488,10 @@ export default function Summary(props) {
                               .toUpperCase() +
                             fundData?.meta?.config?.kyb?.status.slice(1)}
                       </small>
-                    </div>
-                    <div>
-                      <small className="text-muted font-light text-base flex text-slate-500">
-                        <span className="mt-1 mr-3">
+                  
+                     
+                      <small className="text-slate-500 lg:text-base md:text-xs sm:text-lg text-xs flex gap-1 items-center">
+                              <span className="flex items-center gap-1">
                           <FeatherIcon
                             className={``}
                             icon="check-circle"
@@ -500,30 +506,31 @@ export default function Summary(props) {
                       </small>
                     </div>
                   </>
-                </div>
-                <div className="flex flex-col w-full">
+               
+                
                   <>
-                    <div>
-                      <small className={`text-base font-light	 flex text-color-${theme} `}>
-                      <span className="mt-1 mr-3">
+                  <div
+                            className={`text-color-${theme} lg:text-lg md:text-sm xs:text-xl text-sm font-light md:w-1/3 w-full`}
+                          >
+                            <small className="flex items-center gap-1">
+                      
                         <FeatherIcon
                           className={``}
                           icon="clock"
                           color="green"
                           size="15"
                         />{" "}
-                        </span>
+                       
                         Dealing Cycle:{" "}
                         {fundData?.fund_setting?.dealing?.type?.end
                           ? fundData?.fund_setting?.dealing?.type?.end
                           : fundData?.fund_setting?.dealing?.type?.end}
                       </small>
-                    </div>
+                   
                     {fundData?.fund_setting?.account?.applicant?.asset?.digital
                       ?.status && (
-                      <div>
-                        <small className="text-muted text-base font-light flex text-slate-500">
-                          <span className="mt-1 mr-3">
+                        <small className="text-slate-500 lg:text-base md:text-xs xs:text-lg text-xs flex gap-1 items-center">
+                                <span className="flex items-center gap-1">
                             <FeatherIcon
                               className={``}
                               icon="check-circle"
@@ -543,11 +550,11 @@ export default function Summary(props) {
                             ? "Active"
                             : "Not Active"}
                         </small>
-                      </div>
+                      
                     )}
-                  </>
-                </div>
-              </>
+                  </div>
+                        </>
+                      </>
             )}
           </div>
         </div>
@@ -614,9 +621,9 @@ export default function Summary(props) {
           </div>
         )}
       </div>
-      <div className={` flex justify-between h-[10%] sm:h-[10%] w-[90%] sm:w-[95%] mt-4`}>
+      <div className={`md:flex md:flex-row flex flex-col justify-between h-[10%] sm:h-[10%] w-[90%] sm:w-[95%] mt-4`}>
         <div
-          className={`bg-color-stepstatus-${theme}  rounded-md border-[#1b3050] border-[1px] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] mb-8 flex flex-col  justify-center h-full w-[48%]`}
+          className={`bg-color-stepstatus-${theme}  rounded-md border-[#1b3050] border-[1px] shadow-[0px_6px_20px_rgba(0,0,0,0.9)] mb-8 flex flex-col  justify-center h-full md:w-[48%] w-full`}
         >
           <div
             className={`bg-gradient-profile-card-${theme} rounded-md border-color-${theme} border-b-[1px] shadow-${theme}  py-4 px-8 flex justify-between h-full w-full`}
@@ -660,7 +667,7 @@ export default function Summary(props) {
           
           <div className="w-full md:w-1/3 lg:w-1/3 xl:w-1/3"></div>
         </div>
-        <div className="flex flex-col gap-2 w-[48%]">
+        <div className="flex flex-col gap-2 md:w-[48%] w-full">
           <div  className={`bg-color-stepstatus-${theme} rounded-lg border-[#1b3050] border-[1px] shadow-[2px_6px_20px_rgba(0,0,0,0.9)] py-1 px-4  w-full text-sm`}>
             <div className="flex justify-between  gap-1 my-2">
               <div className="font-normal text-white">Particulars Form</div>
