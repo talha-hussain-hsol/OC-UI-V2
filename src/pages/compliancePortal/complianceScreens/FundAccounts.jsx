@@ -1,13 +1,14 @@
+
+
 import React, { useEffect } from "react";
-import SideBar from "../Reusable Components/SideBar";
 import { useTheme } from "../../../contexts/themeContext";
-import Header from "../Reusable Components/Header";
-import FundAccountCard from "../Reusable Components/CardComponent/FundAccountCard";
+import FundAccountCard from "../../../components/cardComponent/FundAccountCard";
 
 const FundAccounts = () => {
   const { theme } = useTheme();
 
   useEffect(() => {
+    console.log("Current theme:", theme);
 
     document.body.style.backgroundColor =
       theme === "SC"
@@ -23,23 +24,9 @@ const FundAccounts = () => {
     };
   }, [theme]);
   return (
-    <div className={`bg-color-${theme} flex flex-col md:flex-row`}>
-      <SideBar portalType="Compliance" />
-
-      <div className="flex flex-col w-full sm:ml-9 h-full pb-10">
-        <div className="flex-1 pt-6 sm:px-10 px-4">
-          <Header
-            heading="Demo Fund"
-            subheading="Compliance Portal"
-            showLogo={true}
-            className="items-center"
-            showTabBar={true}
-            theme={theme}
-          />
-        </div>
+    
         <FundAccountCard />
-      </div>
-    </div>
+      
   );
 };
 

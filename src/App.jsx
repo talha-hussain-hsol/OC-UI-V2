@@ -20,7 +20,9 @@ import SignIn from "./pages/sign-in";
 import SplashScreen from "./pages/splash";
 import Compliance from "./pages/compliancePortal";
 import Customer from "./pages/customerPortal";
-import ComplianceDashboard from "./pages/compliancePortal/dashboard";
+import ComplianceDashboard from "./pages/compliancePortal/complianceScreens/ComplianceDashboard";
+// import DomainAccounts from "./pages/compliancePortal/complianceScreens/DomainAccounts";
+
 import { ThemeProvider } from "./contexts/themeContext";
 
 import Dashboard from "./pages/customerPortal/screen/dashboard/index";
@@ -31,6 +33,12 @@ import MainDocuments from "./pages/customerPortal/screen/maindocuments/index";
 import Wiard from "./pages/wizard";
 // import Stepper from "./pages/wizard/Stepper"
 // import FundCode from "./pages/wizard/account-wizard/FundCode";
+import KYW from "./pages/compliancePortal/complianceScreens/KYW";
+import DomainAccounts from "./pages/compliancePortal/complianceScreens/DomainAccounts";
+import MainScreenCompliance from "./pages/compliancePortal/complianceScreens/MainScreenCompliance";
+import TransactionMonitoring from "./pages/compliancePortal/complianceScreens/TransactionMonitoring";
+import CustomerList from "./pages/compliancePortal/complianceScreens/CustomerList";
+import SummaryDetails from "./pages/compliancePortal/complianceScreens/SummaryDetails";
 
 function App() {
   return (
@@ -111,7 +119,7 @@ const AppWrapper = () => {
         <Route path={"/sign-in"} element={<SignIn />} />
         <Route path="/callback" element={<Callback />} />
         <Route path="/splash" element={<SplashScreen />} />
-        <Route path="/compliance" element={<Compliance />} />
+        <Route path="/compliance" element={<ThemeProvider><Compliance /></ThemeProvider>} />
         <Route
           path="/customer"
           element={
@@ -129,7 +137,13 @@ const ComplianceRoutesWrapper = () => {
   return (
     <div className={`w-full overflow-hidden bg-custom-gradient text-white `}>
       <Routes>
-        <Route path={"/"} element={<ComplianceDashboard />} />
+      <Route path="/" element={<ThemeProvider> <ComplianceDashboard /> </ThemeProvider> } />
+      <Route path="/kyw" element={<ThemeProvider> <KYW /> </ThemeProvider> } />
+      <Route path="/domain-accounts" element={<ThemeProvider> <DomainAccounts /> </ThemeProvider>} />
+      <Route path="/compliance" element={<ThemeProvider> <MainScreenCompliance /> </ThemeProvider> } />
+      <Route path="/transaction-monitoring" element={<ThemeProvider> <TransactionMonitoring /> </ThemeProvider>} />
+      <Route path="/customers-list" element={<ThemeProvider> <CustomerList /> </ThemeProvider>} />
+      <Route path="/summary-details" element={<ThemeProvider> <SummaryDetails /> </ThemeProvider>} />
       </Routes>
     </div>
   );

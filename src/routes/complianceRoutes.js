@@ -2,7 +2,7 @@ import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import "react-toastify/dist/ReactToastify.css";
-import ComplianceDashboard from "../pages/compliancePortal/dashboard";
+import ComplianceDashboard from "../pages/compliancePortal/complianceScreens/ComplianceDashboard";
 
 const ComplianceRoutesWrapper = () => {
   return (
@@ -10,7 +10,7 @@ const ComplianceRoutesWrapper = () => {
       className={`w-full overflow-hidden bg-custom-gradient text-white pt-[0.5%] pl-[7%] pr-[4%]`}
     >
       <Routes>
-        <Route path={"/"} element={<ComplianceDashboard />} />
+      <Route path="/" element={<ComplianceDashboard />} />
       </Routes>
     </div>
   );
