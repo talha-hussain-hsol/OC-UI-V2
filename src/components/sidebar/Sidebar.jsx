@@ -355,7 +355,7 @@ const SideBar = ({ portalType }) => {
           {portalType === "Compliance" && (
             <>
               <Tooltip content="Domains">
-                <Link to="">
+                <Link to="/domain-accounts">
                   <RxDashboard
                     size={18}
                     className={`text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
@@ -363,7 +363,7 @@ const SideBar = ({ portalType }) => {
                 </Link>
               </Tooltip>
               <Tooltip content="Customers">
-                <Link to="">
+                <Link to="/customers-list">
                   <TbUsers
                     size={18}
                     className={`text-color-sidebar-icon-${theme} hover:text-color-sidebar-icon-hover-${theme} transition-colors duration-200`}
