@@ -752,14 +752,14 @@ export default function InvestorSubscriptionList({ ...props }) {
                                   </div>
                                 </div>
                               ) : (
-                                <div className="">
-                                  <div className="">
-                                    <div className="">
-                                      <div className="">
-                                        <div className="">
-                                          <div className={` rounded-lg px-4 w-full flex justify-between`}>
-                                          <small className={`xl:text-[13px] text-[11px] font-light text-color-sidebar-icon-${theme} flex items-center gap-2`}>
-                                              <span className="text-success">
+                                <div className={`bg-color-card-${theme} md:w-[50%] w-full rounded-lg border-color-${theme} border-[1px] shadow-${theme}  px-4 py-4 lg:mr-0 mr-6`}>
+                                <div className="flex flex-col items-center gap-4">
+                                  <div className="flex flex-col gap-6 md:flex-row justify-center mb-5 w-full">
+                                    <div className="w-full md:mr-4 md:flex md:justify-between ">
+                                    <div className="col-sm-6">
+                                    <div className={` rounded-lg  px-4 w-full flex justify-between `}>
+                                    <small className={`xl:text-[13px] text-[11px] font-light text-color-sidebar-icon-${theme} flex items-center gap-2`}>
+                                    <span className="text-success">
                                                 <FeatherIcon
                                                   className={`text-success`}
                                                   icon="clock"
@@ -785,7 +785,7 @@ export default function InvestorSubscriptionList({ ...props }) {
                                             </small>
                                           </div>
 
-                                          <div className={` rounded-lg  py-2 px-4 w-full flex justify-between`}>
+                                          <div className={` rounded-lg  px-4 w-full flex justify-between`}>
                                           <small className={`xl:text-[13px] text-[11px] font-light text-color-sidebar-icon-${theme} flex items-center gap-2`}>
                                               <span className="text-success">
                                                 <FeatherIcon
@@ -805,7 +805,7 @@ export default function InvestorSubscriptionList({ ...props }) {
                                               </p>
                                             </small>
                                           </div>
-                                          <div className={` rounded-lg  py-2 px-4 w-full flex justify-between`}>
+                                          <div className={` rounded-lg  px-4 w-full flex justify-between`}>
                                           <small className={`xl:text-[13px] text-[11px] font-light text-color-sidebar-icon-${theme} flex items-center gap-2`}>
                                               <span className="text-success">
                                                 <FeatherIcon
@@ -826,7 +826,7 @@ export default function InvestorSubscriptionList({ ...props }) {
                                                 </p>
                                             </small>
                                           </div>
-                                          <div className={` rounded-lg  py-2 px-4 w-full flex justify-between`}>
+                                          <div className={` rounded-lg  px-4 w-full flex justify-between`}>
                                           <small className={`xl:text-[13px] text-[11px] font-light text-color-sidebar-icon-${theme} flex items-center gap-2`}>
                                               <span className="text-success">
                                                 <FeatherIcon

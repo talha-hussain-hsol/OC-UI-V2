@@ -6,8 +6,9 @@ import {
   Spinner,
   Button,
   OverlayTrigger,
-  Tooltip,
+  
 } from "react-bootstrap";
+import Tooltip from "../../../components/tooltip/Tooltip";
 import React, { useState, useEffect, useLayoutEffect } from "react";
 import getMissingDataOfIdentity from "../../../helpers/getMissingDataOfIdentity";
 import axios from "axios";
@@ -937,16 +938,11 @@ export default function Summary(props) {
                     className={`w-full flex justify-between items-center bg-color-card-${theme} py-[17px] px-[24px] shadow-${theme} border-b border-color-${theme} rounded-t-lg`}
                     
                   >
-                    <h4 className="text-[15px] font-light">
+                    <h4 className={`text-[15px] text-color-text-${theme} font-light`}>
                       Corporate Underlying Parties
                     </h4>
 
-                    <OverlayTrigger
-                      placement="top"
-                      overlay={
-                        <Tooltip>Invite Underlying Corporate Parties</Tooltip>
-                      }
-                    >
+                    <Tooltip content="Invite Underlying Corporate Parties" position="upper" className="text-nowrap left-[-30px]">
                       <span>
                         <FeatherIcon
                           icon="user-plus"
@@ -954,13 +950,14 @@ export default function Summary(props) {
                           style={{ cursor: "pointer" }}
                           onClick={() =>
                             window.open(
-                              `${process.env.AUTH_API_URL}/entity-users-management/${entityId}?invite_user=true`,
+                              `${import.meta.env.VITE_AUTH_API_URL}/entity-users-management/${entityId}?invite_user=true`,
                               "_blank"
                             )
                           }
+                          className={`text-color-text-${theme}`}
                         />
                       </span>
-                    </OverlayTrigger>
+                      </Tooltip>
                   </div>
 
                   <div className="card-body">

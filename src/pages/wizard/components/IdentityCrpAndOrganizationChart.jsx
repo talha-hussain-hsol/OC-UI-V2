@@ -1,7 +1,7 @@
 import { Button, Col, Container, Form, Row, Nav, Spinner, Alert, Table, Dropdown, Card } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Sezlect from "../../../components/vendor/Select";
+import Select from "../../../components/vendor/Select";
 import { getParticularFieldsApi, postIdentityAPI, getParticularsDetailByIdentityIdAPI, getCrpRoleMetaAPI, getEntityTypeAPI, getCRPsByIdentityIdAPI } from "../../../api/network/CustomerApi";
 import axios from "axios";
 import FeatherIcon from "feather-icons-react";
@@ -17,13 +17,14 @@ import formatDateRegionWise from "../../../helpers/formatDateRegionWise";
 import Flatpickr from "../../../components/vendor/Flatpickr";
 import { format } from "date-fns";
 import { FaExclamationCircle } from "react-icons/fa";
-
+import { useTheme } from "../../../contexts/themeContext";
 
 let crpIdValueSelected = "";
 let treeDataGlobal = [];
 let oldCrpId = "";
 let showParticularForm = false;
 export default function particular(props) {
+  const {theme} = useTheme();
   const [updateLabel, setUpdateLabel] = useState(false);
   const params = useParams();
   const [crpIdentityId, setCrpIdentityId] = useState(null);
@@ -76,9 +77,6 @@ export default function particular(props) {
     show: false,
     hideAuto: false,
   });
-  if (theme === "dark theme") {
-    setDarkMode(true);
-  }
   const handleCloseAlert = () => {
     setAlertProps({ ...alertProps, show: false });
   };
@@ -839,29 +837,29 @@ export default function particular(props) {
     setIdentityDataFields({ ...identityDataFields, [name]: format(new Date(value[0]), "yyyy-MM-dd") });
   };
   return (
-    <div className="main-content">
-      <Container fluid>
-        <Row className="justify-content-center">
+    <div className={`bg-gradient-stepper-card-${theme} w-full`}>
+       <div className={`bg-gradient-stepper-card-${theme} w-full`}>
+        <div className="justify-center flex w-full gap-4">
           {showParticularFormData}
           {showParticularForm}
          
-          <Col xs={12} lg={5} xl={5}>
+          <div className={`w-full lg:w-5/12 xl:w-5/12 bg-color-card-${theme} shadow-${theme} rounded-lg border border-color-${theme} ml-6`}>
             {/* {isLoaderCrp && (
                             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "20rem" }}>
                                 <Spinner animation="grow" />
                             </div>
                         )} */}
-            <Card>
-              <Card.Header>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <h3 className="mb-0">Ultimate Beneficial Owner (UBO)</h3>
-                  <div className={"zoomBox"}>
+            <div>
+              <div className={`bg-color-card-${theme} shadow-${theme} border border-color-${theme} rounded-t-lg py-[12px] px-[24px] mb-4`}>
+                <div className={`flex justify-between items-center`}>
+                  <h3 className={`text-color-text-${theme}`}>Ultimate Beneficial Owner (UBO)</h3>
+                  <div className={`flex justify-between gap-4 bg-[#2c7ce3] p-2 rounded-full items-center`}>
                     <FeatherIcon icon="zoom-out" size="20px" onClick={zoomIOutCallback} />
                     <FeatherIcon icon="zoom-in" size="20px" onClick={zoomInCallback} />
                   </div>
                 </div>
-              </Card.Header>
-              <Card.Body style={{ height: "70vh", overflow: "auto" }}>
+              </div>
+              <div style={{ height: "70vh", overflow: "auto" }}>
                 <div style={{ zoom: `${graphZoom}%`, height: "100vh" }}>
                   {treeData.length > 0 && (
                     <SortableTree
@@ -873,14 +871,15 @@ export default function particular(props) {
                     />
                   )}
                 </div>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col xs={12} lg={7} xl={7}>
+              </div>
+            </div>
+          </div>
+          <div className={`w-full lg:w-7/12 xl:w-7/12 bg-color-card-${theme} shadow-${theme} rounded-lg border border-color-${theme} mr-6`}>
+          
             {showParticularFormData ? (
-              <Card>
-                <Card.Header>
-                  <div className="d-flex" style={{ justifyContent: "space-between", alignItems: "center", textTransform: "capitalize" }}>
+              <div>
+                <div>
+                  <div className={`flex bg-color-card-${theme} shadow-${theme} border-b border-color-${theme} rounded-t-lg px-[24px] py-[10px] mb-10`} style={{ justifyContent: "space-between", alignItems: "center", textTransform: "capitalize" }}>
                     <h3 className="mb-0" style={{ textTransform: "capitalize" }}>
                       {customerType}
                     </h3>
@@ -888,7 +887,7 @@ export default function particular(props) {
                       {customerType && (
                         <>
                           {customerType == "individual" ? (
-                            <img src="/img/investor/default-avatar.png" alt="..." class="" style={{ height: "35px", marginRight: "8px" }} />
+                            <img src="/img/investor/default-avatar.png" alt="..." className="" style={{ height: "35px", marginRight: "8px" }} />
                           ) : (
                             // <EntityIcon
                             //   className={"nodeIcon"}
@@ -898,13 +897,13 @@ export default function particular(props) {
                             //     fill: theme == "dark" || theme == undefined ? "white" : "black",
                             //   }}
                             // />
-                            <img src={UserIcon} alt="EntityIcon" className="w-16 rounded-full"/>
+                            <img src={UserIcon} alt="EntityIcon" className="w-10"/>
                           )}
                         </>
                       )}
                     </div>
                   </div>
-                </Card.Header>
+                </div>
                 <Card.Body style={{ height: "70vh", overflow: "auto" }}>
                   {customerType && showParticularFormData && (
                     <>
@@ -927,20 +926,20 @@ export default function particular(props) {
                           <Spinner animation="grow" />
                         </div>
                       ) : (
-                        <Form className="identity-form mt-5">
-                          <div className="row">
-                            <div className="col-12 col-md-12">
-                              <div className="form-group">
-                                <label className="form-label">Parent Identity Label</label>
-                                <input type="text" className={"form-control"} value={parentLabel} readOnly disabled placeholder="Parent Label Of Identity" />
+                        <form className={`ml-8 mr-8`}>
+                          <div className="flex flex-col gap-4">
+                            <div className="">
+                              <div className="flex flex-col gap-2">
+                                <label className={`text-color-text-${theme} font-light text-[15px]`}>Parent Identity Label</label>
+                                <input type="text" className={`bg-color-textfield-dropdown-${theme} shadow-${theme} text-color-text-${theme} py-2 px-4 rounded-lg`} value={parentLabel} readOnly disabled placeholder="Parent Label Of Identity" />
                               </div>
                             </div>
-                            <div className="col-12 col-md-12">
-                              <div className="form-group">
-                                <label className="form-label">Identity Label</label>
+                            <div className="">
+                              <div className="flex flex-col gap-2">
+                                <label className={`text-color-text-${theme} font-light text-[15px]`}>Identity Label</label>
                                 <input
                                   type="text"
-                                  className={label ? "form-control" : "form-control field_warning"}
+                                  className={label ? `bg-color-textfield-dropdown-${theme} shadow-${theme} py-2 px-4 rounded-lg` : `bg-color-textfield-dropdown-${theme} shadow-${theme} py-2 px-4 rounded-lg border border-orange-500`}
                                   name={"label"}
                                   value={label}
                                   placeholder="Label Of Identity"
@@ -952,12 +951,12 @@ export default function particular(props) {
                               </div>
                             </div>
                             {customerType == "corporate" && (
-                              <div className="col-12 col-md-12">
-                                <div className="form-group">
-                                  <label className="form-label"> Entity Type {!entityType && <span className="text-danger">*</span>}</label>
+                              <div className="">
+                                <div className="flex flex-col gap-2">
+                                  <label className={`text-color-text-${theme} font-light text-[15px]`}> Entity Type {!entityType && <span className="text-red-500">*</span>}</label>
                                   <select
                                     type="text"
-                                    className={entityType ? "form-control" : "form-control field_warning"}
+                                    className={entityType ? `bg-color-textfield-dropdown-${theme} shadow-${theme} py-2 px-4 rounded-lg text-color-text-${theme} appearance-none` : `text-color-text-${theme} bg-color-textfield-dropdown-${theme} shadow-${theme} py-2 px-4 rounded-lg border border-orange-500 appearance-none`}
                                     value={entityType}
                                     onChange={(e) => {
                                       handleChangeEntityKey(e);
@@ -968,7 +967,7 @@ export default function particular(props) {
                                       Object.keys(entityTypeList).map((item, index) => {
                                         if (item != "INDIVIDUAL") {
                                           return (
-                                            <option value={entityTypeList[item]?.value} selected={entityTypeList[item]?.value == entityType}>
+                                            <option key={index} value={entityTypeList[item]?.value} selected={entityTypeList[item]?.value == entityType}>
                                               {entityTypeList[item]?.name}
                                             </option>
                                           );
@@ -979,6 +978,7 @@ export default function particular(props) {
                                 </div>
                               </div>
                             )}
+                            <div className="grid grid-cols-2 gap-4">
                             {particularFields &&
                               particularFields &&
                               particularFields.map((item, index) => {
@@ -1018,22 +1018,20 @@ export default function particular(props) {
                                       let crpCustomerType = customerTypes + "." + formType;
                                       let paramFieldCrp = customerType + "." + "crp";
                                       if (customerTypes == customerType && requiredField) {
+
                                         if (fieldType == "text") {
                                           if (fieldName == "phone") {
                                             return (
-                                              <div className="col-6 col-md-6">
-                                                <div className="form-group">
-                                                  <label className="form-label">
+                                              <div className="" key={index}>
+                                                <div className="flex flex-col gap-2">
+                                                  <label className={`text-color-text-${theme} font-light text-[15px]`}>
                                                     {label}
                                                     {requiredField && <span className="text-danger">*</span>}
                                                   </label>
                                                   <div
                                                     className={
                                                       requiredField && !identityDataFields?.[formKeyVal] && (getUpdatedData(formKeyVal) == "" || getUpdatedData(formKeyVal) == null)
-                                                        ? "form-control field_warning"
-                                                        : "form-control" && darkMode
-                                                        ? "darkMode"
-                                                        : ""
+                                                        ? `bg-color-textfield-dropdown-${theme} shadow-${theme} py-2 px-4 rounded-lg text-color-text-${theme} appearance-none` : `text-color-text-${theme} bg-color-textfield-dropdown-${theme} shadow-${theme} py-2 px-4 rounded-lg border border-orange-500 appearance-none`
                                                     }
                                                   >
                                                     <PhoneInput
@@ -1054,15 +1052,15 @@ export default function particular(props) {
                                             );
                                           } else {
                                             return (
-                                              <div className="col-6 col-md-6">
-                                                <div className="form-group">
-                                                  <label className="form-label">
+                                              <div className="" key={index}>
+                                                <div className="flex flex-col gap-2">
+                                                  <label className={`text-color-text-${theme} font-light text-[15px]`}>
                                                     {label}
-                                                    {requiredField && <span className="text-danger">*</span>}
+                                                    {requiredField && <span className="text-red-500">*</span>}
                                                   </label>
                                                   <input
                                                     type={fieldType}
-                                                    className={requiredField && !identityDataFields?.[formKeyVal] && (getUpdatedData(formKeyVal) == "" || getUpdatedData(formKeyVal) == null) ? "form-control field_warning" : "form-control"}
+                                                    className={requiredField && !identityDataFields?.[formKeyVal] && (getUpdatedData(formKeyVal) == "" || getUpdatedData(formKeyVal) == null) ? `bg-color-textfield-dropdown-${theme} shadow-${theme} py-2 px-4 rounded-lg text-color-text-${theme} appearance-none border border-orange-500` : `text-color-text-${theme} bg-color-textfield-dropdown-${theme} shadow-${theme} py-2 px-4 rounded-lg  appearance-none`}
                                                     defaultValue={editableField === false ? valueField : getUpdatedData(formKeyVal)}
                                                     readOnly={!editableField}
                                                     name={formKeyVal}
@@ -1079,9 +1077,9 @@ export default function particular(props) {
                                         }
                                         if (fieldType == "date") {
                                           return (
-                                            <div className="col-6 col-md-6">
-                                              <div className="form-group">
-                                                <label className="form-label">
+                                            <div className="" key={index}>
+                                              <div className="flex flex-col gap-2">
+                                                <label className={`text-color-text-${theme} font-light text-[15px]`}>
                                                   {label}
                                                   {requiredField && <span className="text-danger">*</span>}
                                                 </label>
@@ -1119,14 +1117,14 @@ export default function particular(props) {
                                         if (fieldType == "dd") {
                                           if (sourceType == "table" || sourceType == "custom") {
                                             return (
-                                              <div className="col-6 col-md-6">
-                                                <div className="form-group">
-                                                  <label className="form-label">
+                                              <div className="" key={index}>
+                                                <div className="flex flex-col gap-2">
+                                                  <label className={`text-color-text-${theme} font-light text-[15px]`}>
                                                     {label}
                                                     {requiredField && <span className="text-danger">*</span>}
                                                   </label>
                                                   <select
-                                                    className={requiredField && !identityDataFields?.[formKeyVal] && (getUpdatedData(formKeyVal) == "" || getUpdatedData(formKeyVal) == null) ? "form-control field_warning" : "form-control"}
+                                                    className={requiredField && !identityDataFields?.[formKeyVal] && (getUpdatedData(formKeyVal) == "" || getUpdatedData(formKeyVal) == null) ? `bg-color-textfield-dropdown-${theme} shadow-${theme} py-2 px-4 rounded-lg text-color-text-${theme} appearance-none border border-orange-500` : `text-color-text-${theme} bg-color-textfield-dropdown-${theme} shadow-${theme} py-2 px-4 rounded-lg  appearance-none`}
                                                     defaultValue={editableField === false ? valueField : getUpdatedData(formKeyVal)}
                                                     readOnly={!editableField}
                                                     name={formKeyVal}
@@ -1137,7 +1135,7 @@ export default function particular(props) {
                                                     <option value="">Select {label}</option>
                                                     {fieldData &&
                                                       fieldData.map((dat, index) => (
-                                                        <option value={dat[returnKey]} selected={editableField == false && valueField == dat[returnKey] ? true : getUpdatedData(formKeyVal) == dat[returnKey] ? true : false}>
+                                                        <option key={index} value={dat[returnKey]} selected={editableField == false && valueField == dat[returnKey] ? true : getUpdatedData(formKeyVal) == dat[returnKey] ? true : false}>
                                                           {dat?.name}
                                                         </option>
                                                       ))}
@@ -1148,14 +1146,14 @@ export default function particular(props) {
                                           }
                                           if (sourceType == "enum") {
                                             return (
-                                              <div className="col-6 col-md-6">
-                                                <div className="form-group">
-                                                  <label className="form-label">
+                                              <div className="" key={index}>
+                                                <div className="flex flex-col gap-2">
+                                                  <label className={`text-color-text-${theme} font-light text-[15px]`}>
                                                     {label}
-                                                    {requiredField && <span className="text-danger">*</span>}
+                                                    {requiredField && <span className="text-red-500">*</span>}
                                                   </label>
                                                   <select
-                                                    className={requiredField && !identityDataFields?.[formKeyVal] && (getUpdatedData(formKeyVal) == "" || getUpdatedData(formKeyVal) == null) ? "form-control field_warning" : "form-control"}
+                                                    className={requiredField && !identityDataFields?.[formKeyVal] && (getUpdatedData(formKeyVal) == "" || getUpdatedData(formKeyVal) == null) ? `bg-color-textfield-dropdown-${theme} shadow-${theme} py-2 px-4 rounded-lg text-color-text-${theme} appearance-none border border-orange-500` : `text-color-text-${theme} bg-color-textfield-dropdown-${theme} shadow-${theme} py-2 px-4 rounded-lg  appearance-none`}
                                                     defaultValue={editableField === false ? valueField : getUpdatedData(formKeyVal)}
                                                     disabled={!editableField}
                                                     name={formKeyVal}
@@ -1166,7 +1164,7 @@ export default function particular(props) {
                                                     <option value="">Select {label}</option>
                                                     {fieldData &&
                                                       Object.keys(fieldData).map((dat, index) => (
-                                                        <option
+                                                        <option key={index}
                                                           value={fieldData[dat][returnKey]}
                                                           selected={editableField == false && valueField == fieldData[dat][returnKey] ? true : getUpdatedData(formKeyVal) == fieldData[dat][returnKey] ? true : false}
                                                         >
@@ -1181,10 +1179,10 @@ export default function particular(props) {
                                         }
                                         if (fieldType == "check") {
                                           return (
-                                            <div className="col-6 col-md-6" style={{ display: "flex", alignItems: "center", marginBottom: "25px" }}>
+                                            <div key={index} className="" style={{ display: "flex", alignItems: "center", marginBottom: "25px" }}>
                                               <Form.Check
                                                 // className={requiredField && !identityDataFields?.[formKeyVal] && (getUpdatedData(formKeyVal) == '' || getUpdatedData(formKeyVal) == null) ? "checkbox-field field_warning" : "checkbox-field"}
-                                                className={"checkbox-field"}
+                                                className={``}
                                                 type={"checkbox"}
                                                 id={formKeyVal}
                                                 name={formKeyVal}
@@ -1203,14 +1201,15 @@ export default function particular(props) {
                                   }
                                 }
                               })}
+                              </div>
                           </div>
                           {selectedRolesForSelectData.length > 0 && crp_id ? (
                             <div>
                               
                               <h2>Roles</h2>
-                              <div className="col-12 col-md-12">
-                                <div className="form-group">
-                                  <label className="form-label">Select Roles {<span className="text-danger">*</span>}</label>
+                              <div className="">
+                                <div className="flex flex-col gap-2">
+                                  <label className={`text-color-text-${theme} font-light text-[15px]`}>Select Roles {<span className="text-red-500">*</span>}</label>
                                   <Select
                                     onChange={handleSelectRolesChange}
                                     isSearchable={true}
@@ -1218,7 +1217,7 @@ export default function particular(props) {
                                     defaultValue={selectedRolesForSelectData}
                                     options={rolesMeta}
                                     placeholder={"Select Roles"}
-                                    className={selectedRolesForSelectData.length > 0 && crp_id ? "form-control" : "form-control field_warning"}
+                                    className={selectedRolesForSelectData.length > 0 && crp_id ? `bg-color-textfield-dropdown-${theme} shadow-${theme} py-2 px-4 rounded-lg text-color-text-${theme} appearance-none ` : `text-color-text-${theme} border border-orange-500 bg-color-textfield-dropdown-${theme} shadow-${theme} py-2 px-4 rounded-lg  appearance-none`}
                                   />
                                   {rolesError && <span className="error-fields">Select Roles To Continue</span>}
                                 </div>
@@ -1226,10 +1225,10 @@ export default function particular(props) {
                             </div>
                           ) : (
                             <div>
-                              <h2>Roles</h2>
-                              <div className="col-12 col-md-12">
-                                <div className="form-group">
-                                  <label className="form-label">Select Roles{<span className="text-danger">*</span>}</label>
+                              <h2 className="text-xl mt-4 mb-4">Roles</h2>
+                              <div className="">
+                                <div className="flex flex-col gap-2">
+                                  <label className={`text-color-text-${theme} font-light text-[15px]`}>Select Roles{<span className="text-red-500">*</span>}</label>
                                   <Select
                                     onChange={handleSelectRolesChange}
                                     isSearchable={true}
@@ -1237,7 +1236,7 @@ export default function particular(props) {
                                     defaultValue={selectedRolesForSelectData}
                                     options={rolesMeta}
                                     placeholder={"Select Roles"}
-                                    className={selectedRolesForSelectData.length > 0 && crp_id ? "form-control" : "form-control field_warning"}
+                                    className={selectedRolesForSelectData.length > 0 && crp_id ? `bg-color-textfield-dropdown-${theme} shadow-${theme} py-2 px-4 rounded-lg text-color-text-${theme} appearance-none ` : `text-color-text-${theme} border border-orange-500 bg-color-textfield-dropdown-${theme} shadow-${theme} py-2 px-4 rounded-lg  appearance-none`}
                                   />
                                   {rolesError && <span className="error-fields">Select Roles To Continue</span>}
                                 </div>
@@ -1245,15 +1244,15 @@ export default function particular(props) {
                             </div>
                           )}
 
-                          <div className="d-flex" style={{ justifyContent: "flex-end" }}>
-                            <Button
-                              className="btn btn-white"
+                          <div className="flex" style={{ justifyContent: "flex-end" }}>
+                            <button
+                              className={`bg-color-cancelBtn-${theme}  hover:bg-color-cancelBtn-hover-${theme} mt-6 border border-white hover:border-color-iconButton-hover-${theme} transition-all duration-300 ease-in-out px-6 py-3 rounded-lg text-white outline-none`}
                               onClick={() => {
                                 handleShowMoreFields();
                               }}
                             >
                               {isShowMoreFields ? "Hide Extra Fields" : "Show More Fields"}
-                            </Button>
+                            </button>
                           </div>
                           {isShowMoreFields && (
                             <div className="row">
@@ -1433,37 +1432,37 @@ export default function particular(props) {
                                 })}
                             </div>
                           )}
-                          <div className="d-flex justify-content-center">
-                            <Button
-                              className="btn btn-success"
+                          <div className="flex justify-center">
+                            <button
+                              className={` px-8 py-3 rounded-lg text-white outline-none transition-all duration-300 ease-in-out bg-color-stepper-button-${theme} hover:bg-color-stepper-button-hover-${theme} `}
                               onClick={() => {
                                 handleSubmit();
                               }}
                             >
                               Save changes
-                            </Button>
+                            </button>
                           </div>
-                        </Form>
+                        </form>
                       )}
                       <br />
                       <br />
                     </>
                   )}
                 </Card.Body>
-              </Card>
+              </div>
             ) : (
-              <Card>
-                <Card.Body style={{ height: "70vh", overflow: "auto" }}>
-                  <Card.Text>
+              <div>
+                <div className="px-2 py-2">
+                  <div className={`flex justify-between gap-2`}>
                     <FaExclamationCircle style={{ color: "orange" }} />
 
-                    <span style={{textTransform:"capitalize"}}>To Update Existing Corporate Underlying Parties, Please Click on the "view" icon. If none exist, you can add new ones by clicking on the "plus" icon. </span>
-                  </Card.Text>
-                </Card.Body>
-              </Card>
+                    <span className={`text-color-text-${theme} `}>To Update Existing Corporate Underlying Parties, Please Click on the "view" icon. If none exist, you can add new ones by clicking on the "plus" icon. </span>
+                  </div>
+                </div>
+              </div>
             )}
-          </Col>
-        </Row>
+          </div>
+        </div>
         {deleteConfirmationModal && (
           <DeleteAccountModal
             clearFieldsAndForms={clearInputFieldsAndForms}
@@ -1479,7 +1478,7 @@ export default function particular(props) {
             {alertProps.message}
           </CustomAlert>
         )}
-      </Container>
+      </div>
     </div>
   );
 }
