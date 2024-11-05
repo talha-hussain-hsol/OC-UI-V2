@@ -29,6 +29,7 @@ import Accounts from "./pages/customerPortal/screen/accounts/index";
 import Identities from "./pages/customerPortal/screen/identities/index";
 import MainDocuments from "./pages/customerPortal/screen/maindocuments/index";
 import Wiard from "./pages/wizard";
+import Chatbot from "./pages/chatbot/Chatbot";
 // import Stepper from "./pages/wizard/Stepper"
 // import FundCode from "./pages/wizard/account-wizard/FundCode";
 
@@ -204,6 +205,7 @@ const CustomerRoutesWrapper = () => {
           }
         />
       </Routes>
+      <Chatbot />
     </div>
   );
 };
