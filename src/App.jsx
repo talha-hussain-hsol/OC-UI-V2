@@ -4,6 +4,7 @@ import {
   Outlet,
   Route,
   Routes,
+  useParams
 } from "react-router-dom";
 import useEntityStore from "./store/useEntityStore";
 // import {} from "./utils/helperFunctions";
@@ -40,8 +41,18 @@ import MainScreenCompliance from "./pages/compliancePortal/complianceScreens/Mai
 import TransactionMonitoring from "./pages/compliancePortal/complianceScreens/TransactionMonitoring";
 import CustomerList from "./pages/compliancePortal/complianceScreens/CustomerList";
 import SummaryDetails from "./pages/compliancePortal/complianceScreens/SummaryDetails";
+import WalletList from "./pages/administration-portal/kyw/wallet";
+import PeriodicReviewListKyw from "./pages/administration-portal/kyw/periodic-review";
+import DueDiligenceListKyw from "./pages/administration-portal/kyw/due-diligence";
+import QuickScanListKyw from "./pages/administration-portal/kyw/quick-scan";
+import WalletScreening from "./pages/administration-portal/kyw/wallet/components/screening";
+
+import { useDispatch } from "react-redux";
+import utilsData from "./helpers/utils";
+
 
 function App() {
+
   return (
     
       <div className="flex ">
@@ -134,7 +145,105 @@ const AppWrapper = () => {
   );
 };
 
-const ComplianceRoutesWrapper = () => {
+const ComplianceRoutesWrapper = (props) => {
+  const params = useParams();
+
+  const [isFundConfigLoaded, setIsFundConfigLoaded] = useState(false);
+  const [isPermissionLoaded, setIsPermissionLoaded] = useState(false);
+  const [fundDetails, setFundDetails] = useState(null);
+  const cancelTokenSource = axios.CancelToken.source();
+  const [alertProps, setAlertProps] = useState({
+    variant: "",
+    message: "",
+    show: false,
+    hideAuto: false,
+  });
+
+  const handleAlert = ({ variant, message, hideAuto }) => {
+    setAlertProps({ variant, message, show: true, hideAuto });
+  };
+
+  const handleCloseAlert = () => {
+    setAlertProps({ ...alertProps, show: false });
+  };
+  const dispatch = useDispatch();
+  let fund_id = parseInt(location.pathname.split("/")[1]);
+  useEffect(() => {
+    if (!isNaN(fund_id)) {
+      getFundConfiguration(fund_id);
+      getPermission(fund_id);
+    }
+  }, [fund_id]);
+
+  // Monitor both API states to control the loader
+
+  const getFundConfiguration = async (fund_id) => {
+    setIsFundConfigLoaded(true); // Mark FundConfig API as loaded
+
+    const response = await getFundDetailAPI(fund_id, cancelTokenSource.token);
+    if (response.success) {
+      setIsFundConfigLoaded(false); // Mark FundConfig API as loaded
+
+      dispatch(addFundConfig(response?.data));
+      setFundDetails(response?.data);
+
+      localStorage.setItem("fundConfigurationData", JSON.stringify(response?.data));
+      localStorage.setItem("fundRegion", response?.data?.fund_setting?.region);
+      localStorage.setItem("name_id", response?.data?.named_id);
+    } else {
+      setIsFundConfigLoaded(false); // Mark FundConfig API as loaded
+    }
+  };
+
+  const getPermission = async (fund_id) => {
+    setIsPermissionLoaded(true); // Mark Permission API as loaded
+
+    let dataToSend = {
+      sessionTerminated: false,
+    };
+    const response = await getPermissionAPI(fund_id, dataToSend, cancelTokenSource.token);
+    if (response.success) {
+      setIsPermissionLoaded(false); // Mark Permission API as loaded
+
+      const apiPermissions = response?.data?.permissions;
+      const localStoragePermissions = JSON.parse(localStorage.getItem("entity_permissions")) || [];
+      const localStoragePermissionNames = localStoragePermissions.map((item) => item);
+      const resultantArray = [...apiPermissions, ...localStoragePermissionNames];
+
+      const uniquePermissions = Array.from(new Set(resultantArray));
+      dispatch(addPermissions(uniquePermissions));
+      localStorage.setItem("permissionData", JSON.stringify(response?.data?.permissions));
+    } else {
+      setIsPermissionLoaded(false); // Mark Permission API as loaded
+    }
+  };
+
+  useEffect(() => {
+    if (JSON.parse(localStorage.getItem("entity_permissions")).length > 0) {
+      dispatch(addEntityPermissions(JSON.parse(localStorage.getItem("entity_permissions"))));
+    }
+    console.log("localStorage.getIteme", JSON.parse(localStorage.getItem("entity_permissions")));
+  }, [localStorage.getItem("entity_permissions")]);
+  useEffect(() => {
+    console.log("isPermissionLoadedisPermissionLoaded", isPermissionLoaded);
+    console.log("isPermissionLoadedisPermissionLoaded isFundConfigLoaded", isFundConfigLoaded);
+  }, [isFundConfigLoaded, isPermissionLoaded]);
+
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    console.log(parts, "parts");
+    console.log(parts.length, "parts.length");
+    if (parts.length === 2) return parts.pop().split(";").shift();
+  }
+  localStorage.setItem("entity_id", getCookie("entity_id"));
+  localStorage.setItem("entity_permissions", getCookie("entity_permissions"));
+  localStorage.setItem("x-auth-token", getCookie("token"));
+  localStorage.setItem("base_url", props.baseURL);
+  localStorage.setItem("login_user_id", getCookie("login_user_id"));
+  utilsData.setPortalType(props.baseURL);
+  axios.defaults.headers = { "x-auth-token": getCookie("token") };
+
   return (
     <div className={`w-full overflow-hidden bg-custom-gradient text-white `}>
       <Routes>
@@ -147,6 +256,13 @@ const ComplianceRoutesWrapper = () => {
       <Route path="/transaction-monitoring" element={<ThemeProvider> <TransactionMonitoring /> </ThemeProvider>} />
       <Route path="/customers-list" element={<ThemeProvider> <CustomerList /> </ThemeProvider>} />
       <Route path="/summary-details" element={<ThemeProvider> <SummaryDetails /> </ThemeProvider>} />
+
+         {/* KYW */}
+         <Route path="/:fund_id/kyw/wallets/list" element={<WalletList fundDetail={fundDetails} />} />
+          <Route path="/:fund_id/kyw/periodic-review/list" element={<PeriodicReviewListKyw />} />
+          <Route path="/:fund_id/kyw/due-diligence/list" element={<DueDiligenceListKyw />} />
+          <Route path="/:fund_id/kyw/quick-scan/list" element={<QuickScanListKyw />} />
+          <Route path="/:fund_id/kyw/wallets/screening/:wallet_id" element={<WalletScreening handleAlert={handleAlert} />} />
       </Routes>
     </div>
   );

@@ -53,7 +53,7 @@ export function getErrorResponse(error) {
 
 export const getFilterFundsAPI = async (name, region, limit, offset, cancelToken) => {
   //http://localhost:8384/7175c8f1-f37b-41b0-8abf-b524bf7e81fc/AAPI/domain/summary?region=singapore&name=dem&offset=0&limit=100
-  const url = `/${entityId}/${baseURL}/domain/summary?offset=${offset}&limit=${limit}${region != null ? `&region=${region}` : ""}${name != "" ? `&name=${name}` : ""}`;
+  const url = `/7175c8f1-f37b-41b0-8abf-b524bf7e81fc/AAPI/domain/summary?offset=${offset}&limit=${limit}${region != null ? `&region=${region}` : ""}${name != "" ? `&name=${name}` : ""}`;
   const request = { type: "GET", urlString: url };
 
   try {
@@ -76,7 +76,7 @@ export const getAccountListAPI = async (fundId, limit, offset, cancelToken) => {
 };
 export const getAccountListSearch = async (name, fundId, limit, offset, cancelToken) => {
   //http://localhost:8384/7175c8f1-f37b-41b0-8abf-b524bf7e81fc/AAPI/Account/list?fund_id=3&offset=1935&limit=5&identityName=Talha
-  const url = `/${entityId}/${baseURL}/Account/list?fund_id=${fundId}&offset=${offset}&limit=${limit}&identityName=${name}`;
+  const url = `/${entityId}/AAPI/Account/list?fund_id=1&offset=${offset}&limit=${limit}&identityName=${name}`;
   const request = { type: "GET", urlString: url };
 
   try {
@@ -867,7 +867,7 @@ export const getDownloadCustomerProfileAPI = async (fund_id, identity_id, cancel
 export const getDownloadAuditReport = async (fund_id, account_id, cancelToken) => {
   ///:entityId/AAPI/fund/:fundId/account/:accountId/application-history
 
-  const url = `/${entityId}/${baseURL}/fund/${fund_id}/account/${account_id}/application-history`;
+  const url = `/${entityId}/AAPI/fund/1/account/${account_id}/application-history`;
   console.log(url, "urlurlurlurl");
   const request = { type: "GET", urlString: url };
 
@@ -1639,7 +1639,7 @@ export const fetchDomainReport = async (fundId, key, cancelToken) => {
 export const getCustomerInformationReport = async (identityId, fundId, cancelToken) => {
   //router.get('/:entityId/AAPI/:fundId/identity/:identityId/customer-info-report',
 
-  const url = `/${entityId}/${baseURL}/${fundId}/identity/${identityId}/customer-info-report`;
+  const url = `/${entityId}/AAPI/1/identity/${identityId}/customer-info-report`;
 
   const request = { type: "GET", urlString: url };
 
