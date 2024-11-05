@@ -6,7 +6,7 @@ import {
   Routes,
 } from "react-router-dom";
 import useEntityStore from "./store/useEntityStore";
-import {} from "./utils/helperFunctions";
+// import {} from "./utils/helperFunctions";
 import Callback from "./pages/callback";
 import { ToastContainer } from "react-toastify";
 import { useState, useEffect } from "react"; // will use the useEffect in future
@@ -14,7 +14,7 @@ import PropTypes from "prop-types";
 import axios from "axios"; //will use this in future
 import Loader from "./components/ui/loader";
 import { getLocalStorage } from "./utils/cookies"; //will use this in future
-
+import SelectFund from "./pages/administration-portal/select-fund";
 import "react-toastify/dist/ReactToastify.css";
 import SignIn from "./pages/sign-in";
 import SplashScreen from "./pages/splash";
@@ -140,6 +140,7 @@ const ComplianceRoutesWrapper = () => {
       <Route path="/" element={<ThemeProvider> <ComplianceDashboard /> </ThemeProvider> } />
       <Route path="/kyw" element={<ThemeProvider> <KYW /> </ThemeProvider> } />
       <Route path="/domain-accounts" element={<ThemeProvider> <DomainAccounts /> </ThemeProvider>} />
+      <Route path="/domains" element={<ThemeProvider> < SelectFund/> </ThemeProvider>} />
       <Route path="/compliance" element={<ThemeProvider> <MainScreenCompliance /> </ThemeProvider> } />
       <Route path="/transaction-monitoring" element={<ThemeProvider> <TransactionMonitoring /> </ThemeProvider>} />
       <Route path="/customers-list" element={<ThemeProvider> <CustomerList /> </ThemeProvider>} />

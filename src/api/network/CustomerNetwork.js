@@ -131,7 +131,10 @@ function getAllUrlParameters(url) {
   return params;
 }
 let entityId = localStorage.getItem('entity_id');
-let userID = localStorage.getItem('login_user_id');
+// let userID = localStorage.getItem('login_user_id');
+
+let userID = '9e7bf370-15f7-483e-8a7a-19f2c3597790';
+console.log("ID Usr" , userID)
 function generateResponseForLoggin(data, status) {
   try {
     let dataToSave = {

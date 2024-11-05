@@ -1,10 +1,17 @@
 import { processRequest } from "./../CustomerNetwork";
 import axios from "axios";
+// import userUtils from "./../../../helpers/utils";
 let baseURLType = window.BaseUrl;
-if (localStorage.getItem("x-auth-token")) axios.defaults.headers = { "x-auth-token": localStorage.getItem("x-auth-token") };
+// if (localStorage.getItem("x-auth-token")) axios.defaults.headers = { "x-auth-token": localStorage.getItem("x-auth-token") };
+axios.defaults.headers = {
+  "x-auth-token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI1IiwianRpIjoiNmNkODhlNTFkMzNlNzFkMjBmMmJjYTVkNWQ2OGQ2MTgyZjFkYWY5MjFhNDEzMDllMjExZDEyNGEyNzYyYzI2ZDdkY2VlZWI3MmYxYTU3MTAiLCJpYXQiOjE3MzA3ODI1NjEuMzE1NzYzLCJuYmYiOjE3MzA3ODI1NjEuMzE1NzY2LCJleHAiOjE3MzEwNDE3NjEuMjEyMzc5LCJzdWIiOiI5ZTdiZjM3MC0xNWY3LTQ4M2UtOGE3YS0xOWYyYzM1OTc3OTAiLCJzY29wZXMiOlsiYXBpLnBvcnRhbC50ZXN0LioiXX0.QbeXqFY8A2knaKb7BXtPYkfrdDqjlNpyuAZ0ubktX2WiDTtB0un1jIFGWhPWj5eQQ9loQxtCBTfJ3mQ-SmDFIiFqbwE4wH6uEwksA0dP4hD0GUlNOZab2NhrPv_X-MmUKJCz6GwuYEKwC_CZvsoiI2gAmD96vblRDP2pIWzdvp7C2tF4J2E9chL8kyh5ZcrpTk9VZyNnEB-aCkqReOIaZpRPwlhkQ6A8_wKCNcR7PzFLKcMsD6ROj-R_EYoxiZuCr6xr0AV4jcerpujQ1kLs-BfdBS24etMAWJU2c-NimFXHE2cABuJvN8bOYUUvvtV6gp80z8BRRBQWfNgQCVXNfXyH_VWvDCL-Ogdit4FjYLVOo9h4tvlqyxzbaQ6-oG6I8oqqixdo-dEJCAGli2lUbFbMrVmRp1cUNLCHoyrXnDFqhANEKypIh186juP0yjrvxGLWaPbMf4va0VE4hMMcYW6FmrOOjfSExNLTcQFPyo_Hi1jxOtL01kazJLSb87Tn5pteozSyzgnNVmae9n75y_mpcsydCcAWT6AeYJ4m-dxVyzLe9si8PuTMlQkKq9k6-YXIq-ozxTRU97sRGzQ-41XyohZAgtOlmWHo0HoOYVYAneSJHpO68xgLHdGpBRWOO74rW3h1ioeHOR8-K3xv2vYByl4A3iAqZ-TOsElKjOM"
+};
 
-let baseURL = localStorage.getItem("base_url");
-let entityId = localStorage.getItem("entity_id");
+// let baseURL = localStorage.getItem("base_url");
+let baseURL = localStorage.getItem("AAPI");
+// let entityId = localStorage.getItem("entity_id");
+let entityId = localStorage.getItem("7175c8f1-f37b-41b0-8abf-b524bf7e81fc");
+
 if (baseURL === null && isSubDomain() === true && window.location.host.split(".")[0] != "portal") {
   // location.reload()
 }
@@ -19,7 +26,7 @@ function isSubDomain() {
 }
 
 export function getErrorResponse(error) {
-
+  console.log(error, "error error    error ");
   let customResponse = [];
   try {
     if (error.data?.masssage == "timeout exceeded") {
@@ -33,8 +40,10 @@ export function getErrorResponse(error) {
     } else {
       customResponse = error?.response.data;
       !!error && console.error(`FAILED API = ${error.response.config.url} | Error Code = ${customResponse.status_code?.value} | System Message = ${customResponse.system_message}`);
+      !!!error && console.log("FAILED API with undefined error");
     }
   } catch (e) {
+    console.log(e, "error catch");
     customResponse.success = false;
     customResponse.status_code = { key: "failed", value: -1, name: "network" };
     customResponse.user_message = "Internet problem";
@@ -105,9 +114,10 @@ export const getExpiredDocumentAPI = async (fundId, type, cancelToken, offset = 
     return getErrorResponse(error);
   }
 };
-export const getPeriodicReviewAPI = async (fundId, offset, limit, cancelToken) => {
+export const getPeriodicReviewAPI = async (fundId, offset, limit, cancelToken, overDue) => {
   //?offset=${data?.offset}&limit=${data?.limit}
-  const url = `/${entityId}/${baseURL}/${fundId}/fundPeriodicReviews?offset=${offset}&limit=${limit}`;
+  //http://localhost:8384/7175c8f1-f37b-41b0-8abf-b524bf7e81fc/AAPI/1/fundPeriodicReviews?offset=0&limit=1000&overDue=true
+  const url = `/${entityId}/${baseURL}/${fundId}/fundPeriodicReviews?offset=${offset}&limit=${limit}&overDue=${overDue}`;
   const request = { type: "GET", urlString: url };
 
   try {
@@ -118,6 +128,7 @@ export const getPeriodicReviewAPI = async (fundId, offset, limit, cancelToken) =
   }
 };
 export const getDueDiligenceAPI = async (fundId, data, cancelToken) => {
+  console.log(data, "data data data data data data data data data data data data data data");
   let url = "";
   if (data?.type === null) {
     url = `/${entityId}/${baseURL}/${fundId}/on-going-due-diligence/?offset=${data?.offset}&limit=${data?.limit}&filter=${data?.filter}&name=${data?.name}&sDate=${data?.startDate}&eDate=${data?.endDate}`;
@@ -308,21 +319,26 @@ export const updateCustomerToRestrictedList = async (data, restrictedListId, cus
   const url = `/${entityId}/${baseURL}/restricted-list/${restrictedListId}/customers/${customerId}`;
   const request = { type: "PUT", urlString: url, params: data };
   try {
+    console.log("error no", cancelToken);
     const response = await processRequest(request, cancelToken);
     return response.data;
   } catch (error) {
+    console.log("error", error);
     return getErrorResponse(error);
   }
 };
 export const postQuickScanAPI = async (fund_id, data, cancelToken) => {
-  
+  console.log("here isn daaaaaaaaaa", data);
+  console.log("here isn");
 
   const url = `/${entityId}/${baseURL}/${fund_id}/doQuickScan`;
   const request = { type: "POST", urlString: url, params: data };
   try {
+    console.log("error no", cancelToken);
     const response = await processRequest(request, cancelToken);
     return response.data;
   } catch (error) {
+    console.log("error", error);
     return getErrorResponse(error);
   }
 };
@@ -516,9 +532,11 @@ export const postCustomerToRestrictedList = async (data, listId, cancelToken) =>
   const url = `/${entityId}/${baseURL}/restricted-list/${listId}/customers`;
   const request = { type: "POST", urlString: url, params: data };
   try {
+    console.log("error no", cancelToken);
     const response = await processRequest(request, cancelToken);
     return response.data;
   } catch (error) {
+    console.log("error", error);
     return getErrorResponse(error);
   }
 };
@@ -527,9 +545,11 @@ export const getPreviousRiskAssessmentAPI = async (fundId, identity_id, cancelTo
   const url = `/${entityId}/${baseURL}/${fundId}/previousRiskAssessments?identityId=${identity_id}`;
   const request = { type: "GET", urlString: url };
   try {
+    console.log("error no", cancelToken);
     const response = await processRequest(request, cancelToken);
     return response.data;
   } catch (error) {
+    console.log("error", error);
     return getErrorResponse(error);
   }
 };
@@ -834,6 +854,7 @@ export const updateFundConfigurationAPI = async (fund_id, data, cancelToken) => 
 };
 export const getDownloadCustomerProfileAPI = async (fund_id, identity_id, cancelToken) => {
   const url = `/${entityId}/${baseURL}/${fund_id}/getIdentityPdfReport?identityId=${identity_id}`;
+  console.log(url, "urlurlurlurl");
   const request = { type: "GET", urlString: url };
 
   try {
@@ -847,6 +868,7 @@ export const getDownloadAuditReport = async (fund_id, account_id, cancelToken) =
   ///:entityId/AAPI/fund/:fundId/account/:accountId/application-history
 
   const url = `/${entityId}/${baseURL}/fund/${fund_id}/account/${account_id}/application-history`;
+  console.log(url, "urlurlurlurl");
   const request = { type: "GET", urlString: url };
 
   try {
@@ -858,6 +880,7 @@ export const getDownloadAuditReport = async (fund_id, account_id, cancelToken) =
 };
 export const getDownloadCustomerProfilePullAPI = async (fund_id, identity_id, dateTime, cancelToken) => {
   const url = `/${entityId}/${baseURL}/${fund_id}/getIdentityPdfReportPolling?id=${identity_id}&dateTime=${dateTime}`;
+  console.log(url, "urlurlurlurl");
   const request = { type: "GET", urlString: url };
 
   try {
@@ -1010,6 +1033,28 @@ export const documentAddPostApi = async (fundId, data, cancelToken) => {
   }
 };
 
+export const editDocumentPostApi = async (fundId, data, cancelToken) => {
+  const url = `/${entityId}/${baseURL}/${fundId}/document-edit`;
+  const request = { type: "PUT", urlString: url, params: data };
+  try {
+    const response = await processRequest(request, cancelToken);
+    return response.data;
+  } catch (error) {
+    return getErrorResponse(error);
+  }
+}
+
+export const docuSignMappedConfiguration = async (data, cancelToken) => {
+  const url = `/${entityId}/${baseURL}/docuSignMappedConfiguration`;
+  const request = { type: "POST", urlString: url, params: data };
+  try {
+    const response = await processRequest(request, cancelToken);
+    return response.data;
+  } catch (error) {
+    return getErrorResponse(error);
+  }
+}
+
 export const postComplianceAPI = async (account_id, identity_id, data, cancelToken) => {
   const url = `/${entityId}/${baseURL}/Account/${account_id}/IdentityId/${identity_id}/saveCompilance`;
   const request = { type: "POST", urlString: url, params: data };
@@ -1022,7 +1067,7 @@ export const postComplianceAPI = async (account_id, identity_id, data, cancelTok
   }
 };
 export const handleAddNewFundAPI = async (data, cancelToken) => {
-  const url = `/${entityId}/${baseURL}/Account/${account_id}/IdentityId/${identity_id}/saveCompilance`;
+  const url = `/${entityId}/${baseURL}/Account/${data.account_id}/IdentityId/${data.identity_id}/saveCompilance`;
   const request = { type: "POST", urlString: url, params: data };
 
   try {
@@ -1033,8 +1078,8 @@ export const handleAddNewFundAPI = async (data, cancelToken) => {
   }
 };
 export const getInvestmentTransactionAPI = async (account_id, cancelToken) => {
-  // const url = `/${entityId}/${baseURL}/Account/transactions/${account_id}`;
-  const url = `/${entityId}/${baseURL}/getAccountSubscriptionDocs?accountId=${account_id}`;
+  const url = `/${entityId}/${baseURL}/Account/transactions/${account_id}`;
+  // const url = `/${entityId}/${baseURL}/getAccountSubscriptionDocs?accountId=${account_id}`;
   const request = { type: "GET", urlString: url };
 
   try {
@@ -1645,6 +1690,16 @@ export const updateQuestionPerodic= async (data, fund_id, cancelToken) => {
 export const handleDownloadStampDocumentAPI = async (data, cancelToken) => {
   const url = `/${entityId}/${baseURL}/getDataSignedUrl`;
   const request = { type: "POST", urlString: url, params: data };
+  try {
+    const response = await processRequest(request, cancelToken);
+    return response.data;
+  } catch (error) {
+    return getErrorResponse(error);
+  }
+}
+export const getSingleDocumentDownload = async (documentId, cancelToken) => {
+  const url = `/${entityId}/${baseURL}/getDocumentSignedUrl/${documentId}`;
+  const request = { type: "GET", urlString: url };
 
   try {
     const response = await processRequest(request, cancelToken);
@@ -1653,3 +1708,82 @@ export const handleDownloadStampDocumentAPI = async (data, cancelToken) => {
     return getErrorResponse(error);
   }
 };
+
+export const getTemplateTags = async (templateId, cancelToken) => {
+  const url = `/${entityId}/${baseURL}/templateTabsLabel`;
+  const request = { type: "POST", urlString: url, params: {
+    templateId,
+  } 
+}
+try {
+  const response = await processRequest(request, cancelToken);
+  return response.data;
+} catch (error) {
+  return getErrorResponse(error);
+}
+};
+export const getEditedTemplateTags = async (data, cancelToken) => {
+  const url = `/${entityId}/${baseURL}/getDocMappedConfiguration`;
+  const request = { type: "POST", urlString: url, params: data
+}
+try {
+  const response = await processRequest(request, cancelToken);
+  return response.data;
+} catch (error) {
+  return getErrorResponse(error);
+}
+};
+export const getOnGoingDueDiligenceStatusAPI = async (fundId, cancelToken) => {
+  const url = `/${entityId}/${baseURL}/getODDStatusAtEntityFundLevel?fundId=${fundId}`;
+  const request = { type: 'GET', urlString: url };
+  try {
+    const response = await processRequest(request, cancelToken);
+    return response.data;
+  } catch (error) {
+    return getErrorResponse(error);
+  }
+}
+
+export const uploadFileManual = async (fundId, cancelToken) => {
+  const url = `${entityId}/${baseURL}/${fundId}/manual-pdf-Document-Upload-SignedURL`;
+  const request = { type: "POST", urlString: url, params: {
+     "content_type":"application/pdf"
+  } };
+  try {
+    const response = await processRequest(request, cancelToken);
+    return response.data;
+  } catch (error) {
+    return getErrorResponse(error);
+  }
+};
+// http://localhost:8384/:entityId/AAPI/getODDStatusAtEntityFundLevel?fundId=1
+
+export const updateOnGoingDueDiligenceStatusAPI = async (
+  fundId,
+  data,
+  cancelToken,
+) => {
+  // http://localhost:8384/:entityId/AAPI/updateODDStatusAtEntityFundLevel?fundId=1
+  const url = `/${entityId}/${baseURL}/updateODDStatusAtEntityFundLevel?fundId=${fundId}`;
+  const request = { type: 'PUT', urlString: url, params: data };
+  try {
+    const response = await processRequest(request, cancelToken);
+    return response.data;
+  } catch (error) {
+    return getErrorResponse(error);
+  }
+};
+
+export const getSingleDocumentOlddDownloadAPI = async (docId, cancelToken) => {
+  const data = {
+    identity_document_id:docId
+  }
+    const url = `/${entityId}/${baseURL}/document`;
+    const request = { type: "POST", urlString: url ,params:data};
+    try {
+      const response = await processRequest(request, cancelToken);
+      return response.data;
+    } catch (error) {
+      return getErrorResponse(error);
+    }
+}
