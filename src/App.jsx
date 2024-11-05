@@ -21,6 +21,7 @@ import SplashScreen from "./pages/splash";
 import Compliance from "./pages/compliancePortal";
 import Customer from "./pages/customerPortal";
 import ComplianceDashboard from "./pages/compliancePortal/complianceScreens/ComplianceDashboard";
+import AccountList from "./pages/administration-portal/kyc/account-list";
 // import DomainAccounts from "./pages/compliancePortal/complianceScreens/DomainAccounts";
 
 import { ThemeProvider } from "./contexts/themeContext";
@@ -141,6 +142,7 @@ const ComplianceRoutesWrapper = () => {
       <Route path="/kyw" element={<ThemeProvider> <KYW /> </ThemeProvider> } />
       <Route path="/domain-accounts" element={<ThemeProvider> <DomainAccounts /> </ThemeProvider>} />
       <Route path="/domains" element={<ThemeProvider> < SelectFund/> </ThemeProvider>} />
+      <Route path="/1/kyc/account/list" element={<ThemeProvider> < AccountList/> </ThemeProvider>} />
       <Route path="/compliance" element={<ThemeProvider> <MainScreenCompliance /> </ThemeProvider> } />
       <Route path="/transaction-monitoring" element={<ThemeProvider> <TransactionMonitoring /> </ThemeProvider>} />
       <Route path="/customers-list" element={<ThemeProvider> <CustomerList /> </ThemeProvider>} />
