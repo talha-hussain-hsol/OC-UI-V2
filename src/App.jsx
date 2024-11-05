@@ -24,7 +24,7 @@ import Customer from "./pages/customerPortal";
 import ComplianceDashboard from "./pages/compliancePortal/complianceScreens/ComplianceDashboard";
 import AccountList from "./pages/administration-portal/kyc/account-list";
 // import DomainAccounts from "./pages/compliancePortal/complianceScreens/DomainAccounts";
-
+import { getFundDetailAPI, getPermissionAPI } from "./api/network/AdministrationApi/AdministrationApi";
 import { ThemeProvider } from "./contexts/themeContext";
 
 import Dashboard from "./pages/customerPortal/screen/dashboard/index";
