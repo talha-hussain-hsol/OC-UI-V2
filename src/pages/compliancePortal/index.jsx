@@ -10,6 +10,6 @@ const Compliance = () => {
       localStorageData
     )}`;
   }, []);
-  return <Loader theme={theme}/>;
+  return <Loader />;
 };
 export default Compliance;
