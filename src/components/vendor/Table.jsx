@@ -1,6 +1,3 @@
-//Table.jsx
-
-
 import React, { useEffect, useRef } from 'react';
 import { Form } from 'react-bootstrap';
 

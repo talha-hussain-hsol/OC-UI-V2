@@ -199,7 +199,7 @@ const Header = ({
           />
         )}
       </div>
-      <hr className=" w-full border-t-[1px] border-t-[#6e84a3] opacity-20 mb-6 " />
+      {/* <hr className=" w-full border-t-[1px] border-t-[#6e84a3] opacity-20 mb-6 " /> */}
     </div>
   );
 };

@@ -116,7 +116,7 @@ const PaginatedTableComponent = ({
           {...getTableProps()}
         >
           <thead>
-            {headerGroups.map((headerGroup) => (
+            {/* {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps({ role: null })}>
                 {headerGroup.headers.map((column) => (
                   <th
@@ -134,7 +134,34 @@ const PaginatedTableComponent = ({
                   </th>
                 ))}
               </tr>
-            ))}
+            ))} */}
+           {headerGroups.map((headerGroup) => {
+  const { key, ...restGroupProps } = headerGroup.getHeaderGroupProps({ role: null });
+
+  return (
+    <tr key={key} {...restGroupProps}>
+      {headerGroup.headers.map((column) => {
+        const { key: columnKey, ...restHeaderProps } = column.getHeaderProps(
+          column.getSortByToggleProps({
+            className: classNames(
+              column.className,
+              column.canSort && "is-sortable"
+            ),
+            role: null,
+          })
+        );
+
+        return (
+          <th key={columnKey} {...restHeaderProps}>
+            {column.render("Header")}
+          </th>
+        );
+      })}
+    </tr>
+  );
+})}
+
+
           </thead>
           <tbody className="fs-base" {...getTableBodyProps({ role: null })}>
             {page.length > 0 ? (

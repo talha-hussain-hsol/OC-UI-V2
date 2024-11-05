@@ -40,6 +40,12 @@ import MainScreenCompliance from "./pages/compliancePortal/complianceScreens/Mai
 import TransactionMonitoring from "./pages/compliancePortal/complianceScreens/TransactionMonitoring";
 import CustomerList from "./pages/compliancePortal/complianceScreens/CustomerList";
 import SummaryDetails from "./pages/compliancePortal/complianceScreens/SummaryDetails";
+import RestrictedLists from "./pages/administration-portal/restricted";
+import DueDilligence from "./pages/administration-portal/kyc/due-diligence";
+import ExpiringDocuments from "./pages/administration-portal/kyc/expiring-document";
+import PeriodicReview from "./pages/administration-portal/kyc/periodic-review";
+import QuickScan from "./pages/administration-portal/kyc/quick-scan";
+import QuickScanDetail from "./pages/administration-portal/kyc/quick-scan/components/detail";
 
 function App() {
   return (
@@ -143,6 +149,12 @@ const ComplianceRoutesWrapper = () => {
       <Route path="/domain-accounts" element={<ThemeProvider> <DomainAccounts /> </ThemeProvider>} />
       <Route path="/domains" element={<ThemeProvider> < SelectFund/> </ThemeProvider>} />
       <Route path="/1/kyc/account/list" element={<ThemeProvider> < AccountList/> </ThemeProvider>} />
+      {/* <Route path="/1/kyc/expiring-document/list" element={<ExpiringDocuments />} /> */}
+      {/* <Route path="/1/kyc/due-diligence/list" element={<DueDilligence />} /> */}
+      {/* <Route path="/1/kyc/periodic-review/list" element={<PeriodicReview />} /> */}
+      {/* <Route path="/1/kyc/quick-scan/list" element={<QuickScan />} /> */}
+      {/* <Route path="/1/kyc/quick-scan-detail/:quick_scan_detail_id" element={<QuickScanDetail />} /> */}
+      <Route path="/1/restricted/list" element={<RestrictedLists />} />
       <Route path="/compliance" element={<ThemeProvider> <MainScreenCompliance /> </ThemeProvider> } />
       <Route path="/transaction-monitoring" element={<ThemeProvider> <TransactionMonitoring /> </ThemeProvider>} />
       <Route path="/customers-list" element={<ThemeProvider> <CustomerList /> </ThemeProvider>} />

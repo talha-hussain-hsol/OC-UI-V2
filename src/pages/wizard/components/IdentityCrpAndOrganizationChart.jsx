@@ -24,6 +24,7 @@ let treeDataGlobal = [];
 let oldCrpId = "";
 let showParticularForm = false;
 export default function particular(props) {
+  var allRequiredField = [];
   const {theme} = useTheme();
   const [updateLabel, setUpdateLabel] = useState(false);
   const params = useParams();
@@ -59,6 +60,7 @@ export default function particular(props) {
   let identity_id_from_props = props?.dataOfAccountSetup?.identity_id;
   let account_id_from_props = props?.dataOfAccountSetup?.account_id;
   let crp_id_from_props = props?.crp_id;
+
   let customerType_from_props = props?.dataOfAccountSetup?.isIndividual ? "individual" : "corporate";
   const [identity_id, setIdentityId] = useState(identity_id_from_props);
 
@@ -103,8 +105,8 @@ export default function particular(props) {
     }
   }, [message]);
   useEffect(() => {
-
-  }, [identity_id]);
+    console.log("selectedRolesMeta", selectedRolesMeta);
+  }, [selectedRolesMeta]);
   useEffect(() => {
     if (errorMessage) {
       setTimeout(function () {
@@ -129,6 +131,7 @@ export default function particular(props) {
   }, [customerType, rolesMetaData]);
   useEffect(() => {
     treeDataGlobal = treeData;
+    console.log(treeData, "treeData useEffect");
   }, [treeData]);
   useEffect(() => {
     if (identity_id) {
@@ -154,6 +157,7 @@ export default function particular(props) {
           return indexA - indexB;
         });
       setParticularFields(filteredObj);
+      console.log(filteredObj, "array   arrayarrayarrayarrayarray");
     }
   }, [particularFieldsDataAll, customerType]);
 
@@ -161,7 +165,8 @@ export default function particular(props) {
     let selectedRolesForSelect = [];
 
     if (rolesMeta && particularAddedDataRoles) {
- 
+      console.log(rolesMeta, "rolesMeta");
+      console.log(particularAddedDataRoles, "particularAddedData particularAddedData particularAddedData");
       for (let selected of particularAddedDataRoles) {
         for (let i of rolesMeta) {
           if (i?.value == selected?.crpRoleMetaId) {
@@ -169,10 +174,44 @@ export default function particular(props) {
           }
         }
       }
+      console.log(selectedRolesForSelect, "selectedRolesForSelect");
       setSelectedRolesForSelectData(selectedRolesForSelect);
       setSelectedRolesMeta(selectedRolesForSelect);
     }
   }, [rolesMeta, particularAddedDataRoles]);
+
+  const handleValidate = () => {
+    let status = true;
+    if (allRequiredField.length > 0) {
+      console.log(identityDataFields, "dentityDataFields handleValidate");
+      console.log("allRequiredField allRequiredField", allRequiredField);
+      for (let item of allRequiredField) {
+        if (identityDataFields && identityDataFields[item]) {
+          if ((!identityDataFields[item] && identityDataFields[item].value === null) || identityDataFields[item].value == "") {
+            status = false;
+          }
+        } else {
+          status = false;
+        }
+      }
+    }
+    if (label != "" && label != null) {
+    } else {
+      status = false;
+    }
+  
+   
+    console.log(status, "status handleValidate ");
+    // if (identityType == 'CORPORATE' && (entityType == '' || entityType === null)) {
+    //     setEntityError(true);
+    //     status = false;
+    // } else {
+    //     setEntityError(false);
+    // }
+    return status;
+  };
+ 
+
 
   const getParticularFields = async () => {
     setIsLoader(true);
@@ -198,6 +237,7 @@ export default function particular(props) {
           return indexA - indexB;
         });
       setParticularFields(filteredObj);
+      console.log(filteredObj, "array   arrayarrayarrayarrayarray");
       // setParticularFields(array)
     } else {
     }
@@ -272,6 +312,7 @@ export default function particular(props) {
   const transformToTreeData = (node) => {
     setIsLoaderCrp(true);
     const { id, label, children, type, roles } = node;
+    console.log(node, "node transformToTreeData");
     let name = "";
     let ownerShip = "";
     let rolesData = [];
@@ -308,6 +349,7 @@ export default function particular(props) {
       // Add any other properties you want here
       // For example, 'id', 'entityId', 'parentId', etc.
     };
+    console.log(treeDataNode, "treeDataNode");
     setIsLoaderCrp(false);
 
     return treeDataNode;
@@ -316,9 +358,11 @@ export default function particular(props) {
   const handleDeleteCRP = (node) => {
     setDeleteConfirmationModal(true);
     setSelectedRow(node?.data);
+    console.log("sdsadasdasdasdasd", node);
   };
 
   const clearInputFieldsAndForms = () => {
+    console.log("selectedRolesForSelectData", selectedRolesForSelectData);
 
     setSelectedRolesMeta([]);
     setParticularAddedData([]);
@@ -378,7 +422,8 @@ export default function particular(props) {
     }
   };
   const filterRolesByType = (data) => {
- 
+    console.log(data, "data filterRolesByType");
+    console.log(customerType.toUpperCase(), "customerType.toUpperCase()");
     if (data) {
       let filterRolesMeta = [];
       for (let item of data) {
@@ -386,6 +431,7 @@ export default function particular(props) {
           filterRolesMeta.push({ value: item?.id, label: item?.name });
         }
       }
+      console.log(filterRolesMeta, "filterRolesMeta  filterRolesMetafilterRolesMetafilterRolesMeta");
       setRolesMeta(filterRolesMeta);
     }
   };
@@ -453,11 +499,13 @@ export default function particular(props) {
       return;
     }
 
+    console.log(selectedRolesMeta, "selectedRolesMeta");
     let selectedRoles = [];
     selectedRolesMeta &&
       selectedRolesMeta.map((item) => {
         selectedRoles.push({ crp_role_meta_id: item?.value });
       });
+    console.log(selectedRoles, "selectedRoles");
     // return;
     const dataToSend = {
       label: label,
@@ -480,6 +528,12 @@ export default function particular(props) {
     const response = await postIdentityAPI(data, cancelTokenSource.token);
     setIsLoader(false);
     if (response.success == true) {
+      handleAlert({
+        variant: "success",
+        message: "CRP Added Successfully",
+        show: true,
+        hideAuto: true,
+      })
       let customerType = response?.data?.type.toLowerCase();
       let crpId = response?.data?.id;
       getCRPsByIdentityId(identity_id_from_props);
@@ -511,6 +565,7 @@ export default function particular(props) {
   };
   const handleSelectRolesChange = (selectedOptions) => {
     setSelectedRolesMeta(selectedOptions);
+    console.log(selectedOptions, "selectedOptions");
     setRolesError("");
   };
   const handleChangeEntityKey = (e) => {
@@ -530,6 +585,7 @@ export default function particular(props) {
     setShowParticularFormData(true);
   };
   const handleEditCRP = (type, selectedCrpId, parentId) => {
+    console.log(selectedCrpId, "selectedCrpId");
     if (parentId != 0) {
       setCustomerType(type);
       crpIdValueSelected = selectedCrpId;
@@ -539,6 +595,7 @@ export default function particular(props) {
   };
   const handleShowHideCRP = (type, selectedCrpId, parentId) => {
     setCrpIdentityId();
+    console.log(selectedCrpId, "selectedCrpId");
     setCrpId(null);
     setCustomerType(null);
     setAddNewCrp(null);
@@ -559,6 +616,7 @@ export default function particular(props) {
     }
   };
   const handleShowHideCRPProps = (type, selectedCrpId, parentId) => {
+    console.log(selectedCrpId, "selectedCrpId");
     setCrpId(null);
     setCustomerType(null);
     setAddNewCrp(null);
@@ -582,6 +640,7 @@ export default function particular(props) {
   const toggleExpandById = (data, id) => {
     return data.map((item) => {
       if (item.data.id === id) {
+        console.log(item.expanded, "matched toggleExpandById");
         return {
           ...item,
           expanded: item.expanded === true ? false : true,
@@ -600,7 +659,10 @@ export default function particular(props) {
   };
 
   const nodeContentRenderer = ({ node }) => {
-   
+    console.log(showParticularForm, "showParticularForm nodeContentRenderer nodeContentRenderer");
+    console.log(node, "node nodenode");
+    console.log(crpIdValueSelected, "crpIdValueSelected crpIdValueSelected");
+    console.log(node?.data.id, "node?.data.id node?.data.id");
     let ownerShip = 0;
     let borderStyle = "";
     if (node?.type == "CORPORATE") {
@@ -614,13 +676,14 @@ export default function particular(props) {
         borderStyle = "1px solid red";
       }
       if (node?.data.id == crpIdValueSelected) {
+        console.log("crp id matcheededed");
         borderStyle = "2px solid #1b636e";
       }
     }
     if (node?.data.id == crpIdValueSelected) {
+      console.log("crp id matcheededed");
       borderStyle = "2px solid #1b636e";
     }
-
     return (
       <div
         style={{
@@ -653,15 +716,14 @@ export default function particular(props) {
                 }}
               />
             ) : (
-              // <EntityIcon
-              //   className={"nodeIcon"}
-              //   fontSize={"large"}
-              //   color={"action"}
-              //   style={{
-              //     fill: theme == "dark" || theme == undefined ? "white" : "black",
-              //   }}
-              // />
-              <img src={UserIcon} alt="EntityIcon" className="w-16 rounded-full"/>
+              <EntityIcon
+                className={"nodeIcon"}
+                fontSize={"large"}
+                color={"action"}
+                style={{
+                  fill: theme == "dark" || theme == undefined ? "white" : "black",
+                }}
+              />
             )}
           </div>
           <div
@@ -1017,8 +1079,11 @@ export default function particular(props) {
                                       let requiredField = item[key[0]]?.required;
                                       let crpCustomerType = customerTypes + "." + formType;
                                       let paramFieldCrp = customerType + "." + "crp";
-                                      if (customerTypes == customerType && requiredField) {
+                                      if(requiredField){
+                                        allRequiredField.push(key[0]);
 
+                                      }
+                                      if (customerTypes == customerType && requiredField) {
                                         if (fieldType == "text") {
                                           if (fieldName == "phone") {
                                             return (
@@ -1408,7 +1473,7 @@ export default function particular(props) {
                                           }
                                           if (fieldType == "check") {
                                             return (
-                                              <div className="col-6 col-md-6" style={{ display: "flex", alignItems: "center", marginBottom: "25px" }}>
+                                              <div key={index} className="col-6 col-md-6" style={{ display: "flex", alignItems: "center", marginBottom: "25px" }}>
                                                 <Form.Check
                                                   // className={requiredField && !identityDataFields?.[formKeyVal] && (getUpdatedData(formKeyVal) == '' || getUpdatedData(formKeyVal) == null) ? "checkbox-field field_warning" : "checkbox-field"}
                                                   className={"checkbox-field"}
@@ -1438,6 +1503,7 @@ export default function particular(props) {
                               onClick={() => {
                                 handleSubmit();
                               }}
+                              disabled={!handleValidate() || selectedRolesMeta?.length === 0}
                             >
                               Save changes
                             </button>
