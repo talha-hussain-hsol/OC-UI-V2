@@ -145,26 +145,26 @@ export default function Filter({ ...props }) {
         <Container fluid>
           <Row className="justify-content-center">
             <Col xs={12} md={12} lg={12}>
-              <div class="card">
-                <div class="card-header">
-                  <h4 class="card-header-title">Search Domain Accounts</h4>
+              <div className="card">
+                <div className="card-header">
+                  <h4 className="card-header-title">Search Domain Accounts</h4>
                   <div
                     onClick={(e) => {
                       handleSyncFunds(e);
                     }}
-                    class="btn btn-sm btn-white me-2"
+                    className="btn btn-sm btn-white me-2"
                   >
                   Sync Domain Account
                   </div>
                 </div>
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="d-grid gap-2 col-12 mx-auto">
+                <div className="card-body">
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="d-grid gap-2 col-12 mx-auto">
                         <div className="row mb-3">
                           <div className="col-sm-12 col-md-5 mb-3 mb-md-0">
                             <input
-                              class="form-control"
+                              className="form-control"
                               type="text"
                               placeholder="Select Domain"
                               onChange={(e) => {

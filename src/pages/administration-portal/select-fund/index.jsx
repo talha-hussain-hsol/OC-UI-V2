@@ -179,12 +179,12 @@ export default function SelectFund({ ...props }) {
                     ? `/${item?.id}/kyc/account/list`
                     : `/${item?.id}/dashboard`
                 } `}
-                class="avatar avatar-xs d-inline-block me-2"
+                className="avatar avatar-xs d-inline-block me-2"
               >
                 <img
                   src={item?.logoBucketKey}
                   alt="..."
-                  class="avatar-img rounded-circle"
+                  className="avatar-img rounded-circle"
                 />
               </Link>
 
@@ -355,10 +355,10 @@ export default function SelectFund({ ...props }) {
                   <Container fluid>
                     <Row className="justify-content-center">
                       <Col xs={12}>
-                        <div class="card">
+                        <div className="card">
                           <div
                             style={{ display: "flex", justifyContent: "end" }}
-                            class="card-header"
+                            className="card-header"
                           >
                             <div
                               style={{ display: "flex", justifyContent: "end" }}
@@ -375,7 +375,7 @@ export default function SelectFund({ ...props }) {
                               </Button>
                             </div>
                           </div>
-                          <div class="table-responsive">
+                          <div className="table-responsive">
                             <TableComponent
                               pageLimit={50}
                               allData={fundData}

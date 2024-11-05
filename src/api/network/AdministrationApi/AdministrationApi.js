@@ -8,9 +8,9 @@ axios.defaults.headers = {
 };
 
 // let baseURL = localStorage.getItem("base_url");
-let baseURL = localStorage.getItem("AAPI");
+let baseURL ='AAPI';
 // let entityId = localStorage.getItem("entity_id");
-let entityId = localStorage.getItem("7175c8f1-f37b-41b0-8abf-b524bf7e81fc");
+let entityId = '7175c8f1-f37b-41b0-8abf-b524bf7e81fc';
 
 if (baseURL === null && isSubDomain() === true && window.location.host.split(".")[0] != "portal") {
   // location.reload()

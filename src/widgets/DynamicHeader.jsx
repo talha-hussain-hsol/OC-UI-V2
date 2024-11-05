@@ -38,14 +38,14 @@ export default function DynamicHeader({ ...props }) {
             ) : null}
             {props?.isShowFundLogo && props?.isShowFundLogo ? (
               <Col xs="auto">
-                <h4 class="card-header-title">
+                <h4 className="card-header-title">
                   {/* <img src={entityLogo} style={{ width: "8em", maxHeight: "50px", textAlign: "left", marginLeft: "10px" }} alt="" class="rounded" /> */}
                 </h4>
               </Col>
             ) : null}
             {props?.isShowCustomerLogo ? (
               <Col xs="auto">
-                <h4 class="card-header-title">
+                <h4 className="card-header-title">
                   {/* <img src={entityLogo} style={{ width: "8em", maxHeight: "50px", textAlign: "left", marginLeft: "10px" }} alt="" class="rounded" /> */}
                 </h4>
               </Col>
